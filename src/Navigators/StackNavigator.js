@@ -13,8 +13,10 @@ const RoutesList = lazy(() => import("../Screens/RoutesList"));
 const BusTimings = lazy(() => import("../Screens/BusTimings"));
 const CategoryProjects = lazy(() => import("../Screens/CategoryProjects"));
 const CityDetails = lazy(() => import("../Screens/CityDetails"));
-const CityList = lazy(() => import("../Screens/CityList"));
-const PlaceList = lazy(() => import("../Screens/PlaceList"));
+const CityList = lazy(() => import("../Screens/ListPages/CityList"));
+const PlaceList = lazy(() => import("../Screens/ListPages/PlaceList"));
+const ProjectList = lazy(() => import("../Screens/ListPages/ProjectList"));
+const StopList = lazy(() => import("../Screens/ListPages/StopList"));
 const EmailSignIn = lazy(() => import("../Screens/AuthScreens/EmailSignIn"));
 const VerifyOTP = lazy(() => import("../Screens/AuthScreens/VerifyOTP"));
 const PlaceDetails = lazy(() => import("../Screens/PlaceDetails"));
@@ -64,9 +66,11 @@ const StackNavigator = () => {
           <Stack.Screen name="VerifyOTP" component={VerifyOTP} />
           <Stack.Screen name="SignUp" component={SignUp} />
           <Stack.Screen name="CategoryProjects" component={CategoryProjects} />
-          <Stack.Screen name="CityDetails" component={CityDetails} />
           <Stack.Screen name="CityList" component={CityList} />
           <Stack.Screen name="PlaceList" component={PlaceList} />
+          <Stack.Screen name="ProjectList" component={ProjectList} />
+          <Stack.Screen name="StopList" component={StopList} />
+          <Stack.Screen name="CityDetails" component={CityDetails} />
           <Stack.Screen name="PlaceDetails" component={PlaceDetails} />
           <Stack.Screen name="SearchPlace" component={SearchPlace} />
           {/* <Stack.Screen name="Invite" component={Invite} /> */}

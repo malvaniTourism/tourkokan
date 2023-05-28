@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { View, ScrollView, Text, TouchableOpacity } from "react-native";
-import SmallCard from "../Components/Customs/SmallCard";
+import SmallCard from "../../Components/Customs/SmallCard";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import COLOR from "../Services/Constants/COLORS";
-import DIMENSIONS from "../Services/Constants/DIMENSIONS";
-import { comnGet } from "../Services/Api/CommonServices";
+import COLOR from "../../Services/Constants/COLORS";
+import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
+import { comnGet } from "../../Services/Api/CommonServices";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native"; // Import the navigation hook from your navigation library
-import Loader from "../Components/Customs/Loader";
-import Header from "../Components/Common/Header";
-import { setLoader } from "../Reducers/CommonActions";
+import Loader from "../../Components/Customs/Loader";
+import Header from "../../Components/Common/Header";
+import { setLoader } from "../../Reducers/CommonActions";
 
 const CityList = ({ navigation, ...props }) => {
   const [cities, setCities] = useState([]); // State to store cities
@@ -41,7 +41,7 @@ const CityList = ({ navigation, ...props }) => {
     <ScrollView>
       <View style={{ flex: 1, alignItems: "center" }}>
         <Loader />
-        <Header name={'Places'}
+        <Header name={'Cities'}
           startIcon={
             <Ionicons
               name="chevron-back-outline"

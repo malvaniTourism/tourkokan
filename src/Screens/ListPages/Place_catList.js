@@ -1,41 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { View, ScrollView, Text, TouchableOpacity } from "react-native";
-import SmallCard from "../Components/Customs/SmallCard";
+import SmallCard from "../../Components/Customs/SmallCard";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import COLOR from "../Services/Constants/COLORS";
-import DIMENSIONS from "../Services/Constants/DIMENSIONS";
-import { comnGet } from "../Services/Api/CommonServices";
+import COLOR from "../../Services/Constants/COLORS";
+import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
+import { comnGet } from "../../Services/Api/CommonServices";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native"; // Import the navigation hook from your navigation library
-import Loader from "../Components/Customs/Loader";
-import Header from "../Components/Common/Header";
-import { setLoader } from "../Reducers/CommonActions";
+import Loader from "../../Components/Customs/Loader";
+import Header from "../../Components/Common/Header";
+import { setLoader } from "../../Reducers/CommonActions";
 
-const CategoryProjects = ({ navigation, route, ...props }) => {
-  const [projects, setProjects] = useState([]); // State to store Projects
+const Place_catList = ({ navigation, ...props }) => {
+  const [place_cats, setPlace_cats] = useState([]); // State to store place_cats
   const [error, setError] = useState(null); // State to store error message
 
   useEffect(() => {
     props.setLoader(true);
-    getAllProjects()
-  }, []);
-
-  const getAllProjects = () => {
-    comnGet(`v1/category/${route.params.id}/projects`, props.access_token)
+    comnGet("v1/place_cats", props.access_token)
       .then((res) => {
-        console.log('res- ', res.data.data);
-        setProjects(res.data.data); // Update Projects state with response data
+        setPlace_cats(res.data.data.data); // Update place_cats state with response data
         props.setLoader(false);
       })
       .catch((error) => {
         props.setLoader(false);
         setError(error.message); // Update error state with error message
       });
-  }
+  }, []);
 
   // Function to handle SmallCard click
   const handleSmallCardClick = (id) => {
-    navigation.navigate("ProjectDetails", { id });
+    navigation.navigate("StopDetails", { id });
   };
 
   const goBack = () => {
@@ -46,7 +41,7 @@ const CategoryProjects = ({ navigation, route, ...props }) => {
     <ScrollView>
       <View style={{ flex: 1, alignItems: "center" }}>
         <Loader />
-        <Header name={route.params.name}
+        <Header name={'Place Categories'}
           startIcon={
             <Ionicons
               name="chevron-back-outline"
@@ -56,9 +51,8 @@ const CategoryProjects = ({ navigation, route, ...props }) => {
             />
           }
         />
-        <View style={{ flexDirection: "row", flexWrap: 'wrap' }}>
-          <Text>{projects[0].id}</Text>
-          {/* {projects && projects[0].projects.map((project) => (
+        <View style={{ flexDirection: "row" }}>
+          {place_cats.map((place_cat) => (
               <SmallCard
                 Icon={
                   <Ionicons
@@ -67,10 +61,10 @@ const CategoryProjects = ({ navigation, route, ...props }) => {
                     size={DIMENSIONS.iconSize}
                   />
                 }
-                title={project.name}
-                onPress={() => handleSmallCardClick(project.id)} 
+                title={place_cat.name}
+                onPress={() => handleSmallCardClick(place_cat.id)}
               />
-          ))} */}
+          ))}
         </View>
       </View>
     </ScrollView>
@@ -91,4 +85,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategoryProjects);
+export default connect (mapStateToProps, mapDispatchToProps) (Place_catList);
