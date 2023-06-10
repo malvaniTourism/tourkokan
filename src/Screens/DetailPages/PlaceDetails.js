@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { View, ScrollView, Text } from "react-native";
-import SmallCard from "../Components/Customs/SmallCard";
+import { View, ScrollView, Text, ImageBackground } from "react-native";
+import SmallCard from "../../Components/Customs/SmallCard";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import COLOR from "../Services/Constants/COLORS";
-import DIMENSIONS from "../Services/Constants/DIMENSIONS";
-import { comnGet } from "../Services/Api/CommonServices";
+import COLOR from "../../Services/Constants/COLORS";
+import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
+import { comnGet } from "../../Services/Api/CommonServices";
 import { connect } from "react-redux";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { setLoader } from "../Reducers/CommonActions";
-import Loader from "../Components/Customs/Loader";
-import Header from "../Components/Common/Header";
+import { setLoader } from "../../Reducers/CommonActions";
+import Loader from "../../Components/Customs/Loader";
+import Header from "../../Components/Common/Header";
+import { Image } from "@rneui/themed";
+import styles from "../Styles";
 
 const PlaceDetails = ({ navigation, route, ...props }) => {
     const [place, setPlace] = useState([]); // State to store city
@@ -19,6 +21,7 @@ const PlaceDetails = ({ navigation, route, ...props }) => {
         props.setLoader(true);
         comnGet(`v1/place/${route.params.id}`, props.access_token)
             .then((res) => {
+                console.log('log ', res.data.data);
                 setPlace(res.data.data); // Update city state with response data
                 props.setLoader(false);
             })
@@ -46,13 +49,12 @@ const PlaceDetails = ({ navigation, route, ...props }) => {
                     />
                 }
             />
-            <View style={{ flex: 1, alignItems: "center" }}>
-                <View style={{ flexDirection: "row" }}>
-                    <Text>{place.name}</Text>
-                    {/* <Text> {place.tag_line}</Text> */}
-                    {/* <Text>{city.description}</Text>
-                    <Text>{city.projects_count}</Text>
-                    <Text>{city.places_count}</Text>              */}
+            <View style={{ flex: 1 }}>
+                <View style={styles.center}>
+                    <View style={styles.placeImageView}>
+                        <ImageBackground source={place.image_url} style={styles.placeImage} />
+                        <Text>{place.name}</Text>
+                    </View>
                 </View>
             </View>
         </ScrollView>

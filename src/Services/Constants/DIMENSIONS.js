@@ -14,6 +14,7 @@ const DIMENSIONS = {
     bannerWidth: sw - 40,
     iconSize: 20,
     userIconSize: 30,
+    borderRadiusLarge: 50,
     borderRadius: 30,
     borderRadiusSmall: 20,
     borderRadiusXS: 10,
@@ -22,6 +23,7 @@ const DIMENSIONS = {
     headerTextSize: 17,
     subtitleTextSize: 17,
     sectionGap: 20,
+    detailsImage: 200,
 };
 
 export default DIMENSIONS;

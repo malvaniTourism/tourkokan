@@ -10,6 +10,7 @@ import Loader from "../../Components/Customs/Loader";
 import { connect } from "react-redux";
 import { setLoader } from "../../Reducers/CommonActions";
 import DropDown from "../../Components/Customs/DropDown";
+import ImagePicker from 'react-native-image-picker';
 
 const SignUp = ({ navigation, ...props }) => {
   const [name, setName] = useState("");
@@ -20,6 +21,7 @@ const SignUp = ({ navigation, ...props }) => {
   const [role, setRole] = useState("");
   const [roles, setRoles] = useState([]);
   const [errMsg, setErrorMsg] = useState("");
+  const [imageSource, setImageSource] = useState(null);
 
   useEffect(() => {
     props.setLoader(true);
@@ -109,6 +111,31 @@ const SignUp = ({ navigation, ...props }) => {
     navigation.navigate("Login");
   };
 
+  const selectImage = () => {
+    const options = {
+      mediaType: 'photo',
+      quality: 1,
+      includeBase64: false,
+    };
+
+    ImagePicker.launchImageLibrary(options, (response) => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        // The selected image URI is in response.uri
+        const source = { uri: response.uri };
+        // Do something with the image source
+        // For example, set it as the state of the component
+        setImageSource(source);
+      }
+    });
+  };
+
+
   return (
     <View style={{ alignItems: "center" }}>
       <Header
@@ -144,6 +171,10 @@ const SignUp = ({ navigation, ...props }) => {
           />
         );
       })}
+      {imageSource && <Image source={imageSource} style={{ width: 200, height: 200 }} />}
+      <TouchableOpacity onPress={selectImage}>
+        <Text>Upload Image</Text>
+      </TouchableOpacity>
       <CustomButton
         title={"Register"}
         containerStyle={styles.buttonContainer}

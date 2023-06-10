@@ -21,6 +21,30 @@ const styles = StyleSheet.create({
     showMore: {
         width: DIMENSIONS.halfWidth,
         alignItems: 'center'
+    },
+    profileImageView: {
+        height: DIMENSIONS.bannerWidth,
+        marginTop: -75,
+        borderRadius: DIMENSIONS.borderRadius,
+        padding: 3
+    },
+    profileImage: {
+        // aspectRatio: 1,
+        height: DIMENSIONS.bannerWidth,
+        borderRadius: DIMENSIONS.borderRadius,
+        resizeMode: 'cover'        
+        // width: '100%',
+    },
+    boldText: {
+        fontWeight: 'bold',
+        fontSize: 16
+    },
+    profileDetails :{
+        padding: 15
+    },
+    flexRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     }
 });
 

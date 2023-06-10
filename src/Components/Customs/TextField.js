@@ -29,6 +29,20 @@ const TextField = (props) => {
             break;
           }
         }
+        case "password": {
+          if (txtVal.match(/^([a-zA-Z])[a-zA-Z-_ ]*$/)) {
+            setIsValid(false);
+            setValue(txtVal);
+            props.setChild(txtVal, true);
+            break;
+          } else {
+            setErrorText(props.errMsg);
+            setIsValid(true);
+            setValue(txtVal);
+            props.setChild(txtVal, false);
+            break;
+          }
+        }
         case "num": {
           if (txtVal.match(/^[0-9]*$/)) {
             if (
@@ -167,6 +181,7 @@ const TextField = (props) => {
       inputProps={{
         maxLength: props.length,
       }}
+      secureTextEntry={props.fieldType == 'password'}
       underlineColorAndroid="transparent"
       InputProps={x}
       onPressIn={props.onPress}

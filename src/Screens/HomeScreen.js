@@ -21,12 +21,6 @@ import CustomButton from "../Components/Customs/Button";
 
 const HomeScreen = ({ navigation, ...props }) => {
     const [searchValue, setSearchValue] = useState("");
-    const [bannerImages, setBannerImages] = useState([
-        "https://4kwallpapers.com/images/walls/thumbs_3t/912.jpg",
-        "https://c4.wallpaperflare.com/wallpaper/977/138/381/tbilisi-georgia-wallpaper-preview.jpg",
-        "https://c4.wallpaperflare.com/wallpaper/766/970/409/cities-city-building-cityscape-wallpaper-preview.jpg",
-        "https://c4.wallpaperflare.com/wallpaper/631/683/713/nature-bridge-sky-city-wallpaper-preview.jpg",
-    ]);
     const [categories, setCategories] = useState([]);
     const [cities, setCities] = useState([]);
     const [projects, setProjects] = useState([]);
@@ -116,7 +110,6 @@ const HomeScreen = ({ navigation, ...props }) => {
                     );
                 })}
                 <SearchPanel navigation={navigation} />
-                <Banner bannerImages={bannerImages} />
 
                 <View style={{ flexDirection: "row" }}>
                     <SmallCard

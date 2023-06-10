@@ -32,7 +32,7 @@ export const SignInFields = [
   {
     name: "Password",
     placeholder: "Password",
-    type: "text",
+    type: "password",
     length: 10,
     required: true,
     disabled: false,
@@ -59,7 +59,7 @@ export const SignUpFields = [
   {
     name: "Mobile",
     placeholder: "Mobile",
-    type: "tel",
+    type: "phone",
     length: 10,
     required: true,
     disabled: false,
