@@ -12,12 +12,14 @@ import TopComponent from "../Components/Common/TopComponent";
 import { setLoader } from "../Reducers/CommonActions";
 import { Image } from "@rneui/themed";
 import styles from "./Styles";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Profile = ({ navigation, ...props }) => {
   const [profile, setProfile] = useState([]); // State to store places
   const [error, setError] = useState(null); // State to store error message
 
   useEffect(() => {
+    checkLogin();
     props.setLoader(true);
     comnGet("v1/user-profile", props.access_token)
       .then((res) => {
@@ -31,6 +33,15 @@ const Profile = ({ navigation, ...props }) => {
       });
   }, []);
 
+  const checkLogin = async () => {
+    if (
+      (await AsyncStorage.getItem("access_token")) == null ||
+      (await AsyncStorage.getItem("access_token")) == ""
+    ) {
+      navigation.navigate("Login");
+    }
+  }
+
   const goBack = () => {
     navigation.goBack();
   };
@@ -43,6 +54,7 @@ const Profile = ({ navigation, ...props }) => {
       .then((res) => {
         if (res.data.success) {
           props.setLoader(false);
+          AsyncStorage.clear()
           navigation.navigate("Login");
         }
         // Do something after successful logout, such as clearing your access_token from state
@@ -97,7 +109,7 @@ const Profile = ({ navigation, ...props }) => {
             }
           </View>
           <View style={styles.flexRow}>
-          <View>
+            <View>
               <Text>{profile.email}</Text>
               <Text>{profile.mobile}</Text>
             </View>

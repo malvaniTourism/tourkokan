@@ -6,10 +6,14 @@ import TextField from "../Customs/TextField";
 import styles from "./Styles";
 import { connect } from "react-redux";
 import { comnPost } from "../../Services/Api/CommonServices";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import COLOR from "../../Services/Constants/COLORS";
+import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 
 const SearchPanel = ({ navigation, ...props }) => {
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
+  const [isValid, setIsValid] = useState(false)
 
   useEffect(() => {
     setSource(props.source.name);
@@ -20,9 +24,11 @@ const SearchPanel = ({ navigation, ...props }) => {
     switch (index) {
       case 0:
         setSource(v);
+        checkIsValid()
         break;
       case 1:
         setDestination(v);
+        checkIsValid()
         break;
     }
   };
@@ -36,6 +42,11 @@ const SearchPanel = ({ navigation, ...props }) => {
     }
   };
 
+  const checkIsValid = () => {
+    if (source != '' && destination != '') setIsValid(true)
+    else setIsValid(false)
+  }
+
   const gotoSearch = (type) => {
     navigation.navigate("SearchPlace", { type });
   };
@@ -43,6 +54,12 @@ const SearchPanel = ({ navigation, ...props }) => {
   const gotoRoutes = () => {
     navigation.navigate("SearchList");
   };
+
+  const swap = () => {
+    console.log('swap - - -');
+    setSource(destination);
+    setDestination(source)
+  }
 
   return (
     <View style={{ marginVertical: 20 }}>
@@ -66,13 +83,14 @@ const SearchPanel = ({ navigation, ...props }) => {
             />
           );
         })}
+        <MaterialIcons style={styles.swapIcon} name="swap-vert-circle" color={COLOR.themeDarkGreen} size={DIMENSIONS.userIconSize} onPress={swap} />
       </View>
       <CustomButton
         title={"Search"}
         containerStyle={styles.searchButtonContainerStyle}
-        buttonStyle={styles.searchButtonStyle}
+        buttonStyle={isValid ? styles.searchButtonStyle : styles.searchButtonDisable}
         titleStyle={styles.buttonTitleStyle}
-        disabled={false}
+        isDisabled={!isValid}
         raised={true}
         type={"Submit"}
         onPress={gotoRoutes}

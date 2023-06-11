@@ -10,15 +10,26 @@ import { useNavigation } from "@react-navigation/native"; // Import the navigati
 import Loader from "../Components/Customs/Loader";
 import Header from "../Components/Common/Header";
 import { setLoader } from "../Reducers/CommonActions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const CategoryProjects = ({ navigation, route, ...props }) => {
   const [projects, setProjects] = useState([]); // State to store Projects
   const [error, setError] = useState(null); // State to store error message
 
   useEffect(() => {
+    checkLogin()
     props.setLoader(true);
     getAllProjects()
   }, []);
+
+  const checkLogin = async () => {
+    if (
+      (await AsyncStorage.getItem("access_token")) == null ||
+      (await AsyncStorage.getItem("access_token")) == ""
+    ) {
+      navigation.navigate("Login");
+    }
+  }
 
   const getAllProjects = () => {
     comnGet(`v1/category/${route.params.id}/projects`, props.access_token)

@@ -52,9 +52,10 @@ const styles = StyleSheet.create({
     animation: "fadeinout 4s infinite",
   },
   bannerImage: {
-    width: DIMENSIONS.bannerWidth,
+    width: DIMENSIONS.screenWidth,
     height: DIMENSIONS.halfWidth,
     animation: "fadeinout 4s infinite",
+    opacity: 1
   },
   routeLineVert: {
     borderColor: COLOR.black,
@@ -74,7 +75,6 @@ const styles = StyleSheet.create({
   },
   buttonStyle: {
     width: DIMENSIONS.bannerWidth,
-    backgroundColor: COLOR.themeDarkGreen,
   },
   titleStyle: {
     color: COLOR.white,
@@ -109,6 +109,9 @@ const styles = StyleSheet.create({
   },
   alertButtonView: {
     flex: 1,
+  },
+  buttonStyle: {
+    backgroundColor: COLOR.themeDarkGreen,
   },
   dropdown: {
     width: DIMENSIONS.bannerWidth + 20,

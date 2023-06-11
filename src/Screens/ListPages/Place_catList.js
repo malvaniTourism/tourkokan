@@ -10,12 +10,14 @@ import { useNavigation } from "@react-navigation/native"; // Import the navigati
 import Loader from "../../Components/Customs/Loader";
 import Header from "../../Components/Common/Header";
 import { setLoader } from "../../Reducers/CommonActions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Place_catList = ({ navigation, ...props }) => {
   const [place_cats, setPlace_cats] = useState([]); // State to store place_cats
   const [error, setError] = useState(null); // State to store error message
 
   useEffect(() => {
+    checkLogin()
     props.setLoader(true);
     comnGet("v1/place_cats", props.access_token)
       .then((res) => {
@@ -27,6 +29,15 @@ const Place_catList = ({ navigation, ...props }) => {
         setError(error.message); // Update error state with error message
       });
   }, []);
+
+  const checkLogin = async () => {
+    if (
+      (await AsyncStorage.getItem("access_token")) == null ||
+      (await AsyncStorage.getItem("access_token")) == ""
+    ) {
+      navigation.navigate("Login");
+    }
+  }
 
   // Function to handle SmallCard click
   const handleSmallCardClick = (id) => {

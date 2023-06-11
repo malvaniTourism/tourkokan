@@ -10,13 +10,24 @@ import { connect } from "react-redux";
 import { comnPost } from "../Services/Api/CommonServices";
 import { setLoader } from "../Reducers/CommonActions";
 import Loader from "../Components/Customs/Loader";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SearchList = ({ navigation, ...props }) => {
   const [list, setList] = useState([]);
 
   useEffect(() => {
+    checkLogin();
     searchRoute();
   }, []);
+
+  const checkLogin = async () => {
+    if (
+      (await AsyncStorage.getItem("access_token")) == null ||
+      (await AsyncStorage.getItem("access_token")) == ""
+    ) {
+      navigation.navigate("Login");
+    }
+  }
 
   const getRoutes = (item) => {
     navigation.navigate("RoutesList", { item });

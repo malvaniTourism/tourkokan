@@ -48,7 +48,7 @@ const Banner = ({ style, bannerImages }) => {
         loop
         // mode={'parallax'}
         // customAnimation={animationStyle}
-        width={DIMENSIONS.bannerWidth}
+        width={DIMENSIONS.windowWidth}
         height={DIMENSIONS.windowWidth / 2}
         autoPlay={true}
         data={bannerImages}

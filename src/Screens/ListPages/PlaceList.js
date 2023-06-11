@@ -10,12 +10,14 @@ import { setLoader } from "../../Reducers/CommonActions";
 import Loader from "../../Components/Customs/Loader";
 import styles from "../Styles";
 import Header from "../../Components/Common/Header";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const PlaceList = ({ navigation, ...props }) => {
   const [places, setPlaces] = useState([]); // State to store places
   const [error, setError] = useState(null); // State to store error message
 
   useEffect(() => {
+    checkLogin()
     props.setLoader(true);
     comnGet("v1/places", props.access_token)
       .then((res) => {
@@ -27,6 +29,15 @@ const PlaceList = ({ navigation, ...props }) => {
         props.setLoader(false);
       });
   }, []);
+
+  const checkLogin = async () => {
+    if (
+      (await AsyncStorage.getItem("access_token")) == null ||
+      (await AsyncStorage.getItem("access_token")) == ""
+    ) {
+      navigation.navigate("Login");
+    }
+  }
 
   // Function to handle SmallCard click
   const handleSmallCardClick = (id) => {

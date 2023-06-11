@@ -12,14 +12,26 @@ import {
   setSource,
 } from "../Reducers/CommonActions";
 import Loader from "../Components/Customs/Loader";
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SearchPlace = ({ navigation, route, ...props }) => {
   const [searchValue, setSearchValue] = useState("");
   const [placesList, setPlacesList] = useState([]);
 
   useEffect(() => {
+    checkLogin()
     searchPlace();
   }, []);
+
+  const checkLogin = async () => {
+    if (
+      (await AsyncStorage.getItem("access_token")) == null ||
+      (await AsyncStorage.getItem("access_token")) == ""
+    ) {
+      navigation.navigate("Login");
+    }
+  }
 
   const searchPlace = (v) => {
     // props.setLoader(true)
@@ -75,13 +87,15 @@ const SearchPlace = ({ navigation, route, ...props }) => {
         }
       />
 
-      <SafeAreaView>
-        <FlatList
-          keyExtractor={(item) => item.id}
-          data={placesList}
-          renderItem={renderItem}
-        />
-      </SafeAreaView>
+      <GestureHandlerRootView>
+        <SafeAreaView>
+          <FlatList
+            keyExtractor={(item) => item.id}
+            data={placesList}
+            renderItem={renderItem}
+          />
+        </SafeAreaView>
+      </GestureHandlerRootView>
     </View>
   );
 };

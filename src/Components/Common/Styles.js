@@ -4,9 +4,8 @@ import DIMENSIONS from "../../Services/Constants/DIMENSIONS.js";
 
 const styles = StyleSheet.create({
   topComponent: {
-    height: (DIMENSIONS.windowHeight * 27) / 100,
+    height: DIMENSIONS.halfWidth,
     width: DIMENSIONS.windowWidth,
-    backgroundColor: COLOR.themeDarkGreen,
     borderBottomLeftRadius: DIMENSIONS.borderRadiusSmall,
     borderBottomRightRadius: DIMENSIONS.borderRadiusSmall,
     position: "relative",
@@ -47,9 +46,15 @@ const styles = StyleSheet.create({
   },
   searchButtonStyle: {
     height: 50,
-    backgroundColor: COLOR.themeDarkGreen,
     borderBottomLeftRadius: DIMENSIONS.borderRadiusSmall,
     borderBottomRightRadius: DIMENSIONS.borderRadiusSmall,
+    backgroundColor: COLOR.themeDarkGreen,
+  },
+  searchButtonDisable: {
+    height: 50,
+    borderBottomLeftRadius: DIMENSIONS.borderRadiusSmall,
+    borderBottomRightRadius: DIMENSIONS.borderRadiusSmall,
+    backgroundColor: COLOR.grey,
   },
   buttonTitleStyle: {
     color: COLOR.white,
@@ -69,6 +74,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: DIMENSIONS.headerTextSize,
     textAlign: "center",
+  },
+  swapIcon: {
+    position: 'absolute',
+    top: '42%',
+    left: '44%'
   },
 });
 

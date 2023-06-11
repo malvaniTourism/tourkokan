@@ -12,12 +12,14 @@ import Loader from "../../Components/Customs/Loader";
 import Header from "../../Components/Common/Header";
 import { Image } from "@rneui/themed";
 import styles from "../Styles";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const PlaceDetails = ({ navigation, route, ...props }) => {
     const [place, setPlace] = useState([]); // State to store city
     const [error, setError] = useState(null); // State to store error message
 
     useEffect(() => {
+        checkLogin()
         props.setLoader(true);
         comnGet(`v1/place/${route.params.id}`, props.access_token)
             .then((res) => {
@@ -30,6 +32,15 @@ const PlaceDetails = ({ navigation, route, ...props }) => {
                 props.setLoader(false);
             });
     }, []);
+
+    const checkLogin = async () => {
+        if (
+            (await AsyncStorage.getItem("access_token")) == null ||
+            (await AsyncStorage.getItem("access_token")) == ""
+        ) {
+            navigation.navigate("Login");
+        }
+    }
 
     const goBack = () => {
         navigation.goBack();

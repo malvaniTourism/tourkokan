@@ -7,12 +7,23 @@ import Feather from "react-native-vector-icons/Feather";
 import COLOR from "../Services/Constants/COLORS";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
 import RouteLine from "../Components/Customs/RouteLine";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const RoutesList = ({ navigation, route }) => {
   const [list, setList] = useState(route.params.item.route_stops);
 
   useEffect(() => {
+    checkLogin()
   }, []);
+
+  const checkLogin = async () => {
+    if (
+      (await AsyncStorage.getItem("access_token")) == null ||
+      (await AsyncStorage.getItem("access_token")) == ""
+    ) {
+      navigation.navigate("Login");
+    }
+  }
 
   const renderItem = ({ item }) => {
     return (

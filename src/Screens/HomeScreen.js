@@ -182,6 +182,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                         title={'Show More'}
                         containerStyle={styles.showMore}
                         onPress={() => showMore('CityList')}
+                        buttonStyle={styles.buttonStyle}
                     />
                 </View>
 
@@ -207,6 +208,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                         title={'Show More'}
                         containerStyle={styles.showMore}
                         onPress={() => showMore('ProjectList')}
+                        buttonStyle={styles.buttonStyle}
                     />
                 </View>
 
@@ -232,6 +234,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                         title={'Show More'}
                         containerStyle={styles.showMore}
                         onPress={() => showMore('StopList')}
+                        buttonStyle={styles.buttonStyle}
                     />
                 </View>
 
@@ -257,6 +260,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                         title={'Show More'}
                         containerStyle={styles.showMore}
                         onPress={() => showMore('Place_catList')}
+                        buttonStyle={styles.buttonStyle}
                     />
                 </View>
 
@@ -282,6 +286,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                         title={'Show More'}
                         containerStyle={styles.showMore}
                         onPress={() => showMore('PlaceList')}
+                        buttonStyle={styles.buttonStyle}
                     />
                 </View>
             </View>

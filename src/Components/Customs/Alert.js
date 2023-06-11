@@ -11,7 +11,7 @@ const Alert = ({ alertMessage, closeAlert }) => {
           <Text>{alertMessage}</Text>
         </View>
         <View style={styles.alertButtonView}>
-          <CustomButton title={"Ok"} onPress={closeAlert} />
+          <CustomButton buttonStyle={styles.buttonStyle} title={"Ok"} onPress={closeAlert} />
         </View>
       </View>
     </View>

@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
+import COLOR from "../Services/Constants/COLORS";
 
 const styles = StyleSheet.create({
     homeSearchBar: {
@@ -17,6 +18,9 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap: "wrap",
         alignItems: "center",
+    },
+    buttonStyle: {
+        backgroundColor: COLOR.themeDarkGreen,
     },
     showMore: {
         width: DIMENSIONS.halfWidth,

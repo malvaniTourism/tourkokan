@@ -10,12 +10,14 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { setLoader } from "../../Reducers/CommonActions";
 import Loader from "../../Components/Customs/Loader";
 import Header from "../../Components/Common/Header";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Place_catDetails = ({ navigation, route, ...props }) => {
     const [place_cat, setPlace_cat] = useState([]); // State to store city
     const [error, setError] = useState(null); // State to store error message
 
     useEffect(() => {
+        checkLogin()
         props.setLoader(true);
         comnGet(`v1/place_cat/${route.params.id}`, props.access_token)
             .then((res) => {
@@ -27,6 +29,15 @@ const Place_catDetails = ({ navigation, route, ...props }) => {
                 props.setLoader(false);
             });
     }, []);
+
+    const checkLogin = async () => {
+        if (
+            (await AsyncStorage.getItem("access_token")) == null ||
+            (await AsyncStorage.getItem("access_token")) == ""
+        ) {
+            navigation.navigate("Login");
+        }
+    }
 
     const goBack = () => {
         navigation.goBack();
