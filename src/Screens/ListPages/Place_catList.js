@@ -11,14 +11,23 @@ import Loader from "../../Components/Customs/Loader";
 import Header from "../../Components/Common/Header";
 import { setLoader } from "../../Reducers/CommonActions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { backPage, checkLogin, goBackHandler, navigateTo } from "../../Services/CommonMethods";
 
 const Place_catList = ({ navigation, ...props }) => {
   const [place_cats, setPlace_cats] = useState([]); // State to store place_cats
   const [error, setError] = useState(null); // State to store error message
 
   useEffect(() => {
-    checkLogin()
+    const backHandler = goBackHandler(navigation)
+    checkLogin(navigation)
     props.setLoader(true);
+    getList()
+    return () => {
+      backHandler.remove()
+    }
+  }, []);
+
+  const getList = () => {
     comnGet("v1/place_cats", props.access_token)
       .then((res) => {
         setPlace_cats(res.data.data.data); // Update place_cats state with response data
@@ -28,24 +37,10 @@ const Place_catList = ({ navigation, ...props }) => {
         props.setLoader(false);
         setError(error.message); // Update error state with error message
       });
-  }, []);
-
-  const checkLogin = async () => {
-    if (
-      (await AsyncStorage.getItem("access_token")) == null ||
-      (await AsyncStorage.getItem("access_token")) == ""
-    ) {
-      navigation.navigate("Login");
-    }
   }
 
-  // Function to handle SmallCard click
   const handleSmallCardClick = (id) => {
-    navigation.navigate("StopDetails", { id });
-  };
-
-  const goBack = () => {
-    navigation.goBack();
+    navigateTo(navigation, "StopDetails", { id });
   };
 
   return (
@@ -58,23 +53,23 @@ const Place_catList = ({ navigation, ...props }) => {
               name="chevron-back-outline"
               color={COLOR.black}
               size={DIMENSIONS.userIconSize}
-              onPress={() => goBack()}
+              onPress={() => backPage(navigation)}
             />
           }
         />
         <View style={{ flexDirection: "row" }}>
           {place_cats.map((place_cat) => (
-              <SmallCard
-                Icon={
-                  <Ionicons
-                    name="bus"
-                    color={COLOR.yellow}
-                    size={DIMENSIONS.iconSize}
-                  />
-                }
-                title={place_cat.name}
-                onPress={() => handleSmallCardClick(place_cat.id)}
-              />
+            <SmallCard
+              Icon={
+                <Ionicons
+                  name="bus"
+                  color={COLOR.yellow}
+                  size={DIMENSIONS.iconSize}
+                />
+              }
+              title={place_cat.name}
+              onPress={() => handleSmallCardClick(place_cat.id)}
+            />
           ))}
         </View>
       </View>
@@ -96,4 +91,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect (mapStateToProps, mapDispatchToProps) (Place_catList);
+export default connect(mapStateToProps, mapDispatchToProps)(Place_catList);

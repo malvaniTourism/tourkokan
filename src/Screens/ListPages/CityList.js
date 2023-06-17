@@ -11,14 +11,23 @@ import Loader from "../../Components/Customs/Loader";
 import Header from "../../Components/Common/Header";
 import { setLoader } from "../../Reducers/CommonActions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { backPage, checkLogin, goBackHandler, navigateTo } from "../../Services/CommonMethods";
 
 const CityList = ({ navigation, ...props }) => {
   const [cities, setCities] = useState([]); // State to store cities
   const [error, setError] = useState(null); // State to store error message
 
   useEffect(() => {
-    checkLogin()
+    const backHandler = goBackHandler(navigation)
+    checkLogin(navigation)
     props.setLoader(true);
+    getCities()
+    return () => {
+      backHandler.remove()
+    }
+  }, []);
+
+  const getCities = () => {
     comnGet("v1/cities", props.access_token)
       .then((res) => {
         setCities(res.data.data.data); // Update cities state with response data
@@ -28,24 +37,10 @@ const CityList = ({ navigation, ...props }) => {
         props.setLoader(false);
         setError(error.message); // Update error state with error message
       });
-  }, []);
-
-  const checkLogin = async () => {
-    if (
-      (await AsyncStorage.getItem("access_token")) == null ||
-      (await AsyncStorage.getItem("access_token")) == ""
-    ) {
-      navigation.navigate("Login");
-    }
   }
 
-  // Function to handle SmallCard click
   const handleSmallCardClick = (id) => {
-    navigation.navigate("CityDetails", { id });
-  };
-
-  const goBack = () => {
-    navigation.goBack();
+    navigateTo(navigation, "CityDetails", { id });
   };
 
   return (
@@ -58,23 +53,23 @@ const CityList = ({ navigation, ...props }) => {
               name="chevron-back-outline"
               color={COLOR.black}
               size={DIMENSIONS.userIconSize}
-              onPress={() => goBack()}
+              onPress={() => backPage(navigation)}
             />
           }
         />
         <View style={{ flexDirection: "row" }}>
           {cities.map((city) => (
-              <SmallCard
-                Icon={
-                  <Ionicons
-                    name="bus"
-                    color={COLOR.yellow}
-                    size={DIMENSIONS.iconSize}
-                  />
-                }
-                title={city.name}
-                onPress={() => handleSmallCardClick(city.id)}
-              />
+            <SmallCard
+              Icon={
+                <Ionicons
+                  name="bus"
+                  color={COLOR.yellow}
+                  size={DIMENSIONS.iconSize}
+                />
+              }
+              title={city.name}
+              onPress={() => handleSmallCardClick(city.id)}
+            />
           ))}
         </View>
       </View>
@@ -96,4 +91,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect (mapStateToProps, mapDispatchToProps) (CityList);
+export default connect(mapStateToProps, mapDispatchToProps)(CityList);

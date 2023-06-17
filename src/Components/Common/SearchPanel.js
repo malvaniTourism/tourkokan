@@ -9,6 +9,7 @@ import { comnPost } from "../../Services/Api/CommonServices";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
+import { navigateTo } from "../../Services/CommonMethods";
 
 const SearchPanel = ({ navigation, ...props }) => {
   const [source, setSource] = useState("");
@@ -48,11 +49,11 @@ const SearchPanel = ({ navigation, ...props }) => {
   }
 
   const gotoSearch = (type) => {
-    navigation.navigate("SearchPlace", { type });
+    navigateTo(navigation, "SearchPlace", { type });
   };
 
   const gotoRoutes = () => {
-    navigation.navigate("SearchList");
+    navigateTo(navigation, "SearchList");
   };
 
   const swap = () => {

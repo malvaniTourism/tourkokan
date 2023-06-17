@@ -76,6 +76,12 @@ const styles = StyleSheet.create({
   buttonStyle: {
     width: DIMENSIONS.bannerWidth,
   },
+  alertContainerStyle: {
+    width: DIMENSIONS.bannerWidth - 40,
+  },
+  alertButtonStyle: {
+    width: DIMENSIONS.bannerWidth - 40,
+  },
   titleStyle: {
     color: COLOR.white,
   },

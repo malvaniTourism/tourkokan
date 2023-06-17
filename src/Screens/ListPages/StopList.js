@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { View, ScrollView, Text, TouchableOpacity } from "react-native";
+import { View, ScrollView, Text, TouchableOpacity, Image } from "react-native";
 import SmallCard from "../../Components/Customs/SmallCard";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import { comnGet } from "../../Services/Api/CommonServices";
 import { connect } from "react-redux";
-import { useNavigation } from "@react-navigation/native"; // Import the navigation hook from your navigation library
 import Loader from "../../Components/Customs/Loader";
 import Header from "../../Components/Common/Header";
 import { setLoader } from "../../Reducers/CommonActions";
+import { backPage, navigateTo } from "../../Services/CommonMethods";
+import styles from "./Styles";
+import Path from "../../Services/Api/BaseUrl";
 
 const StopList = ({ navigation, ...props }) => {
   const [stops, setStops] = useState([]); // State to store stops
@@ -19,6 +21,7 @@ const StopList = ({ navigation, ...props }) => {
     props.setLoader(true);
     comnGet("v1/stops", props.access_token)
       .then((res) => {
+        console.log(res.data.data.data.length);
         setStops(res.data.data.data); // Update stops state with response data
         props.setLoader(false);
       })
@@ -28,13 +31,8 @@ const StopList = ({ navigation, ...props }) => {
       });
   }, []);
 
-  // Function to handle SmallCard click
   const handleSmallCardClick = (id) => {
-    navigation.navigate("StopDetails", { id });
-  };
-
-  const goBack = () => {
-    navigation.goBack();
+    navigateTo(navigation, "StopDetails", { id });
   };
 
   return (
@@ -47,23 +45,25 @@ const StopList = ({ navigation, ...props }) => {
               name="chevron-back-outline"
               color={COLOR.black}
               size={DIMENSIONS.userIconSize}
-              onPress={() => goBack()}
+              onPress={() => backPage(navigation)}
             />
           }
         />
-        <View style={{ flexDirection: "row" }}>
-          {stops.map((stop) => (
-              <SmallCard
-                Icon={
-                  <Ionicons
-                    name="bus"
-                    color={COLOR.yellow}
-                    size={DIMENSIONS.iconSize}
-                  />
-                }
-                title={stop.name}
-                onPress={() => handleSmallCardClick(stop.id)}
-              />
+        <View style={styles.cardsWrap}>
+          {stops.map((stop, index) => (
+            <SmallCard
+              style={styles.stopsCard}
+              key={index}
+              Icon={
+                <Image
+                  source={{ uri: Path.API_PATH + stop.icon }}
+                  color={COLOR.yellow}
+                  size={DIMENSIONS.iconSize}
+                />
+              }
+              title={stop.name}
+              onPress={() => handleSmallCardClick(stop.id)}
+            />
           ))}
         </View>
       </View>
@@ -85,4 +85,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect (mapStateToProps, mapDispatchToProps) (StopList);
+export default connect(mapStateToProps, mapDispatchToProps)(StopList);

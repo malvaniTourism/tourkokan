@@ -11,14 +11,23 @@ import Loader from "../../Components/Customs/Loader";
 import styles from "../Styles";
 import Header from "../../Components/Common/Header";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { backPage, checkLogin, goBackHandler, navigateTo } from "../../Services/CommonMethods";
 
 const PlaceList = ({ navigation, ...props }) => {
   const [places, setPlaces] = useState([]); // State to store places
   const [error, setError] = useState(null); // State to store error message
 
   useEffect(() => {
-    checkLogin()
+    const backHandler = goBackHandler(navigation)
+    checkLogin(navigation)
     props.setLoader(true);
+    getPlaces()
+    return () => {
+      backHandler.remove()
+    }
+  }, []);
+
+  const getPlaces = () => {
     comnGet("v1/places", props.access_token)
       .then((res) => {
         setPlaces(res.data.data.data); // Update places state with response data
@@ -28,24 +37,10 @@ const PlaceList = ({ navigation, ...props }) => {
         setError(error.message); // Update error state with error message
         props.setLoader(false);
       });
-  }, []);
-
-  const checkLogin = async () => {
-    if (
-      (await AsyncStorage.getItem("access_token")) == null ||
-      (await AsyncStorage.getItem("access_token")) == ""
-    ) {
-      navigation.navigate("Login");
-    }
   }
 
-  // Function to handle SmallCard click
   const handleSmallCardClick = (id) => {
-    navigation.navigate("PlaceDetails", { id }); // Replace 'CityScreen' with the name of your CityScreen component in your navigation stack
-  };
-
-  const goBack = () => {
-    navigation.goBack();
+    navigateTo(navigation, "PlaceDetails", { id }); // Replace 'CityScreen' with the name of your CityScreen component in your navigation stack
   };
 
   return (
@@ -57,7 +52,7 @@ const PlaceList = ({ navigation, ...props }) => {
             name="chevron-back-outline"
             color={COLOR.black}
             size={DIMENSIONS.userIconSize}
-            onPress={() => goBack()}
+            onPress={() => backPage(navigation)}
           />
         }
       />

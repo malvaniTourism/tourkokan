@@ -8,6 +8,7 @@ import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import { Image } from "@rneui/themed";
 import { PngTree } from "../../Assets/Images/pngtree.png";
 import Banner from "../Customs/Banner";
+import { navigateTo } from "../../Services/CommonMethods";
 
 const TopComponent = ({ navigation }) => {
   const [bannerImages, setBannerImages] = useState([
@@ -22,7 +23,7 @@ const TopComponent = ({ navigation }) => {
   };
 
   const openProfile = () => {
-    navigation.navigate("Profile");
+    navigateTo(navigation, "Profile");
   };
 
   return (

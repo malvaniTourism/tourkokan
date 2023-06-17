@@ -11,26 +11,22 @@ import { comnPost } from "../Services/Api/CommonServices";
 import { setLoader } from "../Reducers/CommonActions";
 import Loader from "../Components/Customs/Loader";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { backPage, checkLogin, goBackHandler, navigateTo } from "../Services/CommonMethods";
 
 const SearchList = ({ navigation, ...props }) => {
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    checkLogin();
+    const backHandler = goBackHandler(navigation)
+    checkLogin(navigation)
     searchRoute();
+    return () => {
+      backHandler.remove()
+    }
   }, []);
 
-  const checkLogin = async () => {
-    if (
-      (await AsyncStorage.getItem("access_token")) == null ||
-      (await AsyncStorage.getItem("access_token")) == ""
-    ) {
-      navigation.navigate("Login");
-    }
-  }
-
   const getRoutes = (item) => {
-    navigation.navigate("RoutesList", { item });
+    navigateTo(navigation, "RoutesList", { item });
   };
 
   const searchRoute = () => {
@@ -42,7 +38,7 @@ const SearchList = ({ navigation, ...props }) => {
     comnPost("v1/routes", data)
       .then((res) => {
         if (res.data.success) {
-          setList(res.data.data);
+          setList(res.data.data.data);
           props.setLoader(false);
         } else {
           props.setLoader(false);
@@ -68,21 +64,17 @@ const SearchList = ({ navigation, ...props }) => {
     );
   };
 
-  const goBack = () => {
-    navigation.goBack();
-  };
-
   return (
     <View>
       <Header
-        name={"Search List"}
-        goBack={goBack}
+        name={"Routes"}
+        goBack={() => backPage(navigation)}
         startIcon={
           <Ionicons
             name="chevron-back-outline"
             color={COLOR.black}
             size={DIMENSIONS.userIconSize}
-            onPress={() => goBack()}
+            onPress={() => backPage(navigation)}
           />
         }
       />

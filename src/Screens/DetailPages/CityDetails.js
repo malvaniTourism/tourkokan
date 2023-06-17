@@ -11,14 +11,23 @@ import { setLoader } from "../../Reducers/CommonActions";
 import Loader from "../../Components/Customs/Loader";
 import Header from "../../Components/Common/Header";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { backPage, checkLogin, goBackHandler } from "../../Services/CommonMethods";
 
 const CityDetails = ({ navigation, route, ...props }) => {
     const [city, setCity] = useState([]); // State to store city
     const [error, setError] = useState(null); // State to store error message
 
     useEffect(() => {
-        checkLogin()
+        const backHandler = goBackHandler(navigation)
+        checkLogin(navigation)
         props.setLoader(true);
+        getDetails()
+        return () => {
+            backHandler.remove()
+        }
+    }, []);
+
+    const getDetails = () => {
         comnGet(`v1/city/${route.params.id}`, props.access_token)
             .then((res) => {
                 if (res.data.success) {
@@ -33,20 +42,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
                 setError(error.message); // Update error state with error message
                 props.setLoader(false);
             });
-    }, []);
-
-    const checkLogin = async () => {
-        if (
-            (await AsyncStorage.getItem("access_token")) == null ||
-            (await AsyncStorage.getItem("access_token")) == ""
-        ) {
-            navigation.navigate("Login");
-        }
     }
-
-    const goBack = () => {
-        navigation.goBack();
-    };
 
     return (
         <ScrollView>
@@ -58,7 +54,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
                         name="chevron-back-outline"
                         color={COLOR.black}
                         size={DIMENSIONS.userIconSize}
-                        onPress={() => goBack()}
+                        onPress={() => backPage(navigation)}
                     />
                 }
             />

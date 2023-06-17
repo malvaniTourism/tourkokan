@@ -14,24 +14,20 @@ import {
 import Loader from "../Components/Customs/Loader";
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { checkLogin, goBackHandler, navigateTo } from "../Services/CommonMethods";
 
 const SearchPlace = ({ navigation, route, ...props }) => {
   const [searchValue, setSearchValue] = useState("");
   const [placesList, setPlacesList] = useState([]);
 
   useEffect(() => {
-    checkLogin()
+    const backHandler = goBackHandler(navigation)
+    checkLogin(navigation)
     searchPlace();
-  }, []);
-
-  const checkLogin = async () => {
-    if (
-      (await AsyncStorage.getItem("access_token")) == null ||
-      (await AsyncStorage.getItem("access_token")) == ""
-    ) {
-      navigation.navigate("Login");
+    return () => {
+      backHandler.remove()
     }
-  }
+  }, []);
 
   const searchPlace = (v) => {
     // props.setLoader(true)
@@ -59,7 +55,7 @@ const SearchPlace = ({ navigation, route, ...props }) => {
     } else {
       props.setDestination(place);
     }
-    navigation.navigate("Home");
+    navigateTo(navigation, "Home");
     setSearchValue("");
   };
 

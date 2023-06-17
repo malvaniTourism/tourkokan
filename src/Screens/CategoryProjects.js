@@ -11,25 +11,21 @@ import Loader from "../Components/Customs/Loader";
 import Header from "../Components/Common/Header";
 import { setLoader } from "../Reducers/CommonActions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { backPage, checkLogin, goBackHandler, navigateTo } from "../Services/CommonMethods";
 
 const CategoryProjects = ({ navigation, route, ...props }) => {
   const [projects, setProjects] = useState([]); // State to store Projects
   const [error, setError] = useState(null); // State to store error message
 
   useEffect(() => {
-    checkLogin()
+    const backHandler = goBackHandler(navigation)
+    checkLogin(navigation)
     props.setLoader(true);
     getAllProjects()
-  }, []);
-
-  const checkLogin = async () => {
-    if (
-      (await AsyncStorage.getItem("access_token")) == null ||
-      (await AsyncStorage.getItem("access_token")) == ""
-    ) {
-      navigation.navigate("Login");
+    return () => {
+      backHandler.remove()
     }
-  }
+  }, []);
 
   const getAllProjects = () => {
     comnGet(`v1/category/${route.params.id}/projects`, props.access_token)
@@ -46,11 +42,7 @@ const CategoryProjects = ({ navigation, route, ...props }) => {
 
   // Function to handle SmallCard click
   const handleSmallCardClick = (id) => {
-    navigation.navigate("ProjectDetails", { id });
-  };
-
-  const goBack = () => {
-    navigation.goBack();
+    navigateTo(navigation, "ProjectDetails", { id });
   };
 
   return (
@@ -63,7 +55,7 @@ const CategoryProjects = ({ navigation, route, ...props }) => {
               name="chevron-back-outline"
               color={COLOR.black}
               size={DIMENSIONS.userIconSize}
-              onPress={() => goBack()}
+              onPress={() => backPage(navigation)}
             />
           }
         />

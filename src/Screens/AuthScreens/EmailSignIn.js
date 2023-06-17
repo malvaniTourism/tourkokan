@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, BackHandler } from "react-native";
 import TextField from "../../Components/Customs/TextField";
 import { SignInFields } from "../../Services/Constants/FIELDS";
 import Header from "../../Components/Common/Header";
@@ -14,6 +14,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import FontIcons from "react-native-vector-icons/FontAwesome5";
 import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
+import { navigateTo } from "../../Services/CommonMethods";
 
 const EmailSignIn = ({ navigation, ...props }) => {
   const [email, setEmail] = useState("");
@@ -22,7 +23,9 @@ const EmailSignIn = ({ navigation, ...props }) => {
   const [alertMessage, setAlertMessage] = useState("");
 
   useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => navigateTo(navigation, 'Login'));
     return () => {
+      backHandler.remove();
       setIsAlert(false);
       setAlertMessage("");
     };
@@ -62,7 +65,7 @@ const EmailSignIn = ({ navigation, ...props }) => {
           AsyncStorage.setItem("access_token", res.data.data.access_token);
           props.saveAccess_token(res.data.data.access_token);
           props.setLoader(false);
-          navigation.navigate("Home");
+          navigateTo(navigation, "Home");
         } else {
           setIsAlert(true);
           setAlertMessage(res.data.message);
@@ -75,7 +78,7 @@ const EmailSignIn = ({ navigation, ...props }) => {
   };
 
   const signUpScreen = () => {
-    navigation.navigate("SignUp");
+    navigateTo(navigation, "SignUp");
   };
 
   return (

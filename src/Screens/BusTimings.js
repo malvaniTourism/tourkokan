@@ -5,25 +5,17 @@ import Header from "../Components/Common/Header";
 import COLOR from "../Services/Constants/COLORS";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { backPage, checkLogin, goBackHandler } from "../Services/CommonMethods";
 
 const BusTimings = ({ navigation }) => {
 
   useEffect(() => {
-    checkLogin()
-  }, [])
-
-  const checkLogin = async () => {
-    if (
-      (await AsyncStorage.getItem("access_token")) == null ||
-      (await AsyncStorage.getItem("access_token")) == ""
-    ) {
-      navigation.navigate("Login");
+    const backHandler = goBackHandler(navigation)
+    checkLogin(navigation)
+    return () => {
+      backHandler.remove()
     }
-  }
-
-  const goBack = () => {
-    navigation.goBack();
-  };
+  }, [])
 
   return (
     <View>
@@ -34,7 +26,7 @@ const BusTimings = ({ navigation }) => {
             name="chevron-back-outline"
             color={COLOR.black}
             size={DIMENSIONS.userIconSize}
-            onPress={() => goBack()}
+            onPress={() => backPage(navigation)}
           />
         }
       />

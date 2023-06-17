@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, BackHandler, ToastAndroid } from "react-native";
 import TextField from "../../Components/Customs/TextField";
 import { MobileNo, SignInFields } from "../../Services/Constants/FIELDS";
 import Header from "../../Components/Common/Header";
@@ -15,14 +15,18 @@ import FontIcons from "react-native-vector-icons/FontAwesome5";
 import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import Alert from "../../Components/Customs/Alert";
+import { exitApp, navigateTo } from "../../Services/CommonMethods";
 
 const SignIn = ({ navigation, ...props }) => {
   const [mobile, setMobile] = useState("");
   const [isAlert, setIsAlert] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
+  const [successAlert, setSuccessAlert] = useState(false)
 
   useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => exitApp());
     return () => {
+      backHandler.remove();
       setIsAlert(false);
       setAlertMessage("");
     };
@@ -54,7 +58,7 @@ const SignIn = ({ navigation, ...props }) => {
           setIsAlert(true);
           setAlertMessage(res.data.message);
           props.setLoader(false);
-          navigation.navigate("VerifyOTP", { mobile });
+          setSuccessAlert(true)
         } else {
           if (res.data.message.mobile) {
             setIsAlert(true);
@@ -68,12 +72,17 @@ const SignIn = ({ navigation, ...props }) => {
       });
   };
 
+  const proceed = () => {
+    setIsAlert(false)
+    navigateTo(navigation, "VerifyOTP", { mobile });
+  }
+
   const signUpScreen = () => {
-    navigation.navigate("SignUp");
+    navigateTo(navigation, "SignUp");
   };
 
   const emailLogin = () => {
-    navigation.navigate("EmailSignIn");
+    navigateTo(navigation, "EmailSignIn");
   };
 
   return (
@@ -141,6 +150,8 @@ const SignIn = ({ navigation, ...props }) => {
         <Alert
           alertMessage={alertMessage}
           closeAlert={() => setIsAlert(false)}
+          successAlert={successAlert}
+          proceed={() => proceed()}
         />
       )}
     </View>

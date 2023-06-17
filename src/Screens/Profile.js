@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, BackHandler } from "react-native";
 import Header from "../Components/Common/Header";
 import COLOR from "../Services/Constants/COLORS";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
@@ -13,14 +13,23 @@ import { setLoader } from "../Reducers/CommonActions";
 import { Image } from "@rneui/themed";
 import styles from "./Styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { checkLogin, backPage, goBackHandler, navigateTo } from "../Services/CommonMethods";
 
 const Profile = ({ navigation, ...props }) => {
-  const [profile, setProfile] = useState([]); // State to store places
-  const [error, setError] = useState(null); // State to store error message
+  const [profile, setProfile] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    checkLogin();
+    const backHandler = goBackHandler(navigation)
+    checkLogin(navigation)
     props.setLoader(true);
+    getUserProfile();
+    return () => {
+      backHandler.remove()
+    }
+  }, []);
+
+  const getUserProfile = () => {
     comnGet("v1/user-profile", props.access_token)
       .then((res) => {
         console.log('profile daat-- ', res.data.data);
@@ -31,38 +40,23 @@ const Profile = ({ navigation, ...props }) => {
         setError(error.message); // Update error state with error message
         props.setLoader(false);
       });
-  }, []);
-
-  const checkLogin = async () => {
-    if (
-      (await AsyncStorage.getItem("access_token")) == null ||
-      (await AsyncStorage.getItem("access_token")) == ""
-    ) {
-      navigation.navigate("Login");
-    }
   }
-
-  const goBack = () => {
-    navigation.goBack();
-  };
 
   const handleLogout = () => {
     props.setLoader(true);
-    // Call your logout API here
-    // For example:
     comnPost("v1/logout")
       .then((res) => {
         if (res.data.success) {
           props.setLoader(false);
           AsyncStorage.clear()
-          navigation.navigate("Login");
+          navigateTo(navigation, "Login");
         }
-        // Do something after successful logout, such as clearing your access_token from state
       })
       .catch((error) => {
         props.setLoader(false);
       });
   };
+
   return (
     <View>
       <Header
@@ -72,7 +66,7 @@ const Profile = ({ navigation, ...props }) => {
           <Ionicons
             name="chevron-back-outline"
             size={24}
-            onPress={() => goBack()}
+            onPress={() => backPage(navigation)}
             color={'#fff'}
           />
         }
@@ -101,7 +95,7 @@ const Profile = ({ navigation, ...props }) => {
                 <MaterialIcons
                   name="verified"
                   size={24}
-                  onPress={() => goBack()}
+                  onPress={() => backPage(navigation)}
                   color={'#3086e3'}
                 />
               </View>

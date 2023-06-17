@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, BackHandler } from "react-native";
 import TextField from "../../Components/Customs/TextField";
 import { OTP, SignInFields } from "../../Services/Constants/FIELDS";
 import Header from "../../Components/Common/Header";
@@ -21,6 +21,7 @@ import {
   useOtpVerify,
 } from "react-native-otp-verify";
 import Alert from "../../Components/Customs/Alert";
+import { navigateTo } from "../../Services/CommonMethods";
 
 const VerifyOTP = ({ navigation, route, ...props }) => {
   const [otp, setOtp] = useState(1234);
@@ -30,9 +31,11 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
   const [alertMessage, setAlertMessage] = useState("");
 
   useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => navigateTo(navigation, 'Login'));
     // setInterval(() => timer(), 1000);
     startListeningForOtp();
     return () => {
+      backHandler.remove();
       setIsAlert(false);
       setAlertMessage("");
     };
@@ -58,7 +61,7 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
           AsyncStorage.setItem("access_token", res.data.data.access_token);
           props.saveAccess_token(res.data.data.access_token);
           props.setLoader(false);
-          navigation.navigate("Home");
+          navigateTo(navigation, "Home");
         } else {
           setIsAlert(true);
           setAlertMessage(res.data.message);
@@ -115,7 +118,9 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
 
   return (
     <View style={{ alignItems: "center" }}>
-      <Header name={"Verify OTP"} style={{ marginBottom: 50 }} />
+      <Header name={"Verify OTP"} style={{ marginBottom: 50 }}
+        startIcon={<></>}
+      />
       <Loader />
       <FontIcons
         name="user-circle"
@@ -155,11 +160,11 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
           handleChange={(code) => {
             setOtp(code);
           }}
-          // onCodeChanged={code => { this.setState({ otp: code }) }}
-          // autoFocusOnLoad
-          // codeInputFieldStyle={styles.underlineStyleBase}
-          // codeInputHighlightStyle={styles.underlineStyleHighLighted}
-          // onCodeFilled = {(code => this.setState({otp: code}))}
+        // onCodeChanged={code => { this.setState({ otp: code }) }}
+        // autoFocusOnLoad
+        // codeInputFieldStyle={styles.underlineStyleBase}
+        // codeInputHighlightStyle={styles.underlineStyleHighLighted}
+        // onCodeFilled = {(code => this.setState({otp: code}))}
         />
       </View>
       <CustomButton

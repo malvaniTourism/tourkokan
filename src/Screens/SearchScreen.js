@@ -1,21 +1,17 @@
 import React, { useEffect } from "react";
 import { View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { checkLogin, goBackHandler } from "../Services/CommonMethods";
 
 const SearchScreen = () => {
 
   useEffect(() => {
-    checkLogin()
-  }, [])
-
-  const checkLogin = async () => {
-    if (
-      (await AsyncStorage.getItem("access_token")) == null ||
-      (await AsyncStorage.getItem("access_token")) == ""
-    ) {
-      navigation.navigate("Login");
+    const backHandler = goBackHandler(navigation)
+    checkLogin(navigation)
+    return () => {
+      backHandler.remove()
     }
-  }
+  }, [])
 
   return <View></View>;
 };

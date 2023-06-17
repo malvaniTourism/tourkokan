@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, BackHandler } from "react-native";
 import { SignUpFields } from "../../Services/Constants/FIELDS";
 import TextField from "../../Components/Customs/TextField";
 import Header from "../../Components/Common/Header";
@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import { setLoader } from "../../Reducers/CommonActions";
 import DropDown from "../../Components/Customs/DropDown";
 import ImagePicker from 'react-native-image-picker';
+import { navigateTo } from "../../Services/CommonMethods";
 
 const SignUp = ({ navigation, ...props }) => {
   const [name, setName] = useState("");
@@ -24,7 +25,15 @@ const SignUp = ({ navigation, ...props }) => {
   const [imageSource, setImageSource] = useState(null);
 
   useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => navigateTo(navigation, 'Login'));
     props.setLoader(true);
+    getRoles()
+    return () => {
+      backHandler.remove()
+    }
+  }, []);
+
+  const getRoles = () => {
     comnGet("v1/roleDD")
       .then((res) => {
         if (res.data.success) {
@@ -37,7 +46,7 @@ const SignUp = ({ navigation, ...props }) => {
       .catch((err) => {
         props.setLoader(false);
       });
-  }, []);
+  }
 
   const setValue = (val, isVal, index) => {
     switch (index) {
@@ -93,7 +102,7 @@ const SignUp = ({ navigation, ...props }) => {
       .then((res) => {
         if (res.data.success) {
           props.setLoader(false);
-          navigation.navigate("Login");
+          navigateTo(navigation, "Login");
         } else if (res.data.message.email) {
           props.setLoader(false);
           setErrorMsg("The email has already been taken.");
@@ -108,7 +117,7 @@ const SignUp = ({ navigation, ...props }) => {
   };
 
   const signInScreen = () => {
-    navigation.navigate("Login");
+    navigateTo(navigation, "Login");
   };
 
   const selectImage = () => {

@@ -4,23 +4,35 @@ import SmallCard from "../../Components/Customs/SmallCard";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
-import { comnGet } from "../../Services/Api/CommonServices";
+import { comnPost } from "../../Services/Api/CommonServices";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native"; // Import the navigation hook from your navigation library
 import Loader from "../../Components/Customs/Loader";
 import Header from "../../Components/Common/Header";
 import { setLoader } from "../../Reducers/CommonActions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import styles from "./Styles";
+import { backPage, checkLogin, goBackHandler, navigateTo } from "../../Services/CommonMethods";
 
 const ProjectList = ({ navigation, ...props }) => {
   const [projects, setProjects] = useState([]); // State to store projects
   const [error, setError] = useState(null); // State to store error message
 
   useEffect(() => {
-    checkLogin()
+    const backHandler = goBackHandler(navigation)
+    checkLogin(navigation)
     props.setLoader(true);
-    comnGet("v1/projects", props.access_token)
+    getProjects()
+    return () => {
+      backHandler.remove()
+    }
+  }, []);
+
+  const getProjects = () => {
+    const data = {}
+    comnPost("v1/projects", data)
       .then((res) => {
+        console.log(res);
         setProjects(res.data.data.data); // Update projects state with response data
         props.setLoader(false);
       })
@@ -28,24 +40,10 @@ const ProjectList = ({ navigation, ...props }) => {
         props.setLoader(false);
         setError(error.message); // Update error state with error message
       });
-  }, []);
-
-  const checkLogin = async () => {
-    if (
-      (await AsyncStorage.getItem("access_token")) == null ||
-      (await AsyncStorage.getItem("access_token")) == ""
-    ) {
-      navigation.navigate("Login");
-    }
   }
 
-  // Function to handle SmallCard click
   const handleSmallCardClick = (id) => {
-    navigation.navigate("ProjectDetails", { id });
-  };
-
-  const goBack = () => {
-    navigation.goBack();
+    navigateTo(navigation, "ProjectDetails", { id });
   };
 
   return (
@@ -58,23 +56,23 @@ const ProjectList = ({ navigation, ...props }) => {
               name="chevron-back-outline"
               color={COLOR.black}
               size={DIMENSIONS.userIconSize}
-              onPress={() => goBack()}
+              onPress={() => backPage(navigation)}
             />
           }
         />
-        <View style={{ flexDirection: "row" }}>
+        <View style={styles.cardsWrap}>
           {projects.map((project) => (
-              <SmallCard
-                Icon={
-                  <Ionicons
-                    name="bus"
-                    color={COLOR.yellow}
-                    size={DIMENSIONS.iconSize}
-                  />
-                }
-                title={project.name}
-                onPress={() => handleSmallCardClick(project.id)}
-              />
+            <SmallCard
+              Icon={
+                <Ionicons
+                  name="bus"
+                  color={COLOR.yellow}
+                  size={DIMENSIONS.iconSize}
+                />
+              }
+              title={project.name}
+              onPress={() => handleSmallCardClick(project.id)}
+            />
           ))}
         </View>
       </View>
@@ -96,4 +94,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect (mapStateToProps, mapDispatchToProps) (ProjectList);
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectList);

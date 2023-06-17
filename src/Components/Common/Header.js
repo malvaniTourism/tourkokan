@@ -9,7 +9,7 @@ const Header = ({ startIcon, name, endIcon, style, Component }) => {
   return (
     <View style={[styles.headerMain, style]}>
       {startIcon && <View style={{ flex: 1, marginLeft: 7 }}>{startIcon}</View>}
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 2 }}>
         <Text style={styles.headerText}>{name}</Text>
         {Component && Component}
       </View>

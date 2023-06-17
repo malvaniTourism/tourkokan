@@ -8,22 +8,18 @@ import COLOR from "../Services/Constants/COLORS";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
 import RouteLine from "../Components/Customs/RouteLine";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { backPage, checkLogin, goBackHandler, navigateTo } from "../Services/CommonMethods";
 
 const RoutesList = ({ navigation, route }) => {
   const [list, setList] = useState(route.params.item.route_stops);
 
   useEffect(() => {
-    checkLogin()
-  }, []);
-
-  const checkLogin = async () => {
-    if (
-      (await AsyncStorage.getItem("access_token")) == null ||
-      (await AsyncStorage.getItem("access_token")) == ""
-    ) {
-      navigation.navigate("Login");
+    const backHandler = goBackHandler(navigation)
+    checkLogin(navigation)
+    return () => {
+      backHandler.remove()
     }
-  }
+  }, []);
 
   const renderItem = ({ item }) => {
     return (
@@ -37,25 +33,21 @@ const RoutesList = ({ navigation, route }) => {
     );
   };
 
-  const goBack = () => {
-    navigation.goBack();
-  };
-
   const showTiming = () => {
-    navigation.navigate("BusTimings");
+    navigateTo(navigation, "BusTimings");
   };
 
   return (
     <View>
       <Header
         name={route.params.item.name}
-        goBack={goBack}
+        goBack={() => backPage(navigation)}
         startIcon={
           <Ionicons
             name="bus"
             color={COLOR.black}
             size={DIMENSIONS.userIconSize}
-            onPress={() => goBack()}
+            onPress={() => backPage(navigation)}
           />
         }
         endIcon={

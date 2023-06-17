@@ -23,6 +23,7 @@ const PlaceDetails = lazy(() => import("../Screens/DetailPages/PlaceDetails"));
 const ProjectDetails = lazy(() => import("../Screens/DetailPages/ProjectDetails"));
 const StopDetails = lazy(() => import("../Screens/DetailPages/StopDetails"));
 const SearchPlace = lazy(() => import("../Screens/SearchPlace"));
+const MapScreen = lazy(() => import("../Screens/MapScreen"));
 
 const Stack = createNativeStackNavigator();
 
@@ -77,6 +78,7 @@ const StackNavigator = () => {
           <Stack.Screen name="ProjectDetails" component={ProjectDetails} />
           <Stack.Screen name="StopDetails" component={StopDetails} />
           <Stack.Screen name="SearchPlace" component={SearchPlace} />
+          <Stack.Screen name="MapScreen" component={MapScreen} />
           {/* <Stack.Screen name="Invite" component={Invite} /> */}
           {/* <Stack.Screen name="Feed" component={Feed} /> */}
         </Stack.Group>

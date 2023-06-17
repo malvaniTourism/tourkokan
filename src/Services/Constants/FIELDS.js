@@ -123,11 +123,11 @@ export const Destination = [
   },
 ];
 
-export const BusNo = [
+export const CityName = [
   {
-    name: "Bus Number",
-    placeholder: "Search by Bus Name or Number",
-    type: "number",
+    name: "City Name",
+    placeholder: "Search by City Name",
+    type: "text",
     length: 50,
     required: true,
     disabled: false,

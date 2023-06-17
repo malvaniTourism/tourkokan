@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { View, Text, ScrollView, LogBox, Image } from "react-native";
+import { View, Text, ScrollView, LogBox, Image, BackHandler, ToastAndroid } from "react-native";
 import SearchPanel from "../Components/Common/SearchPanel";
 import TopComponent from "../Components/Common/TopComponent";
 import Banner from "../Components/Customs/Banner";
 import SearchBar from "../Components/Customs/Search";
 import SmallCard from "../Components/Customs/SmallCard";
-import { BusNo } from "../Services/Constants/FIELDS";
+import { CityName } from "../Services/Constants/FIELDS";
 import styles from "./Styles";
 import COLOR from "../Services/Constants/COLORS";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
@@ -18,6 +18,7 @@ import SplashScreen from "react-native-splash-screen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Path from "../Services/Api/BaseUrl";
 import CustomButton from "../Components/Customs/Button";
+import { exitApp, navigateTo } from "../Services/CommonMethods";
 
 const HomeScreen = ({ navigation, ...props }) => {
     const [searchValue, setSearchValue] = useState("");
@@ -27,16 +28,11 @@ const HomeScreen = ({ navigation, ...props }) => {
     const [stops, setStops] = useState([]);
     const [place_category, setPlace_category] = useState([]);
     const [places, setPlaces] = useState([]);
-
-    const [error, setError] = useState(null); // State to store error message
-
-    // const categories = [
-    //     { name: 'Category 1', icon: 'heart' },
-    //     { name: 'Category 2', icon: 'book' },
-    //     { name: 'Category 3', icon: 'camera' },
-    // ];
+    const [routes, setRoutes] = useState([])
+    const [error, setError] = useState(null);
 
     useEffect(() => {
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', () => exitApp());
         if (props.access_token) {
             callLandingPageAPI();
         }
@@ -44,6 +40,9 @@ const HomeScreen = ({ navigation, ...props }) => {
         saveToken();
         SplashScreen.hide();
         props.setLoader(false);
+        return () => {
+            backHandler.remove();
+        };
     }, [props.access_token]);
 
     const saveToken = async () => {
@@ -52,15 +51,20 @@ const HomeScreen = ({ navigation, ...props }) => {
             (await AsyncStorage.getItem("access_token")) == null ||
             (await AsyncStorage.getItem("access_token")) == ""
         ) {
-            navigation.navigate("Login");
+            navigateTo(navigation, "Login");
         }
     };
 
     const searchPlace = (val) => {
         setSearchValue(val);
+        const data = {
+            string: val,
+            table_name: "projects"
+        }
         if (searchValue.length > 2) {
-            comnPost("search", data)
+            comnPost("v1/search", data)
                 .then((res) => {
+                    console.log(res.data.data.data);
                 })
                 .catch((err) => {
                 });
@@ -77,6 +81,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                 setStops(res.data.data.stops);
                 setPlace_category(res.data.data.place_category);
                 setPlaces(res.data.data.places);
+                setRoutes(res.data.data.routes)
                 props.setLoader(false);
             })
             .catch((error) => {
@@ -86,12 +91,18 @@ const HomeScreen = ({ navigation, ...props }) => {
     };
 
     const handleSmallCardClick = (page, id, name) => {
-        navigation.navigate(page, { id, name });
+        navigateTo(navigation, page, { id, name });
     };
 
     const showMore = (page) => {
         console.log('page - - ', page);
-        navigation.navigate(page);
+        navigateTo(navigation, page);
+    }
+
+    const onKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            console.log('enter');
+        }
     }
 
     return (
@@ -99,39 +110,57 @@ const HomeScreen = ({ navigation, ...props }) => {
             <View style={{ flex: 1, alignItems: "center" }}>
                 <Loader />
                 <TopComponent navigation={navigation} />
-                {BusNo.map((field, index) => {
+                {CityName.map((field, index) => {
                     return (
                         <SearchBar
                             style={styles.homeSearchBar}
                             placeholder={field.placeholder}
                             value={searchValue}
                             onChangeText={(v) => searchPlace(v)}
+                            onKeyPress={onKeyPress}
                         />
                     );
                 })}
                 <SearchPanel navigation={navigation} />
 
-                <View style={{ flexDirection: "row" }}>
-                    <SmallCard
-                        Icon={
-                            <Ionicons
-                                name="bus"
-                                color={COLOR.yellow}
-                                size={DIMENSIONS.iconSize}
+                {/* <View style={{ flexDirection: "row" }}>
+                    <SmallCard Icon={<Ionicons name="bus" color={COLOR.yellow} size={DIMENSIONS.iconSize} />} title="Chalo Bus" />
+                    <SmallCard Icon={<Ionicons name="bus" color={COLOR.yellow} size={DIMENSIONS.iconSize} />} title="Card Recharge" />
+                </View> */}
+
+                <View style={styles.stopsSectionView}>
+                    <Text style={styles.sectionTitle}>Stops</Text>
+                    <View style={styles.cardsWrap}>
+                        {stops.map((stop, index) => (
+                            <SmallCard
+                                style={styles.stopsCard}
+                                key={index}
+                                Icon={
+                                    <Image
+                                        source={{ uri: Path.API_PATH + stop.icon }}
+                                        color={COLOR.yellow}
+                                        size={DIMENSIONS.iconSize}
+                                    />
+                                }
+                                title={stop.name}
+                                onPress={() => handleSmallCardClick("StopDetails", stop.id)}
                             />
-                        }
-                        title="Chalo Bus"
-                    />
-                    <SmallCard
-                        Icon={
-                            <Ionicons
-                                name="bus"
-                                color={COLOR.yellow}
-                                size={DIMENSIONS.iconSize}
-                            />
-                        }
-                        title="Card Recharge"
-                    />
+                        ))}
+                    </View>
+                    <View style={styles.flexRow}>
+                        <CustomButton
+                            title={'Show More'}
+                            containerStyle={styles.showMore}
+                            onPress={() => showMore('StopList')}
+                            buttonStyle={styles.buttonStyle}
+                        />
+                        <CustomButton
+                            title={'View on MAP'}
+                            containerStyle={styles.showMore}
+                            onPress={() => showMore('MapScreen')}
+                            buttonStyle={styles.buttonStyle}
+                        />
+                    </View>
                 </View>
 
                 <View style={styles.sectionView}>
@@ -158,6 +187,33 @@ const HomeScreen = ({ navigation, ...props }) => {
                         containerStyle={styles.showMore}
                         onPress={() => showMore('ExploreList')}
                     /> */}
+                </View>
+
+                <View style={styles.stopsSectionView}>
+                    <Text style={styles.sectionTitle}>Routes</Text>
+                    <View style={styles.cardsWrap}>
+                        {routes.map((route, index) => (
+                            <SmallCard
+                                style={styles.routesCard}
+                                key={index}
+                                Icon={
+                                    <Image
+                                        source={{ uri: Path.API_PATH + route.icon }}
+                                        color={COLOR.yellow}
+                                        size={DIMENSIONS.iconSize}
+                                    />
+                                }
+                                title={route.name}
+                                onPress={() => handleSmallCardClick("routeDetails", route.id)}
+                            />
+                        ))}
+                    </View>
+                    <CustomButton
+                        title={'Show More'}
+                        containerStyle={styles.showMore}
+                        onPress={() => showMore('SearchList')}
+                        buttonStyle={styles.buttonStyle}
+                    />
                 </View>
 
                 <View style={styles.sectionView}>
@@ -208,32 +264,6 @@ const HomeScreen = ({ navigation, ...props }) => {
                         title={'Show More'}
                         containerStyle={styles.showMore}
                         onPress={() => showMore('ProjectList')}
-                        buttonStyle={styles.buttonStyle}
-                    />
-                </View>
-
-                <View style={styles.sectionView}>
-                    <Text style={styles.sectionTitle}>Stops</Text>
-                    <View style={styles.cardsWrap}>
-                        {stops.map((stop, index) => (
-                            <SmallCard
-                                key={index}
-                                Icon={
-                                    <Image
-                                        source={{ uri: Path.API_PATH + stop.icon }}
-                                        color={COLOR.yellow}
-                                        size={DIMENSIONS.iconSize}
-                                    />
-                                }
-                                title={stop.name}
-                                onPress={() => handleSmallCardClick("StopDetails", stop.id)}
-                            />
-                        ))}
-                    </View>
-                    <CustomButton
-                        title={'Show More'}
-                        containerStyle={styles.showMore}
-                        onPress={() => showMore('StopList')}
                         buttonStyle={styles.buttonStyle}
                     />
                 </View>

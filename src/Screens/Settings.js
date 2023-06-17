@@ -3,21 +3,17 @@ import { View } from "react-native";
 import TopComponent from "../Components/Common/TopComponent";
 import Loader from "../Components/Customs/Loader";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { checkLogin, goBackHandler } from "../Services/CommonMethods";
 
 const Settings = ({ navigation, ...props }) => {
 
   useEffect(() => {
-    checkLogin()
-  }, [])
-
-  const checkLogin = async () => {
-    if (
-      (await AsyncStorage.getItem("access_token")) == null ||
-      (await AsyncStorage.getItem("access_token")) == ""
-    ) {
-      navigation.navigate("Login");
+    const backHandler = goBackHandler(navigation)
+    checkLogin(navigation)
+    return () => {
+      backHandler.remove()
     }
-  }
+  }, [])
 
   return (
     <View>
