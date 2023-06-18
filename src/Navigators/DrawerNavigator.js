@@ -15,7 +15,7 @@ const DrawerNavigator = () => {
       <Drawer.Screen name="Profile" component={Profile} />
       <Drawer.Screen name="Settings" component={Settings} />
       <Drawer.Screen name="All Routes" component={SearchList} />
-      <Drawer.Screen name="Routes Map" component={MapScreen} />
+      {/* <Drawer.Screen name="Routes Map" component={MapScreen} /> */}
     </Drawer.Navigator>
   );
 };

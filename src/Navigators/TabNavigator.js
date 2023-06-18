@@ -1,12 +1,13 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../Screens/HomeScreen";
-import Settings from "../Screens/Settings";
+import MapScreen from "../Screens/MapScreen";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import COLOR from "../Services/Constants/COLORS";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
-import Food from "../Screens/Food";
+import PlaceList from "../Screens/ListPages/PlaceList";
+import ProjectList from "../Screens/ListPages/ProjectList";
 
 const Tab = createBottomTabNavigator();
 
@@ -44,13 +45,13 @@ const TabNavigator = () => {
         }}
       /> */}
       <Tab.Screen
-        name="Food"
-        component={Food}
+        name="PlaceList"
+        component={PlaceList}
         options={{
-          tabBarLabel: "Food",
+          tabBarLabel: "Places",
           tabBarIcon: ({ color, size }) => (
             <Ionicons
-              name="fast-food-outline"
+              name="location-outline"
               color={COLOR.black}
               size={DIMENSIONS.iconSize}
             />
@@ -58,13 +59,28 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Settings"
-        component={Settings}
+        name="ProjectList"
+        component={ProjectList}
         options={{
-          tabBarLabel: "Settings",
+          tabBarLabel: "Bussiness",
           tabBarIcon: ({ color, size }) => (
             <Ionicons
-              name="settings-outline"
+              name="md-person-circle-sharp"
+              color={COLOR.black}
+              size={DIMENSIONS.iconSize}
+            />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="MapScreen"
+        component={MapScreen}
+        options={{
+          tabBarLabel: "Map",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons
+              name="map-outline"
               color={COLOR.black}
               size={DIMENSIONS.iconSize}
             />
