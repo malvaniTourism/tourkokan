@@ -61,6 +61,8 @@ const PlaceDetails = ({ navigation, route, ...props }) => {
                     <View style={styles.placeImageView}>
                         <ImageBackground source={place.image_url} style={styles.placeImage} />
                         <Text>{place.name}</Text>
+                        <Text> {JSON.stringify(place)}</Text>
+
                     </View>
                 </View>
             </View>

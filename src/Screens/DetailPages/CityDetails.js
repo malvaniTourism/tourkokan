@@ -62,7 +62,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
             <View style={{ flex: 1, alignItems: "center" }}>
                 <View style={{ flexDirection: "row" }}>
                     <Text>{city.name}</Text>
-                    <Text> {city.tag_line}</Text>
+                    <Text> {JSON.stringify(city)}</Text>
                     {/* <Text>{city.description}</Text>
                     <Text>{city.projects_count}</Text>
                     <Text>{city.places_count}</Text>              */}

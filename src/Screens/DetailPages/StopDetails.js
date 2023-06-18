@@ -57,6 +57,8 @@ const StopDetails = ({ navigation, route, ...props }) => {
             <View style={{ flex: 1, alignItems: "center" }}>
                 <View style={{ flexDirection: "row" }}>
                     <Text>{stop.name}</Text>
+                    <Text> {JSON.stringify(stop)}</Text>
+
                     {/* <Text> {stop.tag_line}</Text> */}
                     {/* <Text>{city.description}</Text>
                     <Text>{city.stops_count}</Text>

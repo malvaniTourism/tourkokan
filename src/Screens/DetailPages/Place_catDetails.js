@@ -56,6 +56,8 @@ const Place_catDetails = ({ navigation, route, ...props }) => {
             <View style={{ flex: 1, alignItems: "center" }}>
                 <View style={{ flexDirection: "row" }}>
                     <Text>{place_cat.name}</Text>
+                    <Text> {JSON.stringify(place_cat)}</Text>
+
                     {/* <Text> {place_cat.tag_line}</Text> */}
                     {/* <Text>{city.description}</Text>
                     <Text>{city.place_cats_count}</Text>
