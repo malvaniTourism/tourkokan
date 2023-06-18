@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { SearchBar } from "@rneui/themed";
 import styles from "./Styles";
 
-const Search = ({ style, placeholder, onChangeText, value, onKeyPress }) => {
+const Search = ({ style, placeholder, onChangeText, value, onFocus }) => {
   const [search, setSearch] = useState("");
 
   const updateSearch = (search) => {
@@ -21,7 +21,7 @@ const Search = ({ style, placeholder, onChangeText, value, onKeyPress }) => {
         showCancel
         containerStyle={[styles.searchContainer, style]}
         inputContainerStyle={styles.searchInputContainer}
-        onKeyPress={onKeyPress}
+        onFocus={onFocus}
       />
     </View>
   );

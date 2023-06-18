@@ -10,41 +10,45 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import { navigateTo } from "../../Services/CommonMethods";
+import {
+  setDestination,
+  setLoader,
+  setSource,
+} from "../../Reducers/CommonActions";
 
 const SearchPanel = ({ navigation, ...props }) => {
-  const [source, setSource] = useState("");
-  const [destination, setDestination] = useState("");
   const [isValid, setIsValid] = useState(false)
 
   useEffect(() => {
-    setSource(props.source.name);
-    setDestination(props.destination.name);
+    // setSource(props.source.name || "");
+    // setDestination(props.destination.name || "");
+    checkIsValid()
   }, [props]);
 
   const setValue = (v, i, index) => {
     switch (index) {
       case 0:
         setSource(v);
-        checkIsValid()
         break;
       case 1:
         setDestination(v);
-        checkIsValid()
         break;
     }
+    checkIsValid()
   };
 
   const getValue = (i) => {
     switch (i) {
       case 0:
-        return source;
+        return props.source.name;
       case 1:
-        return destination;
+        return props.destination.name;
     }
   };
 
   const checkIsValid = () => {
-    if (source != '' && destination != '') setIsValid(true)
+    console.log(props.source.name, ' == ', props.source);
+    if ((props.source.name) && (props.destination.name)) setIsValid(true)
     else setIsValid(false)
   }
 
@@ -53,13 +57,17 @@ const SearchPanel = ({ navigation, ...props }) => {
   };
 
   const gotoRoutes = () => {
+    props.setSource('')
+    props.setDestination('')
     navigateTo(navigation, "SearchList");
   };
 
   const swap = () => {
     console.log('swap - - -');
-    setSource(destination);
-    setDestination(source)
+    let a = props.source
+    let b = props.destination
+    props.setSource(b);
+    props.setDestination(a)
   }
 
   return (
@@ -84,7 +92,7 @@ const SearchPanel = ({ navigation, ...props }) => {
             />
           );
         })}
-        <MaterialIcons style={styles.swapIcon} name="swap-vert-circle" color={COLOR.themeDarkGreen} size={DIMENSIONS.userIconSize} onPress={swap} />
+        <MaterialIcons style={styles.swapIcon} name="swap-vert-circle" color={isValid ? COLOR.themeDarkGreen : COLOR.grey} size={DIMENSIONS.userIconSize} onPress={isValid ? swap : null} />
       </View>
       <CustomButton
         title={"Search"}
@@ -107,4 +115,18 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(SearchPanel);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setSource: (data) => {
+      dispatch(setSource(data));
+    },
+    setDestination: (data) => {
+      dispatch(setDestination(data));
+    },
+    setLoader: (data) => {
+      dispatch(setLoader(data));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchPanel);

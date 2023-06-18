@@ -16,6 +16,7 @@ const CityDetails = lazy(() => import("../Screens/DetailPages/CityDetails"));
 const CityList = lazy(() => import("../Screens/ListPages/CityList"));
 const PlaceList = lazy(() => import("../Screens/ListPages/PlaceList"));
 const ProjectList = lazy(() => import("../Screens/ListPages/ProjectList"));
+const CityPlaceSearch = lazy(() => import("../Screens/ListPages/CityPlaceSearch"));
 const StopList = lazy(() => import("../Screens/ListPages/StopList"));
 const EmailSignIn = lazy(() => import("../Screens/AuthScreens/EmailSignIn"));
 const VerifyOTP = lazy(() => import("../Screens/AuthScreens/VerifyOTP"));
@@ -79,6 +80,7 @@ const StackNavigator = () => {
           <Stack.Screen name="StopDetails" component={StopDetails} />
           <Stack.Screen name="SearchPlace" component={SearchPlace} />
           <Stack.Screen name="MapScreen" component={MapScreen} />
+          <Stack.Screen name="CityPlaceSearch" component={CityPlaceSearch} />
           {/* <Stack.Screen name="Invite" component={Invite} /> */}
           {/* <Stack.Screen name="Feed" component={Feed} /> */}
         </Stack.Group>

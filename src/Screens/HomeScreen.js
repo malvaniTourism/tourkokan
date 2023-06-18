@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { View, Text, ScrollView, LogBox, Image, BackHandler, ToastAndroid } from "react-native";
+import { View, Text, ScrollView, LogBox, Image, BackHandler, SafeAreaView, FlatList } from "react-native";
+import { ListItem } from "@rneui/themed";
 import SearchPanel from "../Components/Common/SearchPanel";
 import TopComponent from "../Components/Common/TopComponent";
 import Banner from "../Components/Customs/Banner";
@@ -30,6 +31,7 @@ const HomeScreen = ({ navigation, ...props }) => {
     const [places, setPlaces] = useState([]);
     const [routes, setRoutes] = useState([])
     const [error, setError] = useState(null);
+    const [cityList, setCityList] = useState([])
 
     useEffect(() => {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', () => exitApp());
@@ -52,22 +54,6 @@ const HomeScreen = ({ navigation, ...props }) => {
             (await AsyncStorage.getItem("access_token")) == ""
         ) {
             navigateTo(navigation, "Login");
-        }
-    };
-
-    const searchPlace = (val) => {
-        setSearchValue(val);
-        const data = {
-            string: val,
-            table_name: "projects"
-        }
-        if (searchValue.length > 2) {
-            comnPost("v1/search", data)
-                .then((res) => {
-                    console.log(res.data.data.data);
-                })
-                .catch((err) => {
-                });
         }
     };
 
@@ -99,10 +85,8 @@ const HomeScreen = ({ navigation, ...props }) => {
         navigateTo(navigation, page);
     }
 
-    const onKeyPress = (e) => {
-        if (e.key === 'Enter') {
-            console.log('enter');
-        }
+    const onSearchFocus = () => {
+        navigateTo(navigation, "CityPlaceSearch")
     }
 
     return (
@@ -116,8 +100,8 @@ const HomeScreen = ({ navigation, ...props }) => {
                             style={styles.homeSearchBar}
                             placeholder={field.placeholder}
                             value={searchValue}
-                            onChangeText={(v) => searchPlace(v)}
-                            onKeyPress={onKeyPress}
+                            // onChangeText={(v) => searchPlace(v)}
+                            onFocus={onSearchFocus}
                         />
                     );
                 })}

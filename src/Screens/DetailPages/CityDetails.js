@@ -30,6 +30,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
     const getDetails = () => {
         comnGet(`v1/city/${route.params.id}`, props.access_token)
             .then((res) => {
+                console.log(res.data);
                 if (res.data.success) {
                     setCity(res.data.data);
                     props.setLoader(false);
