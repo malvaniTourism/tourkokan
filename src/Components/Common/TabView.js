@@ -1,44 +1,65 @@
-import React, { useState } from 'react'
-import { SafeAreaView, StyleSheet, View } from 'react-native'
-import MaterialTabs from 'react-native-material-tabs';
-import styles from './Styles';
-import { Text } from '@rneui/base';
-
 const TabView = ({ data }) => {
     const [selectedTab, setSelectedTab] = useState(0);
+
+    const handleTabChange = (index) => {
+        setSelectedTab(index);
+    };
+
+    const renderPlaceItem = ({ item }) => (
+        <Card style={styles.placeCard}>
+            <Text>{item.name}</Text>
+            {/* Render additional place details */}
+        </Card>
+    );
+
+    const renderEmptyPlace = () => (
+        <View style={styles.emptyPlace}>
+            <Text>No places available in this category</Text>
+        </View>
+    );
+
+    const renderPlaceGrid = () => {
+        if (!data || data.length === 0) {
+            return <Text>No data available</Text>;
+        }
+
+        const selectedCategory = data[selectedTab];
+        if (!selectedCategory || !selectedCategory.places) {
+            return renderEmptyPlace();
+        }
+
+        const places = selectedCategory.places;
+        if (places.length === 0) {
+            return renderEmptyPlace();
+        }
+
+        return (
+            <FlatList
+                data={places}
+                renderItem={renderPlaceItem}
+                keyExtractor={(item, index) => index.toString()}
+                numColumns={2}
+                columnWrapperStyle={styles.columnWrapper}
+            />
+        );
+    };
 
     return (
         <SafeAreaView style={styles.tabView}>
             <MaterialTabs
-                items={['One', 'Two', 'Three', 'Four', 'Five']}
+                items={data.map((category) => category.name)}
                 selectedIndex={selectedTab}
-                onChange={setSelectedTab}
+                onChange={handleTabChange}
                 barColor="#1fbcd2"
                 indicatorColor="#fffe94"
                 activeTextColor="white"
             />
 
-            {
-                selectedTab == 0 ?
-                    <View>
-                        <Text>View 1</Text>
-                    </View>
-                    :
-                    selectedTab == 1 ?
-                        <View>
-                            <Text>View 2</Text>
-                        </View>
-                        :
-                        selectedTab == 2 ?
-                            <View></View>
-                            :
-                            selectedTab == 3 ?
-                                <View></View>
-                                :
-                                <View></View>
-            }
+            <Card style={styles.parentCard}>
+                <View style={styles.tabContent}>{renderPlaceGrid()}</View>
+            </Card>
         </SafeAreaView>
-    )
-}
+    );
+};
 
-export default TabView
+export default TabView;

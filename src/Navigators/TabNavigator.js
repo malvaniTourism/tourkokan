@@ -8,6 +8,11 @@ import COLOR from "../Services/Constants/COLORS";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
 import PlaceList from "../Screens/ListPages/PlaceList";
 import ProjectList from "../Screens/ListPages/ProjectList";
+import RoutesList from "../Screens/RoutesList";
+import SearchList from "../Screens/SearchList";
+import { PngTree } from "../../Assets/Images/pngtree.png";
+import { Image } from "@rneui/themed";
+import { SvgUri } from 'react-native-svg'; // Import SvgUri from react-native-svg
 
 const Tab = createBottomTabNavigator();
 
@@ -50,7 +55,12 @@ const TabNavigator = () => {
         options={{
           tabBarLabel: "Places",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons
+            // <Ionicons
+            //   name="location-outline"
+            //   color={COLOR.black}
+            //   size={DIMENSIONS.iconSize}
+            // />
+             <Ionicons
               name="location-outline"
               color={COLOR.black}
               size={DIMENSIONS.iconSize}
@@ -58,6 +68,22 @@ const TabNavigator = () => {
           ),
         }}
       />
+
+      <Tab.Screen
+        name="Routes"
+        component={SearchList}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons
+              name="md-bus"
+              color={COLOR.black}
+              size={DIMENSIONS.iconSize + 15}
+            />
+          ),
+          tabBarLabel: () => null,
+        }}
+      />
+
       <Tab.Screen
         name="ProjectList"
         component={ProjectList}

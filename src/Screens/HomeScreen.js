@@ -253,8 +253,8 @@ const HomeScreen = ({ navigation, ...props }) => {
                     />
                 </View>
 
-                <TabView data={place_category} />
-
+                {/* <TabView data={place_category} /> */}
+{/* 
                 <View style={styles.sectionView}>
                     <Text style={styles.sectionTitle}>Place Category</Text>
                     <View style={styles.cardsWrap}>
@@ -279,7 +279,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                         onPress={() => showMore('Place_catList')}
                         buttonStyle={styles.buttonStyle}
                     />
-                </View>
+                </View> */}
 
                 <View style={styles.sectionView}>
                     <Text style={styles.sectionTitle}>Places</Text>
