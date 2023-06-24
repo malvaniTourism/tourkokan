@@ -20,6 +20,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Path from "../Services/Api/BaseUrl";
 import CustomButton from "../Components/Customs/Button";
 import { exitApp, navigateTo } from "../Services/CommonMethods";
+import TabView from "../Components/Common/TabView";
 
 const HomeScreen = ({ navigation, ...props }) => {
     const [searchValue, setSearchValue] = useState("");
@@ -251,6 +252,8 @@ const HomeScreen = ({ navigation, ...props }) => {
                         buttonStyle={styles.buttonStyle}
                     />
                 </View>
+
+                <TabView data={place_category} />
 
                 <View style={styles.sectionView}>
                     <Text style={styles.sectionTitle}>Place Category</Text>

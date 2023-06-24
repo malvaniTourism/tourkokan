@@ -80,6 +80,9 @@ const styles = StyleSheet.create({
     top: '42%',
     left: '44%'
   },
+  tabView: {
+    width: DIMENSIONS.screenWidth
+  },
 });
 
 export default styles;
