@@ -14,12 +14,16 @@ import { Image } from "@rneui/themed";
 import styles from "../Styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { backPage, checkLogin, goBackHandler } from "../../Services/CommonMethods";
+import CityCard from "../../Components/Cards/CityCard";
+// import SkeletonContent from 'react-native-skeleton-content';
 
 const PlaceDetails = ({ navigation, route, ...props }) => {
     const [place, setPlace] = useState([]); // State to store city
     const [error, setError] = useState(null); // State to store error message
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
+        props.setLoader(true);
         const backHandler = goBackHandler(navigation)
         checkLogin(navigation)
         props.setLoader(true);
@@ -34,38 +38,63 @@ const PlaceDetails = ({ navigation, route, ...props }) => {
             .then((res) => {
                 console.log('log ', res.data.data);
                 setPlace(res.data.data); // Update city state with response data
+                setIsLoading(false)
                 props.setLoader(false);
             })
             .catch((error) => {
                 setError(error.message); // Update error state with error message
+                setIsLoading(false)
                 props.setLoader(false);
             });
     }
 
     return (
         <ScrollView>
-            <Loader />
-            <Header
-                name={place.name}
-                startIcon={
-                    <Ionicons
-                        name="chevron-back-outline"
-                        color={COLOR.black}
-                        size={DIMENSIONS.userIconSize}
-                        onPress={() => backPage(navigation)}
-                    />
-                }
-            />
-            <View style={{ flex: 1 }}>
-                <View style={styles.center}>
-                    <View style={styles.placeImageView}>
-                        <ImageBackground source={place.image_url} style={styles.placeImage} />
-                        <Text>{place.name}</Text>
-                        <Text> {JSON.stringify(place)}</Text>
+            {
+                isLoading ?
+                    <Loader />
+                    :
+                    <View>
+                        {/* <SkeletonContent containerStyle={{flex: 1, width: 300}}
+            animationDirection="horizontalLeft"
+            layout={[
+            { width: 220, height: 20, marginBottom: 6 },
+            { width: 180, height: 20, marginBottom: 6 },
+            ]} isLoading={true}> */}
+                        <Header
+                            name={'Place'}
+                            startIcon={
+                                <Ionicons
+                                    name="chevron-back-outline"
+                                    color={COLOR.black}
+                                    size={DIMENSIONS.userIconSize}
+                                    onPress={() => backPage(navigation)}
+                                />
+                            }
+                        />
+                        <View style={{ flex: 1, padding: 10 }}>
+                            <View style={styles.placeImageView}>
+                                <ImageBackground source={place.image_url} style={styles.placeImage} />
+                                <Text style={styles.detailTitle}>{place.name}</Text>
+                            </View>
+                            <Text>{place.description}</Text>
+                            <Text>rating: {place.rating}</Text>
+                            <Text>visitors: {place.visitors_count}</Text>
+                            <Text>uploads: {place.photos_count}</Text>
+                            <Text>comments: {place.comments_count}</Text>
+                            <Text>{place.latitude}</Text>
+                            <Text>{place.longitude}</Text>
+                            <Text>social: {JSON.stringify(place.social_media)}</Text>
+                            <Text>contact: {JSON.stringify(place.contact_details)}</Text>
 
+                            <View style={styles.sectionView}>
+                                <Text style={styles.sectionTitle}>Located In:</Text>
+                                <CityCard data={place.city} />
+                            </View>
+                            {/* <Text style={{marginTop: 50}}> {JSON.stringify(place)}</Text> */}
+                        </View>
                     </View>
-                </View>
-            </View>
+            }
         </ScrollView>
     );
 };
@@ -73,6 +102,7 @@ const PlaceDetails = ({ navigation, route, ...props }) => {
 const mapStateToProps = (state) => {
     return {
         access_token: state.commonState.access_token,
+        isLoading: state.commonState.isLoading,
     };
 };
 

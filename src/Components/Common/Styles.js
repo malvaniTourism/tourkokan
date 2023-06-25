@@ -83,6 +83,13 @@ const styles = StyleSheet.create({
   tabView: {
     width: DIMENSIONS.screenWidth
   },
+  tabPanel: {
+    alignSelf: 'center',
+    width: DIMENSIONS.screenWidth - 10
+  },
+  placeCard: {
+
+  }
 });
 
 export default styles;

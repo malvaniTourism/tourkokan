@@ -33,6 +33,7 @@ const HomeScreen = ({ navigation, ...props }) => {
     const [routes, setRoutes] = useState([])
     const [error, setError] = useState(null);
     const [cityList, setCityList] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', () => exitApp());
@@ -42,7 +43,6 @@ const HomeScreen = ({ navigation, ...props }) => {
         LogBox.ignoreAllLogs();
         saveToken();
         SplashScreen.hide();
-        props.setLoader(false);
         return () => {
             backHandler.remove();
         };
@@ -69,9 +69,11 @@ const HomeScreen = ({ navigation, ...props }) => {
                 setPlace_category(res.data.data.place_category);
                 setPlaces(res.data.data.places);
                 setRoutes(res.data.data.routes)
+                setIsLoading(false)
                 props.setLoader(false);
             })
             .catch((error) => {
+                setIsLoading(false)
                 props.setLoader(false);
                 setError(error.message);
             });
@@ -92,221 +94,188 @@ const HomeScreen = ({ navigation, ...props }) => {
 
     return (
         <ScrollView>
-            <View style={{ flex: 1, alignItems: "center" }}>
-                <Loader />
-                <TopComponent navigation={navigation} />
-                {CityName.map((field, index) => {
-                    return (
-                        <SearchBar
-                            style={styles.homeSearchBar}
-                            placeholder={field.placeholder}
-                            value={searchValue}
-                            // onChangeText={(v) => searchPlace(v)}
-                            onFocus={onSearchFocus}
-                        />
-                    );
-                })}
-                <SearchPanel navigation={navigation} />
+            {
+                isLoading ?
+                    <Loader />
+                    :
+                    <View style={{ flex: 1, alignItems: "center" }}>
+                        <TopComponent navigation={navigation} />
+                        {CityName.map((field, index) => {
+                            return (
+                                <SearchBar
+                                    style={styles.homeSearchBar}
+                                    placeholder={field.placeholder}
+                                    value={searchValue}
+                                    // onChangeText={(v) => searchPlace(v)}
+                                    onFocus={onSearchFocus}
+                                />
+                            );
+                        })}
+                        <SearchPanel navigation={navigation} />
 
-                {/* <View style={{ flexDirection: "row" }}>
-                    <SmallCard Icon={<Ionicons name="bus" color={COLOR.yellow} size={DIMENSIONS.iconSize} />} title="Chalo Bus" />
-                    <SmallCard Icon={<Ionicons name="bus" color={COLOR.yellow} size={DIMENSIONS.iconSize} />} title="Card Recharge" />
-                </View> */}
-
-                <View style={styles.stopsSectionView}>
-                    <Text style={styles.sectionTitle}>Stops</Text>
-                    <View style={styles.cardsWrap}>
-                        {stops.map((stop, index) => (
-                            <SmallCard
-                                style={styles.stopsCard}
-                                key={index}
-                                Icon={
-                                    <Image
-                                        source={{ uri: Path.API_PATH + stop.icon }}
-                                        color={COLOR.yellow}
-                                        size={DIMENSIONS.iconSize}
+                        <View style={styles.stopsSectionView}>
+                            <Text style={styles.sectionTitle}>Stops</Text>
+                            <View style={styles.cardsWrap}>
+                                {stops.map((stop, index) => (
+                                    <SmallCard
+                                        style={styles.stopsCard}
+                                        key={index}
+                                        Icon={
+                                            <Image
+                                                source={{ uri: Path.API_PATH + stop.icon }}
+                                                color={COLOR.yellow}
+                                                size={DIMENSIONS.iconSize}
+                                            />
+                                        }
+                                        title={stop.name}
+                                        onPress={() => handleSmallCardClick("StopDetails", stop.id)}
                                     />
-                                }
-                                title={stop.name}
-                                onPress={() => handleSmallCardClick("StopDetails", stop.id)}
-                            />
-                        ))}
-                    </View>
-                    <View style={styles.flexRow}>
-                        <CustomButton
-                            title={'Show More'}
-                            containerStyle={styles.showMore}
-                            onPress={() => showMore('StopList')}
-                            buttonStyle={styles.buttonStyle}
-                        />
-                        <CustomButton
-                            title={'View on MAP'}
-                            containerStyle={styles.showMore}
-                            onPress={() => showMore('MapScreen')}
-                            buttonStyle={styles.buttonStyle}
-                        />
-                    </View>
-                </View>
+                                ))}
+                            </View>
+                            <View style={styles.flexRow}>
+                                <CustomButton
+                                    title={'Show More'}
+                                    containerStyle={styles.showMore}
+                                    onPress={() => showMore('StopList')}
+                                    buttonStyle={styles.buttonStyle}
+                                />
+                                <CustomButton
+                                    title={'View on MAP'}
+                                    containerStyle={styles.showMore}
+                                    onPress={() => showMore('MapScreen')}
+                                    buttonStyle={styles.buttonStyle}
+                                />
+                            </View>
+                        </View>
 
-                <View style={styles.sectionView}>
-                    <Text style={styles.sectionTitle}>Categories</Text>
-                    <View style={styles.cardsWrap}>
-                        {categories.map((category, index) => (
-                            // <Text>{category.name}</Text>
-                            <SmallCard
-                                key={index}
-                                Icon={
-                                    <Image
-                                        source={{ uri: Path.API_PATH + category.image_url }}
-                                        color={COLOR.yellow}
-                                        size={DIMENSIONS.iconSize}
+                        <View style={styles.sectionView}>
+                            <Text style={styles.sectionTitle}>Categories</Text>
+                            <View style={styles.cardsWrap}>
+                                {categories.map((category, index) => (
+                                    <SmallCard
+                                        key={index}
+                                        Icon={
+                                            <Image
+                                                source={{ uri: Path.API_PATH + category.image_url }}
+                                                color={COLOR.yellow}
+                                                size={DIMENSIONS.iconSize}
+                                            />
+                                        }
+                                        title={category.name}
+                                        onPress={() => handleSmallCardClick("CategoryProjects", category.id, category.name)}
                                     />
-                                }
-                                title={category.name}
-                                onPress={() => handleSmallCardClick("CategoryProjects", category.id, category.name)}
-                            />
-                        ))}
-                    </View>
-                    {/* <CustomButton
-                        title={'Show More'}
-                        containerStyle={styles.showMore}
-                        onPress={() => showMore('ExploreList')}
-                    /> */}
-                </View>
+                                ))}
+                            </View>
+                        </View>
 
-                <View style={styles.stopsSectionView}>
-                    <Text style={styles.sectionTitle}>Routes</Text>
-                    <View style={styles.cardsWrap}>
-                        {routes.map((route, index) => (
-                            <SmallCard
-                                style={styles.routesCard}
-                                key={index}
-                                Icon={
-                                    <Image
-                                        source={{ uri: Path.API_PATH + route.icon }}
-                                        color={COLOR.yellow}
-                                        size={DIMENSIONS.iconSize}
+                        <View style={styles.stopsSectionView}>
+                            <Text style={styles.sectionTitle}>Routes</Text>
+                            <View style={styles.cardsWrap}>
+                                {routes.map((route, index) => (
+                                    <SmallCard
+                                        style={styles.routesCard}
+                                        key={index}
+                                        Icon={
+                                            <Image
+                                                source={{ uri: Path.API_PATH + route.icon }}
+                                                color={COLOR.yellow}
+                                                size={DIMENSIONS.iconSize}
+                                            />
+                                        }
+                                        title={route.name}
+                                        onPress={() => handleSmallCardClick("routeDetails", route.id)}
                                     />
-                                }
-                                title={route.name}
-                                onPress={() => handleSmallCardClick("routeDetails", route.id)}
+                                ))}
+                            </View>
+                            <CustomButton
+                                title={'Show More'}
+                                containerStyle={styles.showMore}
+                                onPress={() => showMore('SearchList')}
+                                buttonStyle={styles.buttonStyle}
                             />
-                        ))}
-                    </View>
-                    <CustomButton
-                        title={'Show More'}
-                        containerStyle={styles.showMore}
-                        onPress={() => showMore('SearchList')}
-                        buttonStyle={styles.buttonStyle}
-                    />
-                </View>
+                        </View>
 
-                <View style={styles.sectionView}>
-                    <Text style={styles.sectionTitle}>Cities</Text>
-                    <View style={styles.cardsWrap}>
-                        {cities.map((city, index) => (
-                            <SmallCard
-                                key={index}
-                                Icon={
-                                    <Image
-                                        source={{ uri: Path.API_PATH + city.image_url }}
-                                        color={COLOR.yellow}
-                                        size={DIMENSIONS.iconSize}
+                        <View style={styles.sectionView}>
+                            <Text style={styles.sectionTitle}>Cities</Text>
+                            <View style={styles.cardsWrap}>
+                                {cities.map((city, index) => (
+                                    <SmallCard
+                                        key={index}
+                                        Icon={
+                                            <Image
+                                                source={{ uri: Path.API_PATH + city.image_url }}
+                                                color={COLOR.yellow}
+                                                size={DIMENSIONS.iconSize}
+                                            />
+                                        }
+                                        title={city.name}
+                                        onPress={() => handleSmallCardClick("CityDetails", city.id)}
                                     />
-                                }
-                                title={city.name}
-                                onPress={() => handleSmallCardClick("CityDetails", city.id)}
+                                ))}
+                            </View>
+                            <CustomButton
+                                title={'Show More'}
+                                containerStyle={styles.showMore}
+                                onPress={() => showMore('CityList')}
+                                buttonStyle={styles.buttonStyle}
                             />
-                        ))}
-                    </View>
-                    <CustomButton
-                        title={'Show More'}
-                        containerStyle={styles.showMore}
-                        onPress={() => showMore('CityList')}
-                        buttonStyle={styles.buttonStyle}
-                    />
-                </View>
+                        </View>
 
-                <View style={styles.sectionView}>
-                    <Text style={styles.sectionTitle}>Projects</Text>
-                    <View style={styles.cardsWrap}>
-                        {projects.map((project, index) => (
-                            <SmallCard
-                                key={index}
-                                Icon={
-                                    <Image
-                                        source={{ uri: Path.API_PATH + project.image_url }}
-                                        color={COLOR.yellow}
-                                        size={DIMENSIONS.iconSize}
+                        <View style={styles.sectionView}>
+                            <Text style={styles.sectionTitle}>Projects</Text>
+                            <View style={styles.cardsWrap}>
+                                {projects.map((project, index) => (
+                                    <SmallCard
+                                        key={index}
+                                        Icon={
+                                            <Image
+                                                source={{ uri: Path.API_PATH + project.image_url }}
+                                                color={COLOR.yellow}
+                                                size={DIMENSIONS.iconSize}
+                                            />
+                                        }
+                                        title={project.name}
+                                        onPress={() => handleSmallCardClick("ProjectDetails", project.id)}
                                     />
-                                }
-                                title={project.name}
-                                onPress={() => handleSmallCardClick("ProjectDetails", project.id)}
+                                ))}
+                            </View>
+                            <CustomButton
+                                title={'Show More'}
+                                containerStyle={styles.showMore}
+                                onPress={() => showMore('ProjectList')}
+                                buttonStyle={styles.buttonStyle}
                             />
-                        ))}
-                    </View>
-                    <CustomButton
-                        title={'Show More'}
-                        containerStyle={styles.showMore}
-                        onPress={() => showMore('ProjectList')}
-                        buttonStyle={styles.buttonStyle}
-                    />
-                </View>
+                        </View>
 
-            {place_category[0] && <TabView data={place_category} />}
-{/* 
-                <View style={styles.sectionView}>
-                    <Text style={styles.sectionTitle}>Place Category</Text>
-                    <View style={styles.cardsWrap}>
-                        {place_category.map((place_cat, index) => (
-                            <SmallCard
-                                key={index}
-                                Icon={
-                                    <Image
-                                        source={{ uri: Path.API_PATH + place_cat.icon }}
-                                        color={COLOR.yellow}
-                                        size={DIMENSIONS.iconSize}
-                                    />
-                                }
-                                title={place_cat.name}
-                                onPress={() => handleSmallCardClick("Place_catDetails", place_cat.id)}
-                            />
-                        ))}
-                    </View>
-                    <CustomButton
-                        title={'Show More'}
-                        containerStyle={styles.showMore}
-                        onPress={() => showMore('Place_catList')}
-                        buttonStyle={styles.buttonStyle}
-                    />
-                </View> */}
+                        <TabView data={place_category} />
 
-                <View style={styles.sectionView}>
-                    <Text style={styles.sectionTitle}>Places</Text>
-                    <View style={styles.cardsWrap}>
-                        {places.map((place, index) => (
-                            <SmallCard
-                                key={index}
-                                Icon={
-                                    <Image
-                                        source={{ uri: Path.API_PATH + place.icon }}
-                                        color={COLOR.yellow}
-                                        size={DIMENSIONS.iconSize}
+                        <View style={styles.sectionView}>
+                            <Text style={styles.sectionTitle}>Places</Text>
+                            <View style={styles.cardsWrap}>
+                                {places.map((place, index) => (
+                                    <SmallCard
+                                        key={index}
+                                        Icon={
+                                            <Image
+                                                source={{ uri: Path.API_PATH + place.icon }}
+                                                color={COLOR.yellow}
+                                                size={DIMENSIONS.iconSize}
+                                            />
+                                        }
+                                        title={place.name}
+                                        onPress={() => handleSmallCardClick("PlaceDetails", place.id)}
                                     />
-                                }
-                                title={place.name}
-                                onPress={() => handleSmallCardClick("PlaceDetails", place.id)}
+                                ))}
+                            </View>
+                            <CustomButton
+                                title={'Show More'}
+                                containerStyle={styles.showMore}
+                                onPress={() => showMore('PlaceList')}
+                                buttonStyle={styles.buttonStyle}
                             />
-                        ))}
+                        </View>
                     </View>
-                    <CustomButton
-                        title={'Show More'}
-                        containerStyle={styles.showMore}
-                        onPress={() => showMore('PlaceList')}
-                        buttonStyle={styles.buttonStyle}
-                    />
-                </View>
-            </View>
+            }
         </ScrollView>
     );
 };

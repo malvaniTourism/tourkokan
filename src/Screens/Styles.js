@@ -12,6 +12,16 @@ const styles = StyleSheet.create({
         top: 240,
         width: DIMENSIONS.bannerWidth
     },
+    placeImageView: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: DIMENSIONS.detailsImage,
+    },
+    detailTitle: {
+        fontSize: DIMENSIONS.headerTextSize,
+        fontWeight: 'bold',
+        color: COLOR.headingColor2
+    },
     sectionView: {
         marginVertical: DIMENSIONS.sectionGap,
         alignItems: "center",

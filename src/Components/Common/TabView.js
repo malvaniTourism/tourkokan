@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, View, FlatList, Dimensions } from 'react-native';
+import { SafeAreaView, View, FlatList } from 'react-native';
 import MaterialTabs from 'react-native-material-tabs';
 import styles from './Styles';
 import { Text, Card } from '@rneui/base';
-
-const windowWidth = Dimensions.get('window').width;
+import COLOR from '../../Services/Constants/COLORS';
 
 const TabView = ({ data }) => {
     const [selectedTab, setSelectedTab] = useState(0);
@@ -55,12 +54,12 @@ const TabView = ({ data }) => {
                 items={data.map((category) => category.name)}
                 selectedIndex={selectedTab}
                 onChange={handleTabChange}
-                barColor="#1fbcd2"
-                indicatorColor="#fffe94"
-                activeTextColor="white"
+                barColor={COLOR.intentColor}
+                indicatorColor={COLOR.headingColor2}
+                activeTextColor={COLOR.yellowLight}
             />
 
-            <Card style={styles.parentCard}>
+            <Card containerStyle={styles.tabPanel}>
                 <View style={styles.tabContent}>{renderPlaceGrid()}</View>
             </Card>
         </SafeAreaView>
