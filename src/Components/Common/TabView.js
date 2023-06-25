@@ -1,6 +1,15 @@
+import React, { useState } from 'react';
+import { SafeAreaView, StyleSheet, View, FlatList, Dimensions } from 'react-native';
+import MaterialTabs from 'react-native-material-tabs';
+import styles from './Styles';
+import { Text, Card } from '@rneui/base';
+
+const windowWidth = Dimensions.get('window').width;
+
 const TabView = ({ data }) => {
     const [selectedTab, setSelectedTab] = useState(0);
 
+    console.log(data);
     const handleTabChange = (index) => {
         setSelectedTab(index);
     };
@@ -14,15 +23,11 @@ const TabView = ({ data }) => {
 
     const renderEmptyPlace = () => (
         <View style={styles.emptyPlace}>
-            <Text>No places available in this category</Text>
+            <Text>We are adding new places inside this category soon..!</Text>
         </View>
     );
 
     const renderPlaceGrid = () => {
-        if (!data || data.length === 0) {
-            return <Text>No data available</Text>;
-        }
-
         const selectedCategory = data[selectedTab];
         if (!selectedCategory || !selectedCategory.places) {
             return renderEmptyPlace();

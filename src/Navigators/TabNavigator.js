@@ -60,11 +60,11 @@ const TabNavigator = () => {
             //   color={COLOR.black}
             //   size={DIMENSIONS.iconSize}
             // />
-             <Ionicons
-              name="location-outline"
-              color={COLOR.black}
-              size={DIMENSIONS.iconSize}
-            />
+            <Ionicons
+            name="location-outline"
+            color={COLOR.black}
+            size={DIMENSIONS.iconSize}
+          />
           ),
         }}
       />

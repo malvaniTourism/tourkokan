@@ -12,6 +12,7 @@ import { comnPost } from "../../Services/Api/CommonServices";
 
 const CityPlaceSearch = ({ navigation, route }) => {
     const [searchValue, setSearchValue] = useState('');
+    const [tableName, setTableName] = useState('cities')
     const [placesList, setPlacesList] = useState([]);
     const [isCity, setIsCity] = useState(true)
 
@@ -23,16 +24,15 @@ const CityPlaceSearch = ({ navigation, route }) => {
         }
     }, []);
 
-    const searchPlace = (val) => {
+    const searchPlace = (val, table) => {
         setSearchValue(val);
         const data = {
             string: val,
-            table_name: "projects"
+            table_name: table
         }
         if (searchValue.length > 2) {
             comnPost("v1/search", data)
                 .then((res) => {
-                    console.log(res.data.data.data);
                     setPlacesList(res.data.data.data)
                 })
                 .catch((err) => {
@@ -42,7 +42,13 @@ const CityPlaceSearch = ({ navigation, route }) => {
 
     const onChipClick = (val) => {
         setIsCity(val)
-        searchPlace(searchValue)
+        let table = 'cities'
+        if (!val) {
+            setTableName('places')
+            table = 'places'
+        }
+        else setTableName('cities')
+        searchPlace(searchValue, table)
     }
 
     const onListItemClick = (id) => {
@@ -68,7 +74,7 @@ const CityPlaceSearch = ({ navigation, route }) => {
                     <SearchBar
                         placeholder={`Enter Text`}
                         value={searchValue}
-                        onChangeText={(v) => searchPlace(v)}
+                        onChangeText={(v) => searchPlace(v, tableName)}
                     />
                 }
             />

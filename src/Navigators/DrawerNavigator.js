@@ -4,7 +4,8 @@ import Profile from "../Screens/Profile";
 import Settings from "../Screens/Settings";
 import SearchList from "../Screens/SearchList";
 import TabNavigator from "./TabNavigator";
-import MapScreen from "../Screens/MapScreen";
+import Pricing from "../Screens/Pricing";
+import ContactUs from "../Screens/ContactUs";
 
 const Drawer = createDrawerNavigator();
 
@@ -15,6 +16,9 @@ const DrawerNavigator = () => {
       <Drawer.Screen name="Profile" component={Profile} />
       <Drawer.Screen name="Settings" component={Settings} />
       <Drawer.Screen name="All Routes" component={SearchList} />
+      <Drawer.Screen name="Pricing" component={Pricing} />
+      <Drawer.Screen name="Contact Us" component={ContactUs} />
+
       {/* <Drawer.Screen name="Routes Map" component={MapScreen} /> */}
     </Drawer.Navigator>
   );

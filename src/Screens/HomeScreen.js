@@ -253,7 +253,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                     />
                 </View>
 
-                {/* <TabView data={place_category} /> */}
+            {place_category[0] && <TabView data={place_category} />}
 {/* 
                 <View style={styles.sectionView}>
                     <Text style={styles.sectionTitle}>Place Category</Text>
