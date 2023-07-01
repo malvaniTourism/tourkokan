@@ -9,8 +9,16 @@ import DIMENSIONS from "../Services/Constants/DIMENSIONS";
 import RouteLine from "../Components/Customs/RouteLine";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { backPage, checkLogin, goBackHandler, navigateTo } from "../Services/CommonMethods";
+import { ContactUsFields } from "../Services/Constants/FIELDS";
+import TextField from "../Components/Customs/TextField";
+import CustomButton from "../Components/Customs/Button";
+import styles from "./Styles";
 
 const ContactUs = ({ navigation, route }) => {
+  const [email, setEmail] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [message, setMessage] = useState("");
+
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
     checkLogin(navigation)
@@ -19,9 +27,34 @@ const ContactUs = ({ navigation, route }) => {
     }
   }, []);
 
-  const showTiming = () => {
-    navigateTo(navigation, "BusTimings");
+  const setValue = (val, isVal, index) => {
+    switch (index) {
+      case 0:
+        setEmail(val);
+        break;
+      case 1:
+        setMobile(val);
+        break;
+      case 2:
+        setMessage(val);
+        break;
+    }
   };
+
+  const getValue = (i) => {
+    switch (i) {
+      case 0:
+        return email;
+      case 1:
+        return mobile;
+      case 2:
+        return message;
+    }
+  };
+
+  const submit = () => {
+
+  }
 
   return (
     <View>
@@ -30,27 +63,41 @@ const ContactUs = ({ navigation, route }) => {
         goBack={() => backPage(navigation)}
         startIcon={
           <Ionicons
-            name="bus"
-            color={COLOR.black}
-            size={DIMENSIONS.userIconSize}
+            name="chevron-back-outline"
+            size={24}
             onPress={() => backPage(navigation)}
           />
         }
         endIcon={
-          <Feather
-            name="clock"
-            color={COLOR.black}
-            size={DIMENSIONS.userIconSize}
-            onPress={() => showTiming()}
-          />
+          <></>
         }
       />
       <SafeAreaView>
-        {/* <FlatList
-          keyExtractor={(item) => item.id}
-          data={list}
-          renderItem={renderItem}
-        /> */}
+        {ContactUsFields.map((field, index) => {
+          return (
+            <TextField
+              name={field.name}
+              label={field.name}
+              placeholder={field.placeholder}
+              fieldType={field.type}
+              length={field.length}
+              required={field.required}
+              disabled={field.disabled}
+              value={getValue(index)}
+              setChild={(v, i) => setValue(v, i, index)}
+            />
+          );
+        })}
+        <CustomButton
+          title={"Submit"}
+          containerStyle={styles.buttonContainer}
+          buttonStyle={styles.buttonStyle}
+          titleStyle={styles.buttonTitle}
+          disabled={false}
+          raised={true}
+          type={"Submit"}
+          onPress={() => submit()}
+        />
       </SafeAreaView>
     </View>
   );

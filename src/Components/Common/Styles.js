@@ -85,7 +85,8 @@ const styles = StyleSheet.create({
   },
   tabPanel: {
     alignSelf: 'center',
-    width: DIMENSIONS.screenWidth - 10
+    width: DIMENSIONS.screenWidth - 10,
+    // marginTop: 7
   },
   placeCard: {
 

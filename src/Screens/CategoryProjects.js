@@ -59,22 +59,24 @@ const CategoryProjects = ({ navigation, route, ...props }) => {
             />
           }
         />
-        <View style={{ flexDirection: "row", flexWrap: 'wrap' }}>
-          <Text>{projects[0].id}</Text>
-          {/* {projects && projects[0].projects.map((project) => (
-              <SmallCard
-                Icon={
-                  <Ionicons
-                    name="bus"
-                    color={COLOR.yellow}
-                    size={DIMENSIONS.iconSize}
-                  />
-                }
-                title={project.name}
-                onPress={() => handleSmallCardClick(project.id)} 
-              />
-          ))} */}
-        </View>
+        {projects[0] &&
+          <View style={{ flexDirection: "row", flexWrap: 'wrap' }}>
+            <Text>{projects[0].id}</Text>
+            {/* {projects && projects[0].projects.map((project) => (
+            <SmallCard
+              Icon={
+                <Ionicons
+                  name="bus"
+                  color={COLOR.yellow}
+                  size={DIMENSIONS.iconSize}
+                />
+              }
+              title={project.name}
+              onPress={() => handleSmallCardClick(project.id)} 
+            />
+        ))} */}
+          </View>
+        }
       </View>
     </ScrollView>
   );

@@ -83,6 +83,11 @@ const HomeScreen = ({ navigation, ...props }) => {
         navigateTo(navigation, page, { id, name });
     };
 
+    const getRoutesList = (item) => {
+        console.log('list - ', item);
+        navigateTo(navigation, "RoutesList", { item });
+    };
+
     const showMore = (page) => {
         console.log('page - - ', page);
         navigateTo(navigation, page);
@@ -183,7 +188,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                                             />
                                         }
                                         title={route.name}
-                                        onPress={() => handleSmallCardClick("routeDetails", route.id)}
+                                        onPress={() => getRoutesList(route)}
                                     />
                                 ))}
                             </View>

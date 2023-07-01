@@ -26,6 +26,7 @@ const SearchList = ({ navigation, ...props }) => {
   }, []);
 
   const getRoutes = (item) => {
+    console.log('item - ', item);
     navigateTo(navigation, "RoutesList", { item });
   };
 

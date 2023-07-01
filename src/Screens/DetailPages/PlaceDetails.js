@@ -72,27 +72,29 @@ const PlaceDetails = ({ navigation, route, ...props }) => {
                                 />
                             }
                         />
-                        <View style={{ flex: 1, padding: 10 }}>
-                            <View style={styles.placeImageView}>
-                                <ImageBackground source={place.image_url} style={styles.placeImage} />
-                                <Text style={styles.detailTitle}>{place.name}</Text>
-                            </View>
-                            <Text>{place.description}</Text>
-                            <Text>rating: {place.rating}</Text>
-                            <Text>visitors: {place.visitors_count}</Text>
-                            <Text>uploads: {place.photos_count}</Text>
-                            <Text>comments: {place.comments_count}</Text>
-                            <Text>{place.latitude}</Text>
-                            <Text>{place.longitude}</Text>
-                            <Text>social: {JSON.stringify(place.social_media)}</Text>
-                            <Text>contact: {JSON.stringify(place.contact_details)}</Text>
+                        {place &&
+                            <View style={{ flex: 1, padding: 10 }}>
+                                <View style={styles.placeImageView}>
+                                    <ImageBackground source={place.image_url} style={styles.placeImage} />
+                                    <Text style={styles.detailTitle}>{place.name}</Text>
+                                </View>
+                                <Text>{place.description}</Text>
+                                <Text>rating: {place.rating}</Text>
+                                <Text>visitors: {place.visitors_count}</Text>
+                                <Text>uploads: {place.photos_count}</Text>
+                                <Text>comments: {place.comments_count}</Text>
+                                <Text>{place.latitude}</Text>
+                                <Text>{place.longitude}</Text>
+                                <Text>social: {JSON.stringify(place.social_media)}</Text>
+                                <Text>contact: {JSON.stringify(place.contact_details)}</Text>
 
-                            <View style={styles.sectionView}>
-                                <Text style={styles.sectionTitle}>Located In:</Text>
-                                <CityCard data={place.city} />
+                                <View style={styles.sectionView}>
+                                    <Text style={styles.sectionTitle}>Located In:</Text>
+                                    <CityCard data={place.city} />
+                                </View>
+                                {/* <Text style={{marginTop: 50}}> {JSON.stringify(place)}</Text> */}
                             </View>
-                            {/* <Text style={{marginTop: 50}}> {JSON.stringify(place)}</Text> */}
-                        </View>
+                        }
                     </View>
             }
         </ScrollView>

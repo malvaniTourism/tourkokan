@@ -19,6 +19,7 @@ const CityPlaceSearch = ({ navigation, route }) => {
     useEffect(() => {
         const backHandler = goBackHandler(navigation)
         checkLogin(navigation)
+        searchPlace("", "cities")
         return () => {
             backHandler.remove()
         }
@@ -30,14 +31,14 @@ const CityPlaceSearch = ({ navigation, route }) => {
             string: val,
             table_name: table
         }
-        if (searchValue.length > 2) {
+        // if (searchValue.length > 2) {
             comnPost("v1/search", data)
                 .then((res) => {
                     setPlacesList(res.data.data.data)
                 })
                 .catch((err) => {
                 });
-        } else setPlacesList([])
+        // } else setPlacesList([])
     };
 
     const onChipClick = (val) => {

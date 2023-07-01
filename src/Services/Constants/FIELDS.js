@@ -133,3 +133,30 @@ export const CityName = [
     disabled: false,
   },
 ];
+
+export const ContactUsFields = [
+  {
+    name: "Email",
+    placeholder: "Email",
+    type: "email",
+    length: 50,
+    required: true,
+    disabled: false,
+  },
+  {
+    name: "Mobile",
+    placeholder: "Mobile",
+    type: "phone",
+    length: 10,
+    required: true,
+    disabled: false,
+  },
+  {
+    name: "Message",
+    placeholder: "Message",
+    type: "text",
+    length: 50,
+    required: true,
+    disabled: false,
+  },
+]

@@ -23,7 +23,7 @@ const SearchPlace = ({ navigation, route, ...props }) => {
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
     checkLogin(navigation)
-    searchPlace();
+    searchPlace("");
     return () => {
       backHandler.remove()
     }
@@ -33,7 +33,7 @@ const SearchPlace = ({ navigation, route, ...props }) => {
     // props.setLoader(true)
     setSearchValue(v);
     let data = {
-      search: searchValue,
+      search: v,
     };
     comnPost("v1/searchPlace", data)
       .then((res) => {
