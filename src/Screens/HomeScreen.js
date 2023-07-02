@@ -133,7 +133,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                                             />
                                         }
                                         title={stop.name}
-                                        onPress={() => handleSmallCardClick("StopDetails", stop.id)}
+                                        onPress={() => handleSmallCardClick("PlaceDetails", stop.id)}
                                     />
                                 ))}
                             </View>

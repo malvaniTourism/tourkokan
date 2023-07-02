@@ -4,6 +4,10 @@ import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 const { StyleSheet } = require("react-native");
 
 const styles = StyleSheet.create({
+    flexRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
     cityContainer: {
         alignSelf: 'center',
         flex: 1,
@@ -16,20 +20,36 @@ const styles = StyleSheet.create({
         marginVertical: 10
     },
     cityImageView: {
-        flex: 1,
+        flex: 2,
     },
     cityImage: {
         flex: 1,
+    },
+    likeView: {
+        position: 'absolute',
+        backgroundColor: COLOR.white,
+        height: 30,
+        width: 30,
+        borderRadius: DIMENSIONS.borderRadius,
+        right: 5,
+        top: 5,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     cityImageStyle: {
         borderTopLeftRadius: DIMENSIONS.borderRadius,
         borderBottomLeftRadius: DIMENSIONS.borderRadius
     },
     cityContentView: {
-        flex: 2,
+        flex: 3,
         padding: 10,
         flexDirection: 'column',
         justifyContent: 'space-between'
+    },
+    cityContentTop: {
+        flex: 1,
+        justifyContent: 'space-between',
+        paddingBottom: 10
     },
     cityName: {
         fontSize: DIMENSIONS.headerTextSize,
@@ -39,6 +59,10 @@ const styles = StyleSheet.create({
     cityTag: {
         fontSize: DIMENSIONS.subtitleTextSize,
         fontWeight: 600
+    },
+    starStyle: {
+        // width: '50%'
+        color: COLOR.yellow
     },
     cityMetaView: {
         paddingTop: 10,

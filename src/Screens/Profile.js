@@ -14,6 +14,7 @@ import { Image } from "@rneui/themed";
 import styles from "./Styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { checkLogin, backPage, goBackHandler, navigateTo } from "../Services/CommonMethods";
+import SvgUri from 'react-native-svg-uri';
 
 const Profile = ({ navigation, ...props }) => {
   const [profile, setProfile] = useState([]);
@@ -112,6 +113,10 @@ const Profile = ({ navigation, ...props }) => {
               <Text>{profile.gender}</Text>
             </View>
           </View>
+
+          <Text>
+            {JSON.stringify(profile)}
+          </Text>
         </View>
       </View>
     </View>

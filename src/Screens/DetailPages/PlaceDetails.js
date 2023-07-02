@@ -34,6 +34,8 @@ const PlaceDetails = ({ navigation, route, ...props }) => {
     }, []);
 
     const getDetails = () => {
+        setIsLoading(true)
+        props.setLoader(true);
         comnGet(`v1/place/${route.params.id}`, props.access_token)
             .then((res) => {
                 console.log('log ', res.data.data);
@@ -50,9 +52,20 @@ const PlaceDetails = ({ navigation, route, ...props }) => {
 
     return (
         <ScrollView>
+            <Header
+                name={'Place'}
+                startIcon={
+                    <Ionicons
+                        name="chevron-back-outline"
+                        color={COLOR.black}
+                        size={DIMENSIONS.userIconSize}
+                        onPress={() => backPage(navigation)}
+                    />
+                }
+            />
             {
                 isLoading ?
-                    <Loader />
+                    <Loader isLoading={isLoading} />
                     :
                     <View>
                         {/* <SkeletonContent containerStyle={{flex: 1, width: 300}}
@@ -61,17 +74,6 @@ const PlaceDetails = ({ navigation, route, ...props }) => {
             { width: 220, height: 20, marginBottom: 6 },
             { width: 180, height: 20, marginBottom: 6 },
             ]} isLoading={true}> */}
-                        <Header
-                            name={'Place'}
-                            startIcon={
-                                <Ionicons
-                                    name="chevron-back-outline"
-                                    color={COLOR.black}
-                                    size={DIMENSIONS.userIconSize}
-                                    onPress={() => backPage(navigation)}
-                                />
-                            }
-                        />
                         {place &&
                             <View style={{ flex: 1, padding: 10 }}>
                                 <View style={styles.placeImageView}>
@@ -90,7 +92,7 @@ const PlaceDetails = ({ navigation, route, ...props }) => {
 
                                 <View style={styles.sectionView}>
                                     <Text style={styles.sectionTitle}>Located In:</Text>
-                                    <CityCard data={place.city} />
+                                    <CityCard data={place.city} reload={() => getDetails()} />
                                 </View>
                                 {/* <Text style={{marginTop: 50}}> {JSON.stringify(place)}</Text> */}
                             </View>

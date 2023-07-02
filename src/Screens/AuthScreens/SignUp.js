@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, BackHandler } from "react-native";
+import { View, Text, TouchableOpacity, BackHandler, Image, ScrollView } from "react-native";
 import { SignUpFields } from "../../Services/Constants/FIELDS";
 import TextField from "../../Components/Customs/TextField";
 import Header from "../../Components/Common/Header";
@@ -10,8 +10,9 @@ import Loader from "../../Components/Customs/Loader";
 import { connect } from "react-redux";
 import { setLoader } from "../../Reducers/CommonActions";
 import DropDown from "../../Components/Customs/DropDown";
-import ImagePicker from 'react-native-image-picker';
+// import ImagePicker from 'react-native-image-picker';
 import { navigateTo } from "../../Services/CommonMethods";
+import { launchImageLibrary } from 'react-native-image-picker'
 
 const SignUp = ({ navigation, ...props }) => {
   const [name, setName] = useState("");
@@ -120,87 +121,100 @@ const SignUp = ({ navigation, ...props }) => {
     navigateTo(navigation, "Login");
   };
 
-  const selectImage = () => {
-    const options = {
-      mediaType: 'photo',
-      quality: 1,
-      includeBase64: false,
-    };
+  // const selectImage = () => {
+  //   const options = {
+  //     mediaType: 'photo',
+  //     quality: 1,
+  //     includeBase64: false,
+  //   };
 
-    ImagePicker.launchImageLibrary(options, (response) => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      } else {
-        // The selected image URI is in response.uri
-        const source = { uri: response.uri };
-        // Do something with the image source
-        // For example, set it as the state of the component
-        setImageSource(source);
-      }
-    });
-  };
+  //   ImagePicker.launchImageLibrary(options, (response) => {
+  //     if (response.didCancel) {
+  //       console.log('User cancelled image picker');
+  //     } else if (response.error) {
+  //       console.log('ImagePicker Error: ', response.error);
+  //     } else if (response.customButton) {
+  //       console.log('User tapped custom button: ', response.customButton);
+  //     } else {
+  //       // The selected image URI is in response.uri
+  //       const source = { uri: response.uri };
+  //       // Do something with the image source
+  //       // For example, set it as the state of the component
+  //       setImageSource(source);
+  //     }
+  //   });
+  // };
 
 
   return (
     <View style={{ alignItems: "center" }}>
       <Header
         name={"Register"}
-        style={{ marginBottom: 50 }}
         startIcon={<View></View>}
       />
       <Loader />
-      <DropDown
-        setChild={(v, i) => setValue(v, i)}
-        name={"Role"}
-        label={"Role"}
-        value={role}
-        disable={false}
-        style={styles.dropDown}
-        fieldType={"dropDwn"}
-        helperMsg={"Select Role"}
-        List={roles}
-        parentDetails={{ label: "role" }}
-      />
-      {SignUpFields.map((field, index) => {
-        return (
-          <TextField
-            name={field.name}
-            label={field.name}
-            placeholder={field.placeholder}
-            fieldType={field.type}
-            length={field.length}
-            required={field.required}
-            disabled={field.disabled}
-            value={getValue(index)}
-            setChild={(v, i) => setValue(v, i, index)}
-          />
-        );
-      })}
-      {imageSource && <Image source={imageSource} style={{ width: 200, height: 200 }} />}
-      <TouchableOpacity onPress={selectImage}>
-        <Text>Upload Image</Text>
-      </TouchableOpacity>
+      <ScrollView>
+        <DropDown
+          setChild={(v, i) => setValue(v, i)}
+          name={"Role"}
+          label={"Role"}
+          value={role}
+          disable={false}
+          style={styles.dropDown}
+          fieldType={"dropDwn"}
+          helperMsg={"Select Role"}
+          List={roles}
+          parentDetails={{ label: "role" }}
+        />
+        {SignUpFields.map((field, index) => {
+          return (
+            <TextField
+              name={field.name}
+              label={field.name}
+              placeholder={field.placeholder}
+              fieldType={field.type}
+              length={field.length}
+              required={field.required}
+              disabled={field.disabled}
+              value={getValue(index)}
+              setChild={(v, i) => setValue(v, i, index)}
+            />
+          );
+        })}
+        {imageSource && <Image source={imageSource} style={{ width: 50, height: 50 }} />}
+        <TouchableOpacity onPress={
+          () =>
+            launchImageLibrary({
+              mediaType: 'photo',
+              includeBase64: false,
+              maxHeight: 200,
+              maxWidth: 200,
+            },
+              (response) => {
+                console.log('img - - ', response.assets[0].uri);
+                setImageSource(response.assets[0].uri)
+              },
+            )
+        }
+          title="Select Image"><Text>Image</Text></TouchableOpacity>
+      </ScrollView>
       <CustomButton
-        title={"Register"}
-        containerStyle={styles.buttonContainer}
-        buttonStyle={styles.buttonStyle}
-        titleStyle={styles.buttonTitle}
-        disabled={false}
-        raised={true}
-        type={"Submit"}
-        onPress={() => Register()}
-      />
-      <Text>{errMsg}</Text>
-      <View style={styles.haveAcc}>
-        <Text>Already have an Account? </Text>
-        <TouchableOpacity onPress={() => signInScreen()}>
-          <Text> Sign In</Text>
-        </TouchableOpacity>
-      </View>
+          title={"Register"}
+          containerStyle={styles.buttonContainer}
+          buttonStyle={styles.buttonStyle}
+          titleStyle={styles.buttonTitle}
+          disabled={false}
+          raised={true}
+          type={"Submit"}
+          onPress={() => Register()}
+        />
+        <Text>{errMsg}</Text>
+        <View style={styles.haveAcc}>
+          <Text>Already have an Account? </Text>
+          <TouchableOpacity onPress={() => signInScreen()}>
+            <Text> Sign In</Text>
+          </TouchableOpacity>
+        </View>
     </View>
   );
 };

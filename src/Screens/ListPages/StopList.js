@@ -32,14 +32,14 @@ const StopList = ({ navigation, ...props }) => {
   }, []);
 
   const handleSmallCardClick = (id) => {
-    navigateTo(navigation, "StopDetails", { id });
+    navigateTo(navigation, "PlaceDetails", { id });
   };
 
   return (
     <ScrollView>
       <View style={{ flex: 1, alignItems: "center" }}>
         <Loader />
-        <Header name={'Stops'}
+        <Header name={"Stops"}
           startIcon={
             <Ionicons
               name="chevron-back-outline"

@@ -63,6 +63,7 @@ const EmailSignIn = ({ navigation, ...props }) => {
           setIsAlert(true);
           setAlertMessage(res.data.message);
           AsyncStorage.setItem("access_token", res.data.data.access_token);
+          AsyncStorage.setItem("userId", res.data.data.user.id);
           props.saveAccess_token(res.data.data.access_token);
           props.setLoader(false);
           navigateTo(navigation, "Home");

@@ -14,7 +14,7 @@ const TabView = ({ data }) => {
     };
 
     const renderPlaceItem = ({ item }) => (
-        <Card style={styles.placeCard}>
+        <Card containerStyle={styles.placeCard}>
             <Text>{item.name}</Text>
             {/* Render additional place details */}
         </Card>

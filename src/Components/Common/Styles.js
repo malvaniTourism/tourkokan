@@ -85,11 +85,16 @@ const styles = StyleSheet.create({
   },
   tabPanel: {
     alignSelf: 'center',
-    width: DIMENSIONS.screenWidth - 10,
-    // marginTop: 7
+    width: DIMENSIONS.bannerWidth,
+    marginTop: 2
+  },
+  tabContent: {
   },
   placeCard: {
-
+    elevation: 5,
+    borderColor: COLOR.intentColor,
+    borderRadius: DIMENSIONS.borderRadiusLarge,
+    marginBottom: 5
   }
 });
 

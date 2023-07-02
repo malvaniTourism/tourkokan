@@ -1,4 +1,5 @@
 import React from "react";
+import { FlatList, Image, StyleSheet, ActivityIndicator } from 'react-native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../Screens/HomeScreen";
 import MapScreen from "../Screens/MapScreen";
@@ -11,8 +12,8 @@ import ProjectList from "../Screens/ListPages/ProjectList";
 import RoutesList from "../Screens/RoutesList";
 import SearchList from "../Screens/SearchList";
 import { PngTree } from "../../Assets/Images/pngtree.png";
-import { Image } from "@rneui/themed";
-import { SvgUri } from 'react-native-svg'; // Import SvgUri from react-native-svg
+import SvgUri from 'react-native-svg-uri';
+import BusImg from "../Assets/Images/B3.svg"
 
 const Tab = createBottomTabNavigator();
 
@@ -61,10 +62,10 @@ const TabNavigator = () => {
             //   size={DIMENSIONS.iconSize}
             // />
             <Ionicons
-            name="location-outline"
-            color={COLOR.black}
-            size={DIMENSIONS.iconSize}
-          />
+              name="location-outline"
+              color={COLOR.black}
+              size={DIMENSIONS.iconSize}
+            />
           ),
         }}
       />
@@ -74,10 +75,16 @@ const TabNavigator = () => {
         component={SearchList}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Ionicons
-              name="md-bus"
-              color={COLOR.black}
-              size={DIMENSIONS.iconSize + 15}
+            // <Ionicons
+            //   name="md-bus"
+            //   color={COLOR.black}
+            //   size={DIMENSIONS.iconSize + 15}
+            // />
+            <SvgUri
+              width={40}
+              height={40}
+              // source={require('../Assets/Images/simp.svg')}
+              source={require('../Assets/Images/B3.svg')}
             />
           ),
           tabBarLabel: () => null,
@@ -118,3 +125,16 @@ const TabNavigator = () => {
 };
 
 export default TabNavigator;
+
+const styles = StyleSheet.create({
+  list: {
+    width: '100%',
+    backgroundColor: '#000',
+  },
+  item: {
+    // backgroundColor: 'red',
+    aspectRatio: 1,
+    width: '100%',
+    // flex: 1,
+  },
+});
