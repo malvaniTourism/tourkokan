@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         width: DIMENSIONS.bannerWidth,
-        height: DIMENSIONS.halfWidth - 20,
+        maxHeight: DIMENSIONS.halfWidth - 20,
         backgroundColor: COLOR.white,
         borderRadius: DIMENSIONS.borderRadius,
         elevation: 5,
@@ -82,6 +82,13 @@ const styles = StyleSheet.create({
     },
     lightBlackText: {
         color: COLOR.lightBlack,
+    },
+    catCardContainer: {
+        justifyContent: 'space-evenly',
+        margin: 10,
+        flexDirection: 'row'
+    },
+    catCardIcon: {
     }
 })
 

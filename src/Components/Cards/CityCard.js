@@ -10,7 +10,7 @@ import StarRating from 'react-native-star-rating';
 import { comnPost } from '../../Services/Api/CommonServices';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const CityCard = ({ data, reload }) => {
+const CityCard = ({ data, reload, getCity }) => {
     const [isFav, setIsFav] = useState(false)
     const [isLiked, setIsLiked] = useState(false)
     const [rating, setRating] = useState(3.5)
@@ -23,7 +23,7 @@ const CityCard = ({ data, reload }) => {
         let data = {
             user_id: AsyncStorage.getItem("userId"),
             favouritable_type: "City",
-            favouritable_id: "1"
+            favouritable_id: data.id
         }
         setIsFav(!isFav)
         comnPost('v1/favourite', data)
@@ -38,6 +38,10 @@ const CityCard = ({ data, reload }) => {
     const onLikeClick = () => {
         setIsLiked(!isLiked)
         // reload()
+    }
+
+    const goToDetails = () => {
+        getCity()
     }
 
     return (
@@ -55,10 +59,10 @@ const CityCard = ({ data, reload }) => {
             </View>
             <View style={styles.cityContentView}>
                 <View style={styles.cityContentTop}>
-                    <View>
+                    <TouchableOpacity onPress={() => goToDetails()}>
                         <Text style={styles.cityName}>{data.name}</Text>
                         <Text style={styles.cityTag}>{data.tag_line}</Text>
-                    </View>
+                    </TouchableOpacity>
                     <View style={styles.flexRow}>
                         <View style={{ width: '40%' }}>
                             <StarRating

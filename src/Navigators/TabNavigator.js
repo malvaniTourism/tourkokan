@@ -81,10 +81,10 @@ const TabNavigator = () => {
             //   size={DIMENSIONS.iconSize + 15}
             // />
             <SvgUri
-              width={40}
-              height={40}
+              width={35}
+              height={35}
               // source={require('../Assets/Images/simp.svg')}
-              source={require('../Assets/Images/B3.svg')}
+              source={require('../Assets/Images/bus.svg')}
             />
           ),
           tabBarLabel: () => null,

@@ -21,6 +21,8 @@ import Path from "../Services/Api/BaseUrl";
 import CustomButton from "../Components/Customs/Button";
 import { exitApp, navigateTo } from "../Services/CommonMethods";
 import TabView from "../Components/Common/TabView";
+import CityCard from "../Components/Cards/CityCard";
+import CategoryCard from "../Components/Cards/CategoryCard";
 
 const HomeScreen = ({ navigation, ...props }) => {
     const [searchValue, setSearchValue] = useState("");
@@ -157,18 +159,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                             <Text style={styles.sectionTitle}>Categories</Text>
                             <View style={styles.cardsWrap}>
                                 {categories.map((category, index) => (
-                                    <SmallCard
-                                        key={index}
-                                        Icon={
-                                            <Image
-                                                source={{ uri: Path.API_PATH + category.image_url }}
-                                                color={COLOR.yellow}
-                                                size={DIMENSIONS.iconSize}
-                                            />
-                                        }
-                                        title={category.name}
-                                        onPress={() => handleSmallCardClick("CategoryProjects", category.id, category.name)}
-                                    />
+                                    <CategoryCard data={category} getCategory={() => handleSmallCardClick("CategoryProjects", category.id, category.name)} />
                                 ))}
                             </View>
                         </View>
@@ -202,20 +193,10 @@ const HomeScreen = ({ navigation, ...props }) => {
 
                         <View style={styles.sectionView}>
                             <Text style={styles.sectionTitle}>Cities</Text>
-                            <View style={styles.cardsWrap}>
+                            <View >
                                 {cities.map((city, index) => (
-                                    <SmallCard
-                                        key={index}
-                                        Icon={
-                                            <Image
-                                                source={{ uri: Path.API_PATH + city.image_url }}
-                                                color={COLOR.yellow}
-                                                size={DIMENSIONS.iconSize}
-                                            />
-                                        }
-                                        title={city.name}
-                                        onPress={() => handleSmallCardClick("CityDetails", city.id)}
-                                    />
+                                    <CityCard data={city} reload={() => callLandingPageAPI()} getCity={() => handleSmallCardClick("CityDetails", city.id)} />
+                                        // onPress={() => handleSmallCardClick("CityDetails", city.id)}
                                 ))}
                             </View>
                             <CustomButton
