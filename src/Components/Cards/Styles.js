@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: DIMENSIONS.bannerWidth,
         maxHeight: DIMENSIONS.halfWidth - 20,
+        minHeight: DIMENSIONS.halfWidth - 20,
         backgroundColor: COLOR.white,
         borderRadius: DIMENSIONS.borderRadius,
         elevation: 5,
@@ -89,7 +90,26 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     catCardIcon: {
-    }
+    },
+    projectCard: {
+        minHeight: DIMENSIONS.bannerHeight,
+        maxHeight: DIMENSIONS.bannerHeight,
+        width: DIMENSIONS.bannerWidth,
+        alignSelf: 'center',
+        borderWidth: 1,
+        borderColor: COLOR.grey,
+        marginVertical: 10
+    },
+    overlay: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: COLOR.black,
+    },
+    projectImage: {
+        height: DIMENSIONS.bannerHeight - 30,
+    },
+    projectImageStyle: {
+        opacity: 0.7
+    },
 })
 
 export default styles

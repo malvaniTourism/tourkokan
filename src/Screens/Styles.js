@@ -72,19 +72,48 @@ const styles = StyleSheet.create({
         // aspectRatio: 1,
         height: DIMENSIONS.bannerWidth,
         borderRadius: DIMENSIONS.borderRadius,
-        resizeMode: 'cover'        
+        resizeMode: 'cover'
         // width: '100%',
     },
     boldText: {
         fontWeight: 'bold',
         fontSize: 16
     },
-    profileDetails :{
+    profileDetails: {
         padding: 15
     },
     flexRow: {
         flexDirection: 'row',
         justifyContent: 'space-between'
+    },
+    categoryBack: {
+        marginTop: -20,
+        height: DIMENSIONS.bannerHeight,
+    },
+    categoryBackImageStyle: {
+        opacity: 0.7
+    },
+    overlay: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: COLOR.black,
+        marginTop: -20,
+    },
+    categoryImageDetails: {
+        height: DIMENSIONS.bannerHeight,
+        width: DIMENSIONS.screenWidth,
+        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center'
+    },
+    catTitle: {
+        color: COLOR.white,
+        fontWeight: 'bold',
+        fontSize: DIMENSIONS.headerTextSize
+    },
+    catSubTitle: {
+        color: COLOR.white,
+        fontSize: DIMENSIONS.subtitleTextSize
     }
 });
 

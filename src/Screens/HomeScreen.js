@@ -159,7 +159,10 @@ const HomeScreen = ({ navigation, ...props }) => {
                             <Text style={styles.sectionTitle}>Categories</Text>
                             <View style={styles.cardsWrap}>
                                 {categories.map((category, index) => (
-                                    <CategoryCard data={category} getCategory={() => handleSmallCardClick("CategoryProjects", category.id, category.name)} />
+                                    <View>
+                                        <CategoryCard data={category} getCategory={() => handleSmallCardClick("CategoryProjects", category.id, category.name)} />
+                                        <Text style={{textAlign: 'center'}}>{category.name}</Text>
+                                    </View>
                                 ))}
                             </View>
                         </View>
@@ -196,7 +199,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                             <View >
                                 {cities.map((city, index) => (
                                     <CityCard data={city} reload={() => callLandingPageAPI()} getCity={() => handleSmallCardClick("CityDetails", city.id)} />
-                                        // onPress={() => handleSmallCardClick("CityDetails", city.id)}
+                                    // onPress={() => handleSmallCardClick("CityDetails", city.id)}
                                 ))}
                             </View>
                             <CustomButton

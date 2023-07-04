@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TouchableOpacity, View } from 'react-native'
+import { TouchableOpacity, View, Image } from 'react-native'
 import styles from './Styles'
 import { Text } from 'react-native-svg'
 import SvgUri from 'react-native-svg-uri'
@@ -15,15 +15,14 @@ const CategoryCard = ({ data, getCategory }) => {
     return (
         <View style={styles.catCardContainer}>
             <TouchableOpacity style={styles.catCardIcon} onPress={() => onIconCLick()}>
-                <SvgUri
-                    width={DIMENSIONS.bannerWidth / 4}
-                    height={DIMENSIONS.bannerWidth / 4}
-                    source={require('../../Assets/Images/beach.svg')}
+                <Image
+                    source={require('../../Assets/Images/beach.png')}
+                    style={{ width: DIMENSIONS.bannerWidth / 4, height: DIMENSIONS.bannerWidth / 4 }}
                 />
             </TouchableOpacity>
-            <View>
-                <Text>{data.name}</Text>
-            </View>
+            {/* <View> */}
+                {/* <Text>{data.name}</Text> */}
+            {/* </View> */}
         </View>
     )
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, ScrollView, Text, TouchableOpacity } from "react-native";
+import { View, ScrollView, Text, TouchableOpacity, ImageBackground } from "react-native";
 import SmallCard from "../Components/Customs/SmallCard";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import COLOR from "../Services/Constants/COLORS";
@@ -12,6 +12,9 @@ import Header from "../Components/Common/Header";
 import { setLoader } from "../Reducers/CommonActions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { backPage, checkLogin, goBackHandler, navigateTo } from "../Services/CommonMethods";
+import Path from "../Services/Api/BaseUrl";
+import styles from "./Styles";
+import ProjectCard from "../Components/Cards/ProjectCard";
 
 const CategoryProjects = ({ navigation, route, ...props }) => {
   const [projects, setProjects] = useState([]); // State to store Projects
@@ -31,7 +34,7 @@ const CategoryProjects = ({ navigation, route, ...props }) => {
     comnGet(`v1/category/${route.params.id}/projects`, props.access_token)
       .then((res) => {
         console.log('res- ', res.data.data);
-        setProjects(res.data.data); // Update Projects state with response data
+        setProjects(res.data.data[0]); // Update Projects state with response data
         props.setLoader(false);
       })
       .catch((error) => {
@@ -59,22 +62,28 @@ const CategoryProjects = ({ navigation, route, ...props }) => {
             />
           }
         />
-        {projects[0] &&
-          <View style={{ flexDirection: "row", flexWrap: 'wrap' }}>
-            <Text>{projects[0].id}</Text>
-            {/* {projects && projects[0].projects.map((project) => (
-            <SmallCard
-              Icon={
-                <Ionicons
-                  name="bus"
-                  color={COLOR.yellow}
-                  size={DIMENSIONS.iconSize}
-                />
-              }
-              title={project.name}
-              onPress={() => handleSmallCardClick(project.id)} 
-            />
-        ))} */}
+        {projects &&
+          <View>
+            <View style={{ marginBottom: 20 }}>
+              <View style={styles.overlay} />
+              <ImageBackground
+                source={{ uri: Path.FTP_PATH + projects.image_url }}
+                style={styles.categoryBack}
+                imageStyle={styles.categoryBackImageStyle}
+                resizeMode="cover"
+              />
+              <View style={styles.categoryImageDetails}>
+                <Text style={styles.catTitle}>{projects.name}</Text>
+                <Text style={styles.catSubTitle}>{projects.description}</Text>
+              </View>
+            </View>
+
+            {projects.projects && projects.projects.map(project => (
+              <ProjectCard project={project} />
+            ))}
+
+
+            <Text style={{ marginTop: 50 }}>{JSON.stringify(projects.projects)}</Text>
           </View>
         }
       </View>

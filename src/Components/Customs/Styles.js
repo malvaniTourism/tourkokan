@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   alertContainer: {
     zIndex: 100,
     backgroundColor: COLOR.white,
-    height: DIMENSIONS.bannerWidth / 2,
+    height: DIMENSIONS.bannerHeight,
     width: DIMENSIONS.bannerWidth,
   },
   alertMsgView: {
