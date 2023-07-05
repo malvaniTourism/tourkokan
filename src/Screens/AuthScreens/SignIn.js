@@ -132,7 +132,7 @@ const SignIn = ({ navigation, ...props }) => {
           style={{
             paddingVertical: 15,
             paddingHorizontal: 25,
-            backgroundColor: COLOR.themeDarkGreen,
+            backgroundColor: COLOR.themeComicBlue,
           }}
           onPress={() => emailLogin()}
         >

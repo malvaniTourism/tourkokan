@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     },
     buttonStyle: {
-        backgroundColor: COLOR.themeDarkGreen,
+        backgroundColor: COLOR.themeComicBlue,
     },
     showMore: {
         width: DIMENSIONS.halfWidth - 40,

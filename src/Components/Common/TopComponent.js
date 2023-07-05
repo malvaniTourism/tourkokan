@@ -28,7 +28,7 @@ const TopComponent = ({ navigation }) => {
 
   return (
     <View style={styles.topComponent}>
-      <StatusBar backgroundColor={COLOR.themeDarkGreen} />
+      <StatusBar backgroundColor={COLOR.themeComicBlue} />
       <View style={styles.topMenu}>
         <Ionicons
           name="menu"

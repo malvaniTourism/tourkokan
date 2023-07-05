@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   buttonStyle: {
-    backgroundColor: COLOR.themeDarkGreen,
+    backgroundColor: COLOR.themeComicBlue,
   },
   dropdown: {
     width: DIMENSIONS.bannerWidth + 20,

@@ -1,6 +1,9 @@
 const COLOR = {
   themeLightGreen: "#9BC90D",
   themeDarkGreen: "#79A70A",
+  themeNaviBlue: "#000080",
+  themeLightBlue: "#2E67F8",
+  themeComicBlue: "#00AEEF",
 
   primaryColor: "#543379",
   primarylight: "#9c48d4",

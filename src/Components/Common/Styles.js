@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderBottomLeftRadius: DIMENSIONS.borderRadiusSmall,
     borderBottomRightRadius: DIMENSIONS.borderRadiusSmall,
-    backgroundColor: COLOR.themeDarkGreen,
+    backgroundColor: COLOR.themeComicBlue,
   },
   searchButtonDisable: {
     height: 50,
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     // flex: 1,
     height: DIMENSIONS.headerHeight,
     width: DIMENSIONS.screenWidth,
-    backgroundColor: COLOR.themeDarkGreen,
+    backgroundColor: COLOR.themeComicBlue,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",

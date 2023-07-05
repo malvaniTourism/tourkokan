@@ -92,7 +92,7 @@ const SearchPanel = ({ navigation, ...props }) => {
             />
           );
         })}
-        <MaterialIcons style={styles.swapIcon} name="swap-vert-circle" color={isValid ? COLOR.themeDarkGreen : COLOR.grey} size={DIMENSIONS.userIconSize} onPress={isValid ? swap : null} />
+        <MaterialIcons style={styles.swapIcon} name="swap-vert-circle" color={isValid ? COLOR.themeComicBlue : COLOR.grey} size={DIMENSIONS.userIconSize} onPress={isValid ? swap : null} />
       </View>
       <CustomButton
         title={"Search"}
