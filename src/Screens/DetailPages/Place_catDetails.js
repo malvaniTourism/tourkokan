@@ -12,6 +12,7 @@ import Loader from "../../Components/Customs/Loader";
 import Header from "../../Components/Common/Header";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { backPage, checkLogin, goBackHandler } from "../../Services/CommonMethods";
+import GlobalText from "../../Components/Customs/Text";
 
 const Place_catDetails = ({ navigation, route, ...props }) => {
     const [place_cat, setPlace_cat] = useState([]); // State to store city
@@ -55,13 +56,8 @@ const Place_catDetails = ({ navigation, route, ...props }) => {
             />
             <View style={{ flex: 1, alignItems: "center" }}>
                 <View style={{ flexDirection: "row" }}>
-                    <Text>{place_cat.name}</Text>
-                    <Text> {JSON.stringify(place_cat)}</Text>
-
-                    {/* <Text> {place_cat.tag_line}</Text> */}
-                    {/* <Text>{city.description}</Text>
-                    <Text>{city.place_cats_count}</Text>
-                    <Text>{city.place_cats_count}</Text>              */}
+                    <GlobalText text={place_cat.name} />
+                    <GlobalText text={JSON.stringify(place_cat)} />
                 </View>
             </View>
         </ScrollView>

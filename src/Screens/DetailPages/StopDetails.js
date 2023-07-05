@@ -12,6 +12,7 @@ import Loader from "../../Components/Customs/Loader";
 import Header from "../../Components/Common/Header";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { backPage, checkLogin, goBackHandler } from "../../Services/CommonMethods";
+import GlobalText from "../../Components/Customs/Text";
 
 const StopDetails = ({ navigation, route, ...props }) => {
     const [stop, setStop] = useState([]); // State to store city
@@ -56,13 +57,8 @@ const StopDetails = ({ navigation, route, ...props }) => {
             />
             <View style={{ flex: 1, alignItems: "center" }}>
                 <View style={{ flexDirection: "row" }}>
-                    <Text>{stop.name}</Text>
-                    <Text> {JSON.stringify(stop)}</Text>
-
-                    {/* <Text> {stop.tag_line}</Text> */}
-                    {/* <Text>{city.description}</Text>
-                    <Text>{city.stops_count}</Text>
-                    <Text>{city.stops_count}</Text>              */}
+                    <GlobalText text={stop.name} />
+                    <GlobalText text={JSON.stringify(stop)} />
                 </View>
             </View>
         </ScrollView>

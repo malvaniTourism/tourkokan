@@ -12,6 +12,7 @@ import { setLoader } from "../Reducers/CommonActions";
 import Loader from "../Components/Customs/Loader";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { backPage, checkLogin, goBackHandler, navigateTo } from "../Services/CommonMethods";
+import GlobalText from "../Components/Customs/Text";
 
 const SearchList = ({ navigation, ...props }) => {
   const [list, setList] = useState([]);
@@ -55,7 +56,7 @@ const SearchList = ({ navigation, ...props }) => {
       <ListItem bottomDivider onPress={() => getRoutes(item)}>
         {/* <Avatar source={{ uri: item.avatar_url }} /> */}
         <RouteLine />
-        <Text>{item.id}</Text>
+        <GlobalText text={item.id} />
         <ListItem.Content>
           {/* <ListItem.Title>{item.number}</ListItem.Title> */}
           <ListItem.Title>{item.name}</ListItem.Title>
@@ -88,7 +89,7 @@ const SearchList = ({ navigation, ...props }) => {
             renderItem={renderItem}
           />
         ) : (
-          <Text>No Routes Available</Text>
+          <GlobalText text={"No Routes Available"} />
         )}
       </SafeAreaView>
     </View>

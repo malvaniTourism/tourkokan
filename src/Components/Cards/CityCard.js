@@ -9,6 +9,7 @@ import DIMENSIONS from '../../Services/Constants/DIMENSIONS';
 import StarRating from 'react-native-star-rating';
 import { comnPost } from '../../Services/Api/CommonServices';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import GlobalText from '../Customs/Text';
 
 const CityCard = ({ data, reload, getCity }) => {
     const [isFav, setIsFav] = useState(false)
@@ -60,8 +61,8 @@ const CityCard = ({ data, reload, getCity }) => {
             <View style={styles.cityContentView}>
                 <View style={styles.cityContentTop}>
                     <TouchableOpacity onPress={() => goToDetails()}>
-                        <Text style={styles.cityName}>{data.name}</Text>
-                        <Text style={styles.cityTag}>{data.tag_line}</Text>
+                        <GlobalText text={data.name} style={styles.cityName} />
+                        <GlobalText text={data.tag_line} style={styles.cityTag} />
                     </TouchableOpacity>
                     <View style={styles.flexRow}>
                         <View style={{ width: '40%' }}>
@@ -87,12 +88,12 @@ const CityCard = ({ data, reload, getCity }) => {
                 </View>
                 <View style={styles.cityMetaView}>
                     <View style={styles.splitView}>
-                        <Text style={styles.lightBlackText}>Rs. 2500 for one</Text>
+                        <GlobalText text={"Rs. 2500 for one"} style={styles.lightBlackText} />
                     </View>
                     <View style={styles.vertDivider}></View>
                     <View style={styles.splitView}>
-                        <Text style={styles.lightBlackText}>2 Km</Text>
-                        <Text style={styles.lightBlackText}>25 Min</Text>
+                        <GlobalText text={"2 Km"} style={styles.lightBlackText} />
+                        <GlobalText text={"25 Min"} style={styles.lightBlackText} />
                     </View>
                 </View>
             </View>

@@ -20,9 +20,6 @@ const CategoryCard = ({ data, getCategory }) => {
                     style={{ width: DIMENSIONS.bannerWidth / 4, height: DIMENSIONS.bannerWidth / 4 }}
                 />
             </TouchableOpacity>
-            {/* <View> */}
-                {/* <Text>{data.name}</Text> */}
-            {/* </View> */}
         </View>
     )
 }

@@ -4,6 +4,7 @@ import MaterialTabs from 'react-native-material-tabs';
 import styles from './Styles';
 import { Text, Card } from '@rneui/base';
 import COLOR from '../../Services/Constants/COLORS';
+import GlobalText from '../Customs/Text';
 
 const TabView = ({ data }) => {
     const [selectedTab, setSelectedTab] = useState(0);
@@ -15,14 +16,14 @@ const TabView = ({ data }) => {
 
     const renderPlaceItem = ({ item }) => (
         <Card containerStyle={styles.placeCard}>
-            <Text>{item.name}</Text>
+            <GlobalText text={item.name} />
             {/* Render additional place details */}
         </Card>
     );
 
     const renderEmptyPlace = () => (
         <View style={styles.emptyPlace}>
-            <Text>We are adding new places inside this category soon..!</Text>
+            <GlobalText text={"We are adding new places inside this category soon..!"} />
         </View>
     );
 

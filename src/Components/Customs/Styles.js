@@ -127,6 +127,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLOR.grey,
   },
+  text: {
+    color: COLOR.black
+  }
 });
 
 export default styles;

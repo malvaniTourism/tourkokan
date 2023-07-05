@@ -15,6 +15,7 @@ import { backPage, checkLogin, goBackHandler, navigateTo } from "../Services/Com
 import Path from "../Services/Api/BaseUrl";
 import styles from "./Styles";
 import ProjectCard from "../Components/Cards/ProjectCard";
+import GlobalText from "../Components/Customs/Text";
 
 const CategoryProjects = ({ navigation, route, ...props }) => {
   const [projects, setProjects] = useState([]); // State to store Projects
@@ -73,8 +74,8 @@ const CategoryProjects = ({ navigation, route, ...props }) => {
                 resizeMode="cover"
               />
               <View style={styles.categoryImageDetails}>
-                <Text style={styles.catTitle}>{projects.name}</Text>
-                <Text style={styles.catSubTitle}>{projects.description}</Text>
+                <GlobalText text={projects.name} style={styles.catTitle} />
+                <GlobalText text={projects.description} style={styles.catSubTitle} />
               </View>
             </View>
 
@@ -83,7 +84,7 @@ const CategoryProjects = ({ navigation, route, ...props }) => {
             ))}
 
 
-            <Text style={{ marginTop: 50 }}>{JSON.stringify(projects.projects)}</Text>
+            <GlobalText text={JSON.stringify(projects.projects)} style={{ marginTop: 50 }} />
           </View>
         }
       </View>

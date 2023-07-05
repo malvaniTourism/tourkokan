@@ -15,6 +15,7 @@ import styles from "./Styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { checkLogin, backPage, goBackHandler, navigateTo } from "../Services/CommonMethods";
 import SvgUri from 'react-native-svg-uri';
+import GlobalText from "../Components/Customs/Text";
 
 const Profile = ({ navigation, ...props }) => {
   const [profile, setProfile] = useState([]);
@@ -73,7 +74,7 @@ const Profile = ({ navigation, ...props }) => {
         }
         endIcon={
           <TouchableOpacity onPress={handleLogout}>
-            <Text style={{ color: '#fff' }}>Logout  </Text>
+            <GlobalText text={"Logout  "} style={{ color: '#fff' }} />
           </TouchableOpacity>
         }
       />
@@ -88,8 +89,8 @@ const Profile = ({ navigation, ...props }) => {
         <View style={styles.profileDetails}>
           <View style={styles.flexRow}>
             <View>
-              <Text style={styles.boldText}>{profile.name}</Text>
-              <Text>{profile.role_id}</Text>
+              <GlobalText text={profile.name} style={styles.boldText} />
+              <GlobalText text={profile.role_id} />
             </View>
             {!profile.isVerified ?
               <View>
@@ -105,18 +106,16 @@ const Profile = ({ navigation, ...props }) => {
           </View>
           <View style={styles.flexRow}>
             <View>
-              <Text>{profile.email}</Text>
-              <Text>{profile.mobile}</Text>
+              <GlobalText text={profile.email} />
+              <GlobalText text={profile.mobile} />
             </View>
             <View>
-              <Text>{profile.dob}</Text>
-              <Text>{profile.gender}</Text>
+              <GlobalText text={profile.dob} />
+              <GlobalText text={profile.gender} />
             </View>
           </View>
 
-          <Text>
-            {JSON.stringify(profile)}
-          </Text>
+          <GlobalText text={JSON.stringify(profile)} />
         </View>
       </View>
     </View>

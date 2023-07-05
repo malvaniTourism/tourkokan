@@ -23,6 +23,7 @@ import { exitApp, navigateTo } from "../Services/CommonMethods";
 import TabView from "../Components/Common/TabView";
 import CityCard from "../Components/Cards/CityCard";
 import CategoryCard from "../Components/Cards/CategoryCard";
+import GlobalText from "../Components/Customs/Text";
 
 const HomeScreen = ({ navigation, ...props }) => {
     const [searchValue, setSearchValue] = useState("");
@@ -121,7 +122,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                         <SearchPanel navigation={navigation} />
 
                         <View style={styles.stopsSectionView}>
-                            <Text style={styles.sectionTitle}>Stops</Text>
+                            <GlobalText text={"Stops"} style={styles.sectionTitle} />
                             <View style={styles.cardsWrap}>
                                 {stops.map((stop, index) => (
                                     <SmallCard
@@ -156,19 +157,19 @@ const HomeScreen = ({ navigation, ...props }) => {
                         </View>
 
                         <View style={styles.sectionView}>
-                            <Text style={styles.sectionTitle}>Categories</Text>
+                            <GlobalText text={"Categories"} style={styles.sectionTitle} />
                             <View style={styles.cardsWrap}>
                                 {categories.map((category, index) => (
                                     <View>
                                         <CategoryCard data={category} getCategory={() => handleSmallCardClick("CategoryProjects", category.id, category.name)} />
-                                        <Text style={{textAlign: 'center'}}>{category.name}</Text>
+                                        <GlobalText text={category.name} style={{textAlign: 'center'}} />
                                     </View>
                                 ))}
                             </View>
                         </View>
 
                         <View style={styles.stopsSectionView}>
-                            <Text style={styles.sectionTitle}>Routes</Text>
+                            <GlobalText text={"Routes"} style={styles.sectionTitle} />
                             <View style={styles.cardsWrap}>
                                 {routes.map((route, index) => (
                                     <SmallCard
@@ -195,7 +196,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                         </View>
 
                         <View style={styles.sectionView}>
-                            <Text style={styles.sectionTitle}>Cities</Text>
+                            <GlobalText text={"Cities"} style={styles.sectionTitle} />
                             <View >
                                 {cities.map((city, index) => (
                                     <CityCard data={city} reload={() => callLandingPageAPI()} getCity={() => handleSmallCardClick("CityDetails", city.id)} />
@@ -211,7 +212,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                         </View>
 
                         <View style={styles.sectionView}>
-                            <Text style={styles.sectionTitle}>Projects</Text>
+                            <GlobalText text={"Projects"} style={styles.sectionTitle} />
                             <View style={styles.cardsWrap}>
                                 {projects.map((project, index) => (
                                     <SmallCard
@@ -239,7 +240,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                         <TabView data={place_category} />
 
                         <View style={styles.sectionView}>
-                            <Text style={styles.sectionTitle}>Places</Text>
+                            <GlobalText text={"Places"} style={styles.sectionTitle} />
                             <View style={styles.cardsWrap}>
                                 {places.map((place, index) => (
                                     <SmallCard

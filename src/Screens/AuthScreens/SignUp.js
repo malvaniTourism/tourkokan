@@ -13,6 +13,7 @@ import DropDown from "../../Components/Customs/DropDown";
 // import ImagePicker from 'react-native-image-picker';
 import { navigateTo } from "../../Services/CommonMethods";
 import { launchImageLibrary } from 'react-native-image-picker'
+import GlobalText from "../../Components/Customs/Text";
 
 const SignUp = ({ navigation, ...props }) => {
   const [name, setName] = useState("");
@@ -196,7 +197,7 @@ const SignUp = ({ navigation, ...props }) => {
               },
             )
         }
-          title="Select Image"><Text>Image</Text></TouchableOpacity>
+          title="Select Image"><GlobalText text={"Image"} /></TouchableOpacity>
       </ScrollView>
       <CustomButton
           title={"Register"}
@@ -208,11 +209,11 @@ const SignUp = ({ navigation, ...props }) => {
           type={"Submit"}
           onPress={() => Register()}
         />
-        <Text>{errMsg}</Text>
+        <GlobalText text={errMsg} />
         <View style={styles.haveAcc}>
-          <Text>Already have an Account? </Text>
+          <GlobalText text={"Already have an Account? "} />
           <TouchableOpacity onPress={() => signInScreen()}>
-            <Text> Sign In</Text>
+            <GlobalText text={" Sign In"} />
           </TouchableOpacity>
         </View>
     </View>

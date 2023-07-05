@@ -9,6 +9,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { ListItem } from "@rneui/themed";
 import { checkLogin, goBackHandler, navigateTo } from "../../Services/CommonMethods";
 import { comnPost } from "../../Services/Api/CommonServices";
+import GlobalText from "../../Components/Customs/Text";
 
 const CityPlaceSearch = ({ navigation, route }) => {
     const [searchValue, setSearchValue] = useState('');
@@ -82,10 +83,10 @@ const CityPlaceSearch = ({ navigation, route }) => {
 
             <View style={styles.flexRow}>
                 <TouchableOpacity style={[styles.clickChip, isCity ? styles.chipEnabled : styles.chipDisabled]} onPress={() => onChipClick(true)}>
-                    <Text style={styles.chipTitle}>City</Text>
+                    <GlobalText text={"City"} style={styles.chipTitle} />
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.clickChip, !isCity ? styles.chipEnabled : styles.chipDisabled]} onPress={() => onChipClick(false)}>
-                    <Text style={styles.chipTitle}>Place</Text>
+                    <GlobalText text={"Place"} style={styles.chipTitle} />
                 </TouchableOpacity>
             </View>
 

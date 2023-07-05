@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import DrawerNavigator from "./DrawerNavigator";
 import TabNavigator from "./TabNavigator";
+import GlobalText from "../Components/Customs/Text";
 
 const SignIn = lazy(() => import("../Screens/AuthScreens/SignIn"));
 const SignUp = lazy(() => import("../Screens/AuthScreens/SignUp"));
@@ -32,7 +33,7 @@ const StackNavigator = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   return (
-    <Suspense fallback={<Text>Loading...</Text>}>
+    <Suspense fallback={<GlobalText text={"Loading..."} />}>
     <NavigationContainer>
       <Stack.Navigator>
         {isLoggedIn ? (

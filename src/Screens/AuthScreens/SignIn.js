@@ -16,6 +16,7 @@ import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import Alert from "../../Components/Customs/Alert";
 import { exitApp, navigateTo } from "../../Services/CommonMethods";
+import GlobalText from "../../Components/Customs/Text";
 
 const SignIn = ({ navigation, ...props }) => {
   const [mobile, setMobile] = useState("");
@@ -126,7 +127,7 @@ const SignIn = ({ navigation, ...props }) => {
       />
 
       <View style={{ marginTop: 30, alignItems: "center" }}>
-        <Text style={{ marginBottom: 20 }}>---------- OR ----------</Text>
+        <GlobalText text={"---------- OR ----------"} style={{ marginBottom: 20 }} />
         <TouchableOpacity
           style={{
             paddingVertical: 15,
@@ -135,14 +136,14 @@ const SignIn = ({ navigation, ...props }) => {
           }}
           onPress={() => emailLogin()}
         >
-          <Text style={{ color: COLOR.white }}>Login with Email</Text>
+          <GlobalText text={"Login with Email"} style={{ color: COLOR.white }} />
         </TouchableOpacity>
       </View>
 
       <View style={styles.haveAcc}>
-        <Text>Don't have an Account? </Text>
+        <GlobalText text={"Don't have an Account? "} />
         <TouchableOpacity onPress={() => signUpScreen()}>
-          <Text> Sign Up</Text>
+          <GlobalText text={" Sign Up"} />
         </TouchableOpacity>
       </View>
 

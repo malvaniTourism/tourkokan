@@ -15,6 +15,7 @@ import styles from "../Styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { backPage, checkLogin, goBackHandler } from "../../Services/CommonMethods";
 import CityCard from "../../Components/Cards/CityCard";
+import GlobalText from "../../Components/Customs/Text";
 // import SkeletonContent from 'react-native-skeleton-content';
 
 const PlaceDetails = ({ navigation, route, ...props }) => {
@@ -78,23 +79,22 @@ const PlaceDetails = ({ navigation, route, ...props }) => {
                             <View style={{ flex: 1, padding: 10 }}>
                                 <View style={styles.placeImageView}>
                                     <ImageBackground source={place.image_url} style={styles.placeImage} />
-                                    <Text style={styles.detailTitle}>{place.name}</Text>
+                                    <GlobalText text={place.name} style={styles.detailTitle} />
                                 </View>
-                                <Text>{place.description}</Text>
-                                <Text>rating: {place.rating}</Text>
-                                <Text>visitors: {place.visitors_count}</Text>
-                                <Text>uploads: {place.photos_count}</Text>
-                                <Text>comments: {place.comments_count}</Text>
-                                <Text>{place.latitude}</Text>
-                                <Text>{place.longitude}</Text>
-                                <Text>social: {JSON.stringify(place.social_media)}</Text>
-                                <Text>contact: {JSON.stringify(place.contact_details)}</Text>
+                                <GlobalText text={place.description} />
+                                <GlobalText text={`rating: ${place.rating}`} />
+                                <GlobalText text={`visitors: ${place.visitors_count}`} />
+                                <GlobalText text={`uploads: ${place.photos_count}`} />
+                                <GlobalText text={`comments: ${place.comments_count}`} />
+                                <GlobalText text={place.latitude} />
+                                <GlobalText text={place.longitude} />
+                                <GlobalText text={`social: ${JSON.stringify(place.social_media)}`} />
+                                <GlobalText text={`contact: ${JSON.stringify(place.contact_details)}`} />
 
                                 <View style={styles.sectionView}>
-                                    <Text style={styles.sectionTitle}>Located In:</Text>
+                                    <GlobalText text={"Located In:"} style={styles.sectionTitle} />
                                     <CityCard data={place.city} reload={() => getDetails()} />
                                 </View>
-                                {/* <Text style={{marginTop: 50}}> {JSON.stringify(place)}</Text> */}
                             </View>
                         }
                     </View>

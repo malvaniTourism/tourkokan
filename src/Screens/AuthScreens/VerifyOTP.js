@@ -22,6 +22,7 @@ import {
 } from "react-native-otp-verify";
 import Alert from "../../Components/Customs/Alert";
 import { navigateTo } from "../../Services/CommonMethods";
+import GlobalText from "../../Components/Customs/Text";
 
 const VerifyOTP = ({ navigation, route, ...props }) => {
   const [otp, setOtp] = useState(1234);
@@ -131,13 +132,9 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
       />
       <View>
         <View style={{ marginTop: "5%", marginLeft: "10%" }}>
-          <Text style={styles.otpHead}>OTP Verification</Text>
-          <Text style={styles.otpSubHead}>
-            We have sent an OTP to verify your phone number.
-          </Text>
-          <Text style={styles.otpMobile}>
-            Sent to +91 {route.params.mobile}
-          </Text>
+          <GlobalText text={"OTP Verification"} style={styles.otpHead} />
+          <GlobalText text={"We have sent an OTP to verify your phone number."} style={styles.otpSubHead} />
+          <GlobalText text={`Sent to +91 ${route.params.mobile}`} style={styles.otpMobile} />
         </View>
         <OtpInputs
           style={{ flexDirection: "row" }}
@@ -179,14 +176,12 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
         onPress={() => verifyOtp()}
       />
       {sec >= 1 ? (
-        <Text style={styles.countertext}>
-          You can resend your OTP within (00:{sec > 9 ? sec : "0" + sec})
-        </Text>
+        <GlobalText text={`You can resend your OTP within (00:${sec > 9 ? sec : "0" + sec})`} style={styles.countertext} />
       ) : (
         <View>
-          <Text>I didn't receive a code</Text>
+          <GlobalText text={"I didn't receive a code"} />
           <TouchableOpacity onPress={() => resend()}>
-            <Text style={styles.counterText1}>Resend</Text>
+            <GlobalText text={"Resend"} style={styles.counterText1} />
           </TouchableOpacity>
         </View>
       )}

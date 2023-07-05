@@ -15,6 +15,7 @@ import FontIcons from "react-native-vector-icons/FontAwesome5";
 import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import { navigateTo } from "../../Services/CommonMethods";
+import GlobalText from "../../Components/Customs/Text";
 
 const EmailSignIn = ({ navigation, ...props }) => {
   const [email, setEmail] = useState("");
@@ -122,9 +123,9 @@ const EmailSignIn = ({ navigation, ...props }) => {
         onPress={() => Login()}
       />
       <View style={styles.haveAcc}>
-        <Text>Don't have an Account? </Text>
+        <GlobalText text={"Don't have an Account? "} />
         <TouchableOpacity onPress={() => signUpScreen()}>
-          <Text> Sign Up</Text>
+          <GlobalText text={" Sign Up"} />
         </TouchableOpacity>
       </View>
     </View>
