@@ -114,8 +114,6 @@ const Profile = ({ navigation, ...props }) => {
               <GlobalText text={profile.gender} />
             </View>
           </View>
-
-          <GlobalText text={JSON.stringify(profile)} />
         </View>
       </View>
     </View>

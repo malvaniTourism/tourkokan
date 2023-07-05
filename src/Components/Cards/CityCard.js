@@ -21,13 +21,13 @@ const CityCard = ({ data, reload, getCity }) => {
     }
 
     const onHeartClick = () => {
-        let data = {
+        let cityData = {
             user_id: AsyncStorage.getItem("userId"),
             favouritable_type: "City",
             favouritable_id: data.id
         }
         setIsFav(!isFav)
-        comnPost('v1/favourite', data)
+        comnPost('v1/favourite', cityData)
             .then(res => {
                 // reload()
             })

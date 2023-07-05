@@ -12,6 +12,7 @@ import Header from "../../Components/Common/Header";
 import { setLoader } from "../../Reducers/CommonActions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { backPage, checkLogin, goBackHandler, navigateTo } from "../../Services/CommonMethods";
+import styles from "./Styles";
 
 const CityList = ({ navigation, ...props }) => {
   const [cities, setCities] = useState([]); // State to store cities
@@ -57,7 +58,8 @@ const CityList = ({ navigation, ...props }) => {
             />
           }
         />
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flex: 1, alignItems: "center" }}>
+        <View style={styles.cardsWrap}>
           {cities.map((city) => (
             <SmallCard
               Icon={
@@ -71,6 +73,7 @@ const CityList = ({ navigation, ...props }) => {
               onPress={() => handleSmallCardClick(city.id)}
             />
           ))}
+        </View>
         </View>
       </View>
     </ScrollView>

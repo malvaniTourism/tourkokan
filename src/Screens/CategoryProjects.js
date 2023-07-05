@@ -65,7 +65,7 @@ const CategoryProjects = ({ navigation, route, ...props }) => {
         />
         {projects &&
           <View>
-            <View style={{ marginBottom: 20 }}>
+            <View style={styles.prjImgContainer}>
               <View style={styles.overlay} />
               <ImageBackground
                 source={{ uri: Path.FTP_PATH + projects.image_url }}

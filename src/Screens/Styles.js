@@ -86,6 +86,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
+    prjImgContainer: {
+        marginBottom: 20,
+        width: DIMENSIONS.screenWidth,
+    },
     categoryBack: {
         marginTop: -20,
         height: DIMENSIONS.bannerHeight,
@@ -100,20 +104,22 @@ const styles = StyleSheet.create({
     },
     categoryImageDetails: {
         height: DIMENSIONS.bannerHeight,
-        width: DIMENSIONS.screenWidth,
+        width: DIMENSIONS.bannerWidth,
         position: 'absolute',
-        alignItems: 'center',
+        alignSelf: 'center',
         justifyContent: 'center',
         textAlign: 'center'
     },
     catTitle: {
         color: COLOR.white,
         fontWeight: 'bold',
-        fontSize: DIMENSIONS.headerTextSize
+        fontSize: DIMENSIONS.headerTextSize,
+        textAlign: 'center'
     },
     catSubTitle: {
         color: COLOR.white,
-        fontSize: DIMENSIONS.subtitleTextSize
+        fontSize: DIMENSIONS.subtitleTextSize,
+        textAlign: 'center'
     }
 });
 
