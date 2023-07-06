@@ -16,6 +16,7 @@ import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import { navigateTo } from "../../Services/CommonMethods";
 import GlobalText from "../../Components/Customs/Text";
+import SQLite from 'react-native-sqlite-storage'
 
 const EmailSignIn = ({ navigation, ...props }) => {
   const [email, setEmail] = useState("");
@@ -24,6 +25,8 @@ const EmailSignIn = ({ navigation, ...props }) => {
   const [alertMessage, setAlertMessage] = useState("");
 
   useEffect(() => {
+    // openDB()
+    // createUserTable();
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => navigateTo(navigation, 'Login'));
     return () => {
       backHandler.remove();
@@ -31,6 +34,55 @@ const EmailSignIn = ({ navigation, ...props }) => {
       setAlertMessage("");
     };
   }, []);
+
+  const openDB = () => {
+    const db = SQLite.openDatabase({ name: 'mydb.db', createFromLocation: '~mydata.db' });
+    if (db) {
+      // Database initialization successful, proceed with queries
+    } else {
+      console.error('Failed to initialize the database.');
+    }
+  }
+
+  const createUserTable = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        'CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT)'
+      );
+    });
+  }
+
+  const createUser = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        'INSERT INTO users (name, email) VALUES (?, ?)',
+        ['John Doe', 'john@example.com'],
+        (tx, results) => {
+          if (results.rowsAffected > 0) {
+            console.log('Record inserted successfully.');
+          } else {
+            console.log('Failed to insert record.');
+          }
+        }
+      );
+    });
+  }
+
+  const getUserData = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        'SELECT * FROM users',
+        [],
+        (tx, results) => {
+          const len = results.rows.length;
+          for (let i = 0; i < len; i++) {
+            const { id, name, email } = results.rows.item(i);
+            console.log(`User ${id}: ${name} (${email})`);
+          }
+        }
+      );
+    });
+  }
 
   const setValue = (val, isVal, index) => {
     switch (index) {
@@ -58,6 +110,7 @@ const EmailSignIn = ({ navigation, ...props }) => {
       email,
       password,
     };
+    // createUser()
     comnPost("auth/login", data)
       .then((res) => {
         if (res.data.success) {
