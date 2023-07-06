@@ -90,6 +90,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     catCardIcon: {
+        width: DIMENSIONS.bannerWidth / 4,
+        height: DIMENSIONS.bannerWidth / 4
     },
     projectCard: {
         minHeight: DIMENSIONS.bannerHeight,

@@ -17,7 +17,7 @@ const CategoryCard = ({ data, getCategory }) => {
             <TouchableOpacity style={styles.catCardIcon} onPress={() => onIconCLick()}>
                 <Image
                     source={require('../../Assets/Images/beach.png')}
-                    style={{ width: DIMENSIONS.bannerWidth / 4, height: DIMENSIONS.bannerWidth / 4 }}
+                    style={styles.catCardIcon}
                 />
             </TouchableOpacity>
         </View>

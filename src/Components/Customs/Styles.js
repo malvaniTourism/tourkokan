@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
   },
   containerStyle: {
     width: DIMENSIONS.bannerWidth,
+    borderRadius: DIMENSIONS.borderRadiusXS
   },
   buttonStyle: {
     width: DIMENSIONS.bannerWidth,
@@ -128,7 +129,8 @@ const styles = StyleSheet.create({
     borderColor: COLOR.grey,
   },
   text: {
-    color: COLOR.black
+    color: COLOR.black,
+    fontSize: DIMENSIONS.textSize
   }
 });
 
