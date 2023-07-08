@@ -35,6 +35,7 @@ const DIMENSIONS = {
 
     sectionGap: 20,
 
+    smallImage: 40,
     detailsImage: 100,
 
 };

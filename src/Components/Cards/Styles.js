@@ -133,6 +133,15 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: DIMENSIONS.borderRadiusXS,
         alignItems: 'center',
         paddingVertical: 2
+    },
+    busImage: {
+        height: DIMENSIONS.smallImage,
+        width: DIMENSIONS.smallImage,
+    },
+    routeHeadCardImage: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })
 
