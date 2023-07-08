@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, ScrollView, Text } from "react-native";
+import { View, ScrollView, Text, ImageBackground, Image } from "react-native";
 import SmallCard from "../../Components/Customs/SmallCard";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import COLOR from "../../Services/Constants/COLORS";
@@ -11,8 +11,11 @@ import { setLoader } from "../../Reducers/CommonActions";
 import Loader from "../../Components/Customs/Loader";
 import Header from "../../Components/Common/Header";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { backPage, checkLogin, goBackHandler } from "../../Services/CommonMethods";
+import { backPage, checkLogin, goBackHandler, navigateTo } from "../../Services/CommonMethods";
 import GlobalText from "../../Components/Customs/Text";
+import styles from "./Styles";
+import TabView from "../../Components/Common/TabView";
+import Path from "../../Services/Api/BaseUrl";
 
 const CityDetails = ({ navigation, route, ...props }) => {
     const [city, setCity] = useState([]); // State to store city
@@ -46,11 +49,15 @@ const CityDetails = ({ navigation, route, ...props }) => {
             });
     }
 
+    const handleSmallCardClick = (page, id, name) => {
+        navigateTo(navigation, page, { id, name });
+    };
+
     return (
         <ScrollView>
             <Loader />
             <Header
-                name={city.name}
+                name={"City"}
                 startIcon={
                     <Ionicons
                         name="chevron-back-outline"
@@ -60,12 +67,65 @@ const CityDetails = ({ navigation, route, ...props }) => {
                     />
                 }
             />
-            <View style={{ flex: 1, alignItems: "center" }}>
-                <View style={{ flexDirection: "row" }}>
-                    <GlobalText text={city.name} />
-                    <GlobalText text={JSON.stringify(city)} />
+
+            {city &&
+                <View style={{ flex: 1, padding: 10 }}>
+                    <View style={styles.placeImageView}>
+                        <ImageBackground source={city.image_url} style={styles.placeImage} />
+                        <GlobalText text={city.name} style={styles.detailTitle} />
+                        <GlobalText text={city.tag_line} style={styles.detailTitle} />
+                    </View>
+                    <GlobalText text={city.description} />
+                    <GlobalText text={`projects: ${city.projects_count}`} />
+                    <GlobalText text={`places: ${city.places_count}`} />
+                    <GlobalText text={`uploads: ${city.photos_count}`} />
+                    <GlobalText text={`comments: ${city.comments_count}`} />
+                    <GlobalText text={city.latitude} />
+                    <GlobalText text={city.longitude} />
+                    <GlobalText text={`social: ${JSON.stringify(city.social_media)}`} />
+                    <GlobalText text={`contact: ${JSON.stringify(city.contact_details)}`} />
+                    <GlobalText text={`comments: ${JSON.stringify(city.comments)}`} />
+                    <GlobalText text={`photos: ${JSON.stringify(city.photos)}`} />
+
+                    <View style={styles.sectionView}>
+                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                            {city.places && city.places.map((place, index) => (
+                                <SmallCard
+                                    key={index}
+                                    Icon={
+                                        <Image
+                                            source={{ uri: Path.API_PATH + place.icon }}
+                                            color={COLOR.yellow}
+                                            size={DIMENSIONS.iconSize}
+                                        />
+                                    }
+                                    title={place.name}
+                                    onPress={() => handleSmallCardClick("PlaceDetails", place.id)}
+                                />
+                            ))}
+                        </ScrollView>
+                    </View>
+
+                    <View style={styles.sectionView}>
+                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                            {city.projects && city.projects.map((project, index) => (
+                                <SmallCard
+                                    key={index}
+                                    Icon={
+                                        <Image
+                                            source={{ uri: Path.API_PATH + project.icon }}
+                                            color={COLOR.yellow}
+                                            size={DIMENSIONS.iconSize}
+                                        />
+                                    }
+                                    title={project.name}
+                                    onPress={() => handleSmallCardClick("ProjectDetails", project.id)}
+                                />
+                            ))}
+                        </ScrollView>
+                    </View>
                 </View>
-            </View>
+            }
         </ScrollView>
     );
 };

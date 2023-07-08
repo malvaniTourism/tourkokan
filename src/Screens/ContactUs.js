@@ -6,7 +6,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import Feather from "react-native-vector-icons/Feather";
 import COLOR from "../Services/Constants/COLORS";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
-import RouteLine from "../Components/Customs/RouteLine";
+import RouteLine from "../Components/Customs/RouteLines/RouteLine";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { backPage, checkLogin, goBackHandler, navigateTo } from "../Services/CommonMethods";
 import { ContactUsFields } from "../Services/Constants/FIELDS";

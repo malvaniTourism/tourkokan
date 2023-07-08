@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { View, Text, ScrollView, LogBox, Image, BackHandler, SafeAreaView, FlatList } from "react-native";
 import { ListItem } from "@rneui/themed";
 import SearchPanel from "../Components/Common/SearchPanel";
@@ -24,8 +24,13 @@ import TabView from "../Components/Common/TabView";
 import CityCard from "../Components/Cards/CityCard";
 import CategoryCard from "../Components/Cards/CategoryCard";
 import GlobalText from "../Components/Customs/Text";
+import BottomSheet from "../Components/Customs/BottomSheet";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import LocationSheet from "../Components/Common/LocationSheet";
 
 const HomeScreen = ({ navigation, ...props }) => {
+    const refRBSheet = useRef();
+
     const [searchValue, setSearchValue] = useState("");
     const [categories, setCategories] = useState([]);
     const [cities, setCities] = useState([]);
@@ -100,6 +105,14 @@ const HomeScreen = ({ navigation, ...props }) => {
         navigateTo(navigation, "CityPlaceSearch")
     }
 
+    const openLocationSheet = () => {
+        refRBSheet.current.open()
+    }
+
+    const closeLocationSheet = () => {
+        refRBSheet.current.close()
+    }
+
     return (
         <ScrollView>
             {
@@ -107,7 +120,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                     <Loader />
                     :
                     <View style={{ flex: 1, alignItems: "center" }}>
-                        <TopComponent navigation={navigation} />
+                        <TopComponent navigation={navigation} openLocationSheet={() => openLocationSheet()} />
                         {CityName.map((field, index) => {
                             return (
                                 <SearchBar
@@ -162,7 +175,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                                 {categories.map((category, index) => (
                                     <View>
                                         <CategoryCard data={category} getCategory={() => handleSmallCardClick("CategoryProjects", category.id, category.name)} />
-                                        <GlobalText text={category.name} style={{textAlign: 'center'}} />
+                                        <GlobalText text={category.name} style={{ textAlign: 'center' }} />
                                     </View>
                                 ))}
                             </View>
@@ -266,6 +279,15 @@ const HomeScreen = ({ navigation, ...props }) => {
                         </View>
                     </View>
             }
+            <BottomSheet
+                refRBSheet={refRBSheet}
+                height={300}
+                Component={<LocationSheet
+                    openLocationSheet={() => openLocationSheet()}
+                    closeLocationSheet={() => closeLocationSheet()}
+                />}
+                openLocationSheet={() => openLocationSheet()}
+                closeLocationSheet={() => closeLocationSheet()} />
         </ScrollView>
     );
 };

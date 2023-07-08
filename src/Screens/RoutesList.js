@@ -6,9 +6,13 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import Feather from "react-native-vector-icons/Feather";
 import COLOR from "../Services/Constants/COLORS";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
-import RouteLine from "../Components/Customs/RouteLine";
+import RouteLine from "../Components/Customs/RouteLines/RouteLine";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { backPage, checkLogin, goBackHandler, navigateTo } from "../Services/CommonMethods";
+import RouteLineFirst from "../Components/Customs/RouteLines/RouteLineFirst";
+import RouteLineLast from "../Components/Customs/RouteLines/RouteLineLast";
+import GlobalText from "../Components/Customs/Text";
+import RouteHeadCard from "../Components/Cards/RouteHeadCard";
 
 const RoutesList = ({ navigation, route }) => {
   const [list, setList] = useState(route.params.item.route_stops);
@@ -21,13 +25,23 @@ const RoutesList = ({ navigation, route }) => {
     }
   }, []);
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item, index }) => {
+    let isFirst = index === 0;
+    let isLast = index === list.length - 1;
+
     return (
-      <ListItem bottomDivider>
-        {/* <Avatar source={{ uri: item.avatar_url }} /> */}
-        <RouteLine />
+      <ListItem bottomDivider style={{paddingTop: isFirst ? 20 : 0}}>
+        {
+          isFirst ?
+            <RouteLineFirst />
+            :
+            isLast ?
+              <RouteLineLast />
+              :
+              <RouteLine />
+        }
         <ListItem.Content>
-          <ListItem.Title>{item.place.name}</ListItem.Title>
+          <ListItem.Title><GlobalText text={item.place.name} style={{color: (isFirst || isLast) && COLOR.themeComicBlue}} /></ListItem.Title>
         </ListItem.Content>
       </ListItem>
     );
@@ -40,11 +54,11 @@ const RoutesList = ({ navigation, route }) => {
   return (
     <View>
       <Header
-        name={route.params.item.name}
+        name={""}
         goBack={() => backPage(navigation)}
         startIcon={
           <Ionicons
-            name="bus"
+            name="chevron-back-outline"
             color={COLOR.black}
             size={DIMENSIONS.userIconSize}
             onPress={() => backPage(navigation)}
@@ -59,6 +73,7 @@ const RoutesList = ({ navigation, route }) => {
           />
         }
       />
+      <RouteHeadCard data={route.params.item} />
       <SafeAreaView>
         <FlatList
           keyExtractor={(item) => item.id}

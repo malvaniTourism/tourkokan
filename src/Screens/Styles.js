@@ -4,23 +4,13 @@ import COLOR from "../Services/Constants/COLORS";
 
 const styles = StyleSheet.create({
     homeSearchBar: {
-        marginTop: -15,
+        // marginTop: -15,
     },
     cityListView: {
         zIndex: 1,
         position: 'absolute',
         top: 240,
         width: DIMENSIONS.bannerWidth
-    },
-    placeImageView: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: DIMENSIONS.detailsImage,
-    },
-    detailTitle: {
-        fontSize: DIMENSIONS.headerTextSize,
-        fontWeight: 'bold',
-        color: COLOR.headingColor2
     },
     sectionView: {
         marginVertical: DIMENSIONS.sectionGap,

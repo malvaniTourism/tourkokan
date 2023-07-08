@@ -57,19 +57,6 @@ const styles = StyleSheet.create({
     animation: "fadeinout 4s infinite",
     opacity: 1
   },
-  routeLineVert: {
-    borderColor: COLOR.black,
-    borderWidth: 1,
-    position: "absolute",
-    height: 80,
-    top: -30,
-    left: 5,
-  },
-  routeDot: {
-    borderColor: COLOR.black,
-    borderWidth: 6,
-    borderRadius: DIMENSIONS.borderRadius,
-  },
   containerStyle: {
     width: DIMENSIONS.bannerWidth,
     borderRadius: DIMENSIONS.borderRadiusXS

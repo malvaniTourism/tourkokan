@@ -126,7 +126,7 @@ export const Destination = [
 export const CityName = [
   {
     name: "City Name",
-    placeholder: "Search by City Name",
+    placeholder: "Search for city, place",
     type: "text",
     length: 50,
     required: true,

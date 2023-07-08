@@ -17,6 +17,8 @@ const DIMENSIONS = {
     bannerHeight: (sw - 40) / 2,
 
     iconSize: 20,
+    iconMedium: 21,
+    iconBig: 24,
     userIconSize: 30,
 
     borderRadiusLarge: 50,

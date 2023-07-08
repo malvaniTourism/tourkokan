@@ -1,3 +1,4 @@
+import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 
 const { StyleSheet } = require("react-native");
@@ -13,6 +14,20 @@ const styles = StyleSheet.create({
     },
     placeImage: {
 
+    },
+    placeImageView: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: DIMENSIONS.detailsImage,
+    },
+    detailTitle: {
+        fontSize: DIMENSIONS.headerTextSize,
+        fontWeight: 'bold',
+        color: COLOR.headingColor2
+    },
+    sectionView: {
+        marginVertical: DIMENSIONS.sectionGap,
+        alignItems: "center",
     },
 })
 

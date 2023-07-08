@@ -5,7 +5,7 @@ import Header from "../Components/Common/Header";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import COLOR from "../Services/Constants/COLORS";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
-import RouteLine from "../Components/Customs/RouteLine";
+import RouteLine from "../Components/Customs/RouteLines/RouteLine";
 import { connect } from "react-redux";
 import { comnPost } from "../Services/Api/CommonServices";
 import { setLoader } from "../Reducers/CommonActions";

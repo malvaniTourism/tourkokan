@@ -112,6 +112,28 @@ const styles = StyleSheet.create({
     projectImageStyle: {
         opacity: 0.7
     },
+    routeHeadCard: {
+        height: DIMENSIONS.bannerHeight / 2,
+        width: DIMENSIONS.bannerWidth,
+        backgroundColor: COLOR.white,
+        alignSelf: 'center',
+        marginVertical: -28,
+        elevation: 10,
+        zIndex: 10,
+        borderRadius: DIMENSIONS.borderRadiusXS,
+        justifyContent: 'space-between'
+    },
+    routeHeadCardTitle: {
+        fontWeight: 'bold',
+        color: COLOR.themeComicBlue
+    },
+    routeHeadCardBottom: {
+        backgroundColor: COLOR.red,
+        borderBottomLeftRadius: DIMENSIONS.borderRadiusXS,
+        borderBottomRightRadius: DIMENSIONS.borderRadiusXS,
+        alignItems: 'center',
+        paddingVertical: 2
+    }
 })
 
 export default styles

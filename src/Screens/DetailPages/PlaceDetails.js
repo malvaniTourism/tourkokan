@@ -11,7 +11,7 @@ import { setLoader } from "../../Reducers/CommonActions";
 import Loader from "../../Components/Customs/Loader";
 import Header from "../../Components/Common/Header";
 import { Image } from "@rneui/themed";
-import styles from "../Styles";
+import styles from "./Styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { backPage, checkLogin, goBackHandler } from "../../Services/CommonMethods";
 import CityCard from "../../Components/Cards/CityCard";

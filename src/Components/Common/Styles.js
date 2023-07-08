@@ -8,25 +8,57 @@ const styles = StyleSheet.create({
     width: DIMENSIONS.windowWidth,
     borderBottomLeftRadius: DIMENSIONS.borderRadiusSmall,
     borderBottomRightRadius: DIMENSIONS.borderRadiusSmall,
-    position: "relative",
   },
   userIcon: {
     margin: 10,
   },
   topMenu: {
-    backgroundColor: COLOR.transparent,
+    backgroundColor: COLOR.themeComicBlue,
     width: DIMENSIONS.windowWidth,
     flexDirection: "row",
     justifyContent: "space-between",
-    position: "absolute",
     zIndex: 10,
   },
+  locationView: {
+    margin: 10,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  fontBold: {
+    fontWeight: 'bold',
+    fontSize: DIMENSIONS.subtitleTextSize,
+    marginRight: 5
+  },
+  listView: {
+    zIndex: 1,
+    height: 200,
+    top: 70,
+    position: 'absolute',
+    width: DIMENSIONS.screenWidth,
+  },
+  currLocView: {
+    zIndex: 0,
+    padding: 10,
+    position: 'relative',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  recentsView: {
+    marginTop: 10,
+    padding: 20,
+    borderTopWidth: 1,
+    borderColor: COLOR.grey
+  },
+  recentsListView: {
+    marginTop: 10,
+    flexDirection: 'row'
+  },
   fieldsView: {
-    borderWidth: 1,
-    borderColor: COLOR.grey,
+    // borderWidth: 1,
+    // borderColor: COLOR.grey,
     borderBottomColor: COLOR.transparent,
     paddingTop: 10,
-    marginBottom: -15,
+    // marginBottom: -5,
   },
   textContainerStyle: {
     width: DIMENSIONS.bannerWidth,
@@ -37,30 +69,22 @@ const styles = StyleSheet.create({
     borderColor: COLOR.transparent,
   },
   searchPanelField: {
+    borderWidth: .5,
     borderRadius: DIMENSIONS.borderRadius,
   },
   searchButtonContainerStyle: {
     marginTop: 15,
-    borderBottomLeftRadius: DIMENSIONS.borderRadiusSmall,
-    borderBottomRightRadius: DIMENSIONS.borderRadiusSmall,
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0,
+    borderRadius: DIMENSIONS.borderRadiusSmall,
   },
   searchButtonStyle: {
     height: 50,
     backgroundColor: COLOR.themeComicBlue,
-    borderBottomLeftRadius: DIMENSIONS.borderRadiusSmall,
-    borderBottomRightRadius: DIMENSIONS.borderRadiusSmall,
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0,
+    borderRadius: DIMENSIONS.borderRadiusSmall,
   },
   searchButtonDisable: {
     height: 50,
     backgroundColor: COLOR.grey,
-    borderBottomLeftRadius: DIMENSIONS.borderRadiusSmall,
-    borderBottomRightRadius: DIMENSIONS.borderRadiusSmall,
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0,
+    borderRadius: DIMENSIONS.borderRadiusSmall,
   },
   buttonTitleStyle: {
     color: COLOR.white,
@@ -83,8 +107,8 @@ const styles = StyleSheet.create({
   },
   swapIcon: {
     position: 'absolute',
-    top: '42%',
-    left: '44%'
+    top: '41%',
+    left: '80%'
   },
   tabView: {
     width: DIMENSIONS.screenWidth
