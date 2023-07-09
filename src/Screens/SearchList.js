@@ -13,8 +13,9 @@ import Loader from "../Components/Customs/Loader";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { backPage, checkLogin, goBackHandler, navigateTo } from "../Services/CommonMethods";
 import GlobalText from "../Components/Customs/Text";
+import RouteHeadCard from "../Components/Cards/RouteHeadCard";
 
-const SearchList = ({ navigation, ...props }) => {
+const SearchList = ({ navigation, route, ...props }) => {
   const [list, setList] = useState([]);
 
   useEffect(() => {
@@ -27,7 +28,6 @@ const SearchList = ({ navigation, ...props }) => {
   }, []);
 
   const getRoutes = (item) => {
-    console.log('item - ', item);
     navigateTo(navigation, "RoutesList", { item });
   };
 
@@ -83,11 +83,20 @@ const SearchList = ({ navigation, ...props }) => {
       <Loader />
       <SafeAreaView>
         {list[0] ? (
-          <FlatList
-            keyExtractor={(item) => item.id}
-            data={list}
-            renderItem={renderItem}
-          />
+          route.params.from == "Search" ?
+            (
+              list.map(route => (
+                <RouteHeadCard data={route} />
+              ))
+            )
+            :
+            (
+              <FlatList
+                keyExtractor={(item) => item.id}
+                data={list}
+                renderItem={renderItem}
+              />
+            )
         ) : (
           <GlobalText text={"No Routes Available"} />
         )}

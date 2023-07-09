@@ -7,6 +7,7 @@ import styles from "./Styles";
 import { connect } from "react-redux";
 import { comnPost } from "../../Services/Api/CommonServices";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import { navigateTo } from "../../Services/CommonMethods";
@@ -47,7 +48,6 @@ const SearchPanel = ({ navigation, ...props }) => {
   };
 
   const checkIsValid = () => {
-    console.log(props.source.name, ' == ', props.source);
     if ((props.source.name) && (props.destination.name)) setIsValid(true)
     else setIsValid(false)
   }
@@ -59,11 +59,10 @@ const SearchPanel = ({ navigation, ...props }) => {
   const gotoRoutes = () => {
     props.setSource('')
     props.setDestination('')
-    navigateTo(navigation, "SearchList");
+    navigateTo(navigation, "SearchList", { from: "Search" });
   };
 
   const swap = () => {
-    console.log('swap - - -');
     let a = props.source
     let b = props.destination
     props.setSource(b);
@@ -89,10 +88,25 @@ const SearchPanel = ({ navigation, ...props }) => {
               style={styles.searchPanelField}
               containerStyle={styles.textContainerStyle}
               inputContainerStyle={styles.inputContainerStyle}
+              leftIcon={
+                <Ionicons
+                  style={styles.swapIcon}
+                  name="bus"
+                  color={COLOR.grey}
+                  size={DIMENSIONS.iconBig}
+                  onPress={isValid ? swap : null}
+                />
+              }
             />
           );
         })}
-        <MaterialIcons style={styles.swapIcon} name="swap-vert-circle" color={isValid ? COLOR.themeComicBlue : COLOR.grey} size={DIMENSIONS.userIconSize} onPress={isValid ? swap : null} />
+        <MaterialIcons
+          style={styles.swapIcon}
+          name="swap-vert-circle"
+          color={isValid ? COLOR.themeComicBlue : COLOR.grey}
+          size={DIMENSIONS.iconLarge}
+          onPress={isValid ? swap : null}
+        />
       </View>
       <CustomButton
         title={"Search"}

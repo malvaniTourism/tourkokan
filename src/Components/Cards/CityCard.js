@@ -10,8 +10,9 @@ import StarRating from 'react-native-star-rating';
 import { comnPost } from '../../Services/Api/CommonServices';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import GlobalText from '../Customs/Text';
+import { navigateTo } from '../../Services/CommonMethods';
 
-const CityCard = ({ data, reload, getCity }) => {
+const CityCard = ({ data, reload, navigation }) => {
     const [isFav, setIsFav] = useState(false)
     const [isLiked, setIsLiked] = useState(false)
     const [rating, setRating] = useState(3.5)
@@ -32,7 +33,6 @@ const CityCard = ({ data, reload, getCity }) => {
                 // reload()
             })
             .catch(err => {
-                console.log(err);
             })
     }
 
@@ -41,8 +41,8 @@ const CityCard = ({ data, reload, getCity }) => {
         // reload()
     }
 
-    const goToDetails = () => {
-        getCity()
+    const getCity = (id) => {
+        navigateTo(navigation, "CityDetails", { id })
     }
 
     return (
@@ -60,7 +60,7 @@ const CityCard = ({ data, reload, getCity }) => {
             </View>
             <View style={styles.cityContentView}>
                 <View style={styles.cityContentTop}>
-                    <TouchableOpacity onPress={() => goToDetails()}>
+                    <TouchableOpacity onPress={() => getCity(data.id)}>
                         <GlobalText text={data.name} style={styles.cityName} />
                         <GlobalText text={data.tag_line} style={styles.cityTag} />
                     </TouchableOpacity>

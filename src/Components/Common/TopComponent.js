@@ -34,7 +34,7 @@ const TopComponent = ({ navigation, openLocationSheet }) => {
         <View style={styles.locationView}>
           <Ionicons
             name="menu"
-            color={COLOR.black}
+            color={COLOR.white}
             size={DIMENSIONS.userIconSize}
             style={{ marginRight: 20 }}
             onPress={() => openDrawer()}
@@ -42,14 +42,14 @@ const TopComponent = ({ navigation, openLocationSheet }) => {
           <GlobalText text={"Devgad"} style={styles.fontBold} />
           <Ionicons
             name="chevron-down"
-            color={COLOR.black}
+            color={COLOR.white}
             size={DIMENSIONS.iconMedium}
             onPress={() => openLocationSheet()}
           />
         </View>
         <FontIcons
           name="user-circle"
-          color={COLOR.black}
+          color={COLOR.white}
           size={DIMENSIONS.userIconSize}
           style={styles.userIcon}
           onPress={() => openProfile()}

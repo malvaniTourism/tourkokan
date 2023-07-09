@@ -32,7 +32,6 @@ const ProjectList = ({ navigation, ...props }) => {
     const data = {}
     comnPost("v1/projects", data)
       .then((res) => {
-        console.log(res);
         setProjects(res.data.data.data); // Update projects state with response data
         props.setLoader(false);
       })

@@ -15,7 +15,7 @@ const BusTimings = lazy(() => import("../Screens/BusTimings"));
 const CategoryProjects = lazy(() => import("../Screens/CategoryProjects"));
 const CityDetails = lazy(() => import("../Screens/DetailPages/CityDetails"));
 const CityList = lazy(() => import("../Screens/ListPages/CityList"));
-const PlaceList = lazy(() => import("../Screens/ListPages/PlaceList"));
+const Explore = lazy(() => import("../Screens/ListPages/Explore"));
 const ProjectList = lazy(() => import("../Screens/ListPages/ProjectList"));
 const CityPlaceSearch = lazy(() => import("../Screens/ListPages/CityPlaceSearch"));
 const StopList = lazy(() => import("../Screens/ListPages/StopList"));
@@ -72,7 +72,7 @@ const StackNavigator = () => {
           <Stack.Screen name="SignUp" component={SignUp} />
           <Stack.Screen name="CategoryProjects" component={CategoryProjects} />
           <Stack.Screen name="CityList" component={CityList} />
-          <Stack.Screen name="PlaceList" component={PlaceList} />
+          <Stack.Screen name="Explore" component={Explore} />
           <Stack.Screen name="ProjectList" component={ProjectList} />
           <Stack.Screen name="StopList" component={StopList} />
           <Stack.Screen name="CityDetails" component={CityDetails} />

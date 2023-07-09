@@ -34,7 +34,6 @@ const Profile = ({ navigation, ...props }) => {
   const getUserProfile = () => {
     comnGet("v1/user-profile", props.access_token)
       .then((res) => {
-        console.log('profile daat-- ', res.data.data);
         setProfile(res.data.data); // Update places state with response data
         props.setLoader(false);
       })

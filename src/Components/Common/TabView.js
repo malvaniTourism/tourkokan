@@ -9,7 +9,6 @@ import GlobalText from '../Customs/Text';
 const TabView = ({ data }) => {
     const [selectedTab, setSelectedTab] = useState(0);
 
-    console.log(data);
     const handleTabChange = (index) => {
         setSelectedTab(index);
     };

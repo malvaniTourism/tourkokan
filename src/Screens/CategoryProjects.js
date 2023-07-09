@@ -34,7 +34,6 @@ const CategoryProjects = ({ navigation, route, ...props }) => {
   const getAllProjects = () => {
     comnGet(`v1/category/${route.params.id}/projects`, props.access_token)
       .then((res) => {
-        console.log('res- ', res.data.data);
         setProjects(res.data.data[0]); // Update Projects state with response data
         props.setLoader(false);
       })

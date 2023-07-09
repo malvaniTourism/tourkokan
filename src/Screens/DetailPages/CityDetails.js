@@ -34,7 +34,6 @@ const CityDetails = ({ navigation, route, ...props }) => {
     const getDetails = () => {
         comnGet(`v1/city/${route.params.id}`, props.access_token)
             .then((res) => {
-                console.log(res.data);
                 if (res.data.success) {
                     setCity(res.data.data);
                     props.setLoader(false);
@@ -70,7 +69,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
 
             {city &&
                 <View style={{ flex: 1, padding: 10 }}>
-                    <View style={styles.placeImageView}>
+                    <View style={styles.cityImageView}>
                         <ImageBackground source={city.image_url} style={styles.placeImage} />
                         <GlobalText text={city.name} style={styles.detailTitle} />
                         <GlobalText text={city.tag_line} style={styles.detailTitle} />

@@ -34,6 +34,13 @@ const styles = StyleSheet.create({
         width: DIMENSIONS.bannerWidth - 30,
         shadowColor: COLOR.headingColor2
     },
+    toggleView: {
+        paddingBottom: 10
+    },
+    placesList: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+    },
     sectionTitle: {
         fontWeight: "bold",
         fontSize: DIMENSIONS.headerTextSize,

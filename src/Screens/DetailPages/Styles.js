@@ -7,18 +7,18 @@ const styles = StyleSheet.create({
     center: {
         justifyContent: 'center'
     },
-    placeImageView: {
+    placeImageTitleView: {
         height: DIMENSIONS.detailsImage,
         width: DIMENSIONS.detailsImage,
-        borderRadius: DIMENSIONS.borderRadiusLarge
+        borderRadius: DIMENSIONS.borderRadiusLarge,
     },
-    placeImage: {
-
-    },
-    placeImageView: {
+    cityImageView: {
         alignItems: 'center',
         justifyContent: 'center',
         height: DIMENSIONS.detailsImage,
+    },
+    placeImage: {
+
     },
     detailTitle: {
         fontSize: DIMENSIONS.headerTextSize,

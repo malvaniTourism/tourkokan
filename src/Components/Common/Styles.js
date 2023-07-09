@@ -26,8 +26,9 @@ const styles = StyleSheet.create({
   },
   fontBold: {
     fontWeight: 'bold',
-    fontSize: DIMENSIONS.subtitleTextSize,
-    marginRight: 5
+    fontSize: DIMENSIONS.headerTextSize,
+    marginRight: 5,
+    color: COLOR.white
   },
   listView: {
     zIndex: 1,
@@ -54,23 +55,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   fieldsView: {
-    // borderWidth: 1,
-    // borderColor: COLOR.grey,
-    borderBottomColor: COLOR.transparent,
-    paddingTop: 10,
-    // marginBottom: -5,
+    borderWidth: .5,
+    borderColor: COLOR.themeComicBlue,
+    borderRadius: DIMENSIONS.borderRadius,
+    paddingBottom: 10,
+    backgroundColor: COLOR.white
   },
   textContainerStyle: {
     width: DIMENSIONS.bannerWidth,
-    marginBottom: -16,
   },
   inputContainerStyle: {
-    borderWidth: 1,
-    borderColor: COLOR.transparent,
-  },
-  searchPanelField: {
     borderWidth: .5,
     borderRadius: DIMENSIONS.borderRadius,
+    borderColor: COLOR.grey,
+  },
+  searchPanelField: {
+    borderWidth: 0,
+    paddingLeft: 40
   },
   searchButtonContainerStyle: {
     marginTop: 15,
@@ -107,11 +108,12 @@ const styles = StyleSheet.create({
   },
   swapIcon: {
     position: 'absolute',
-    top: '41%',
+    top: '39.5%',
     left: '80%'
   },
   tabView: {
-    width: DIMENSIONS.screenWidth
+    width: DIMENSIONS.screenWidth,
+    marginBottom: 30
   },
   tabPanel: {
     alignSelf: 'center',

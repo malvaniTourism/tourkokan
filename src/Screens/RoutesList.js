@@ -30,7 +30,7 @@ const RoutesList = ({ navigation, route }) => {
     let isLast = index === list.length - 1;
 
     return (
-      <ListItem bottomDivider style={{paddingTop: isFirst ? 20 : 0}}>
+      <ListItem bottomDivider style={{ paddingTop: isFirst ? 20 : 0 }}>
         {
           isFirst ?
             <RouteLineFirst />
@@ -41,7 +41,7 @@ const RoutesList = ({ navigation, route }) => {
               <RouteLine />
         }
         <ListItem.Content>
-          <ListItem.Title><GlobalText text={item.place.name} style={{color: (isFirst || isLast) && COLOR.themeComicBlue}} /></ListItem.Title>
+          <ListItem.Title><GlobalText text={item.place.name} style={{ color: (isFirst || isLast) && COLOR.themeComicBlue }} /></ListItem.Title>
         </ListItem.Content>
       </ListItem>
     );
@@ -73,7 +73,9 @@ const RoutesList = ({ navigation, route }) => {
           />
         }
       />
-      <RouteHeadCard data={route.params.item} />
+      <View style={{ marginVertical: -28, zIndex: 1 }}>
+        <RouteHeadCard data={route.params.item} />
+      </View>
       <SafeAreaView>
         <FlatList
           keyExtractor={(item) => item.id}

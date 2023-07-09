@@ -185,6 +185,8 @@ const TextField = (props) => {
       underlineColorAndroid="transparent"
       InputProps={x}
       onPressIn={props.onPress}
+      leftIcon={props.leftIcon}
+      leftIconContainerStyle={styles.leftIconContainerStyle}
     />
   );
 };

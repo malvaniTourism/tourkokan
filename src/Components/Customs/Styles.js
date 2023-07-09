@@ -10,12 +10,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   textField: {
-    backgroundColor: COLOR.white,
-    borderWidth: 1,
-    borderColor: COLOR.grey,
-    padding: 10,
+    
   },
-  textFieldContainer: {},
+  textFieldContainer: {
+    borderWidth: 0,
+    padding: 10,
+    borderColor: COLOR.grey,
+    marginBottom: -35
+  },
+  leftIconContainerStyle: {
+    top: -10,
+    left: 10
+  },
   searchContainer: {
     backgroundColor: "transparent",
     borderTopColor: "transparent",

@@ -7,7 +7,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import COLOR from "../Services/Constants/COLORS";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
-import PlaceList from "../Screens/ListPages/PlaceList";
+import Exlore from "../Screens/ListPages/Explore";
 import ProjectList from "../Screens/ListPages/ProjectList";
 import RoutesList from "../Screens/RoutesList";
 import SearchList from "../Screens/SearchList";
@@ -51,10 +51,10 @@ const TabNavigator = () => {
         }}
       /> */}
       <Tab.Screen
-        name="PlaceList"
-        component={PlaceList}
+        name="Exlore"
+        component={Exlore}
         options={{
-          tabBarLabel: "Places",
+          tabBarLabel: "Explore",
           tabBarIcon: ({ color, size }) => (
             // <Ionicons
             //   name="location-outline"

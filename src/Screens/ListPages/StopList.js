@@ -21,7 +21,6 @@ const StopList = ({ navigation, ...props }) => {
     props.setLoader(true);
     comnGet("v1/stops", props.access_token)
       .then((res) => {
-        console.log(res.data.data.data.length);
         setStops(res.data.data.data); // Update stops state with response data
         props.setLoader(false);
       })

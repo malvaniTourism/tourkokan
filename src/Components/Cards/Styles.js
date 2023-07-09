@@ -117,7 +117,6 @@ const styles = StyleSheet.create({
         width: DIMENSIONS.bannerWidth,
         backgroundColor: COLOR.white,
         alignSelf: 'center',
-        marginVertical: -28,
         elevation: 10,
         zIndex: 10,
         borderRadius: DIMENSIONS.borderRadiusXS,
@@ -142,6 +141,38 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    placeCard: {
+        width: DIMENSIONS.halfWidth - 30,
+        height: DIMENSIONS.halfWidth - 60,
+        elevation: 10,
+        margin: 10,
+        padding: 10,
+        backgroundColor: COLOR.white,
+        borderRadius: DIMENSIONS.borderRadiusXS,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    placeOverlay: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: COLOR.black,
+        borderRadius: DIMENSIONS.borderRadiusXS
+    },
+    placeImage: {
+        width: DIMENSIONS.halfWidth - 30,
+        height: DIMENSIONS.halfWidth - 60,
+        position: 'absolute'
+    },
+    placeImageStyle: {
+        borderRadius: DIMENSIONS.borderRadiusXS,
+    },
+    placeName: {
+        color: COLOR.white,
+        fontSize: DIMENSIONS.headerTextSize,
+        fontWeight: 'bold'
+    },
+    placeDesc: {
+        color: COLOR.white
     }
 })
 

@@ -7,7 +7,7 @@ import DIMENSIONS from '../../Services/Constants/DIMENSIONS'
 
 const CategoryCard = ({ data, getCategory }) => {
     const [cat, setCat] = useState(data)
-    console.log(data.name);
+
     const onIconCLick = () => {
         getCategory()
     }

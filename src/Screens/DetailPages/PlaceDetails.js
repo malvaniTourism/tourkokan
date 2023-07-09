@@ -39,7 +39,6 @@ const PlaceDetails = ({ navigation, route, ...props }) => {
         props.setLoader(true);
         comnGet(`v1/place/${route.params.id}`, props.access_token)
             .then((res) => {
-                console.log('log ', res.data.data);
                 setPlace(res.data.data); // Update city state with response data
                 setIsLoading(false)
                 props.setLoader(false);
@@ -77,7 +76,7 @@ const PlaceDetails = ({ navigation, route, ...props }) => {
             ]} isLoading={true}> */}
                         {place &&
                             <View style={{ flex: 1, padding: 10 }}>
-                                <View style={styles.placeImageView}>
+                                <View style={styles.placeImageTitleView}>
                                     <ImageBackground source={place.image_url} style={styles.placeImage} />
                                     <GlobalText text={place.name} style={styles.detailTitle} />
                                 </View>
@@ -93,7 +92,7 @@ const PlaceDetails = ({ navigation, route, ...props }) => {
 
                                 <View style={styles.sectionView}>
                                     <GlobalText text={"Located In:"} style={styles.sectionTitle} />
-                                    <CityCard data={place.city} reload={() => getDetails()} />
+                                    <CityCard data={place.city} reload={() => getDetails()} navigation={navigation} />
                                 </View>
                             </View>
                         }

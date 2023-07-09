@@ -92,13 +92,11 @@ const HomeScreen = ({ navigation, ...props }) => {
     };
 
     const getRoutesList = (item) => {
-        console.log('list - ', item);
         navigateTo(navigation, "RoutesList", { item });
     };
 
     const showMore = (page) => {
-        console.log('page - - ', page);
-        navigateTo(navigation, page);
+        navigateTo(navigation, page, { from: "Home" });
     }
 
     const onSearchFocus = () => {
@@ -212,7 +210,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                             <GlobalText text={"Cities"} style={styles.sectionTitle} />
                             <View >
                                 {cities.map((city, index) => (
-                                    <CityCard data={city} reload={() => callLandingPageAPI()} getCity={() => handleSmallCardClick("CityDetails", city.id)} />
+                                    <CityCard data={city} reload={() => callLandingPageAPI()} navigation={navigation} />
                                     // onPress={() => handleSmallCardClick("CityDetails", city.id)}
                                 ))}
                             </View>
@@ -252,7 +250,7 @@ const HomeScreen = ({ navigation, ...props }) => {
 
                         <TabView data={place_category} />
 
-                        <View style={styles.sectionView}>
+                        {/* <View style={styles.sectionView}>
                             <GlobalText text={"Places"} style={styles.sectionTitle} />
                             <View style={styles.cardsWrap}>
                                 {places.map((place, index) => (
@@ -273,10 +271,10 @@ const HomeScreen = ({ navigation, ...props }) => {
                             <CustomButton
                                 title={'Show More'}
                                 containerStyle={styles.showMore}
-                                onPress={() => showMore('PlaceList')}
+                                onPress={() => showMore('Explore')}
                                 buttonStyle={styles.buttonStyle}
                             />
-                        </View>
+                        </View> */}
                     </View>
             }
             <BottomSheet

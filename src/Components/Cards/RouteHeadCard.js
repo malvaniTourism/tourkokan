@@ -13,15 +13,15 @@ const RouteHeadCard = ({ data }) => {
                 </View>
                 <View style={{ flex: 3, justifyContent: 'center' }}>
                     <GlobalText text={data.name} style={styles.routeHeadCardTitle} />
-                    <GlobalText text={"09:00 AM - 10:30 AM"} />
+                    <GlobalText text={`${data.start_time} - ${data.end_time}`} />
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '85%' }}>
-                        <GlobalText text={`\u2022 11 Stops`} />
+                        <GlobalText text={`\u2022 ${data.route_stops.length} Stops`} />
                         <GlobalText text={`\u2022 Non Reservation`} />
                     </View>
                 </View>
             </View>
             <View style={styles.routeHeadCardBottom}>
-                <GlobalText text={"Day Ordinary"} style={{ color: COLOR.white }} />
+                <GlobalText text={data.bus_type.type} style={{ color: COLOR.white }} />
             </View>
         </View>
     )
