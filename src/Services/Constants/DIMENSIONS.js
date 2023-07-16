@@ -21,6 +21,7 @@ const DIMENSIONS = {
     iconBig: 25,
     userIconSize: 30,
     iconLarge: 35,
+    iconXL: 60,
 
     borderRadiusLarge: 50,
     borderRadius: 30,

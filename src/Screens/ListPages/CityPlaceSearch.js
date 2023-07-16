@@ -10,17 +10,20 @@ import { ListItem } from "@rneui/themed";
 import { checkLogin, goBackHandler, navigateTo } from "../../Services/CommonMethods";
 import { comnPost } from "../../Services/Api/CommonServices";
 import GlobalText from "../../Components/Customs/Text";
+import { setLoader } from "../../Reducers/CommonActions";
 
-const CityPlaceSearch = ({ navigation, route }) => {
+const CityPlaceSearch = ({ navigation, route, ...props }) => {
     const [searchValue, setSearchValue] = useState('');
-    const [tableName, setTableName] = useState('cities')
+    const [tableName, setTableName] = useState('places')
     const [placesList, setPlacesList] = useState([]);
-    const [isCity, setIsCity] = useState(true)
+    const [isCity, setIsCity] = useState(false);
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
+        props.setLoader(true)
         const backHandler = goBackHandler(navigation)
         checkLogin(navigation)
-        searchPlace("", "cities")
+        searchPlace("", "places")
         return () => {
             backHandler.remove()
         }
@@ -36,8 +39,12 @@ const CityPlaceSearch = ({ navigation, route }) => {
             comnPost("v1/search", data)
                 .then((res) => {
                     setPlacesList(res.data.data.data)
+                    setIsLoading(false)
+                    props.setLoader(false)
                 })
                 .catch((err) => {
+                    setIsLoading(false)
+                    props.setLoader(false)
                 });
         // } else setPlacesList([])
     };
@@ -70,7 +77,7 @@ const CityPlaceSearch = ({ navigation, route }) => {
 
     return (
         <View>
-            <Loader />
+            <Loader isLoading={isLoading} />
             <Header
                 Component={
                     <SearchBar
@@ -81,14 +88,14 @@ const CityPlaceSearch = ({ navigation, route }) => {
                 }
             />
 
-            <View style={styles.flexRow}>
+            {/* <View style={styles.flexRow}>
                 <TouchableOpacity style={[styles.clickChip, isCity ? styles.chipEnabled : styles.chipDisabled]} onPress={() => onChipClick(true)}>
                     <GlobalText text={"City"} style={styles.chipTitle} />
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.clickChip, !isCity ? styles.chipEnabled : styles.chipDisabled]} onPress={() => onChipClick(false)}>
                     <GlobalText text={"Place"} style={styles.chipTitle} />
                 </TouchableOpacity>
-            </View>
+            </View> */}
 
             <GestureHandlerRootView>
                 <SafeAreaView>
@@ -110,6 +117,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        setLoader: data => {
+            dispatch(setLoader(data))
+        }
     };
 };
 

@@ -21,6 +21,7 @@ const SearchPlace = ({ navigation, route, ...props }) => {
   const [placesList, setPlacesList] = useState([]);
 
   useEffect(() => {
+    props.setLoader(true)
     const backHandler = goBackHandler(navigation)
     checkLogin(navigation)
     searchPlace("");

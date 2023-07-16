@@ -10,7 +10,7 @@ import { CityName } from "../Services/Constants/FIELDS";
 import styles from "./Styles";
 import COLOR from "../Services/Constants/COLORS";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import Feather from "react-native-vector-icons/Feather";
 import { comnGet, comnPost, login } from "../Services/Api/CommonServices";
 import { connect } from "react-redux";
 import { saveAccess_token, setLoader } from "../Reducers/CommonActions";
@@ -27,6 +27,7 @@ import GlobalText from "../Components/Customs/Text";
 import BottomSheet from "../Components/Customs/BottomSheet";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import LocationSheet from "../Components/Common/LocationSheet";
+import RouteHeadCard from "../Components/Cards/RouteHeadCard";
 
 const HomeScreen = ({ navigation, ...props }) => {
     const refRBSheet = useRef();
@@ -132,7 +133,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                         })}
                         <SearchPanel navigation={navigation} />
 
-                        <View style={styles.stopsSectionView}>
+                        {/* <View style={styles.stopsSectionView}>
                             <GlobalText text={"Stops"} style={styles.sectionTitle} />
                             <View style={styles.cardsWrap}>
                                 {stops.map((stop, index) => (
@@ -165,9 +166,9 @@ const HomeScreen = ({ navigation, ...props }) => {
                                     buttonStyle={styles.buttonStyle}
                                 />
                             </View>
-                        </View>
+                        </View> */}
 
-                        <View style={styles.sectionView}>
+                        {/* <View style={styles.sectionView}>
                             <GlobalText text={"Categories"} style={styles.sectionTitle} />
                             <View style={styles.cardsWrap}>
                                 {categories.map((category, index) => (
@@ -177,32 +178,28 @@ const HomeScreen = ({ navigation, ...props }) => {
                                     </View>
                                 ))}
                             </View>
-                        </View>
+                        </View> */}
 
-                        <View style={styles.stopsSectionView}>
+                        <View style={styles.sectionView}>
                             <GlobalText text={"Routes"} style={styles.sectionTitle} />
                             <View style={styles.cardsWrap}>
                                 {routes.map((route, index) => (
-                                    <SmallCard
-                                        style={styles.routesCard}
-                                        key={index}
-                                        Icon={
-                                            <Image
-                                                source={{ uri: Path.API_PATH + route.icon }}
-                                                color={COLOR.yellow}
-                                                size={DIMENSIONS.iconSize}
-                                            />
-                                        }
-                                        title={route.name}
-                                        onPress={() => getRoutesList(route)}
-                                    />
+                                    <RouteHeadCard data={route} cardClick={() => getRoutesList(route)} />
                                 ))}
                             </View>
                             <CustomButton
-                                title={'Show More'}
-                                containerStyle={styles.showMore}
+                                title={'See More'}
                                 onPress={() => showMore('SearchList')}
+                                containerStyle={styles.showMore}
                                 buttonStyle={styles.buttonStyle}
+                                titleStyle={styles.titleStyle}
+                                icon={
+                                    <Feather
+                                        name="chevrons-right"
+                                        size={24}
+                                        color={COLOR.themeComicBlue}
+                                    />
+                                }
                             />
                         </View>
 
@@ -215,14 +212,22 @@ const HomeScreen = ({ navigation, ...props }) => {
                                 ))}
                             </View>
                             <CustomButton
-                                title={'Show More'}
-                                containerStyle={styles.showMore}
+                                title={'See More'}
                                 onPress={() => showMore('CityList')}
+                                containerStyle={styles.showMore}
                                 buttonStyle={styles.buttonStyle}
+                                titleStyle={styles.titleStyle}
+                                icon={
+                                    <Feather
+                                        name="chevrons-right"
+                                        size={24}
+                                        color={COLOR.themeComicBlue}
+                                    />
+                                }
                             />
                         </View>
 
-                        <View style={styles.sectionView}>
+                        {/* <View style={styles.sectionView}>
                             <GlobalText text={"Projects"} style={styles.sectionTitle} />
                             <View style={styles.cardsWrap}>
                                 {projects.map((project, index) => (
@@ -246,9 +251,9 @@ const HomeScreen = ({ navigation, ...props }) => {
                                 onPress={() => showMore('ProjectList')}
                                 buttonStyle={styles.buttonStyle}
                             />
-                        </View>
+                        </View> */}
 
-                        <TabView data={place_category} />
+                        {/* <TabView data={place_category} /> */}
 
                         {/* <View style={styles.sectionView}>
                             <GlobalText text={"Places"} style={styles.sectionTitle} />

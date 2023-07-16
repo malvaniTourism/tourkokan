@@ -68,7 +68,7 @@ const Profile = ({ navigation, ...props }) => {
             name="chevron-back-outline"
             size={24}
             onPress={() => backPage(navigation)}
-            color={'#fff'}
+            color={COLOR.white}
           />
         }
         endIcon={

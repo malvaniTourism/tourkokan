@@ -113,6 +113,7 @@ const EmailSignIn = ({ navigation, ...props }) => {
     // createUser()
     comnPost("auth/login", data)
       .then((res) => {
+        console.log(res);
         if (res.data.success) {
           setIsAlert(true);
           setAlertMessage(res.data.message);
@@ -162,6 +163,8 @@ const EmailSignIn = ({ navigation, ...props }) => {
             disabled={field.disabled}
             value={getValue(index)}
             setChild={(v, i) => setValue(v, i, index)}
+            style={styles.containerStyle}
+            inputContainerStyle={styles.inputContainerStyle}
           />
         );
       })}

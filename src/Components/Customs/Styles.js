@@ -63,6 +63,13 @@ const styles = StyleSheet.create({
     animation: "fadeinout 4s infinite",
     opacity: 1
   },
+  seeMore: {
+    width: DIMENSIONS.bannerWidth,
+    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: "flex-end",
+    marginTop: 10
+  },
   containerStyle: {
     width: DIMENSIONS.bannerWidth,
     borderRadius: DIMENSIONS.borderRadiusXS

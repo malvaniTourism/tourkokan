@@ -13,6 +13,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: 30,
   },
+  containerStyle: {
+    borderWidth: 1,
+    padding: 10,
+    borderColor: COLOR.grey,
+    borderRadius: DIMENSIONS.borderRadius
+  },
+  inputContainerStyle: {
+    borderColor: COLOR.transparent,
+    marginBottom: 20
+  }
 });
 
 export default styles;

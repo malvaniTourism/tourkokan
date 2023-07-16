@@ -59,7 +59,7 @@ const RoutesList = ({ navigation, route }) => {
         startIcon={
           <Ionicons
             name="chevron-back-outline"
-            color={COLOR.black}
+            color={COLOR.white}
             size={DIMENSIONS.userIconSize}
             onPress={() => backPage(navigation)}
           />
@@ -67,7 +67,7 @@ const RoutesList = ({ navigation, route }) => {
         endIcon={
           <Feather
             name="clock"
-            color={COLOR.black}
+            color={COLOR.white}
             size={DIMENSIONS.userIconSize}
             onPress={() => showTiming()}
           />

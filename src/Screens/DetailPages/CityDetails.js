@@ -60,7 +60,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
                 startIcon={
                     <Ionicons
                         name="chevron-back-outline"
-                        color={COLOR.black}
+                        color={COLOR.white}
                         size={DIMENSIONS.userIconSize}
                         onPress={() => backPage(navigation)}
                     />

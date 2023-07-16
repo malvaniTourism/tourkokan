@@ -2,6 +2,7 @@ import { Button } from "@rneui/themed";
 import React from "react";
 import styles from "./Styles";
 import { View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const CustomButton = ({
   title,
@@ -12,9 +13,10 @@ const CustomButton = ({
   raised,
   type,
   onPress,
+  icon
 }) => {
   return (
-    <View style={{ alignItems: "center" }}>
+    <TouchableOpacity onPress={onPress} style={styles.seeMore}>
       <Button
         title={title}
         containerStyle={[styles.containerStyle, containerStyle]}
@@ -23,9 +25,9 @@ const CustomButton = ({
         disabled={isDisabled}
         raised={raised}
         type={type}
-        onPress={onPress}
       />
-    </View>
+      {icon}
+    </TouchableOpacity>
   );
 };
 

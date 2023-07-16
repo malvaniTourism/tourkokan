@@ -66,6 +66,7 @@ const ContactUs = ({ navigation, route }) => {
             name="chevron-back-outline"
             size={24}
             onPress={() => backPage(navigation)}
+            color={COLOR.white}
           />
         }
         endIcon={

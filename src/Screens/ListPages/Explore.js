@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, ScrollView, Text, TouchableOpacity, Switch, SafeAreaView } from "react-native";
+import { View, ScrollView, Text, TouchableOpacity, Switch, SafeAreaView, ImageBackground } from "react-native";
 import SmallCard from "../../Components/Customs/SmallCard";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import COLOR from "../../Services/Constants/COLORS";
@@ -15,19 +15,20 @@ import { backPage, checkLogin, goBackHandler, navigateTo } from "../../Services/
 import PlaceCard from "../../Components/Cards/PlaceCard";
 import CityCard from "../../Components/Cards/CityCard";
 import { FlatList } from "react-native-gesture-handler";
+import GlobalText from "../../Components/Customs/Text";
 
 const Explore = ({ navigation, ...props }) => {
   const [places, setPlaces] = useState([]);
   const [cities, setCities] = useState([]);
   const [error, setError] = useState(null);
-  const [isEnabled, setIsEnabled] = useState(false)
+  const [isEnabled, setIsEnabled] = useState(true)
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
     checkLogin(navigation)
     props.setLoader(true);
-    getPlaces()
     getCities()
+    getPlaces()
     return () => {
       backHandler.remove()
     }
@@ -61,8 +62,8 @@ const Explore = ({ navigation, ...props }) => {
     )
   }
 
-  const toggleSwitch = () => {
-    setIsEnabled(!isEnabled)
+  const toggleSwitch = (val) => {
+    setIsEnabled(val)
   }
 
   const handleSmallCardClick = (id) => {
@@ -70,30 +71,47 @@ const Explore = ({ navigation, ...props }) => {
   };
 
   return (
-    <View style={{ flex: (cities[0] || places[0]) ? 1 : 0 }}>
+    <View style={{ flex: 1, justifyContent: "flex-start" }}>
       <Loader />
       <Header name={'Explore'}
         startIcon={
           <Ionicons
             name="chevron-back-outline"
-            color={COLOR.black}
+            color={COLOR.white}
             size={DIMENSIONS.userIconSize}
             onPress={() => backPage(navigation)}
           />
         }
       />
       <View style={styles.toggleView}>
-        <Switch
-          trackColor={{ false: '#767577', true: '#f5dd4b' }}
-          thumbColor={COLOR.themeComicBlue}
-          // thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleSwitch}
-          value={isEnabled}
+        <View style={styles.overlay} />
+        <ImageBackground
+          source={{ uri: "https://c4.wallpaperflare.com/wallpaper/766/970/409/cities-city-building-cityscape-wallpaper-preview.jpg" }}
+          style={styles.exploreHeaderImage} imageStyle={styles.cityImageStyle}
+          resizeMode="cover"
         />
+        <View style={styles.details}>
+          <GlobalText text={"Click on what would you like to Explore..."} style={styles.whiteText} />
+          <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 10 }}>
+            <TouchableOpacity onPress={() => toggleSwitch(true)}>
+              <GlobalText text={"Cities"} style={styles.whiteText} />
+            </TouchableOpacity>
+            <View style={styles.lineVert} />
+            <TouchableOpacity onPress={() => toggleSwitch(false)}>
+              <GlobalText text={"Places"} style={styles.whiteText} />
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
+      <View style={{minHeight: DIMENSIONS.screenHeight}}>
       {isEnabled ?
-        <SafeAreaView style={{alignItems: "center"}}>
+        <ScrollView>
+          {cities.map((city) => (
+            <CityCard data={city} navigation={navigation} />
+            ))}
+        </ScrollView>
+        :
+        <SafeAreaView style={{ alignItems: "center", marginBottom: 70 }}>
           <ScrollView>
             <FlatList
               keyExtractor={(item) => item.id}
@@ -101,16 +119,11 @@ const Explore = ({ navigation, ...props }) => {
               renderItem={renderPlaces}
               numColumns={2}
               style={{ paddingBottom: 150 }}
-            />
+              />
           </ScrollView>
         </SafeAreaView>
-        :
-        <ScrollView>
-          {cities.map((city) => (
-            <CityCard data={city} navigation={navigation} />
-          ))}
-        </ScrollView>
       }
+      </View>
     </View>
   );
 };

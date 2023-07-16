@@ -120,22 +120,22 @@ const styles = StyleSheet.create({
         elevation: 10,
         zIndex: 10,
         borderRadius: DIMENSIONS.borderRadiusXS,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginVertical: 10
     },
     routeHeadCardTitle: {
         fontWeight: 'bold',
         color: COLOR.themeComicBlue
     },
     routeHeadCardBottom: {
-        backgroundColor: COLOR.red,
         borderBottomLeftRadius: DIMENSIONS.borderRadiusXS,
         borderBottomRightRadius: DIMENSIONS.borderRadiusXS,
         alignItems: 'center',
         paddingVertical: 2
     },
     busImage: {
-        height: DIMENSIONS.smallImage,
-        width: DIMENSIONS.smallImage,
+        height: DIMENSIONS.iconXL,
+        width: DIMENSIONS.iconXL,
     },
     routeHeadCardImage: {
         flex: 1,

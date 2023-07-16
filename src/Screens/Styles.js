@@ -35,7 +35,36 @@ const styles = StyleSheet.create({
         shadowColor: COLOR.headingColor2
     },
     toggleView: {
-        paddingBottom: 10
+        height: DIMENSIONS.bannerHeight - 50,
+        marginBottom: 10
+    },
+    overlay: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: COLOR.black,
+    },
+    exploreHeaderImage: {
+        flex: 1,
+        opacity: 0.7,
+        marginTop: -20,
+    },
+    details: {
+        height: DIMENSIONS.bannerHeight - 50,
+        width: DIMENSIONS.bannerWidth,
+        position: 'absolute',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        textAlign: 'center'
+    },
+    lineVert: {
+        borderWidth: 1,
+        borderColor: COLOR.white,
+        marginHorizontal: 20
+    },
+    whiteText: {
+        color: COLOR.white,
+        textAlign: "center",
+        fontWeight: "bold",
+        fontSize: DIMENSIONS.headerTextSize
     },
     placesList: {
         flexDirection: "row",
@@ -53,10 +82,14 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     },
     buttonStyle: {
-        backgroundColor: COLOR.themeComicBlue,
+        backgroundColor: COLOR.transparent,
+        width: "auto"
+    },
+    titleStyle: {
+        color: COLOR.themeComicBlue
     },
     showMore: {
-        width: DIMENSIONS.halfWidth - 40,
+        width: "auto",
         alignItems: 'center'
     },
     profileImageView: {

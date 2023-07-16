@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: DIMENSIONS.headerTextSize,
     textAlign: "center",
+    color: COLOR.white
   },
   swapIcon: {
     position: 'absolute',

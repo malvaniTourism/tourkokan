@@ -112,6 +112,8 @@ const SignIn = ({ navigation, ...props }) => {
             disabled={field.disabled}
             value={getValue(index)}
             setChild={(v, i) => setValue(v, i, index)}
+            style={styles.containerStyle}
+            inputContainerStyle={styles.inputContainerStyle}
           />
         );
       })}

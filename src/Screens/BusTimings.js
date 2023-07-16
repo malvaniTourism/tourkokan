@@ -24,7 +24,7 @@ const BusTimings = ({ navigation }) => {
         startIcon={
           <Ionicons
             name="chevron-back-outline"
-            color={COLOR.black}
+            color={COLOR.white}
             size={DIMENSIONS.userIconSize}
             onPress={() => backPage(navigation)}
           />

@@ -56,7 +56,7 @@ const CategoryProjects = ({ navigation, route, ...props }) => {
           startIcon={
             <Ionicons
               name="chevron-back-outline"
-              color={COLOR.black}
+              color={COLOR.white}
               size={DIMENSIONS.userIconSize}
               onPress={() => backPage(navigation)}
             />
@@ -81,7 +81,6 @@ const CategoryProjects = ({ navigation, route, ...props }) => {
             {projects.projects && projects.projects.map(project => (
               <ProjectCard project={project} />
             ))}
-
 
             <GlobalText text={JSON.stringify(projects.projects)} style={{ marginTop: 50 }} />
           </View>
