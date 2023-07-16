@@ -25,7 +25,6 @@ import CityCard from "../Components/Cards/CityCard";
 import CategoryCard from "../Components/Cards/CategoryCard";
 import GlobalText from "../Components/Customs/Text";
 import BottomSheet from "../Components/Customs/BottomSheet";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import LocationSheet from "../Components/Common/LocationSheet";
 import RouteHeadCard from "../Components/Cards/RouteHeadCard";
 

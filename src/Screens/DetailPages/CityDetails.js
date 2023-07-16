@@ -6,7 +6,6 @@ import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import { comnGet } from "../../Services/Api/CommonServices";
 import { connect } from "react-redux";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { setLoader } from "../../Reducers/CommonActions";
 import Loader from "../../Components/Customs/Loader";
 import Header from "../../Components/Common/Header";

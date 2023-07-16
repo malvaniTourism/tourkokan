@@ -8,7 +8,6 @@ import DIMENSIONS from '../../Services/Constants/DIMENSIONS';
 import Search from '../Customs/Search';
 import { comnPost } from '../../Services/Api/CommonServices';
 import { ListItem } from '@rneui/themed';
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import styles from './Styles';
 import DialogBox from 'react-native-dialogbox';
 
@@ -214,17 +213,15 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet }) => {
                 />
             </View>
             {placesList[0] &&
-                <GestureHandlerRootView style={styles.listView}>
-                    <SafeAreaView>
-                        <ScrollView>
-                            <FlatList
-                                keyExtractor={(item) => item.id}
-                                data={placesList}
-                                renderItem={renderItem}
-                            />
-                        </ScrollView>
-                    </SafeAreaView>
-                </GestureHandlerRootView>
+                <SafeAreaView style={styles.listView}>
+                    <ScrollView>
+                        <FlatList
+                            keyExtractor={(item) => item.id}
+                            data={placesList}
+                            renderItem={renderItem}
+                        />
+                    </ScrollView>
+                </SafeAreaView>
             }
             <TouchableOpacity style={styles.currLocView} onPress={() => myLocationPress()}>
                 <MaterialIcons

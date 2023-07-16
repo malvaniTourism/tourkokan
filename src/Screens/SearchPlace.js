@@ -12,7 +12,6 @@ import {
   setSource,
 } from "../Reducers/CommonActions";
 import Loader from "../Components/Customs/Loader";
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { checkLogin, goBackHandler, navigateTo } from "../Services/CommonMethods";
 
@@ -83,16 +82,13 @@ const SearchPlace = ({ navigation, route, ...props }) => {
           />
         }
       />
-
-      <GestureHandlerRootView>
-        <SafeAreaView>
-          <FlatList
-            keyExtractor={(item) => item.id}
-            data={placesList}
-            renderItem={renderItem}
-          />
-        </SafeAreaView>
-      </GestureHandlerRootView>
+      <SafeAreaView>
+        <FlatList
+          keyExtractor={(item) => item.id}
+          data={placesList}
+          renderItem={renderItem}
+        />
+      </SafeAreaView>
     </View>
   );
 };

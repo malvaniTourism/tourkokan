@@ -105,12 +105,14 @@ const EmailSignIn = ({ navigation, ...props }) => {
   };
 
   const Login = () => {
+    console.log('datatatata');
     props.setLoader(true);
     const data = {
       email,
       password,
     };
     // createUser()
+    console.log(data);
     comnPost("auth/login", data)
       .then((res) => {
         console.log(res);

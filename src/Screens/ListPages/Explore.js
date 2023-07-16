@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, ScrollView, Text, TouchableOpacity, Switch, SafeAreaView, ImageBackground } from "react-native";
+import { View, ScrollView, Text, TouchableOpacity, Switch, SafeAreaView, ImageBackground, FlatList } from "react-native";
 import SmallCard from "../../Components/Customs/SmallCard";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import COLOR from "../../Services/Constants/COLORS";
@@ -14,7 +14,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { backPage, checkLogin, goBackHandler, navigateTo } from "../../Services/CommonMethods";
 import PlaceCard from "../../Components/Cards/PlaceCard";
 import CityCard from "../../Components/Cards/CityCard";
-import { FlatList } from "react-native-gesture-handler";
 import GlobalText from "../../Components/Customs/Text";
 
 const Explore = ({ navigation, ...props }) => {

@@ -1,9 +1,8 @@
 import React from 'react'
-import { Image, View } from 'react-native'
+import { Image, TouchableOpacity, View } from 'react-native'
 import styles from './Styles'
 import GlobalText from '../Customs/Text'
 import COLOR from '../../Services/Constants/COLORS'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import Path from '../../Services/Api/BaseUrl'
 import { SvgUri, SvgCssUri } from 'react-native-svg'
 

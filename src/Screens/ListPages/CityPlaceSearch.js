@@ -5,7 +5,6 @@ import Header from "../../Components/Common/Header";
 import SearchBar from "../../Components/Customs/Search";
 import styles from "./Styles";
 import Loader from "../../Components/Customs/Loader";
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { ListItem } from "@rneui/themed";
 import { checkLogin, goBackHandler, navigateTo } from "../../Services/CommonMethods";
 import { comnPost } from "../../Services/Api/CommonServices";
@@ -36,16 +35,16 @@ const CityPlaceSearch = ({ navigation, route, ...props }) => {
             table_name: table
         }
         // if (searchValue.length > 2) {
-            comnPost("v1/search", data)
-                .then((res) => {
-                    setPlacesList(res.data.data.data)
-                    setIsLoading(false)
-                    props.setLoader(false)
-                })
-                .catch((err) => {
-                    setIsLoading(false)
-                    props.setLoader(false)
-                });
+        comnPost("v1/search", data)
+            .then((res) => {
+                setPlacesList(res.data.data.data)
+                setIsLoading(false)
+                props.setLoader(false)
+            })
+            .catch((err) => {
+                setIsLoading(false)
+                props.setLoader(false)
+            });
         // } else setPlacesList([])
     };
 
@@ -97,15 +96,13 @@ const CityPlaceSearch = ({ navigation, route, ...props }) => {
                 </TouchableOpacity>
             </View> */}
 
-            <GestureHandlerRootView>
-                <SafeAreaView>
-                    <FlatList
-                        keyExtractor={(item) => item.id}
-                        data={placesList}
-                        renderItem={renderItem}
-                    />
-                </SafeAreaView>
-            </GestureHandlerRootView>
+            <SafeAreaView>
+                <FlatList
+                    keyExtractor={(item) => item.id}
+                    data={placesList}
+                    renderItem={renderItem}
+                />
+            </SafeAreaView>
         </View>
     )
 }

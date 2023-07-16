@@ -1,8 +1,7 @@
 import { Button } from "@rneui/themed";
 import React from "react";
 import styles from "./Styles";
-import { View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity, View } from "react-native";
 
 const CustomButton = ({
   title,
@@ -25,6 +24,7 @@ const CustomButton = ({
         disabled={isDisabled}
         raised={raised}
         type={type}
+        onPress={onPress}
       />
       {icon}
     </TouchableOpacity>
