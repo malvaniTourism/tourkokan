@@ -14,6 +14,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { backPage, checkLogin, goBackHandler, navigateTo } from "../Services/CommonMethods";
 import GlobalText from "../Components/Customs/Text";
 import RouteHeadCard from "../Components/Cards/RouteHeadCard";
+import styles from "./Styles";
 
 const SearchList = ({ navigation, route, ...props }) => {
   const [list, setList] = useState([]);
@@ -41,6 +42,7 @@ const SearchList = ({ navigation, route, ...props }) => {
       .then((res) => {
         if (res.data.success) {
           setList(res.data.data.data);
+          console.log(list);
           props.setLoader(false);
         } else {
           props.setLoader(false);
@@ -53,16 +55,23 @@ const SearchList = ({ navigation, route, ...props }) => {
 
   const renderItem = ({ item }) => {
     return (
-      <ListItem bottomDivider onPress={() => getRoutes(item)}>
-        {/* <Avatar source={{ uri: item.avatar_url }} /> */}
-        <RouteLine />
-        <GlobalText text={item.id} />
-        <ListItem.Content>
-          {/* <ListItem.Title>{item.number}</ListItem.Title> */}
-          <ListItem.Title>{item.name}</ListItem.Title>
-        </ListItem.Content>
-        <ListItem.Chevron />
-      </ListItem>
+      // <ListItem bottomDivider onPress={() => getRoutes(item)}>
+      //   {/* <Avatar source={{ uri: item.avatar_url }} /> */}
+      //   <RouteLine />
+      //   <GlobalText text={item.id} />
+      //   <ListItem.Content>
+      //     {/* <ListItem.Title>{item.number}</ListItem.Title> */}
+      //     <ListItem.Title>{item.name}</ListItem.Title>
+      //   </ListItem.Content>
+      //   <ListItem.Chevron />
+      // </ListItem>
+      <View style={styles.sectionView}>
+        {list.map((route, index) => (
+          <View style={styles.cardsWrap}>
+            <RouteHeadCard data={route} cardClick={() => getRoutesList(route)} />
+          </View>
+        ))}
+      </View>
     );
   };
 
@@ -82,21 +91,22 @@ const SearchList = ({ navigation, route, ...props }) => {
       />
       <Loader />
       <SafeAreaView>
-        {list[0] ? (
-          route.params.from == "Search" ?
-            (
-              list.map(route => (
-                <RouteHeadCard data={route} />
-              ))
-            )
-            :
-            (
-              <FlatList
-                keyExtractor={(item) => item.id}
-                data={list}
-                renderItem={renderItem}
-              />
-            )
+        {list.length > 0 ? (
+          route.params && route.params.from === "Search" ? (
+            <View style={styles.cardsWrap}>
+              {list.map((route) => (
+                <RouteHeadCard data={route} cardClick={() => getRoutesList(route)} />
+              ))}
+            </View>
+          ) : (
+            <FlatList
+              keyExtractor={(item) => item.id}
+              data={list}
+              renderItem={({ item }) => (
+                <RouteHeadCard data={item} cardClick={() => getRoutesList(item)} />
+              )}
+            />
+          )
         ) : (
           <GlobalText text={"No Routes Available"} />
         )}

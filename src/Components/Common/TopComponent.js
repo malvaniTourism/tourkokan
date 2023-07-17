@@ -24,7 +24,7 @@ const TopComponent = ({ navigation, openLocationSheet }) => {
   };
 
   const openProfile = () => {
-    navigateTo(navigation, "Profile");
+    navigateTo(navigation, "ProfileView");
   };
 
   return (

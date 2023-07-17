@@ -6,6 +6,7 @@ import SearchList from "../Screens/SearchList";
 import TabNavigator from "./TabNavigator";
 import Pricing from "../Screens/Pricing";
 import ContactUs from "../Screens/ContactUs";
+import ProfileView from "../Screens/ProfileView";
 
 const Drawer = createDrawerNavigator();
 
@@ -13,7 +14,7 @@ const DrawerNavigator = () => {
   return (
     <Drawer.Navigator screenOptions={{ headerShown: false }}>
       <Drawer.Screen name="Home" component={TabNavigator} />
-      <Drawer.Screen name="Profile" component={Profile} />
+      <Drawer.Screen name="ProfileView" component={ProfileView} />
       <Drawer.Screen name="Settings" component={Settings} />
       <Drawer.Screen name="All Routes" component={SearchList} />
       <Drawer.Screen name="Pricing" component={Pricing} />

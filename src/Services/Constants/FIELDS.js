@@ -95,7 +95,7 @@ export const SrcDest = [
     name: "Destination",
     placeholder: "Destination",
     type: "text",
-    length: 10,
+    length: 50,
     required: true,
     disabled: false,
   },
