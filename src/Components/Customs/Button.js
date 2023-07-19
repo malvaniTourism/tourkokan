@@ -12,10 +12,11 @@ const CustomButton = ({
   raised,
   type,
   onPress,
-  icon
+  icon,
+  seeMoreStyle
 }) => {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.seeMore}>
+    <TouchableOpacity onPress={onPress} style={seeMoreStyle}>
       <Button
         title={title}
         containerStyle={[styles.containerStyle, containerStyle]}

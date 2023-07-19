@@ -31,6 +31,8 @@ const DIMENSIONS = {
 
     headerHeight: sw / 7,
 
+    xlText: sw / 20,
+    largeText: sw / 23,
     headerTextSize: sw / 25,
     subtitleTextSize: sw / 28,
     textSize: sw / 30,

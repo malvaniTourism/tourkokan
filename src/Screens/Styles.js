@@ -92,6 +92,13 @@ const styles = StyleSheet.create({
         width: "auto",
         alignItems: 'center'
     },
+    seeMoreStyle: {
+        width: DIMENSIONS.bannerWidth,
+        alignItems: "center",
+        flexDirection: 'row',
+        justifyContent: "flex-end",
+        marginTop: 10
+    },
     profileImageView: {
         height: DIMENSIONS.bannerWidth,
         marginTop: -75,
@@ -150,6 +157,88 @@ const styles = StyleSheet.create({
         color: COLOR.white,
         fontSize: DIMENSIONS.subtitleTextSize,
         textAlign: 'center'
+    },
+    pricingView: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 20,
+    },
+    pricingCard: {
+        margin: 20,
+        padding: 20,
+        borderWidth: 1,
+        borderColor: COLOR.grey,
+        borderRadius: DIMENSIONS.borderRadiusXXS,
+    },
+    pricingOptionTitle: {
+        fontSize: DIMENSIONS.xlText,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    pricingOptionPrice: {
+        fontSize: DIMENSIONS.headerTextSize,
+        color: COLOR.lightBlack,
+        marginBottom: 10,
+    },
+    pricingOptionDescription: {
+        fontSize: 14,
+        color: COLOR.greySolid,
+        marginBottom: 10,
+    },
+    pricingOptionFeatures: {
+        marginBottom: 10,
+    },
+    pricingOptionFeature: {
+        fontSize: 14,
+        color: COLOR.grayDark,
+    },
+    pricingOptionButton: {
+        fontSize: 14,
+        color: COLOR.white,
+        padding: 10,
+    },
+    planButtonContainer: {
+        width: "auto",
+    },
+    headerContainer: {
+        alignItems: 'center',
+    },
+    coverPhoto: {
+        width: '100%',
+        height: 200,
+    },
+    profileContainer: {
+        alignItems: 'center',
+        marginTop: -50,
+    },
+    profilePhoto: {
+        width: DIMENSIONS.detailsImage,
+        height: DIMENSIONS.detailsImage,
+        borderRadius: DIMENSIONS.borderRadiusLarge,
+    },
+    bioContainer: {
+        padding: 15,
+    },
+    statsContainer: {
+        flexDirection: 'row',
+        marginTop: 20,
+        marginBottom: 20,
+    },
+    statContainer: {
+        alignItems: 'center',
+        flex: 1,
+    },
+    statCount: {
+        fontSize: DIMENSIONS.largeText,
+        fontWeight: 'bold',
+    },
+    statLabel: {
+        fontSize: DIMENSIONS.subtitleTextSize,
+        color: COLOR.grayDark,
+    },
+    editButtonContainer: {
+        alignSelf: "center"
     }
 });
 

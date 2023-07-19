@@ -10,9 +10,14 @@ const COLOR = {
   intentColor: "#2DA5C8",
 
   white: "#ffffff",
+
   black: "#000000",
   lightBlack: '#222',
+
   grey: "#bbb",
+  grayDark: "#888",
+  greySolid: "#666",
+
   green: "#28a745",
   yellow: "#fec465",
   red: "#eb5757",
@@ -28,11 +33,6 @@ const COLOR = {
   headingColor2: "#420045",
   labelActiveColor: "#533278",
   cancelButton: "#e9716f",
-
-  grayDark: "#808080",
-  graylight: "#d3d3d3",
-  grayBackground: "#E6E5E4",
-  graya1: "#a1a1a1",
 
   borderColor: "#e8e8e8",
   divider: "#d4d4d4",

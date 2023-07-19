@@ -11,11 +11,12 @@ import Loader from "../Components/Customs/Loader";
 import TopComponent from "../Components/Common/TopComponent";
 import { setLoader } from "../Reducers/CommonActions";
 import { Image } from "@rneui/themed";
-// import styles from "./Styles";
+import styles from "./Styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { checkLogin, backPage, goBackHandler, navigateTo } from "../Services/CommonMethods";
 import SvgUri from 'react-native-svg-uri';
 import GlobalText from "../Components/Customs/Text";
+import CustomButton from '../Components/Customs/Button';
 
 const ProfileView = ({ navigation, ...props }) => {
 
@@ -95,104 +96,41 @@ const ProfileView = ({ navigation, ...props }) => {
             style={styles.profilePhoto}
             source={{ uri: 'https://www.bootdey.com/img/Content/avatar/avatar1.png' }}
           />
-          <Text style={styles.nameText}>{profile.name}</Text>
+          <GlobalText text={profile.name} style={styles.pricingOptionTitle} />
         </View>
       </View>
       <View style={styles.bioContainer}>
-        <Text style={styles.bioText}>
-          {profile.email}
-        </Text>
-        <Text style={styles.bioText}>
-          {profile.mobile}
-        </Text>
-        <Text style={styles.bioText}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et
-          ullamcorper nisi.
-        </Text>
+        <GlobalText text={profile.email} style={styles.bioText} />
+        <GlobalText text={profile.mobile} style={styles.bioText} />
+        <GlobalText text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed etullamcorper nisi."} style={styles.bioText}></GlobalText>
       </View>
       <View style={styles.statsContainer}>
         <View style={styles.statContainer}>
-          <Text style={styles.statCount}>1234</Text>
-          <Text style={styles.statLabel}>Posts</Text>
+          <GlobalText text={"1234"} style={styles.statCount} />
+          <GlobalText text={"Posts"} style={styles.statLabel} />
         </View>
         <View style={styles.statContainer}>
-          <Text style={styles.statCount}>5678</Text>
-          <Text style={styles.statLabel}>Followers</Text>
+          <GlobalText text={"5678"} style={styles.statCount} />
+          <GlobalText text={"Followers"} style={styles.statLabel} />
         </View>
         <View style={styles.statContainer}>
-          <Text style={styles.statCount}>9101</Text>
-          <Text style={styles.statLabel}>Following</Text>
+          <GlobalText text={"9101"} style={styles.statCount} />
+          <GlobalText text={"Following"} style={styles.statLabel} />
         </View>
       </View>
-      <TouchableOpacity style={styles.button} onPress={handleEditPress}>
-        <Text style={styles.buttonText}>Edit Profile</Text>
-      </TouchableOpacity>
+      <CustomButton
+        title={"Edit Profile"}
+        containerStyle={styles.editButtonContainer}
+        buttonStyle={styles.planButtonStyle}
+        titleStyle={styles.planButtonTitleStyle}
+        raised={true}
+        type={"Submit"}
+        onPress={handleEditPress}
+      />
 
-      <Text>{JSON.stringify(profile)}</Text>
+      <GlobalText text={JSON.stringify(profile)} />
     </ScrollView>
   );
-};
-
-const styles = {
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  headerContainer: {
-    alignItems: 'center',
-  },
-  coverPhoto: {
-    width: '100%',
-    height: 200,
-  },
-  profileContainer: {
-    alignItems: 'center',
-    marginTop: -50,
-  },
-  profilePhoto: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-  },
-  nameText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginTop: 10,
-  },
-  bioContainer: {
-    padding: 15,
-  },
-  bioText: {
-    fontSize: 16,
-  },
-  statsContainer: {
-    flexDirection: 'row',
-    marginTop: 20,
-    marginBottom: 20,
-  },
-  statContainer: {
-    alignItems: 'center',
-    flex: 1,
-  },
-  statCount: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  statLabel: {
-    fontSize: 16,
-    color: '#999',
-  },
-  button: {
-    backgroundColor: '#0066cc',
-    borderRadius: 5,
-    padding: 10,
-    marginHorizontal: 20,
-  },
-  buttonText: {
-    fontSize: 16,
-    color: '#fff',
-    textAlign: 'center',
-  },
 };
 
 const mapStateToProps = (state) => {

@@ -155,12 +155,14 @@ const HomeScreen = ({ navigation, ...props }) => {
                                 <CustomButton
                                     title={'Show More'}
                                     containerStyle={styles.showMore}
+                                    seeMoreStyle={styles.seeMoreStyle}
                                     onPress={() => showMore('StopList')}
                                     buttonStyle={styles.buttonStyle}
                                 />
                                 <CustomButton
                                     title={'View on MAP'}
                                     containerStyle={styles.showMore}
+                                    seeMoreStyle={styles.seeMoreStyle}
                                     onPress={() => showMore('MapScreen')}
                                     buttonStyle={styles.buttonStyle}
                                 />
@@ -190,6 +192,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                                 title={'See More'}
                                 onPress={() => showMore('SearchList')}
                                 containerStyle={styles.showMore}
+                                seeMoreStyle={styles.seeMoreStyle}
                                 buttonStyle={styles.buttonStyle}
                                 titleStyle={styles.titleStyle}
                                 icon={
@@ -214,6 +217,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                                 title={'See More'}
                                 onPress={() => showMore('CityList')}
                                 containerStyle={styles.showMore}
+                                seeMoreStyle={styles.seeMoreStyle}
                                 buttonStyle={styles.buttonStyle}
                                 titleStyle={styles.titleStyle}
                                 icon={
@@ -247,6 +251,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                             <CustomButton
                                 title={'Show More'}
                                 containerStyle={styles.showMore}
+                                seeMoreStyle={styles.seeMoreStyle}
                                 onPress={() => showMore('ProjectList')}
                                 buttonStyle={styles.buttonStyle}
                             />
@@ -275,6 +280,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                             <CustomButton
                                 title={'Show More'}
                                 containerStyle={styles.showMore}
+                                seeMoreStyle={styles.seeMoreStyle}
                                 onPress={() => showMore('Explore')}
                                 buttonStyle={styles.buttonStyle}
                             />
