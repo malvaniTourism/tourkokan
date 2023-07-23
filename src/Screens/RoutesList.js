@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, View, Text, SafeAreaView } from "react-native";
+import { FlatList, View, SafeAreaView } from "react-native";
 import { ListItem } from "@rneui/themed";
 import Header from "../Components/Common/Header";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import Feather from "react-native-vector-icons/Feather";
 import COLOR from "../Services/Constants/COLORS";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
 import RouteLine from "../Components/Customs/RouteLines/RouteLine";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { backPage, checkLogin, goBackHandler, navigateTo } from "../Services/CommonMethods";
 import RouteLineFirst from "../Components/Customs/RouteLines/RouteLineFirst";
 import RouteLineLast from "../Components/Customs/RouteLines/RouteLineLast";
@@ -47,14 +45,10 @@ const RoutesList = ({ navigation, route }) => {
     );
   };
 
-  const showTiming = () => {
-    navigateTo(navigation, "BusTimings");
-  };
-
   return (
     <View>
       <Header
-        name={""}
+        name={route.params.item.bus_type.type}
         goBack={() => backPage(navigation)}
         startIcon={
           <Ionicons
@@ -65,16 +59,11 @@ const RoutesList = ({ navigation, route }) => {
           />
         }
         endIcon={
-          <Feather
-            name="clock"
-            color={COLOR.white}
-            size={DIMENSIONS.userIconSize}
-            onPress={() => showTiming()}
-          />
+          <></>
         }
       />
-      <View style={{ marginVertical: -28, zIndex: 1 }}>
-        <RouteHeadCard data={route.params.item} />
+      <View style={{ marginVertical: -15 }}>
+        <RouteHeadCard data={route.params.item} cardClick={() => console.log('clicked')} />
       </View>
       <SafeAreaView>
         <FlatList

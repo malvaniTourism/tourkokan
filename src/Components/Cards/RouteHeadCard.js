@@ -1,10 +1,10 @@
 import React from 'react'
-import { Image, TouchableOpacity, View } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 import styles from './Styles'
 import GlobalText from '../Customs/Text'
 import COLOR from '../../Services/Constants/COLORS'
 import Path from '../../Services/Api/BaseUrl'
-import { SvgUri, SvgCssUri } from 'react-native-svg'
+import { SvgCssUri } from 'react-native-svg'
 
 const RouteHeadCard = ({ data, cardClick }) => {
     console.log(Path.FTP_PATH1 + data.bus_type.logo);
@@ -23,7 +23,7 @@ const RouteHeadCard = ({ data, cardClick }) => {
                     </View>
                 </View>
             </View>
-            <View style={[styles.routeHeadCardBottom, {backgroundColor: JSON.parse(data.bus_type.meta_data)[0].color_code}]}>
+            <View style={[styles.routeHeadCardBottom, { backgroundColor: JSON.parse(data.bus_type.meta_data)[0].color_code }]}>
                 <GlobalText text={data.bus_type.type} style={{ color: COLOR.white }} />
             </View>
         </TouchableOpacity>
