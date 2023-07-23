@@ -19,6 +19,23 @@ const styles = StyleSheet.create({
     borderColor: COLOR.grey,
     borderRadius: DIMENSIONS.borderRadius
   },
+  roleDropDown: {
+    borderWidth: 1,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderColor: COLOR.grey,
+    borderRadius: DIMENSIONS.borderRadius,
+  },
+  imageContainerStyle: {
+    borderWidth: 1,
+    paddingVertical: 14,
+    paddingHorizontal: 10,
+    borderColor: COLOR.grey,
+    borderRadius: DIMENSIONS.borderRadius,
+    width: DIMENSIONS.bannerWidth,
+    alignSelf: 'center',
+    marginBottom: 20,
+  },
   inputContainerStyle: {
     borderColor: COLOR.transparent,
     marginBottom: 20

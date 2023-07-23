@@ -14,6 +14,7 @@ import DropDown from "../../Components/Customs/DropDown";
 import { navigateTo } from "../../Services/CommonMethods";
 import { launchImageLibrary } from 'react-native-image-picker'
 import GlobalText from "../../Components/Customs/Text";
+import COLOR from "../../Services/Constants/COLORS";
 
 const SignUp = ({ navigation, ...props }) => {
   const [name, setName] = useState("");
@@ -158,7 +159,7 @@ const SignUp = ({ navigation, ...props }) => {
           label={"Role"}
           value={role}
           disable={false}
-          style={styles.dropDown}
+          style={styles.roleDropDown}
           fieldType={"dropDwn"}
           helperMsg={"Select Role"}
           List={roles}
@@ -176,43 +177,49 @@ const SignUp = ({ navigation, ...props }) => {
               disabled={field.disabled}
               value={getValue(index)}
               setChild={(v, i) => setValue(v, i, index)}
+              style={styles.containerStyle}
+              inputContainerStyle={styles.inputContainerStyle}
             />
           );
         })}
         {imageSource && <Image source={imageSource} style={{ width: 50, height: 50 }} />}
-        <TouchableOpacity onPress={
-          () =>
-            launchImageLibrary({
-              mediaType: 'photo',
-              includeBase64: false,
-              maxHeight: 200,
-              maxWidth: 200,
-            },
-              (response) => {
-                console.log('img - - ', response.assets[0].uri);
-                setImageSource(response.assets[0].uri)
+        <TouchableOpacity
+          style={styles.imageContainerStyle}
+          onPress={
+            () =>
+              launchImageLibrary({
+                mediaType: 'photo',
+                includeBase64: false,
+                maxHeight: 200,
+                maxWidth: 200,
               },
-            )
-        }
-          title="Select Image"><GlobalText text={"Image"} /></TouchableOpacity>
+                (response) => {
+                  if (response.assets) {
+                    console.log('img - - ', response.assets[0].uri);
+                    setImageSource(response.assets[0].uri)
+                  }
+                },
+              )
+          }
+          title="Select Image"><GlobalText text={"Upload Image"} style={{ color: COLOR.grayDark }} /></TouchableOpacity>
       </ScrollView>
       <CustomButton
-          title={"Register"}
-          containerStyle={styles.buttonContainer}
-          buttonStyle={styles.buttonStyle}
-          titleStyle={styles.buttonTitle}
-          disabled={false}
-          raised={true}
-          type={"Submit"}
-          onPress={() => Register()}
-        />
-        <GlobalText text={errMsg} />
-        <View style={styles.haveAcc}>
-          <GlobalText text={"Already have an Account? "} />
-          <TouchableOpacity onPress={() => signInScreen()}>
-            <GlobalText text={" Sign In"} />
-          </TouchableOpacity>
-        </View>
+        title={"Register"}
+        containerStyle={styles.buttonContainer}
+        buttonStyle={styles.buttonStyle}
+        titleStyle={styles.buttonTitle}
+        disabled={false}
+        raised={true}
+        type={"Submit"}
+        onPress={() => Register()}
+      />
+      <GlobalText text={errMsg} />
+      <View style={styles.haveAcc}>
+        <GlobalText text={"Already have an Account? "} />
+        <TouchableOpacity onPress={() => signInScreen()}>
+          <GlobalText text={" Sign In"} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
