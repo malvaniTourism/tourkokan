@@ -239,7 +239,38 @@ const styles = StyleSheet.create({
     },
     editButtonContainer: {
         alignSelf: "center"
-    }
+    },
+    containerHome: {
+        flex: 1,
+        backgroundColor: 'white',
+        padding: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    boldTextHome: {
+        fontSize: 25,
+        color: 'red',
+        marginVertical: 16,
+    },
+
+    containerMap: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+    },
+    mapStyle: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+    },
+
+
 });
 
 export default styles;

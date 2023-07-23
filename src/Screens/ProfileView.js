@@ -1,4 +1,18 @@
-import { View, Text, ScrollView, TouchableOpacity, BackHandler, TextInput, StyleSheet, } from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  BackHandler,
+  TextInput,
+  StyleSheet,
+  LogBox,
+  FlatList,
+  SafeAreaView,
+  PermissionsAndroid,
+  Button,
+  Platform
+} from 'react-native';
 import React, { useState, useEffect } from "react";
 import Header from "../Components/Common/Header";
 import COLOR from "../Services/Constants/COLORS";
@@ -17,19 +31,53 @@ import { checkLogin, backPage, goBackHandler, navigateTo } from "../Services/Com
 import SvgUri from 'react-native-svg-uri';
 import GlobalText from "../Components/Customs/Text";
 import CustomButton from '../Components/Customs/Button';
+import Geolocation from '@react-native-community/geolocation';
 
 const ProfileView = ({ navigation, ...props }) => {
 
   const handleEditPress = () => {
 
   }
+  const [currentLongitude, setCurrentLongitude] = useState('...');
+  const [currentLatitude, setCurrentLatitude] = useState('...');
+  const [locationStatus, setLocationStatus] = useState('');
 
   const [profile, setProfile] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
+    const requestLocationPermission = async () => {
+      if (Platform.OS === 'ios') {
+        getOneTimeLocation();
+        subscribeLocationLocation();
+      } else {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+              title: 'Location Access Required',
+              message: 'This App needs to Access your location',
+            }
+          );
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            //To Check, If Permission is granted
+            getOneTimeLocation();
+            subscribeLocationLocation();
+          } else {
+            setLocationStatus('Permission Denied');
+          }
+        } catch (err) {
+          console.warn(err);
+        }
+      }
+    };
+    requestLocationPermission();
+    return () => {
+      Geolocation.clearWatch(watchID);
+    };
     checkLogin(navigation)
+
     // props.setLoader(true);
     getUserProfile();
     return () => {
@@ -37,6 +85,49 @@ const ProfileView = ({ navigation, ...props }) => {
     }
   }, []);
 
+  const getOneTimeLocation = () => {
+    setLocationStatus('Getting Location ...');
+    Geolocation.getCurrentPosition(
+      //Will give you the current location
+      (position) => {
+        setLocationStatus('You are Here');
+        const currentLongitude = JSON.stringify(position.coords.longitude);
+        //getting the Longitude from the location json
+        const currentLatitude = JSON.stringify(position.coords.latitude);
+        //getting the Latitude from the location json
+        setCurrentLongitude(currentLongitude);
+        //Setting state Longitude to re re-render the Longitude Text
+        setCurrentLatitude(currentLatitude);
+        //Setting state Latitude to re re-render the Longitude Text
+      },
+      (error) => {
+        setLocationStatus(error.message);
+      },
+      { enableHighAccuracy: false, timeout: 30000, maximumAge: 1000 }
+    );
+  };
+
+  const subscribeLocationLocation = () => {
+    watchID = Geolocation.watchPosition(
+      (position) => {
+        setLocationStatus('You are Here');
+        //Will give you the location on location change
+        console.log(position);
+        const currentLongitude = JSON.stringify(position.coords.longitude);
+        //getting the Longitude from the location json
+        const currentLatitude = JSON.stringify(position.coords.latitude);
+        //getting the Latitude from the location json
+        setCurrentLongitude(currentLongitude);
+        //Setting state Longitude to re re-render the Longitude Text
+        setCurrentLatitude(currentLatitude);
+        //Setting state Latitude to re re-render the Longitude Text
+      },
+      (error) => {
+        setLocationStatus(error.message);
+      },
+      { enableHighAccuracy: false, maximumAge: 1000 }
+    );
+  };
   const getUserProfile = () => {
     comnGet("v1/user-profile", props.access_token)
       .then((res) => {
@@ -86,6 +177,43 @@ const ProfileView = ({ navigation, ...props }) => {
       />
       <Loader />
 
+      <View style={styles.containerHome}>
+        <View style={styles.containerHome}>
+          <Image
+            source={{
+              uri:
+                'https://raw.githubusercontent.com/AboutReact/sampleresource/master/location.png',
+            }}
+            style={{ width: 100, height: 100 }}
+          />
+          <Text style={styles.boldTextHome}>{locationStatus}</Text>
+          <Text
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 16,
+            }}>
+            Longitude: {currentLongitude}
+          </Text>
+          <Text
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 16,
+            }}>
+            Latitude: {currentLatitude}
+          </Text>
+          <View style={{ marginTop: 20 }}>
+            <Button title="Button" onPress={getOneTimeLocation} />
+          </View>
+        </View>
+        <Text style={{ fontSize: 18, textAlign: 'center', color: 'grey' }}>
+          React Native Geolocation
+        </Text>
+        <Text style={{ fontSize: 16, textAlign: 'center', color: 'grey' }}>
+          www.aboutreact.com
+        </Text>
+      </View>
       <View style={styles.headerContainer}>
         <Image
           style={styles.coverPhoto}

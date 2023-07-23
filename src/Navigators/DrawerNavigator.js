@@ -7,6 +7,7 @@ import TabNavigator from "./TabNavigator";
 import Pricing from "../Screens/Pricing";
 import ContactUs from "../Screens/ContactUs";
 import ProfileView from "../Screens/ProfileView";
+import Weather from "../Screens/Weather";
 
 const Drawer = createDrawerNavigator();
 
@@ -19,7 +20,8 @@ const DrawerNavigator = () => {
       <Drawer.Screen name="All Routes" component={SearchList} />
       <Drawer.Screen name="Pricing" component={Pricing} />
       <Drawer.Screen name="Contact Us" component={ContactUs} />
-
+      <Drawer.Screen name="Emergency" component={ContactUs} />
+      <Drawer.Screen name="Weather" component={Weather} />
       {/* <Drawer.Screen name="Routes Map" component={MapScreen} /> */}
     </Drawer.Navigator>
   );

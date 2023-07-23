@@ -32,6 +32,10 @@ const SearchList = ({ navigation, route, ...props }) => {
     navigateTo(navigation, "RoutesList", { item });
   };
 
+  const getRoutesList = (item) => {
+    navigateTo(navigation, "RoutesList", { item });
+  };
+
   const searchRoute = () => {
     props.setLoader(true);
     const data = {

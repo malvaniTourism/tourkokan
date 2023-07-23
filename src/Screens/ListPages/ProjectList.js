@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, ScrollView, Text, TouchableOpacity } from "react-native";
+import { View, ScrollView, Text, TouchableOpacity, SafeAreaView, StyleSheet } from "react-native";
 import SmallCard from "../../Components/Customs/SmallCard";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import COLOR from "../../Services/Constants/COLORS";
@@ -13,6 +13,8 @@ import { setLoader } from "../../Reducers/CommonActions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "./Styles";
 import { backPage, checkLogin, goBackHandler, navigateTo } from "../../Services/CommonMethods";
+import MapView, { Marker } from 'react-native-maps';
+
 
 const ProjectList = ({ navigation, ...props }) => {
   const [projects, setProjects] = useState([]); // State to store projects
@@ -46,36 +48,68 @@ const ProjectList = ({ navigation, ...props }) => {
   };
 
   return (
-    <ScrollView>
-      <View style={{ flex: 1, alignItems: "center" }}>
-        <Loader />
-        <Header name={'Projects'}
-          startIcon={
-            <Ionicons
-              name="chevron-back-outline"
-              color={COLOR.white}
-              size={DIMENSIONS.userIconSize}
-              onPress={() => backPage(navigation)}
-            />
-          }
-        />
-        <View style={styles.cardsWrap}>
-          {projects.map((project) => (
-            <SmallCard
-              Icon={
-                <Ionicons
-                  name="bus"
-                  color={COLOR.yellow}
-                  size={DIMENSIONS.iconSize}
-                />
-              }
-              title={project.name}
-              onPress={() => handleSmallCardClick(project.id)}
-            />
-          ))}
-        </View>
+    // <ScrollView>
+    //   <View style={{ flex: 1, alignItems: "center" }}>
+    //     <Loader />
+    //     <Header name={'Projects'}
+    //       startIcon={
+    //         <Ionicons
+    //           name="chevron-back-outline"
+    //           color={COLOR.white}
+    //           size={DIMENSIONS.userIconSize}
+    //           onPress={() => backPage(navigation)}
+    //         />
+    //       }
+    //     />
+    //     <View style={styles.cardsWrap}>
+    //       {projects.map((project) => (
+    //         <SmallCard
+    //           Icon={
+    //             <Ionicons
+    //               name="bus"
+    //               color={COLOR.yellow}
+    //               size={DIMENSIONS.iconSize}
+    //             />
+    //           }
+    //           title={project.name}
+    //           onPress={() => handleSmallCardClick(project.id)}
+    //         />
+    //       ))}
+    //     </View>
+    //   </View>
+    // </ScrollView>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={stylesMap.containerMap}>
+        <MapView
+          style={stylesMap.mapStyle}
+          initialRegion={{
+            latitude: 19.2309972,
+            longitude: 73.0838757,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+          customMapStyle={mapStyle}>
+          <Marker
+            draggable
+            coordinate={{
+              latitude: 19.2309972,
+              longitude: 73.0838757
+            }}
+            onDragEnd={
+              (e) => alert(JSON.stringify(e.nativeEvent.coordinate))
+            }
+            title={'Test Marker'}
+            description={'This is a description of the marker'}
+          />
+        </MapView>
       </View>
-    </ScrollView>
+    </SafeAreaView>
+
+
+
+
+
+
   );
 };
 
@@ -93,4 +127,103 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
+const mapStyle = [
+  { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
+  { elementType: 'labels.text.fill', stylers: [{ color: '#746855' }] },
+  { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
+  {
+    featureType: 'administrative.locality',
+    elementType: 'labels.text.fill',
+    stylers: [{ color: '#d59563' }],
+  },
+  {
+    featureType: 'poi',
+    elementType: 'labels.text.fill',
+    stylers: [{ color: '#d59563' }],
+  },
+  {
+    featureType: 'poi.park',
+    elementType: 'geometry',
+    stylers: [{ color: '#263c3f' }],
+  },
+  {
+    featureType: 'poi.park',
+    elementType: 'labels.text.fill',
+    stylers: [{ color: '#6b9a76' }],
+  },
+  {
+    featureType: 'road',
+    elementType: 'geometry',
+    stylers: [{ color: '#38414e' }],
+  },
+  {
+    featureType: 'road',
+    elementType: 'geometry.stroke',
+    stylers: [{ color: '#212a37' }],
+  },
+  {
+    featureType: 'road',
+    elementType: 'labels.text.fill',
+    stylers: [{ color: '#9ca5b3' }],
+  },
+  {
+    featureType: 'road.highway',
+    elementType: 'geometry',
+    stylers: [{ color: '#746855' }],
+  },
+  {
+    featureType: 'road.highway',
+    elementType: 'geometry.stroke',
+    stylers: [{ color: '#1f2835' }],
+  },
+  {
+    featureType: 'road.highway',
+    elementType: 'labels.text.fill',
+    stylers: [{ color: '#f3d19c' }],
+  },
+  {
+    featureType: 'transit',
+    elementType: 'geometry',
+    stylers: [{ color: '#2f3948' }],
+  },
+  {
+    featureType: 'transit.station',
+    elementType: 'labels.text.fill',
+    stylers: [{ color: '#d59563' }],
+  },
+  {
+    featureType: 'water',
+    elementType: 'geometry',
+    stylers: [{ color: '#17263c' }],
+  },
+  {
+    featureType: 'water',
+    elementType: 'labels.text.fill',
+    stylers: [{ color: '#515c6d' }],
+  },
+  {
+    featureType: 'water',
+    elementType: 'labels.text.stroke',
+    stylers: [{ color: '#17263c' }],
+  },
+];
+
+const stylesMap = StyleSheet.create({
+  containerMap: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  mapStyle: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+});
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectList);
