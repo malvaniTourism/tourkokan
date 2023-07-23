@@ -195,7 +195,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                                 seeMoreStyle={styles.seeMoreStyle}
                                 buttonStyle={styles.buttonStyle}
                                 titleStyle={styles.titleStyle}
-                                icon={
+                                endIcon={
                                     <Feather
                                         name="chevrons-right"
                                         size={24}
@@ -220,7 +220,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                                 seeMoreStyle={styles.seeMoreStyle}
                                 buttonStyle={styles.buttonStyle}
                                 titleStyle={styles.titleStyle}
-                                icon={
+                                endIcon={
                                     <Feather
                                         name="chevrons-right"
                                         size={24}

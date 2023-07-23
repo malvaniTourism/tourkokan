@@ -99,6 +99,13 @@ const styles = StyleSheet.create({
         justifyContent: "flex-end",
         marginTop: 10
     },
+    locBtnStyle: {
+        width: DIMENSIONS.bannerWidth,
+        alignItems: "center",
+        flexDirection: 'row',
+        justifyContent: "center",
+        marginVertical: 10,
+    },
     profileImageView: {
         height: DIMENSIONS.bannerWidth,
         marginTop: -75,
@@ -269,8 +276,22 @@ const styles = StyleSheet.create({
         right: 0,
         bottom: 0,
     },
-
-
+    locationModal: {
+        padding: 10,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: DIMENSIONS.headerTextSize
+    },
+    profileMapView: {
+        height: DIMENSIONS.halfWidth,
+        width: DIMENSIONS.screenWidth,
+        marginVertical: 20,
+        borderWidth: 1,
+        borderColor: COLOR.grey
+    },
+    map: {
+        ...StyleSheet.absoluteFillObject,
+    },
 });
 
 export default styles;

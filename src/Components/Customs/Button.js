@@ -12,11 +12,13 @@ const CustomButton = ({
   raised,
   type,
   onPress,
-  icon,
+  startIcon,
+  endIcon,
   seeMoreStyle
 }) => {
   return (
     <TouchableOpacity onPress={onPress} style={seeMoreStyle}>
+      {startIcon}
       <Button
         title={title}
         containerStyle={[styles.containerStyle, containerStyle]}
@@ -27,7 +29,7 @@ const CustomButton = ({
         type={type}
         onPress={onPress}
       />
-      {icon}
+      {endIcon}
     </TouchableOpacity>
   );
 };

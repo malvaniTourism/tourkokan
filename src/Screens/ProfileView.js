@@ -32,58 +32,63 @@ import SvgUri from 'react-native-svg-uri';
 import GlobalText from "../Components/Customs/Text";
 import CustomButton from '../Components/Customs/Button';
 import Geolocation from '@react-native-community/geolocation';
+import { Overlay } from '@rneui/themed';
+import MapView, { Marker, Polygon } from 'react-native-maps';
 
 const ProfileView = ({ navigation, ...props }) => {
-
-  const handleEditPress = () => {
-
-  }
-  const [currentLongitude, setCurrentLongitude] = useState('...');
-  const [currentLatitude, setCurrentLatitude] = useState('...');
+  const [currentLatitude, setCurrentLatitude] = useState(null);
+  const [currentLongitude, setCurrentLongitude] = useState(null);
   const [locationStatus, setLocationStatus] = useState('');
+  const [watchID, setWatchID] = useState("");
+  const [showLocModal, setShowLocModal] = useState(true);
+  const [initialRegion, setInitialRegion] = useState(
+    {
+      latitude: currentLatitude || 37.4220936,
+      longitude: currentLongitude || -122.083922,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421
+    }
+  )
 
   const [profile, setProfile] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
-    const requestLocationPermission = async () => {
-      if (Platform.OS === 'ios') {
-        getOneTimeLocation();
-        subscribeLocationLocation();
-      } else {
-        try {
-          const granted = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-            {
-              title: 'Location Access Required',
-              message: 'This App needs to Access your location',
-            }
-          );
-          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            //To Check, If Permission is granted
-            getOneTimeLocation();
-            subscribeLocationLocation();
-          } else {
-            setLocationStatus('Permission Denied');
-          }
-        } catch (err) {
-          console.warn(err);
-        }
-      }
-    };
-    requestLocationPermission();
-    return () => {
-      Geolocation.clearWatch(watchID);
-    };
+    // requestLocationPermission();
     checkLogin(navigation)
-
-    // props.setLoader(true);
     getUserProfile();
     return () => {
+      Geolocation.clearWatch(watchID);
       backHandler.remove()
-    }
+    };
   }, []);
+
+  const requestLocationPermission = async () => {
+    if (Platform.OS === 'ios') {
+      getOneTimeLocation();
+      subscribeLocationLocation();
+    } else {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            title: 'Location Access Required',
+            message: 'This App needs to Access your location',
+          }
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          //To Check, If Permission is granted
+          getOneTimeLocation();
+          subscribeLocationLocation();
+        } else {
+          setLocationStatus('Permission Denied');
+        }
+      } catch (err) {
+        console.warn(err);
+      }
+    }
+  };
 
   const getOneTimeLocation = () => {
     setLocationStatus('Getting Location ...');
@@ -91,9 +96,10 @@ const ProfileView = ({ navigation, ...props }) => {
       //Will give you the current location
       (position) => {
         setLocationStatus('You are Here');
-        const currentLongitude = JSON.stringify(position.coords.longitude);
+        setInitialLocation(position.coords.longitude, position.coords.latitude)
+        const currentLongitude = position.coords.longitude;
         //getting the Longitude from the location json
-        const currentLatitude = JSON.stringify(position.coords.latitude);
+        const currentLatitude = position.coords.latitude;
         //getting the Latitude from the location json
         setCurrentLongitude(currentLongitude);
         //Setting state Longitude to re re-render the Longitude Text
@@ -108,14 +114,14 @@ const ProfileView = ({ navigation, ...props }) => {
   };
 
   const subscribeLocationLocation = () => {
-    watchID = Geolocation.watchPosition(
+    let WatchID = Geolocation.watchPosition(
       (position) => {
         setLocationStatus('You are Here');
         //Will give you the location on location change
         console.log(position);
-        const currentLongitude = JSON.stringify(position.coords.longitude);
+        const currentLongitude = position.coords.longitude;
         //getting the Longitude from the location json
-        const currentLatitude = JSON.stringify(position.coords.latitude);
+        const currentLatitude = position.coords.latitude;
         //getting the Latitude from the location json
         setCurrentLongitude(currentLongitude);
         //Setting state Longitude to re re-render the Longitude Text
@@ -127,7 +133,19 @@ const ProfileView = ({ navigation, ...props }) => {
       },
       { enableHighAccuracy: false, maximumAge: 1000 }
     );
+    setWatchID(WatchID)
   };
+
+  const setInitialLocation = (lat, long) => {
+    let myInitialRegion = {
+      latitude: lat || 37.4220936,
+      longitude: long || -122.083922,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    };
+    setInitialRegion(myInitialRegion)
+  }
+
   const getUserProfile = () => {
     comnGet("v1/user-profile", props.access_token)
       .then((res) => {
@@ -155,6 +173,19 @@ const ProfileView = ({ navigation, ...props }) => {
       });
   };
 
+  const handleEditPress = () => {
+
+  }
+
+  const setHomeLocation = () => {
+    requestLocationPermission();
+    setShowLocModal(false)
+  }
+
+  const setCurrLocation = () => {
+    requestLocationPermission();
+    setShowLocModal(false)
+  }
 
   return (
     <ScrollView style={styles.container}>
@@ -177,48 +208,11 @@ const ProfileView = ({ navigation, ...props }) => {
       />
       <Loader />
 
-      <View style={styles.containerHome}>
-        <View style={styles.containerHome}>
-          <Image
-            source={{
-              uri:
-                'https://raw.githubusercontent.com/AboutReact/sampleresource/master/location.png',
-            }}
-            style={{ width: 100, height: 100 }}
-          />
-          <Text style={styles.boldTextHome}>{locationStatus}</Text>
-          <Text
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: 16,
-            }}>
-            Longitude: {currentLongitude}
-          </Text>
-          <Text
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: 16,
-            }}>
-            Latitude: {currentLatitude}
-          </Text>
-          <View style={{ marginTop: 20 }}>
-            <Button title="Button" onPress={getOneTimeLocation} />
-          </View>
-        </View>
-        <Text style={{ fontSize: 18, textAlign: 'center', color: 'grey' }}>
-          React Native Geolocation
-        </Text>
-        <Text style={{ fontSize: 16, textAlign: 'center', color: 'grey' }}>
-          www.aboutreact.com
-        </Text>
-      </View>
       <View style={styles.headerContainer}>
-        <Image
+        {/* <Image
           style={styles.coverPhoto}
           source={{ uri: 'https://www.bootdey.com/image/280x280/1E90FF/1E90FF' }}
-        />
+        /> */}
         <View style={styles.profileContainer}>
           <Image
             style={styles.profilePhoto}
@@ -256,7 +250,54 @@ const ProfileView = ({ navigation, ...props }) => {
         onPress={handleEditPress}
       />
 
-      <GlobalText text={JSON.stringify(profile)} />
+      {currentLatitude &&
+        <View style={styles.profileMapView}>
+          <MapView style={styles.map} initialRegion={initialRegion}>
+            <Marker
+              coordinate={{ latitude: currentLatitude, longitude: currentLongitude }}
+            />
+          </MapView>
+        </View>}
+
+      <Overlay style={styles.locationModal} isVisible={showLocModal} onBackdropPress={() => setShowLocModal(false)}>
+        <GlobalText text={"Set Your Primary Location"} style={styles.locationModal} />
+        <View>
+          <CustomButton
+            title={"Home Location"}
+            containerStyle={styles.showMore}
+            seeMoreStyle={styles.locBtnStyle}
+            buttonStyle={styles.buttonStyle}
+            titleStyle={styles.titleStyle}
+            raised={false}
+            type={"Submit"}
+            onPress={setHomeLocation}
+            startIcon={
+              <Ionicons
+                name="home"
+                size={24}
+                color={COLOR.themeComicBlue}
+              />
+            }
+          />
+          <CustomButton
+            title={"Current Location"}
+            containerStyle={styles.showMore}
+            seeMoreStyle={styles.locBtnStyle}
+            buttonStyle={styles.buttonStyle}
+            titleStyle={styles.titleStyle}
+            raised={false}
+            type={"Submit"}
+            onPress={setCurrLocation}
+            startIcon={
+              <Ionicons
+                name="location"
+                size={24}
+                color={COLOR.themeComicBlue}
+              />
+            }
+          />
+        </View>
+      </Overlay>
     </ScrollView>
   );
 };
