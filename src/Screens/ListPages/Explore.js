@@ -16,11 +16,12 @@ import PlaceCard from "../../Components/Cards/PlaceCard";
 import CityCard from "../../Components/Cards/CityCard";
 import GlobalText from "../../Components/Customs/Text";
 
-const Explore = ({ navigation, ...props }) => {
+const Explore = ({ route, navigation, ...props }) => {
   const [places, setPlaces] = useState([]);
   const [cities, setCities] = useState([]);
   const [error, setError] = useState(null);
-  const [isEnabled, setIsEnabled] = useState(true)
+  const [isEnabled, setIsEnabled] = useState(route.name == "Cities")
+  console.log(route.name);
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
@@ -90,8 +91,8 @@ const Explore = ({ navigation, ...props }) => {
           resizeMode="cover"
         />
         <View style={styles.details}>
-          <GlobalText text={"Click on what would you like to Explore..."} style={styles.whiteText} />
-          <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 10 }}>
+          <GlobalText text={"Lot more to Explore..."} style={styles.whiteText} />
+          {/* <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 10 }}>
             <TouchableOpacity onPress={() => toggleSwitch(true)}>
               <GlobalText text={"Cities"} style={styles.whiteText} />
             </TouchableOpacity>
@@ -99,7 +100,7 @@ const Explore = ({ navigation, ...props }) => {
             <TouchableOpacity onPress={() => toggleSwitch(false)}>
               <GlobalText text={"Places"} style={styles.whiteText} />
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
       </View>
       <View style={{minHeight: DIMENSIONS.screenHeight}}>

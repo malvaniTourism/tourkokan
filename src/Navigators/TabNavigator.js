@@ -7,7 +7,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import COLOR from "../Services/Constants/COLORS";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
-import Exlore from "../Screens/ListPages/Explore";
+import Explore from "../Screens/ListPages/Explore";
 import ProjectList from "../Screens/ListPages/ProjectList";
 import RoutesList from "../Screens/RoutesList";
 import SearchList from "../Screens/SearchList";
@@ -51,10 +51,11 @@ const TabNavigator = () => {
         }}
       /> */}
       <Tab.Screen
-        name="Exlore"
-        component={Exlore}
+        name="Cities"
+        component={Explore}
         options={{
-          tabBarLabel: "Explore",
+          pageName: "Cities",
+          tabBarLabel: "Cities",
           tabBarIcon: ({ color, size }) => (
             // <Ionicons
             //   name="location-outline"
@@ -96,10 +97,11 @@ const TabNavigator = () => {
       />
 
       <Tab.Screen
-        name="ProjectList"
-        component={ProjectList}
+        name="Places"
+        component={Explore}
         options={{
-          tabBarLabel: "Bussiness",
+          pageName: "Places",
+          tabBarLabel: "Places",
           tabBarIcon: ({ color, size }) => (
             <Ionicons
               name="md-person-circle-sharp"

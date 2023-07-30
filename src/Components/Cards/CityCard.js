@@ -42,7 +42,7 @@ const CityCard = ({ data, reload, navigation }) => {
     }
 
     const getCity = (id) => {
-        navigateTo(navigation, "CityDetails", { id })
+        // navigateTo(navigation, "CityDetails", { id })
     }
 
     return (

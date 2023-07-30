@@ -8,7 +8,7 @@ import { navigateTo } from '../../Services/CommonMethods';
 const PlaceCard = ({ data, navigation }) => {
 
     const getPlace = (id) => {
-        navigateTo(navigation, "PlaceDetails", { id })
+        // navigateTo(navigation, "PlaceDetails", { id })
     }
 
     return (
