@@ -11,6 +11,8 @@ import RouteLineFirst from "../Components/Customs/RouteLines/RouteLineFirst";
 import RouteLineLast from "../Components/Customs/RouteLines/RouteLineLast";
 import GlobalText from "../Components/Customs/Text";
 import RouteHeadCard from "../Components/Cards/RouteHeadCard";
+import { StyleSheet } from "react-native";
+import { Text } from "react-native-svg";
 
 const RoutesList = ({ navigation, route }) => {
   const [list, setList] = useState(route.params.item.route_stops);
@@ -39,7 +41,13 @@ const RoutesList = ({ navigation, route }) => {
               <RouteLine />
         }
         <ListItem.Content>
-          <ListItem.Title><GlobalText text={item.place.name} style={{ color: (isFirst || isLast) && COLOR.themeComicBlue }} /></ListItem.Title>
+          <ListItem.Title>
+            <GlobalText text={item.place.name} style={{ color: (isFirst || isLast) && COLOR.themeComicBlue }} />
+            {/* <GlobalText text={item.dept_time} style={{ color: (isFirst || isLast) && COLOR.themeComicBlue }} />
+            <GlobalText text={item.arr_time} style={{ color: (isFirst || isLast) && COLOR.themeComicBlue }} /> */}
+            {/* {JSON.stringify({ item })} */}
+
+          </ListItem.Title>
         </ListItem.Content>
       </ListItem>
     );
@@ -66,14 +74,34 @@ const RoutesList = ({ navigation, route }) => {
         <RouteHeadCard data={route.params.item} cardClick={() => console.log('clicked')} />
       </View>
       <SafeAreaView>
-        <FlatList
-          keyExtractor={(item) => item.id}
-          data={list}
-          renderItem={renderItem}
-        />
+        <View style={styles1.flatListContainer}>
+          <FlatList
+            keyExtractor={(item) => item.id}
+            data={list}
+            renderItem={renderItem}
+          />
+        </View>
       </SafeAreaView>
     </View>
   );
 };
+
+const styles1 = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  flatListContainer: {
+    margin: 20,
+    borderRadius: 10, // Apply the desired border radius
+    borderWidth: 1, // Apply the desired border width
+    borderColor: "#000", // Apply the desired border color
+    overflow: "hidden", // This will clip the content inside the container with the border radius
+  },
+  item: {
+    padding: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+  },
+});
 
 export default RoutesList;
