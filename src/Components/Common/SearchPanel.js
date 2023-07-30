@@ -16,6 +16,7 @@ import {
   setLoader,
   setSource,
 } from "../../Reducers/CommonActions";
+import { Polygon } from "react-native-svg";
 
 const SearchPanel = ({ navigation, ...props }) => {
   const [isValid, setIsValid] = useState(false)
@@ -144,3 +145,23 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPanel);
+
+<kml>
+  <Document>
+    <Folder>
+      <Placemark>
+        <MultiGeometry>
+          <Polygon>
+            <innerBoundaryIs>
+              <LinearRing>
+                <coordinates>
+                  79 73.691801465609,16.5828351274665 73.6918448847189,16.5828381798049 73.691906763123,16.5828425298033 73.6919708689385,16.5828933032244 73.6919767669027,16.5828920465654 73.6919979154121,16.5828875405231 73.6922204630482,16.5827937443333 73.6922634348198,16.5827756331641 73.6922634954092,16.5827756076276 73.6924931158845,16.582611110543
+                </coordinates>
+              </LinearRing>
+            </innerBoundaryIs>
+          </Polygon>
+        </MultiGeometry>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>
