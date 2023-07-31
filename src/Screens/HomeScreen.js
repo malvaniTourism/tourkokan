@@ -51,8 +51,16 @@ const HomeScreen = ({ navigation, ...props }) => {
         LogBox.ignoreAllLogs();
         saveToken();
         SplashScreen.hide();
+
+        let isFirstTime = AsyncStorage.getItem("isFirstTime")
+        if (isFirstTime) {
+            refRBSheet.current.open()
+            AsyncStorage.setItem("isFirstTime", false)
+        }
+
         return () => {
             backHandler.remove();
+            AsyncStorage.setItem("isFirstTime", false)
         };
     }, [props.access_token]);
 

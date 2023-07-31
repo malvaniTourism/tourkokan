@@ -124,6 +124,7 @@ const EmailSignIn = ({ navigation, ...props }) => {
           props.saveAccess_token(res.data.data.access_token);
           props.setLoader(false);
           navigateTo(navigation, "Home");
+          AsyncStorage.setItem("isFirstTime", true)
         } else {
           setIsAlert(true);
           setAlertMessage(res.data.message);

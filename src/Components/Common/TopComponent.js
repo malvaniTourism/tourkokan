@@ -39,7 +39,7 @@ const TopComponent = ({ navigation, openLocationSheet }) => {
             style={{ marginRight: 20 }}
             onPress={() => openDrawer()}
           />
-          <GlobalText text={"Devgad"} style={styles.fontBold} />
+          <GlobalText text={"Devgad"} style={styles.whiteBold} />
           <Ionicons
             name="chevron-down"
             color={COLOR.white}

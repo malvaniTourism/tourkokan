@@ -28,6 +28,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: DIMENSIONS.headerTextSize,
     marginRight: 5,
+  },
+  whiteBold: {
+    fontWeight: 'bold',
+    fontSize: DIMENSIONS.headerTextSize,
+    marginRight: 5,
     color: COLOR.white
   },
   listView: {
@@ -128,6 +133,14 @@ const styles = StyleSheet.create({
     borderColor: COLOR.intentColor,
     borderRadius: DIMENSIONS.borderRadiusLarge,
     marginBottom: 5
+  },
+  overlay: {
+    height: DIMENSIONS.bannerHeight,
+    width: DIMENSIONS.bannerWidth
+  },
+  overlayMessage: {
+    fontWeight: 'bold',
+    fontSize: DIMENSIONS.headerTextSize
   }
 });
 

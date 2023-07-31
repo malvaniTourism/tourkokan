@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { View, Text } from 'react-native';
+import ComingSoon from '../Components/Common/ComingSoon';
+import { navigateTo } from '../Services/CommonMethods';
 
-const Weather = () => {
+const Weather = ({ navigation }) => {
   const [weatherData, setWeatherData] = useState(null);
+  const [isVisible, setIsVisible] = useState(true)
 
   useEffect(() => {
     // Replace 'YOUR_API_KEY' with your Weatherstack API key
@@ -17,6 +20,10 @@ const Weather = () => {
     //   .catch(error => {
     //     console.error('Error fetching weather data:', error);
     //   });
+    setTimeout(() => {
+      setIsVisible(false)
+      navigateTo(navigation, "Home")
+    }, 2000)
   }, []);
 
   return (
@@ -31,7 +38,7 @@ const Weather = () => {
           {/* Add more weather data as needed */}
         </View>
       ) : (
-        <Text>Loading weather data...</Text>
+        <ComingSoon message={"Coming Soon..."} visible={isVisible} />
       )}
     </View>
   );

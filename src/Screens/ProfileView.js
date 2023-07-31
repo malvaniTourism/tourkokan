@@ -67,7 +67,7 @@ const ProfileView = ({ navigation, ...props }) => {
   const requestLocationPermission = async () => {
     if (Platform.OS === 'ios') {
       getOneTimeLocation();
-      subscribeLocationLocation();
+      subscribeLocation();
     } else {
       try {
         const granted = await PermissionsAndroid.request(
@@ -80,7 +80,7 @@ const ProfileView = ({ navigation, ...props }) => {
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
           //To Check, If Permission is granted
           getOneTimeLocation();
-          subscribeLocationLocation();
+          subscribeLocation();
         } else {
           setLocationStatus('Permission Denied');
         }
@@ -113,7 +113,7 @@ const ProfileView = ({ navigation, ...props }) => {
     );
   };
 
-  const subscribeLocationLocation = () => {
+  const subscribeLocation = () => {
     let WatchID = Geolocation.watchPosition(
       (position) => {
         setLocationStatus('You are Here');

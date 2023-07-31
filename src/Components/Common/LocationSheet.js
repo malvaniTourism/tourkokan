@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { FlatList, SafeAreaView, ScrollView, View, Platform, TouchableOpacity } from 'react-native'
+import { FlatList, SafeAreaView, ScrollView, View, Platform, TouchableOpacity, PermissionsAndroid } from 'react-native'
 import GlobalText from '../Customs/Text'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
@@ -10,6 +10,7 @@ import { comnPost } from '../../Services/Api/CommonServices';
 import { ListItem } from '@rneui/themed';
 import styles from './Styles';
 import DialogBox from 'react-native-dialogbox';
+import Geolocation from '@react-native-community/geolocation';
 
 const LocationSheet = ({ openLocationSheet, closeLocationSheet }) => {
     const refDialogBox = useRef();
@@ -19,6 +20,11 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet }) => {
     const [isLocationEnabled, setIsLocationEnabled] = useState(false);
     const [latitude, setLatitude] = useState('')
     const [longitude, setLongitude] = useState('')
+    const [currentLatitude, setCurrentLatitude] = useState(null);
+    const [currentLongitude, setCurrentLongitude] = useState(null);
+    const [locationStatus, setLocationStatus] = useState('');
+    const [watchID, setWatchID] = useState("");
+  
 
     const searchPlace = (val, table) => {
         setSearchValue(val);
@@ -50,32 +56,66 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet }) => {
         closeLocationSheet()
     }
 
-    const myLocationPress = () => {
-        if (Platform.OS !== 'android' && isLocationEnabled === false) {
-            refDialogBox.current.confirm({
-                title: 'Enable Location Service',
-                content: "Please turn on your location service  to detect your current location",
-                ok: {
-                    text: 'CONTINUE',
-                    callback: () => {
-                        LocationSwitch.enableLocationService(1000, true,
-                            () => { isLocationEnabled(false) },
-                            () => { closeLocationSheet() },
-                            () => { getCurrentLoc(); },
-                        );
-                    },
-                },
-                cancel: {
-                    text: 'CANCEL',
-                    callback: () => { },
-                },
-            });
-
+    const myLocationPress = async () => {
+        if (Platform.OS === 'ios') {
+            getOneTimeLocation();
+            subscribeLocation();
         } else {
-            closeLocationSheet()
-            getCurrentLoc();
+            try {
+                const granted = await PermissionsAndroid.request(
+                    PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+                    {
+                        title: 'Location Access Required',
+                        message: 'This App needs to Access your location',
+                    }
+                );
+                if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                    //To Check, If Permission is granted
+                    getOneTimeLocation();
+                    subscribeLocation();
+                } else {
+                    setLocationStatus('Permission Denied');
+                }
+            } catch (err) {
+                console.warn(err);
+            }
         }
     }
+
+    const getOneTimeLocation = () => {
+        setLocationStatus('Getting Location ...');
+        Geolocation.getCurrentPosition(
+            (position) => {
+                setLocationStatus('You are Here');
+                const currentLongitude = position.coords.longitude;
+                const currentLatitude = position.coords.latitude;
+                setCurrentLongitude(currentLongitude);
+                setCurrentLatitude(currentLatitude);
+            },
+            (error) => {
+                setLocationStatus(error.message);
+            },
+            { enableHighAccuracy: false, timeout: 30000, maximumAge: 1000 }
+        );
+    };
+
+    const subscribeLocation = () => {
+        let WatchID = Geolocation.watchPosition(
+            (position) => {
+                setLocationStatus('You are Here');
+                console.log(position);
+                const currentLongitude = position.coords.longitude;
+                const currentLatitude = position.coords.latitude;
+                setCurrentLongitude(currentLongitude);
+                setCurrentLatitude(currentLatitude);
+            },
+            (error) => {
+                setLocationStatus(error.message);
+            },
+            { enableHighAccuracy: false, maximumAge: 1000 }
+        );
+        setWatchID(WatchID)
+    };
 
     const getCurrentLoc = () => {
         if (Platform.OS === 'ios') {
