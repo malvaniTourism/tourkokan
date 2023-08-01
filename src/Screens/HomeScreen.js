@@ -42,11 +42,15 @@ const HomeScreen = ({ navigation, ...props }) => {
     const [error, setError] = useState(null);
     const [cityList, setCityList] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    const [isLandingDataFetched, setIsLandingDataFetched] = useState(false);
 
     useEffect(() => {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', () => exitApp());
         if (props.access_token) {
-            callLandingPageAPI();
+            if (!isLandingDataFetched && props.access_token) {
+                callLandingPageAPI();
+                setIsLandingDataFetched(true); // Mark the data as fetched
+            }
         }
         LogBox.ignoreAllLogs();
         saveToken();

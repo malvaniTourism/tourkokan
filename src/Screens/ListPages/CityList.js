@@ -23,7 +23,14 @@ const CityList = ({ navigation, ...props }) => {
     const backHandler = goBackHandler(navigation)
     checkLogin(navigation)
     props.setLoader(true);
-    getCities()
+
+    if (props.access_token) {
+      if (!isLandingDataFetched && props.access_token) {
+        getCities()
+        setIsLandingDataFetched(true); // Mark the data as fetched
+      }
+    }
+
     return () => {
       backHandler.remove()
     }
@@ -60,11 +67,11 @@ const CityList = ({ navigation, ...props }) => {
           }
         />
         <View style={{ flex: 1, alignItems: "center" }}>
-        <View>
-          {cities.map((city) => (
-            <CityCard data={city} navigation={navigation} />
-          ))}
-        </View>
+          <View>
+            {cities.map((city) => (
+              <CityCard data={city} navigation={navigation} />
+            ))}
+          </View>
         </View>
       </View>
     </ScrollView>

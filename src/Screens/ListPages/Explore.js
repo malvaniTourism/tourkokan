@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { View, ScrollView, Text, TouchableOpacity, Switch, SafeAreaView, ImageBackground, FlatList } from "react-native";
 import SmallCard from "../../Components/Customs/SmallCard";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -17,18 +17,29 @@ import CityCard from "../../Components/Cards/CityCard";
 import GlobalText from "../../Components/Customs/Text";
 
 const Explore = ({ route, navigation, ...props }) => {
+  const refRBSheet = useRef();
+
   const [places, setPlaces] = useState([]);
   const [cities, setCities] = useState([]);
   const [error, setError] = useState(null);
   const [isEnabled, setIsEnabled] = useState(route.name == "Cities")
+  const [isLandingDataFetched, setIsLandingDataFetched] = useState(false);
+
   console.log(route.name);
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
     checkLogin(navigation)
     props.setLoader(true);
-    getCities()
-    getPlaces()
+
+    if (props.access_token) {
+      if (!isLandingDataFetched && props.access_token) {
+        getCities()
+        getPlaces()
+        setIsLandingDataFetched(true); // Mark the data as fetched
+      }
+    }
+
     return () => {
       backHandler.remove()
     }
@@ -103,26 +114,26 @@ const Explore = ({ route, navigation, ...props }) => {
           </View> */}
         </View>
       </View>
-      <View style={{minHeight: DIMENSIONS.screenHeight}}>
-      {isEnabled ?
-        <ScrollView>
-          {cities.map((city) => (
-            <CityCard data={city} navigation={navigation} />
-            ))}
-        </ScrollView>
-        :
-        <SafeAreaView style={{ alignItems: "center", marginBottom: 70 }}>
+      <View style={{ minHeight: DIMENSIONS.screenHeight }}>
+        {isEnabled ?
           <ScrollView>
-            <FlatList
-              keyExtractor={(item) => item.id}
-              data={places}
-              renderItem={renderPlaces}
-              numColumns={2}
-              style={{ paddingBottom: 150 }}
-              />
+            {cities.map((city) => (
+              <CityCard data={city} navigation={navigation} />
+            ))}
           </ScrollView>
-        </SafeAreaView>
-      }
+          :
+          <SafeAreaView style={{ alignItems: "center", marginBottom: 70 }}>
+            <ScrollView>
+              <FlatList
+                keyExtractor={(item) => item.id}
+                data={places}
+                renderItem={renderPlaces}
+                numColumns={2}
+                style={{ paddingBottom: 150 }}
+              />
+            </ScrollView>
+          </SafeAreaView>
+        }
       </View>
     </View>
   );
