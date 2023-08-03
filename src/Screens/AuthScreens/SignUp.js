@@ -15,6 +15,7 @@ import { navigateTo } from "../../Services/CommonMethods";
 import { launchImageLibrary } from 'react-native-image-picker'
 import GlobalText from "../../Components/Customs/Text";
 import COLOR from "../../Services/Constants/COLORS";
+import Popup from "../../Components/Common/Popup";
 
 const SignUp = ({ navigation, ...props }) => {
   const [name, setName] = useState("");
@@ -26,6 +27,7 @@ const SignUp = ({ navigation, ...props }) => {
   const [roles, setRoles] = useState([]);
   const [errMsg, setErrorMsg] = useState("");
   const [imageSource, setImageSource] = useState(null);
+  const [isSuccess, setIsSuccess] = useState(false)
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => navigateTo(navigation, 'Login'));
@@ -105,7 +107,8 @@ const SignUp = ({ navigation, ...props }) => {
       .then((res) => {
         if (res.data.success) {
           props.setLoader(false);
-          navigateTo(navigation, "Login");
+          setAlertMessage("Registration Successful, now login to continue...");
+          setIsSuccess(true)
         } else if (res.data.message.email) {
           props.setLoader(false);
           setErrorMsg("The email has already been taken.");
@@ -116,12 +119,22 @@ const SignUp = ({ navigation, ...props }) => {
       })
       .catch((err) => {
         props.setLoader(false);
+        setIsAlert(true);
+        setIsSuccess(false)
+        setAlertMessage("Something went wrong...");
       });
   };
 
   const signInScreen = () => {
     navigateTo(navigation, "Login");
   };
+
+  const closePopup = () => {
+    if (isSuccess) {
+      navigateTo(navigation, "Login");
+    }
+    setIsAlert(false)
+  }
 
   // const selectImage = () => {
   //   const options = {
@@ -220,6 +233,12 @@ const SignUp = ({ navigation, ...props }) => {
           <GlobalText text={" Sign In"} />
         </TouchableOpacity>
       </View>
+
+      <Popup
+        message={alertMessage}
+        visible={isAlert}
+        onPress={closePopup}
+      />
     </View>
   );
 };

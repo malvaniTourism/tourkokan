@@ -73,7 +73,7 @@ const ContactUs = ({ navigation, route }) => {
           <></>
         }
       />
-      <SafeAreaView>
+      <SafeAreaView style={{alignItems: "center"}}>
         {ContactUsFields.map((field, index) => {
           return (
             <TextField
@@ -86,13 +86,15 @@ const ContactUs = ({ navigation, route }) => {
               disabled={field.disabled}
               value={getValue(index)}
               setChild={(v, i) => setValue(v, i, index)}
+              style={styles.containerStyle}
+              inputContainerStyle={styles.inputContainerStyle}
             />
           );
         })}
         <CustomButton
           title={"Submit"}
-          containerStyle={styles.buttonContainer}
-          buttonStyle={styles.buttonStyle}
+          containerStyle={styles.contactButtonContainer}
+          buttonStyle={styles.contactButtonStyle}
           titleStyle={styles.buttonTitle}
           disabled={false}
           raised={true}

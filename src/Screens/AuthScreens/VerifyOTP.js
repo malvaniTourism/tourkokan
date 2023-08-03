@@ -23,6 +23,7 @@ import {
 import Alert from "../../Components/Customs/Alert";
 import { navigateTo } from "../../Services/CommonMethods";
 import GlobalText from "../../Components/Customs/Text";
+import Popup from "../../Components/Common/Popup";
 
 const VerifyOTP = ({ navigation, route, ...props }) => {
   const [otp, setOtp] = useState(1234);
@@ -30,6 +31,7 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
   const [sec, setSec] = useState(30);
   const [isAlert, setIsAlert] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false)
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => navigateTo(navigation, 'Login'));
@@ -63,18 +65,30 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
           AsyncStorage.setItem("userId", res.data.data.user.id);
           props.saveAccess_token(res.data.data.access_token);
           props.setLoader(false);
-          navigateTo(navigation, "Home");
-          AsyncStorage.setItem("isFirstTime", true)
+          isSuccess(true)
         } else {
           setIsAlert(true);
           setAlertMessage(res.data.message);
           props.setLoader(false);
+          isSuccess(false)
         }
       })
       .catch((err) => {
+        setIsAlert(true);
+        setIsSuccess(false)
+        setAlertMessage("Something went wrong...");
         props.setLoader(false);
+        isSuccess(false)
       });
   };
+
+  const closePopup = () => {
+    if (isSuccess) {
+      navigateTo(navigation, "Home");
+      AsyncStorage.setItem("isFirstTime", true)
+    }
+    setIsAlert(false)
+  }
 
   const resend = () => {
     props.setLoader(true);
@@ -186,12 +200,11 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
           </TouchableOpacity>
         </View>
       )}
-      {isAlert && (
-        <Alert
-          alertMessage={alertMessage}
-          closeAlert={() => setIsAlert(false)}
-        />
-      )}
+      <Popup
+        message={alertMessage}
+        visible={isAlert}
+        onPress={closePopup}
+      />
     </View>
   );
 };

@@ -141,6 +141,11 @@ const styles = StyleSheet.create({
   overlayMessage: {
     fontWeight: 'bold',
     fontSize: DIMENSIONS.headerTextSize
+  },
+  popupView: {
+    alignItems: "center",
+    justifyContent: "center",
+    height: DIMENSIONS.bannerHeight / 2
   }
 });
 

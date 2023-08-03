@@ -85,6 +85,23 @@ const styles = StyleSheet.create({
         backgroundColor: COLOR.transparent,
         width: "auto"
     },
+    contactButtonStyle: {
+        backgroundColor: COLOR.themeComicBlue,
+        width: "auto",
+    },
+    contactButtonContainer: {
+        marginTop: 15,
+    },
+    containerStyle: {
+        borderWidth: 1,
+        padding: 10,
+        borderColor: COLOR.grey,
+        borderRadius: DIMENSIONS.borderRadius
+    },
+    inputContainerStyle: {
+        borderColor: COLOR.transparent,
+        marginBottom: 10
+    },
     titleStyle: {
         color: COLOR.themeComicBlue
     },

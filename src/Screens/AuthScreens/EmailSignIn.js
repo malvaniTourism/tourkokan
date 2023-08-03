@@ -17,12 +17,14 @@ import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import { navigateTo } from "../../Services/CommonMethods";
 import GlobalText from "../../Components/Customs/Text";
 import SQLite from 'react-native-sqlite-storage'
+import Popup from "../../Components/Common/Popup";
 
 const EmailSignIn = ({ navigation, ...props }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isAlert, setIsAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false)
 
   useEffect(() => {
     // openDB()
@@ -105,7 +107,6 @@ const EmailSignIn = ({ navigation, ...props }) => {
   };
 
   const Login = () => {
-    console.log('datatatata');
     props.setLoader(true);
     const data = {
       email,
@@ -115,7 +116,7 @@ const EmailSignIn = ({ navigation, ...props }) => {
     console.log(data);
     comnPost("auth/login", data)
       .then((res) => {
-        console.log(res);
+        console.log('1', res.data);
         if (res.data.success) {
           setIsAlert(true);
           setAlertMessage(res.data.message);
@@ -123,18 +124,29 @@ const EmailSignIn = ({ navigation, ...props }) => {
           AsyncStorage.setItem("userId", res.data.data.user.id);
           props.saveAccess_token(res.data.data.access_token);
           props.setLoader(false);
-          navigateTo(navigation, "Home");
-          AsyncStorage.setItem("isFirstTime", true)
+          setIsSuccess(true)
         } else {
           setIsAlert(true);
           setAlertMessage(res.data.message);
           props.setLoader(false);
+          setIsSuccess(false)
         }
       })
       .catch((err) => {
+        setIsAlert(true);
+        setIsSuccess(false)
+        setAlertMessage("Something went wrong...");
         props.setLoader(false);
       });
   };
+
+  const closePopup = () => {
+    if (isSuccess) {
+      navigateTo(navigation, "Home");
+      AsyncStorage.setItem("isFirstTime", true)
+    }
+    setIsAlert(false)
+  }
 
   const signUpScreen = () => {
     navigateTo(navigation, "SignUp");
@@ -187,6 +199,12 @@ const EmailSignIn = ({ navigation, ...props }) => {
           <GlobalText text={" Sign Up"} />
         </TouchableOpacity>
       </View>
+
+      <Popup
+        message={alertMessage}
+        onPress={closePopup}
+        visible={isAlert}
+      />
     </View>
   );
 };

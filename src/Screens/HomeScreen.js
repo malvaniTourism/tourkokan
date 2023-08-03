@@ -56,12 +56,6 @@ const HomeScreen = ({ navigation, ...props }) => {
         saveToken();
         SplashScreen.hide();
 
-        let isFirstTime = AsyncStorage.getItem("isFirstTime")
-        if (isFirstTime) {
-            refRBSheet.current.open()
-            AsyncStorage.setItem("isFirstTime", false)
-        }
-
         return () => {
             backHandler.remove();
             AsyncStorage.setItem("isFirstTime", false)
@@ -91,6 +85,12 @@ const HomeScreen = ({ navigation, ...props }) => {
                 setRoutes(res.data.data.routes)
                 setIsLoading(false)
                 props.setLoader(false);
+
+                let isFirstTime = AsyncStorage.getItem("isFirstTime")
+                if (isFirstTime) {
+                    refRBSheet.current.open()
+                    AsyncStorage.setItem("isFirstTime", false)
+                }
             })
             .catch((error) => {
                 setIsLoading(false)
@@ -307,7 +307,8 @@ const HomeScreen = ({ navigation, ...props }) => {
                     closeLocationSheet={() => closeLocationSheet()}
                 />}
                 openLocationSheet={() => openLocationSheet()}
-                closeLocationSheet={() => closeLocationSheet()} />
+                closeLocationSheet={() => closeLocationSheet()}
+            />
         </ScrollView>
     );
 };

@@ -36,15 +36,15 @@ import { Overlay } from '@rneui/themed';
 import MapView, { Marker, Polygon } from 'react-native-maps';
 
 const ProfileView = ({ navigation, ...props }) => {
-  const [currentLatitude, setCurrentLatitude] = useState(null);
-  const [currentLongitude, setCurrentLongitude] = useState(null);
+  const [currentLatitude, setCurrentLatitude] = useState(37.4220936);
+  const [currentLongitude, setCurrentLongitude] = useState(-122.083922);
   const [locationStatus, setLocationStatus] = useState('');
   const [watchID, setWatchID] = useState("");
-  const [showLocModal, setShowLocModal] = useState(true);
+  const [showLocModal, setShowLocModal] = useState(false);
   const [initialRegion, setInitialRegion] = useState(
     {
-      latitude: currentLatitude || 37.4220936,
-      longitude: currentLongitude || -122.083922,
+      latitude: currentLatitude,
+      longitude: currentLongitude,
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421
     }
@@ -258,6 +258,15 @@ const ProfileView = ({ navigation, ...props }) => {
             />
           </MapView>
         </View>}
+        <CustomButton
+        title={"Update Location"}
+        containerStyle={styles.editButtonContainer}
+        buttonStyle={styles.planButtonStyle}
+        titleStyle={styles.planButtonTitleStyle}
+        raised={true}
+        type={"Submit"}
+        onPress={() => setShowLocModal(true)}
+      />
 
       <Overlay style={styles.locationModal} isVisible={showLocModal} onBackdropPress={() => setShowLocModal(false)}>
         <GlobalText text={"Set Your Primary Location"} style={styles.locationModal} />

@@ -17,6 +17,7 @@ import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import Alert from "../../Components/Customs/Alert";
 import { exitApp, navigateTo } from "../../Services/CommonMethods";
 import GlobalText from "../../Components/Customs/Text";
+import Popup from "../../Components/Common/Popup";
 
 const SignIn = ({ navigation, ...props }) => {
   const [mobile, setMobile] = useState("");
@@ -70,8 +71,14 @@ const SignIn = ({ navigation, ...props }) => {
       })
       .catch((err) => {
         props.setLoader(false);
+        setIsAlert(true);
+        setAlertMessage("Something went wrong...");
       });
   };
+
+  const closePopup = () => {
+    setIsAlert(false)
+  }
 
   const proceed = () => {
     setIsAlert(false)
@@ -148,15 +155,11 @@ const SignIn = ({ navigation, ...props }) => {
           <GlobalText text={" Sign Up"} />
         </TouchableOpacity>
       </View>
-
-      {isAlert && (
-        <Alert
-          alertMessage={alertMessage}
-          closeAlert={() => setIsAlert(false)}
-          successAlert={successAlert}
-          proceed={() => proceed()}
-        />
-      )}
+      <Popup
+        message={alertMessage}
+        visible={isAlert}
+        onPress={closePopup}
+      />
     </View>
   );
 };
