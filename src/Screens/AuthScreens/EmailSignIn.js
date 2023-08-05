@@ -18,13 +18,15 @@ import { navigateTo } from "../../Services/CommonMethods";
 import GlobalText from "../../Components/Customs/Text";
 import SQLite from 'react-native-sqlite-storage'
 import Popup from "../../Components/Common/Popup";
+import Feather from "react-native-vector-icons/Feather";
 
 const EmailSignIn = ({ navigation, ...props }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isAlert, setIsAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-  const [isSuccess, setIsSuccess] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [showPassword, setShowPassword] = useState(false)
 
   useEffect(() => {
     // openDB()
@@ -176,6 +178,20 @@ const EmailSignIn = ({ navigation, ...props }) => {
             setChild={(v, i) => setValue(v, i, index)}
             style={styles.containerStyle}
             inputContainerStyle={styles.inputContainerStyle}
+            isSecure={field.isSecure}
+            rightIcon={
+              field.type == "password" &&
+              <Feather
+                name={field.isSecure ? 'eye' : 'eye-off'}
+                size={24}
+                color={COLOR.themeComicBlue}
+                onPress={() => {
+                  field.isSecure = !showPassword
+                  setShowPassword(!showPassword)
+                }}
+                style={styles.eyeIcon}
+              />
+            }
           />
         );
       })}

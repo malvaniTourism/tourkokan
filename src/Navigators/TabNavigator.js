@@ -21,6 +21,11 @@ const TabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={{ headerShown: false, presentation: "modal" }}
+      tabBarOptions={{
+        activeTintColor: COLOR.themeComicBlue, // Set the active tab color
+        inactiveTintColor: COLOR.black, // Set the inactive tab color
+        labelStyle: { paddingBottom: 4 }, // Add padding to the tab labels
+      }}
     >
       <Tab.Screen
         name="Home"
@@ -36,20 +41,7 @@ const TabNavigator = () => {
           ),
         }}
       />
-      {/* <Tab.Screen
-        name="Explore"
-        component={Explore}
-        options={{
-          tabBarLabel: "Explore",
-          tabBarIcon: ({ color, size }) => (
-            <Fontisto
-              name="compass-alt"
-              color={COLOR.black}
-              size={DIMENSIONS.iconSize}
-            />
-          ),
-        }}
-      /> */}
+
       <Tab.Screen
         name="Cities"
         component={Explore}
@@ -57,11 +49,6 @@ const TabNavigator = () => {
           pageName: "Cities",
           tabBarLabel: "Cities",
           tabBarIcon: ({ color, size }) => (
-            // <Ionicons
-            //   name="location-outline"
-            //   color={COLOR.black}
-            //   size={DIMENSIONS.iconSize}
-            // />
             <Ionicons
               name="location-outline"
               color={COLOR.black}
@@ -76,17 +63,6 @@ const TabNavigator = () => {
         component={SearchList}
         options={{
           tabBarIcon: ({ color, size }) => (
-            // <Ionicons
-            //   name="md-bus"
-            //   color={COLOR.black}
-            //   size={DIMENSIONS.iconSize + 15}
-            // />
-            // <SvgUri
-            //   width={35}
-            //   height={35}
-            //   // source={require('../Assets/Images/simp.svg')}
-            //   source={require('../Assets/Images/Bus1_png_high.svg')}
-            // />
             <Image
               source={require('../Assets/Images/Bus1_png_high.png')}
               style={{ width: 40, height: 40 }}
@@ -131,16 +107,3 @@ const TabNavigator = () => {
 };
 
 export default TabNavigator;
-
-const styles = StyleSheet.create({
-  list: {
-    width: '100%',
-    backgroundColor: '#000',
-  },
-  item: {
-    // backgroundColor: 'red',
-    aspectRatio: 1,
-    width: '100%',
-    // flex: 1,
-  },
-});

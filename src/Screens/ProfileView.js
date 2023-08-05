@@ -174,7 +174,7 @@ const ProfileView = ({ navigation, ...props }) => {
   };
 
   const handleEditPress = () => {
-
+    navigateTo(navigation, "Profile")
   }
 
   const setHomeLocation = () => {
@@ -209,10 +209,6 @@ const ProfileView = ({ navigation, ...props }) => {
       <Loader />
 
       <View style={styles.headerContainer}>
-        {/* <Image
-          style={styles.coverPhoto}
-          source={{ uri: 'https://www.bootdey.com/image/280x280/1E90FF/1E90FF' }}
-        /> */}
         <View style={styles.profileContainer}>
           <Image
             style={styles.profilePhoto}
@@ -220,10 +216,33 @@ const ProfileView = ({ navigation, ...props }) => {
           />
           <GlobalText text={profile.name} style={styles.pricingOptionTitle} />
         </View>
+        {currentLatitude &&
+          <View style={styles.profileMapView}>
+            <MapView style={styles.map} initialRegion={initialRegion}>
+              <Marker
+                coordinate={{ latitude: currentLatitude, longitude: currentLongitude }}
+              />
+            </MapView>
+          </View>
+        }
       </View>
       <View style={styles.bioContainer}>
-        <GlobalText text={profile.email} style={styles.bioText} />
-        <GlobalText text={profile.mobile} style={styles.bioText} />
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <View>
+            <GlobalText text={profile.email} style={styles.bioText} />
+            <GlobalText text={profile.mobile} style={styles.bioText} />
+          </View>
+          {!profile.isVerified ?
+            <View>
+              <MaterialIcons
+                name="verified"
+                size={24}
+                color={COLOR.verified}
+              />
+            </View>
+            : null
+          }
+        </View>
         <GlobalText text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed etullamcorper nisi."} style={styles.bioText}></GlobalText>
       </View>
       <View style={styles.statsContainer}>
@@ -240,33 +259,29 @@ const ProfileView = ({ navigation, ...props }) => {
           <GlobalText text={"Following"} style={styles.statLabel} />
         </View>
       </View>
-      <CustomButton
-        title={"Edit Profile"}
-        containerStyle={styles.editButtonContainer}
-        buttonStyle={styles.planButtonStyle}
-        titleStyle={styles.planButtonTitleStyle}
-        raised={true}
-        type={"Submit"}
-        onPress={handleEditPress}
-      />
 
-      {currentLatitude &&
-        <View style={styles.profileMapView}>
-          <MapView style={styles.map} initialRegion={initialRegion}>
-            <Marker
-              coordinate={{ latitude: currentLatitude, longitude: currentLongitude }}
-            />
-          </MapView>
-        </View>}
+      <View style={{ flexDirection: "row", justifyContent: "space-evenly", marginTop: 30 }}>
         <CustomButton
-        title={"Update Location"}
-        containerStyle={styles.editButtonContainer}
-        buttonStyle={styles.planButtonStyle}
-        titleStyle={styles.planButtonTitleStyle}
-        raised={true}
-        type={"Submit"}
-        onPress={() => setShowLocModal(true)}
-      />
+          title={"Edit Profile"}
+          seeMoreStyle={styles.editSeeMoreStyle}
+          containerStyle={styles.editButtonContainer}
+          buttonStyle={styles.planButtonStyle}
+          titleStyle={styles.planButtonTitleStyle}
+          raised={true}
+          type={"Submit"}
+          onPress={handleEditPress}
+        />
+        <CustomButton
+          title={"Update Location"}
+          seeMoreStyle={styles.updateSeeMoreStyle}
+          containerStyle={styles.editButtonContainer}
+          buttonStyle={styles.planButtonStyle}
+          titleStyle={styles.planButtonTitleStyle}
+          raised={true}
+          type={"Submit"}
+          onPress={() => setShowLocModal(true)}
+        />
+      </View>
 
       <Overlay style={styles.locationModal} isVisible={showLocModal} onBackdropPress={() => setShowLocModal(false)}>
         <GlobalText text={"Set Your Primary Location"} style={styles.locationModal} />

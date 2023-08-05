@@ -181,13 +181,14 @@ const TextField = (props) => {
       inputProps={{
         maxLength: props.length,
       }}
-      secureTextEntry={props.fieldType == 'password'}
+      secureTextEntry={props.isSecure}
       underlineColorAndroid="transparent"
       InputProps={x}
       onPressIn={props.onPress}
       leftIcon={props.leftIcon}
       leftIconContainerStyle={styles.leftIconContainerStyle}
       maxLength={props.length}
+      rightIcon={props.rightIcon}
     />
   );
 };

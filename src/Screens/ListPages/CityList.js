@@ -18,6 +18,7 @@ import CityCard from "../../Components/Cards/CityCard";
 const CityList = ({ navigation, ...props }) => {
   const [cities, setCities] = useState([]); // State to store cities
   const [error, setError] = useState(null); // State to store error message
+  const [isLandingDataFetched, setIsLandingDataFetched] = useState(false);
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)

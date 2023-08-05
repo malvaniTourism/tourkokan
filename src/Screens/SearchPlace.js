@@ -25,25 +25,25 @@ const SearchPlace = ({ navigation, route, ...props }) => {
     props.setLoader(true)
     const backHandler = goBackHandler(navigation)
     checkLogin(navigation)
-    searchPlace("");
+    searchPlace("", nextPage, true);
     return () => {
       backHandler.remove()
     }
   }, []);
 
-  const searchPlace = (v) => {
+  const searchPlace = (v, page, next) => {
     // props.setLoader(true)
     setSearchValue(v);
     let data = {
       search: v,
     };
-    comnPost(`v1/searchPlace?page=${nextPage}`, data)
+    comnPost(`v1/searchPlace?page=${page}`, data)
       .then((res) => {
         if (res.data.success) {
           setPlacesList(res.data.data.data);
           props.setLoader(false);
-          let nextUrl = res.data.next_page_url
-          saveNext = nextUrl[nextUrl.length - 1]
+          let nextUrl = res.data.data.next_page_url
+          if (next) setNextPage(nextUrl[nextUrl.length - 1])
         } else {
           props.setLoader(false);
         }
@@ -64,9 +64,7 @@ const SearchPlace = ({ navigation, route, ...props }) => {
   };
 
   const goToNext = () => {
-    console.log('next');
-    setNextPage(saveNext)
-    searchPlace(saveNext)
+    searchPlace(searchValue, nextPage, true)
   }
 
   const renderItem = ({ item }) => {
@@ -88,7 +86,7 @@ const SearchPlace = ({ navigation, route, ...props }) => {
           style={styles.homeSearchBar}
           placeholder={`Enter ${route.params.type}`}
           value={searchValue}
-          onChangeText={(v) => searchPlace(v)}
+          onChangeText={(v) => searchPlace(v, nextPage)}
           />
         }
         />
@@ -98,7 +96,7 @@ const SearchPlace = ({ navigation, route, ...props }) => {
           data={placesList}
           renderItem={renderItem}
           onEndReached={goToNext}
-          onEndReachedThreshold={0.2}
+          onEndReachedThreshold={0.1}
           style={{marginBottom: 30}}
         />
       {/* </ScrollView> */}

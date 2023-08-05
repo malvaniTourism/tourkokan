@@ -41,6 +41,7 @@ const DropDown = ({ ...props }) => {
       onFocus={() => setIsFocus(true)}
       onBlur={() => setIsFocus(false)}
       onChange={handleChange}
+      dropdownTextStyle={styles.text}
       // renderLeftIcon={() => ()}
     />
   );

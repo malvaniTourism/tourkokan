@@ -33,6 +33,7 @@ export const SignInFields = [
     name: "Password",
     placeholder: "Password",
     type: "password",
+    isSecure: true,
     length: 10,
     required: true,
     disabled: false,
@@ -68,7 +69,8 @@ export const SignUpFields = [
     name: "Password",
     placeholder: "Password",
     type: "password",
-    length: 10,
+    isSecure: true,
+    length: 50,
     required: true,
     disabled: false,
   },
@@ -76,10 +78,38 @@ export const SignUpFields = [
     name: "Confirm Password",
     placeholder: "Confirm Password",
     type: "password",
-    length: 10,
+    isSecure: true,
+    length: 50,
     required: true,
     disabled: false,
   },
+];
+
+export const ProfileFields = [
+  {
+    name: "Name",
+    placeholder: "Name",
+    type: "text",
+    length: 50,
+    required: true,
+    disabled: false,
+  },
+  {
+    name: "Email",
+    placeholder: "Email",
+    type: "email",
+    length: 50,
+    required: true,
+    disabled: false,
+  },
+  {
+    name: "Mobile",
+    placeholder: "Mobile",
+    type: "phone",
+    length: 10,
+    required: true,
+    disabled: false,
+  }
 ];
 
 export const SrcDest = [

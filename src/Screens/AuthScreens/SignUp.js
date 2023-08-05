@@ -18,6 +18,7 @@ import COLOR from "../../Services/Constants/COLORS";
 import Popup from "../../Components/Common/Popup";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
+import Feather from "react-native-vector-icons/Feather";
 
 const SignUp = ({ navigation, ...props }) => {
   const [name, setName] = useState("");
@@ -29,10 +30,11 @@ const SignUp = ({ navigation, ...props }) => {
   const [roles, setRoles] = useState([]);
   const [errMsg, setErrorMsg] = useState("");
   const [imageSource, setImageSource] = useState(null);
-  const [uploadImage, setUploadImage] =useState(null);
+  const [uploadImage, setUploadImage] = useState(null);
   const [isSuccess, setIsSuccess] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [isAlert, setIsAlert] = useState(false);
+  const [showPassword, setShowPassword] = useState(false)
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => navigateTo(navigation, 'Login'));
@@ -243,6 +245,20 @@ const SignUp = ({ navigation, ...props }) => {
                 setChild={(v, i) => setValue(v, i, index)}
                 style={styles.containerStyle}
                 inputContainerStyle={styles.inputContainerStyle}
+                isSecure={field.isSecure}
+                rightIcon={
+                  field.type == "password" &&
+                  <Feather
+                    name={field.isSecure ? 'eye' : 'eye-off'}
+                    size={24}
+                    color={COLOR.themeComicBlue}
+                    onPress={() => {
+                      field.isSecure = !showPassword
+                      setShowPassword(!showPassword)
+                    }}
+                    style={styles.eyeIcon}
+                  />
+                }
               />
             );
           })}

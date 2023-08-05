@@ -36,6 +36,7 @@ const Explore = ({ route, navigation, ...props }) => {
         getPlaces()
         setIsLandingDataFetched(true); // Mark the data as fetched
       }
+      props.setLoader(false);
     }
 
     return () => {
@@ -114,20 +115,22 @@ const Explore = ({ route, navigation, ...props }) => {
       </View>
       <View style={{ minHeight: DIMENSIONS.screenHeight }}>
         {isEnabled ?
-          <ScrollView>
+          <ScrollView
+            style={{ marginBottom: 150 }}
+          >
             {cities.map((city) => (
               <CityCard data={city} navigation={navigation} />
             ))}
           </ScrollView>
           :
-          <SafeAreaView style={{ alignItems: "center", marginBottom: 70 }}>
+          <SafeAreaView style={{ alignItems: "center", marginBottom: 270 }}>
             <ScrollView>
               <FlatList
                 keyExtractor={(item) => item.id}
                 data={places}
                 renderItem={renderPlaces}
                 numColumns={2}
-                style={{ paddingBottom: 150 }}
+                style={{ paddingBottom: 80 }}
               />
             </ScrollView>
           </SafeAreaView>

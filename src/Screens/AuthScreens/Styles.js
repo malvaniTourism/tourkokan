@@ -26,6 +26,10 @@ const styles = StyleSheet.create({
     borderColor: COLOR.grey,
     borderRadius: DIMENSIONS.borderRadius
   },
+  eyeIcon: {
+    position: "absolute",
+    left: -40
+  },
   roleDropDown: {
     borderWidth: 1,
     paddingVertical: 6,

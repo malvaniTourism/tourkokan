@@ -4,6 +4,7 @@ const COLOR = {
   themeNaviBlue: "#000080",
   themeLightBlue: "#2E67F8",
   themeComicBlue: "#00AEEF",
+  verified: '#3086e3',
 
   primaryColor: "#543379",
   primarylight: "#9c48d4",

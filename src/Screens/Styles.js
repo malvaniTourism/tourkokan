@@ -102,6 +102,10 @@ const styles = StyleSheet.create({
         borderColor: COLOR.transparent,
         marginBottom: 10
     },
+    profileContainerStyle: {
+        borderColor: COLOR.transparent,
+        marginBottom: 20
+    },
     titleStyle: {
         color: COLOR.themeComicBlue
     },
@@ -141,7 +145,8 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
     profileDetails: {
-        padding: 15
+        padding: 15,
+        alignItems: "center"
     },
     flexRow: {
         flexDirection: 'row',
@@ -235,6 +240,8 @@ const styles = StyleSheet.create({
     profileContainer: {
         alignItems: 'center',
         marginTop: -50,
+        position: "absolute",
+        zIndex: 10
     },
     profilePhoto: {
         width: DIMENSIONS.detailsImage,
@@ -262,7 +269,18 @@ const styles = StyleSheet.create({
         color: COLOR.grayDark,
     },
     editButtonContainer: {
-        alignSelf: "center"
+        alignSelf: "center",
+        width: DIMENSIONS.halfWidth - 20,
+    },
+    editSeeMoreStyle: {
+        borderRadius: 0,
+        borderTopLeftRadius: DIMENSIONS.borderRadius,
+        borderBottomLeftRadius: DIMENSIONS.borderRadius
+    },
+    updateSeeMoreStyle: {
+        borderRadius: 0,
+        borderTopRightRadius: DIMENSIONS.borderRadius,
+        borderBottomRightRadius: DIMENSIONS.borderRadius
     },
     containerHome: {
         flex: 1,
@@ -300,14 +318,32 @@ const styles = StyleSheet.create({
         fontSize: DIMENSIONS.headerTextSize
     },
     profileMapView: {
-        height: DIMENSIONS.halfWidth,
+        height: DIMENSIONS.screenWidth - 100,
         width: DIMENSIONS.screenWidth,
-        marginVertical: 20,
+        marginTop: -20,
+        marginBottom: 10,
         borderWidth: 1,
-        borderColor: COLOR.grey
+        borderColor: COLOR.grey,
+        position: "relative",
     },
     map: {
         ...StyleSheet.absoluteFillObject,
+    },
+    roleDropDown: {
+        borderWidth: 1,
+        paddingVertical: 6,
+        paddingHorizontal: 12,
+        borderColor: COLOR.grey,
+        borderRadius: DIMENSIONS.borderRadius,
+    },
+    buttonView: {
+        borderRadius: DIMENSIONS.borderRadius,
+        overflow: 'hidden',
+        marginVertical: 30
+    },
+    profileButtonStyle: {
+        backgroundColor: COLOR.themeComicBlue,
+        width: "auto"
     },
 });
 

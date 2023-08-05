@@ -6,7 +6,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import DrawerNavigator from "./DrawerNavigator";
 import TabNavigator from "./TabNavigator";
 import GlobalText from "../Components/Customs/Text";
-import ProfileView from "../Screens/ProfileView";
 
 const SignIn = lazy(() => import("../Screens/AuthScreens/SignIn"));
 const SignUp = lazy(() => import("../Screens/AuthScreens/SignUp"));
@@ -27,6 +26,8 @@ const ProjectDetails = lazy(() => import("../Screens/DetailPages/ProjectDetails"
 const StopDetails = lazy(() => import("../Screens/DetailPages/StopDetails"));
 const SearchPlace = lazy(() => import("../Screens/SearchPlace"));
 const MapScreen = lazy(() => import("../Screens/MapScreen"));
+const ProfileView = lazy(() => import("../Screens/ProfileView"));
+const Profile = lazy(() => import("../Screens/Profile"));
 
 const Stack = createNativeStackNavigator();
 
@@ -46,7 +47,6 @@ const StackNavigator = () => {
               options={{ headerShown: false }}
             />
             {/* <Stack.Screen name="HomeScreen" component={HomeScreen} /> */}
-            <Stack.Screen name="ProfileView" component={ProfileView} />
           </Stack.Group>
         ) : (
           // Auth screens
@@ -83,6 +83,8 @@ const StackNavigator = () => {
           <Stack.Screen name="SearchPlace" component={SearchPlace} />
           <Stack.Screen name="MapScreen" component={MapScreen} />
           <Stack.Screen name="CityPlaceSearch" component={CityPlaceSearch} />
+          <Stack.Screen name="ProfileView" component={ProfileView} />
+          <Stack.Screen name="Profile" component={Profile} />
           {/* <Stack.Screen name="Invite" component={Invite} /> */}
           {/* <Stack.Screen name="Feed" component={Feed} /> */}
         </Stack.Group>

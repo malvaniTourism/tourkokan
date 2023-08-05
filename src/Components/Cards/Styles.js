@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
         opacity: 0.7
     },
     routeHeadCard: {
-        height: DIMENSIONS.bannerHeight / 2,
+        height: DIMENSIONS.bannerHeight / 2 + 20,
         width: DIMENSIONS.bannerWidth,
         backgroundColor: COLOR.white,
         alignSelf: 'center',
@@ -125,7 +125,8 @@ const styles = StyleSheet.create({
     },
     routeHeadCardTitle: {
         fontWeight: 'bold',
-        color: COLOR.themeComicBlue
+        color: COLOR.themeComicBlue,
+        lineHeight: 25
     },
     routeHeadCardBottom: {
         borderBottomLeftRadius: DIMENSIONS.borderRadiusXS,
@@ -134,8 +135,8 @@ const styles = StyleSheet.create({
         paddingVertical: 2
     },
     busImage: {
-        height: DIMENSIONS.iconXL,
-        width: DIMENSIONS.iconXL,
+        height: DIMENSIONS.iconXXL,
+        width: DIMENSIONS.iconXXL,
     },
     routeHeadCardImage: {
         flex: 1,
