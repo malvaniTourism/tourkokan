@@ -43,6 +43,8 @@ const COLOR = {
   underlineActiveColor: "#773ba5",
 
   transparent: "transparent",
+
+  loginImageBackground: "#e9f2ff"
 };
 
 export default COLOR;

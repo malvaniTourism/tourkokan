@@ -58,7 +58,7 @@ const HomeScreen = ({ navigation, ...props }) => {
 
         return () => {
             backHandler.remove();
-            AsyncStorage.setItem("isFirstTime", false)
+            AsyncStorage.setItem("isFirstTime", JSON.stringify(false))
         };
     }, [props.access_token]);
 
@@ -72,8 +72,9 @@ const HomeScreen = ({ navigation, ...props }) => {
         }
     };
 
-    const callLandingPageAPI = () => {
+    const callLandingPageAPI = async () => {
         props.setLoader(true);
+        let isFirstTime = await AsyncStorage.getItem("isFirstTime")
         comnGet("v1/landingpage", props.access_token)
             .then((res) => {
                 setCategories(res.data.data.categories);
@@ -86,10 +87,9 @@ const HomeScreen = ({ navigation, ...props }) => {
                 setIsLoading(false)
                 props.setLoader(false);
 
-                let isFirstTime = AsyncStorage.getItem("isFirstTime")
-                if (isFirstTime) {
+                if (isFirstTime == "true") {
                     refRBSheet.current.open()
-                    AsyncStorage.setItem("isFirstTime", false)
+                    AsyncStorage.setItem("isFirstTime", JSON.stringify(false))
                 }
             })
             .catch((error) => {

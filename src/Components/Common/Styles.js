@@ -68,15 +68,17 @@ const styles = StyleSheet.create({
   },
   textContainerStyle: {
     width: DIMENSIONS.bannerWidth,
+    marginBottom: -32
   },
   inputContainerStyle: {
     borderWidth: .5,
     borderRadius: DIMENSIONS.borderRadius,
     borderColor: COLOR.grey,
+    width: DIMENSIONS.bannerWidth - 25
   },
   searchPanelField: {
     borderWidth: 0,
-    paddingLeft: 40
+    paddingLeft: 40,
   },
   searchButtonContainerStyle: {
     marginTop: 15,

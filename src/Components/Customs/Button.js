@@ -17,7 +17,7 @@ const CustomButton = ({
   seeMoreStyle
 }) => {
   return (
-    <TouchableOpacity onPress={onPress} style={seeMoreStyle}>
+    <TouchableOpacity onPress={onPress} style={[styles.buttonView, seeMoreStyle]}>
       {startIcon}
       <Button
         title={title}

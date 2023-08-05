@@ -85,7 +85,7 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
   const closePopup = () => {
     if (isSuccess) {
       navigateTo(navigation, "Home");
-      AsyncStorage.setItem("isFirstTime", true)
+      AsyncStorage.setItem("isFirstTime", JSON.stringify(true))
     }
     setIsAlert(false)
   }

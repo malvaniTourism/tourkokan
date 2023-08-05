@@ -10,13 +10,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   textField: {
-    
+    width: DIMENSIONS.bannerWidth,
+    paddingLeft: 20
   },
   textFieldContainer: {
     borderWidth: 0,
     padding: 10,
     borderColor: COLOR.grey,
-    marginBottom: -35
+    marginBottom: -50,
+    alignItems: "center"
+  },
+  inputContainer: {
+    width: DIMENSIONS.bannerWidth,
   },
   leftIconContainerStyle: {
     top: -10,
@@ -63,9 +68,14 @@ const styles = StyleSheet.create({
     animation: "fadeinout 4s infinite",
     opacity: 1
   },
+  buttonView: {
+    overflow: 'hidden',
+    borderRadius: DIMENSIONS.borderRadiusXS,
+  },
   containerStyle: {
     width: DIMENSIONS.bannerWidth,
-    borderRadius: DIMENSIONS.borderRadiusXS
+    borderRadius: DIMENSIONS.borderRadiusXS,
+    overflow: 'hidden'
   },
   buttonStyle: {
     width: DIMENSIONS.bannerWidth,
@@ -114,9 +124,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.themeComicBlue,
   },
   dropdown: {
-    width: DIMENSIONS.bannerWidth + 20,
-    backgroundColor: COLOR.white,
-    marginBottom: 25,
+    width: DIMENSIONS.bannerWidth,
+    marginBottom: 10,
     padding: 7,
     borderWidth: 1,
     borderColor: COLOR.grey,

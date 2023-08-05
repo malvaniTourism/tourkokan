@@ -46,7 +46,6 @@ const SearchList = ({ navigation, route, ...props }) => {
       .then((res) => {
         if (res.data.success) {
           setList(res.data.data.data);
-          console.log(list);
           props.setLoader(false);
         } else {
           props.setLoader(false);

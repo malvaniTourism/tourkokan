@@ -25,8 +25,6 @@ const Explore = ({ route, navigation, ...props }) => {
   const [isEnabled, setIsEnabled] = useState(route.name == "Cities")
   const [isLandingDataFetched, setIsLandingDataFetched] = useState(false);
 
-  console.log(route.name);
-
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
     checkLogin(navigation)

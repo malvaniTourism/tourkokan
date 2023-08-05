@@ -7,7 +7,7 @@ import Path from '../../Services/Api/BaseUrl'
 import { SvgCssUri } from 'react-native-svg'
 
 const RouteHeadCard = ({ data, cardClick }) => {
-    console.log(Path.FTP_PATH1 + data.bus_type.logo);
+
     return (
         <TouchableOpacity style={styles.routeHeadCard} onPress={() => cardClick()}>
             <View style={{ flex: 1, flexDirection: 'row' }}>

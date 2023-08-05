@@ -168,7 +168,7 @@ const TextField = (props) => {
       value={props.value === "" && isValid ? value : props.value}
       style={[styles.textField, props.style]}
       containerStyle={[styles.textFieldContainer, props.containerStyle]}
-      inputContainerStyle={props.inputContainerStyle}
+      inputContainerStyle={[styles.inputContainer, props.inputContainerStyle]}
       helperText={
         (props.value === "" && isValid) || props.value === "" ? errorText : ""
       }
@@ -187,6 +187,7 @@ const TextField = (props) => {
       onPressIn={props.onPress}
       leftIcon={props.leftIcon}
       leftIconContainerStyle={styles.leftIconContainerStyle}
+      maxLength={props.length}
     />
   );
 };

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { View, Text, TouchableOpacity, BackHandler } from "react-native";
+import { View, Text, TouchableOpacity, BackHandler, Image } from "react-native";
 import TextField from "../../Components/Customs/TextField";
 import { SignInFields } from "../../Services/Constants/FIELDS";
 import Header from "../../Components/Common/Header";
@@ -113,10 +113,8 @@ const EmailSignIn = ({ navigation, ...props }) => {
       password,
     };
     // createUser()
-    console.log(data);
     comnPost("auth/login", data)
       .then((res) => {
-        console.log('1', res.data);
         if (res.data.success) {
           setIsAlert(true);
           setAlertMessage(res.data.message);
@@ -143,7 +141,7 @@ const EmailSignIn = ({ navigation, ...props }) => {
   const closePopup = () => {
     if (isSuccess) {
       navigateTo(navigation, "Home");
-      AsyncStorage.setItem("isFirstTime", true)
+      AsyncStorage.setItem("isFirstTime", JSON.stringify(true))
     }
     setIsAlert(false)
   }
@@ -155,17 +153,15 @@ const EmailSignIn = ({ navigation, ...props }) => {
   return (
     <View style={{ alignItems: "center" }}>
       <Header
-        name={"Login"}
-        style={{ marginBottom: 50 }}
+        name={""}
         startIcon={<View></View>}
+        style={styles.loginHeader}
       />
+      <View>
+        <Image style={styles.loginImage} source={require('../../Assets/Images/tour_set.jpg')} />
+        <GlobalText text={"Log-in"} style={styles.loginText} />
+      </View>
       <Loader />
-      <FontIcons
-        name="user-circle"
-        color={COLOR.black}
-        size={DIMENSIONS.userIconSize}
-        style={styles.appLogo}
-      />
       {SignInFields.map((field, index) => {
         return (
           <TextField
@@ -185,6 +181,7 @@ const EmailSignIn = ({ navigation, ...props }) => {
       })}
       <CustomButton
         title={"Login"}
+        seeMoreStyle={styles.buttonView}
         containerStyle={styles.buttonContainer}
         buttonStyle={styles.buttonStyle}
         titleStyle={styles.buttonTitle}
@@ -196,7 +193,7 @@ const EmailSignIn = ({ navigation, ...props }) => {
       <View style={styles.haveAcc}>
         <GlobalText text={"Don't have an Account? "} />
         <TouchableOpacity onPress={() => signUpScreen()}>
-          <GlobalText text={" Sign Up"} />
+          <GlobalText text={" Sign-up"} />
         </TouchableOpacity>
       </View>
 

@@ -16,6 +16,8 @@ import { launchImageLibrary } from 'react-native-image-picker'
 import GlobalText from "../../Components/Customs/Text";
 import COLOR from "../../Services/Constants/COLORS";
 import Popup from "../../Components/Common/Popup";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 
 const SignUp = ({ navigation, ...props }) => {
   const [name, setName] = useState("");
@@ -27,7 +29,10 @@ const SignUp = ({ navigation, ...props }) => {
   const [roles, setRoles] = useState([]);
   const [errMsg, setErrorMsg] = useState("");
   const [imageSource, setImageSource] = useState(null);
-  const [isSuccess, setIsSuccess] = useState(false)
+  const [uploadImage, setUploadImage] =useState(null);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [isAlert, setIsAlert] = useState(false);
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => navigateTo(navigation, 'Login'));
@@ -93,6 +98,24 @@ const SignUp = ({ navigation, ...props }) => {
     }
   };
 
+  const handleImageUpload = () => {
+    launchImageLibrary(
+      {
+        mediaType: 'photo',
+        includeBase64: true, // Set to true to include base64 data
+        maxHeight: 200,
+        maxWidth: 200,
+      },
+      (response) => {
+        if (response.assets) {
+          // Upload the image to the API
+          setUploadImage(response.assets[0].base64);
+          setImageSource(response.assets[0].uri);
+        }
+      }
+    );
+  };
+
   const Register = () => {
     props.setLoader(true);
     const data = {
@@ -101,20 +124,31 @@ const SignUp = ({ navigation, ...props }) => {
       mobile: mobile,
       password: password,
       password_confirmation: cpassword,
-      role_id: role,
+      role_id: role.id,
+      profile_picture: uploadImage
     };
     comnPost("auth/register", data)
       .then((res) => {
         if (res.data.success) {
           props.setLoader(false);
           setAlertMessage("Registration Successful, now login to continue...");
+          setIsAlert(true);
           setIsSuccess(true)
         } else if (res.data.message.email) {
           props.setLoader(false);
-          setErrorMsg("The email has already been taken.");
-        } else if (res.data.message.phone) {
+          setAlertMessage("The email has already been taken.");
+          setIsSuccess(false)
+          setIsAlert(true);
+        } else if (res.data.message.mobile) {
           props.setLoader(false);
-          setErrorMsg("The mobile has already been taken.");
+          setAlertMessage("The mobile has already been taken.");
+          setIsSuccess(false)
+          setIsAlert(true);
+        } else if (res.data.message.profile_picture) {
+          props.setLoader(false);
+          setAlertMessage("Select a proper image to upload");
+          setIsSuccess(false)
+          setIsAlert(true);
         }
       })
       .catch((err) => {
@@ -160,80 +194,78 @@ const SignUp = ({ navigation, ...props }) => {
 
   return (
     <View style={{ alignItems: "center" }}>
-      <Header
-        name={"Register"}
-        startIcon={<View></View>}
-      />
-      <Loader />
       <ScrollView>
-        <DropDown
-          setChild={(v, i) => setValue(v, i)}
-          name={"Role"}
-          label={"Role"}
-          value={role}
-          disable={false}
-          style={styles.roleDropDown}
-          fieldType={"dropDwn"}
-          helperMsg={"Select Role"}
-          List={roles}
-          parentDetails={{ label: "role" }}
+        <Header
+          name={""}
+          startIcon={<View></View>}
+          style={styles.loginHeader}
         />
-        {SignUpFields.map((field, index) => {
-          return (
-            <TextField
-              name={field.name}
-              label={field.name}
-              placeholder={field.placeholder}
-              fieldType={field.type}
-              length={field.length}
-              required={field.required}
-              disabled={field.disabled}
-              value={getValue(index)}
-              setChild={(v, i) => setValue(v, i, index)}
-              style={styles.containerStyle}
-              inputContainerStyle={styles.inputContainerStyle}
-            />
-          );
-        })}
-        {imageSource && <Image source={imageSource} style={{ width: 50, height: 50 }} />}
-        <TouchableOpacity
-          style={styles.imageContainerStyle}
-          onPress={
-            () =>
-              launchImageLibrary({
-                mediaType: 'photo',
-                includeBase64: false,
-                maxHeight: 200,
-                maxWidth: 200,
-              },
-                (response) => {
-                  if (response.assets) {
-                    console.log('img - - ', response.assets[0].uri);
-                    setImageSource(response.assets[0].uri)
-                  }
-                },
-              )
-          }
-          title="Select Image"><GlobalText text={"Upload Image"} style={{ color: COLOR.grayDark }} /></TouchableOpacity>
-      </ScrollView>
-      <CustomButton
-        title={"Register"}
-        containerStyle={styles.buttonContainer}
-        buttonStyle={styles.buttonStyle}
-        titleStyle={styles.buttonTitle}
-        disabled={false}
-        raised={true}
-        type={"Submit"}
-        onPress={() => Register()}
-      />
-      <GlobalText text={errMsg} />
-      <View style={styles.haveAcc}>
-        <GlobalText text={"Already have an Account? "} />
-        <TouchableOpacity onPress={() => signInScreen()}>
-          <GlobalText text={" Sign In"} />
-        </TouchableOpacity>
-      </View>
+        <Loader />
+        <View>
+          <Image style={styles.loginImage} source={require('../../Assets/Images/tour_set.jpg')} />
+          <GlobalText text={"Sign-up"} style={styles.loginText} />
+        </View>
+        <View style={{ alignItems: "center" }}>
+          <TouchableOpacity
+            style={styles.imageContainerStyle}
+            onPress={handleImageUpload}
+            title="Select Image">
+            {imageSource ?
+              <Image source={imageSource} style={{ width: 50, height: 50, resizeMode: "contain" }} />
+              :
+              <MaterialIcons name='camera' color={COLOR.themeComicBlue} size={DIMENSIONS.userIconSize} />
+            }
+          </TouchableOpacity>
 
+          <DropDown
+            setChild={(v, i) => setValue(v, i)}
+            name={"Role"}
+            label={"Role"}
+            value={role}
+            disable={false}
+            style={styles.roleDropDown}
+            fieldType={"dropDwn"}
+            helperMsg={"Select Role"}
+            List={roles}
+            parentDetails={{ label: "role" }}
+          />
+          {SignUpFields.map((field, index) => {
+            return (
+              <TextField
+                name={field.name}
+                label={field.name}
+                placeholder={field.placeholder}
+                fieldType={field.type}
+                length={field.length}
+                required={field.required}
+                disabled={field.disabled}
+                value={getValue(index)}
+                setChild={(v, i) => setValue(v, i, index)}
+                style={styles.containerStyle}
+                inputContainerStyle={styles.inputContainerStyle}
+              />
+            );
+          })}
+          <CustomButton
+            title={"Register"}
+            seeMoreStyle={styles.buttonView}
+            containerStyle={styles.buttonContainer}
+            buttonStyle={styles.buttonStyle}
+            titleStyle={styles.buttonTitle}
+            disabled={false}
+            raised={true}
+            type={"Submit"}
+            onPress={() => Register()}
+          />
+          <GlobalText text={errMsg} />
+          <View style={styles.haveAcc}>
+            <GlobalText text={"Already have an Account? "} />
+            <TouchableOpacity onPress={() => signInScreen()}>
+              <GlobalText text={" Sign-in"} />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
       <Popup
         message={alertMessage}
         visible={isAlert}

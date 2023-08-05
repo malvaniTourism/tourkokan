@@ -6,12 +6,19 @@ const styles = StyleSheet.create({
   appLogo: {
     height: 100,
   },
+  buttonView: {
+    borderRadius: DIMENSIONS.borderRadius,
+    overflow: 'hidden',
+    marginTop: 30
+  },
   buttonContainer: {},
-  buttonStyle: {},
+  buttonStyle: {
+    paddingVertical: 13
+  },
   buttonTitle: {},
   haveAcc: {
     flexDirection: "row",
-    marginTop: 30,
+    marginVertical: 30,
   },
   containerStyle: {
     borderWidth: 1,
@@ -28,17 +35,32 @@ const styles = StyleSheet.create({
   },
   imageContainerStyle: {
     borderWidth: 1,
-    paddingVertical: 14,
-    paddingHorizontal: 10,
+    padding: 14,
     borderColor: COLOR.grey,
     borderRadius: DIMENSIONS.borderRadius,
-    width: DIMENSIONS.bannerWidth,
-    alignSelf: 'center',
+    width: DIMENSIONS.iconXL,
+    height: DIMENSIONS.iconXL,
+    alignItems: "center",
+    justifyContent: "center",
     marginBottom: 20,
   },
   inputContainerStyle: {
     borderColor: COLOR.transparent,
     marginBottom: 20
+  },
+  loginHeader: {
+    backgroundColor: COLOR.loginImageBackground,
+    marginBottom: -20
+  },
+  loginImage: {
+    height: DIMENSIONS.bannerHeight,
+    width: DIMENSIONS.screenWidth
+  },
+  loginText: {
+    fontWeight: "bold",
+    fontSize: DIMENSIONS.headerTextSize,
+    padding: 30,
+    paddingBottom: 10
   }
 });
 

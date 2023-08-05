@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { View, Text, TouchableOpacity, BackHandler, ToastAndroid } from "react-native";
+import { View, Text, TouchableOpacity, BackHandler, ToastAndroid, Image, StatusBar } from "react-native";
 import TextField from "../../Components/Customs/TextField";
 import { MobileNo, SignInFields } from "../../Services/Constants/FIELDS";
 import Header from "../../Components/Common/Header";
@@ -18,6 +18,7 @@ import Alert from "../../Components/Customs/Alert";
 import { exitApp, navigateTo } from "../../Services/CommonMethods";
 import GlobalText from "../../Components/Customs/Text";
 import Popup from "../../Components/Common/Popup";
+import Feather from "react-native-vector-icons/Feather";
 
 const SignIn = ({ navigation, ...props }) => {
   const [mobile, setMobile] = useState("");
@@ -95,18 +96,17 @@ const SignIn = ({ navigation, ...props }) => {
 
   return (
     <View style={{ alignItems: "center" }}>
+      <StatusBar backgroundColor={COLOR.loginImageBackground} />
       <Header
-        name={"Login"}
-        style={{ marginBottom: 50 }}
+        name={""}
         startIcon={<View></View>}
+        style={styles.loginHeader}
       />
       <Loader />
-      <FontIcons
-        name="user-circle"
-        color={COLOR.black}
-        size={DIMENSIONS.userIconSize}
-        style={styles.appLogo}
-      />
+      <View>
+        <Image style={styles.loginImage} source={require('../../Assets/Images/tour_set.jpg')} />
+        <GlobalText text={"Log-in"} style={styles.loginText} />
+      </View>
       {MobileNo.map((field, index) => {
         return (
           <TextField
@@ -126,6 +126,7 @@ const SignIn = ({ navigation, ...props }) => {
       })}
       <CustomButton
         title={"Send OTP"}
+        seeMoreStyle={styles.buttonView}
         containerStyle={styles.buttonContainer}
         buttonStyle={styles.buttonStyle}
         titleStyle={styles.buttonTitle}
@@ -137,22 +138,23 @@ const SignIn = ({ navigation, ...props }) => {
 
       <View style={{ marginTop: 30, alignItems: "center" }}>
         <GlobalText text={"---------- OR ----------"} style={{ marginBottom: 20 }} />
-        <TouchableOpacity
-          style={{
-            paddingVertical: 15,
-            paddingHorizontal: 25,
-            backgroundColor: COLOR.themeComicBlue,
-          }}
+        <CustomButton
+          title={"Login with Email"}
+          seeMoreStyle={styles.buttonView}
+          containerStyle={styles.buttonContainer}
+          buttonStyle={styles.buttonStyle}
+          titleStyle={styles.buttonTitle}
+          disabled={false}
+          raised={true}
+          type={"Submit"}
           onPress={() => emailLogin()}
-        >
-          <GlobalText text={"Login with Email"} style={{ color: COLOR.white }} />
-        </TouchableOpacity>
+        />
       </View>
 
       <View style={styles.haveAcc}>
         <GlobalText text={"Don't have an Account? "} />
         <TouchableOpacity onPress={() => signUpScreen()}>
-          <GlobalText text={" Sign Up"} />
+          <GlobalText text={" Sign-up"} />
         </TouchableOpacity>
       </View>
       <Popup
