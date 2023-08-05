@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, View, Text, SafeAreaView } from "react-native";
+import { FlatList, View, Text, SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import Header from "../Components/Common/Header";
 import SearchBar from "../Components/Customs/Search";
@@ -18,6 +18,8 @@ import { checkLogin, goBackHandler, navigateTo } from "../Services/CommonMethods
 const SearchPlace = ({ navigation, route, ...props }) => {
   const [searchValue, setSearchValue] = useState("");
   const [placesList, setPlacesList] = useState([]);
+  const [nextPage, setNextPage] = useState(1)
+  let saveNext = 1
 
   useEffect(() => {
     props.setLoader(true)
@@ -35,11 +37,13 @@ const SearchPlace = ({ navigation, route, ...props }) => {
     let data = {
       search: v,
     };
-    comnPost("v1/searchPlace", data)
+    comnPost(`v1/searchPlace?page=${nextPage}`, data)
       .then((res) => {
         if (res.data.success) {
-          setPlacesList(res.data.data);
+          setPlacesList(res.data.data.data);
           props.setLoader(false);
+          let nextUrl = res.data.next_page_url
+          saveNext = nextUrl[nextUrl.length - 1]
         } else {
           props.setLoader(false);
         }
@@ -59,6 +63,12 @@ const SearchPlace = ({ navigation, route, ...props }) => {
     setSearchValue("");
   };
 
+  const goToNext = () => {
+    console.log('next');
+    setNextPage(saveNext)
+    searchPlace(saveNext)
+  }
+
   const renderItem = ({ item }) => {
     return (
       <ListItem bottomDivider onPress={() => setPlace(item)}>
@@ -75,20 +85,23 @@ const SearchPlace = ({ navigation, route, ...props }) => {
       <Header
         Component={
           <SearchBar
-            style={styles.homeSearchBar}
-            placeholder={`Enter ${route.params.type}`}
-            value={searchValue}
-            onChangeText={(v) => searchPlace(v)}
+          style={styles.homeSearchBar}
+          placeholder={`Enter ${route.params.type}`}
+          value={searchValue}
+          onChangeText={(v) => searchPlace(v)}
           />
         }
-      />
-      <SafeAreaView>
+        />
+        {/* <ScrollView> */}
         <FlatList
           keyExtractor={(item) => item.id}
           data={placesList}
           renderItem={renderItem}
+          onEndReached={goToNext}
+          onEndReachedThreshold={0.2}
+          style={{marginBottom: 30}}
         />
-      </SafeAreaView>
+      {/* </ScrollView> */}
     </View>
   );
 };

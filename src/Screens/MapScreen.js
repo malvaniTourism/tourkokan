@@ -119,3 +119,48 @@ const styles = StyleSheet.create({
 });
 
 export default MapScreen;
+
+
+
+
+// import React, { Component } from "react";
+// import { View } from "react-native";
+// import MapmyIndiaGL from 'mapmyindia-map-react-native-beta';
+
+// MapmyIndiaGL.setMapSDKKey("b0919dc4a2edba9cb6814cf85ea53bca");//place your mapsdkKey
+// MapmyIndiaGL.setRestAPIKey("b0919dc4a2edba9cb6814cf85ea53bca");//your restApiKey
+// MapmyIndiaGL.setAtlasClientId("33OkryzDZsLDRr_vBZC8Op4OE18gLTV9WAD6xhJj1zBnECWgQ85iOF4tUM0tO870Rzpw_IUcLXWV_Epdm158DBh_RCThRWnP");//your atlasClientId key
+// MapmyIndiaGL.setAtlasClientSecret("lrFxI-iSEg-cyFWdzHkcE_uCn8M0kew8XxZDqd0W4rvbGCd3e5u_z6A2jreA68FkV9r8uoiFedVRSOGnIYJdFE8ibWq5aKPJd-sMj3s6I5Y="); //your atlasClientSecret key
+// MapmyIndiaGL.setAtlasGrantType("Map SDK Key");
+
+// const MapScreen = ({ navigation }) => {
+//   <View style={{ flex: 1 }}>
+//     <MapmyIndiaGL.MapView style={{ flex: 1 }} >
+//       <MapmyIndiaGL.Camera
+//         ref={c => (this.camera = c)}
+//         zoomLevel={12}
+//         minZoomLevel={4}
+//         maxZoomLevel={22}
+//         centerCoordinate={[77.231409, 28.6162]}
+//       />
+//     </MapmyIndiaGL.MapView>
+//   </View>
+// };
+
+// // const styles = StyleSheet.create({
+// //   container: {
+// //     backgroundColor: '#F5FCFF',
+// //     flex: 1,
+// //   },
+// // });
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//   },
+//   map: {
+//     ...StyleSheet.absoluteFillObject,
+//   },
+// });
+
+// export default MapScreen;
