@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, View, Text, SafeAreaView } from "react-native";
 import { ListItem } from "@rneui/themed";
-import Header from "../Components/Common/Header";
+import Header from "../../Components/Common/Header";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import COLOR from "../Services/Constants/COLORS";
-import DIMENSIONS from "../Services/Constants/DIMENSIONS";
-import RouteLine from "../Components/Customs/RouteLines/RouteLine";
+import COLOR from "../../Services/Constants/COLORS";
+import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
+import RouteLine from "../../Components/Customs/RouteLines/RouteLine";
 import { connect } from "react-redux";
-import { comnPost } from "../Services/Api/CommonServices";
-import { setLoader } from "../Reducers/CommonActions";
-import Loader from "../Components/Customs/Loader";
+import { comnPost } from "../../Services/Api/CommonServices";
+import { setLoader } from "../../Reducers/CommonActions";
+import Loader from "../../Components/Customs/Loader";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { backPage, checkLogin, goBackHandler, navigateTo } from "../Services/CommonMethods";
-import GlobalText from "../Components/Customs/Text";
-import RouteHeadCard from "../Components/Cards/RouteHeadCard";
-import styles from "./Styles";
+import { backPage, checkLogin, goBackHandler, navigateTo } from "../../Services/CommonMethods";
+import GlobalText from "../../Components/Customs/Text";
+import RouteHeadCard from "../../Components/Cards/RouteHeadCard";
+import styles from "../Styles";
 
 const SearchList = ({ navigation, route, ...props }) => {
   const [list, setList] = useState([]);

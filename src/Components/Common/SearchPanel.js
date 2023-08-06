@@ -57,8 +57,8 @@ const SearchPanel = ({ navigation, ...props }) => {
   };
 
   const gotoRoutes = () => {
-    props.setSource('')
-    props.setDestination('')
+    // props.setSource('')
+    // props.setDestination('')
     navigateTo(navigation, "SearchList", { from: "Search" });
   };
 

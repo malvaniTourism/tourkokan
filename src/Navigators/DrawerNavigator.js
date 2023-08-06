@@ -2,7 +2,7 @@ import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import Profile from "../Screens/Profile";
 import Settings from "../Screens/Settings";
-import SearchList from "../Screens/SearchList";
+import SearchList from "../Screens/ListPages/SearchList";
 import TabNavigator from "./TabNavigator";
 import Pricing from "../Screens/Pricing";
 import ContactUs from "../Screens/ContactUs";

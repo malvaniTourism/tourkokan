@@ -10,7 +10,7 @@ import DIMENSIONS from "../Services/Constants/DIMENSIONS";
 import Explore from "../Screens/ListPages/Explore";
 import ProjectList from "../Screens/ListPages/ProjectList";
 import RoutesList from "../Screens/ListPages/RoutesList";
-import SearchList from "../Screens/SearchList";
+import SearchList from "../Screens/ListPages/SearchList";
 import { PngTree } from "../../Assets/Images/pngtree.png";
 import SvgUri from 'react-native-svg-uri';
 import BusImg from "../Assets/Images/B3.svg"
