@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     paddingLeft: 40,
   },
   searchButtonContainerStyle: {
-    marginTop: 15,
+    marginTop: 10,
     borderRadius: DIMENSIONS.borderRadiusSmall,
   },
   searchButtonStyle: {
@@ -117,6 +117,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '39.5%',
     left: '80%'
+  },
+  errorText: {
+    color: COLOR.red,
+    textAlign: "center",
+    fontWeight: "bold",
+    lineHeight: 20,
+    paddingTop: 5
   },
   tabView: {
     width: DIMENSIONS.screenWidth,

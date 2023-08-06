@@ -16,14 +16,16 @@ import {
   setLoader,
   setSource,
 } from "../../Reducers/CommonActions";
+import GlobalText from "../Customs/Text";
 
 const SearchPanel = ({ navigation, ...props }) => {
   const [isValid, setIsValid] = useState(false)
+  const [errorText, setErrorText] = useState("")
 
   useEffect(() => {
     // setSource(props.source.name || "");
     // setDestination(props.destination.name || "");
-    checkIsValid()
+    // checkIsValid()
   }, [props]);
 
   const setValue = (v, i, index) => {
@@ -59,7 +61,9 @@ const SearchPanel = ({ navigation, ...props }) => {
   const gotoRoutes = () => {
     // props.setSource('')
     // props.setDestination('')
-    navigateTo(navigation, "SearchList", { from: "Search" });
+    if (isValid) {
+      navigateTo(navigation, "SearchList", { from: "Search" });
+    } else setErrorText("Source & Destination are required for a Search")
   };
 
   const swap = () => {
@@ -108,12 +112,20 @@ const SearchPanel = ({ navigation, ...props }) => {
           onPress={isValid ? swap : null}
         />
       </View>
+
+        {!isValid &&
+      <View>
+          <GlobalText
+            text={errorText}
+            style={styles.errorText}
+          />
+      </View>
+        }
       <CustomButton
         title={"Search"}
         containerStyle={styles.searchButtonContainerStyle}
-        buttonStyle={isValid ? styles.searchButtonStyle : styles.searchButtonDisable}
+        buttonStyle={styles.searchButtonStyle}
         titleStyle={styles.buttonTitleStyle}
-        isDisabled={!isValid}
         raised={true}
         type={"Submit"}
         onPress={gotoRoutes}

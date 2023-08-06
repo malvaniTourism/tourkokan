@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     contactButtonStyle: {
         backgroundColor: COLOR.themeComicBlue,
         width: "auto",
+        paddingVertical: 13
     },
     contactButtonContainer: {
         // marginTop: 15,
@@ -240,7 +241,6 @@ const styles = StyleSheet.create({
     profileContainer: {
         alignItems: 'center',
         marginTop: -50,
-        position: "absolute",
         zIndex: 10
     },
     profilePhoto: {
@@ -318,7 +318,7 @@ const styles = StyleSheet.create({
         fontSize: DIMENSIONS.headerTextSize
     },
     profileMapView: {
-        height: DIMENSIONS.screenWidth - 100,
+        height: DIMENSIONS.screenWidth - 150,
         width: DIMENSIONS.screenWidth,
         marginTop: -20,
         marginBottom: 10,

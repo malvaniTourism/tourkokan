@@ -30,6 +30,7 @@ const CityList = ({ navigation, ...props }) => {
         getCities()
         setIsLandingDataFetched(true); // Mark the data as fetched
       }
+      props.setLoader(false);
     }
 
     return () => {
@@ -49,24 +50,20 @@ const CityList = ({ navigation, ...props }) => {
       });
   }
 
-  const handleSmallCardClick = (id) => {
-    navigateTo(navigation, "CityDetails", { id });
-  };
-
   return (
-    <ScrollView>
+    <ScrollView stickyHeaderIndices={[0]}>
+      <Header name={'Cities'}
+        startIcon={
+          <Ionicons
+            name="chevron-back-outline"
+            color={COLOR.white}
+            size={DIMENSIONS.userIconSize}
+            onPress={() => backPage(navigation)}
+          />
+        }
+      />
       <View style={{ flex: 1, alignItems: "center" }}>
         <Loader />
-        <Header name={'Cities'}
-          startIcon={
-            <Ionicons
-              name="chevron-back-outline"
-              color={COLOR.white}
-              size={DIMENSIONS.userIconSize}
-              onPress={() => backPage(navigation)}
-            />
-          }
-        />
         <View style={{ flex: 1, alignItems: "center" }}>
           <View>
             {cities.map((city) => (

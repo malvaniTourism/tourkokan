@@ -209,13 +209,6 @@ const ProfileView = ({ navigation, ...props }) => {
       <Loader />
 
       <View style={styles.headerContainer}>
-        <View style={styles.profileContainer}>
-          <Image
-            style={styles.profilePhoto}
-            source={{ uri: 'https://www.bootdey.com/img/Content/avatar/avatar1.png' }}
-          />
-          <GlobalText text={profile.name} style={styles.pricingOptionTitle} />
-        </View>
         {currentLatitude &&
           <View style={styles.profileMapView}>
             <MapView style={styles.map} initialRegion={initialRegion}>
@@ -225,6 +218,13 @@ const ProfileView = ({ navigation, ...props }) => {
             </MapView>
           </View>
         }
+        <View style={styles.profileContainer}>
+          <Image
+            style={styles.profilePhoto}
+            source={{ uri: 'https://www.bootdey.com/img/Content/avatar/avatar1.png' }}
+          />
+          <GlobalText text={profile.name} style={styles.pricingOptionTitle} />
+        </View>
       </View>
       <View style={styles.bioContainer}>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>

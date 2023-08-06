@@ -13,11 +13,18 @@ import { ContactUsFields } from "../Services/Constants/FIELDS";
 import TextField from "../Components/Customs/TextField";
 import CustomButton from "../Components/Customs/Button";
 import styles from "./Styles";
+import { comnPost } from "../Services/Api/CommonServices";
+import Popup from "../Components/Common/Popup";
+import Loader from "../Components/Customs/Loader";
+import { setLoader } from "../Reducers/CommonActions";
+import { connect } from "react-redux";
 
-const ContactUs = ({ navigation, route }) => {
+const ContactUs = ({ navigation, route, ...props }) => {
   const [email, setEmail] = useState("");
-  const [mobile, setMobile] = useState("");
+  const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
+  const [alertMessage, setAlertMessage] = useState("");
+  const [isAlert, setIsAlert] = useState(false)
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
@@ -33,7 +40,7 @@ const ContactUs = ({ navigation, route }) => {
         setEmail(val);
         break;
       case 1:
-        setMobile(val);
+        setPhone(val);
         break;
       case 2:
         setMessage(val);
@@ -46,14 +53,41 @@ const ContactUs = ({ navigation, route }) => {
       case 0:
         return email;
       case 1:
-        return mobile;
+        return phone;
       case 2:
         return message;
     }
   };
 
-  const submit = () => {
+  const submit = async () => {
+    props.setLoader(true);
+    let data = {
+      user_id: await AsyncStorage.getItem('userId'),
+      name: await AsyncStorage.getItem('userName'),
+      email,
+      phone,
+      message
+    }
+    console.log(data);
 
+    comnPost('v1/contact', data)
+      .then(res => {
+        setIsAlert(true);
+        setAlertMessage(res.data.message);
+        props.setLoader(false);
+        setEmail("")
+        setPhone("")
+        setMessage("")
+      })
+      .catch(err => {
+        setIsAlert(true);
+        setAlertMessage("Failed");
+        props.setLoader(false);
+      })
+  }
+
+  const closePopup = () => {
+    setIsAlert(false)
   }
 
   return (
@@ -73,7 +107,8 @@ const ContactUs = ({ navigation, route }) => {
           <></>
         }
       />
-      <SafeAreaView style={{alignItems: "center"}}>
+      <Loader />
+      <SafeAreaView style={{ alignItems: "center" }}>
         {ContactUsFields.map((field, index) => {
           return (
             <TextField
@@ -103,8 +138,26 @@ const ContactUs = ({ navigation, route }) => {
           onPress={() => submit()}
         />
       </SafeAreaView>
+      <Popup
+        message={alertMessage}
+        onPress={closePopup}
+        visible={isAlert}
+      />
     </View>
   );
 };
 
-export default ContactUs;
+const mapStateToProps = (state) => {
+  return {
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setLoader: (data) => {
+      dispatch(setLoader(data));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactUs);

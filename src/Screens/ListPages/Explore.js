@@ -24,6 +24,7 @@ const Explore = ({ route, navigation, ...props }) => {
   const [error, setError] = useState(null);
   const [isEnabled, setIsEnabled] = useState(route.name == "Cities")
   const [isLandingDataFetched, setIsLandingDataFetched] = useState(false);
+  const [nextPage, setNextPage] = useState(1)
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
@@ -45,10 +46,12 @@ const Explore = ({ route, navigation, ...props }) => {
   }, []);
 
   const getPlaces = () => {
-    comnGet("v1/places", props.access_token)
+    comnGet(`v1/places?page=${nextPage}`, props.access_token)
       .then((res) => {
-        setPlaces(res.data.data.data);
+        setPlaces([...places, ...res.data.data.data]);
         props.setLoader(false);
+        let nextUrl = res.data.data.next_page_url
+        setNextPage(nextUrl[nextUrl.length - 1])
       })
       .catch((error) => {
         props.setLoader(false);
@@ -72,13 +75,11 @@ const Explore = ({ route, navigation, ...props }) => {
     )
   }
 
-  const toggleSwitch = (val) => {
-    setIsEnabled(val)
+  const goToNext = () => {
+    console.log('nexts');
+    props.setLoader(true)
+    getPlaces()
   }
-
-  const handleSmallCardClick = (id) => {
-    navigateTo(navigation, "PlaceDetails", { id }); // Replace 'CityScreen' with the name of your CityScreen component in your navigation stack
-  };
 
   return (
     <View style={{ flex: 1, justifyContent: "flex-start" }}>
@@ -131,6 +132,8 @@ const Explore = ({ route, navigation, ...props }) => {
                 renderItem={renderPlaces}
                 numColumns={2}
                 style={{ paddingBottom: 80 }}
+                onEndReached={goToNext}
+                onEndReachedThreshold={0.1}
               />
             </ScrollView>
           </SafeAreaView>

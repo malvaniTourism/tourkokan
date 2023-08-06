@@ -56,6 +56,7 @@ const HomeScreen = ({ navigation, ...props }) => {
             if (!isLandingDataFetched && props.access_token) {
                 callLandingPageAPI();
                 setIsLandingDataFetched(true); // Mark the data as fetched
+                getUserProfile();
             }
         }
         LogBox.ignoreAllLogs();
@@ -104,6 +105,20 @@ const HomeScreen = ({ navigation, ...props }) => {
                 setError(error.message);
             });
     };
+
+    const getUserProfile = () => {
+        comnGet("v1/user-profile", props.access_token)
+            .then((res) => {
+                console.log(res.data.data);
+                props.setLoader(false);
+                AsyncStorage.setItem('userName', res.data.data.name)
+                AsyncStorage.setItem('userId', JSON.stringify(res.data.data.id))
+            })
+            .catch((error) => {
+                setError(error.message); // Update error state with error message
+                props.setLoader(false);
+            });
+    }
 
     const handleSmallCardClick = (page, id, name) => {
         navigateTo(navigation, page, { id, name });

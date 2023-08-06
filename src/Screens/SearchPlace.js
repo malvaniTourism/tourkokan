@@ -40,12 +40,12 @@ const SearchPlace = ({ navigation, route, ...props }) => {
     comnPost(`v1/searchPlace?page=${page}`, data)
       .then((res) => {
         if (res.data.success) {
-          console.log('list - - ', placesList);
-
-          setPlacesList([...placesList, ...res.data.data.data]);
           props.setLoader(false);
           let nextUrl = res.data.data.next_page_url
-          if (next) setNextPage(nextUrl[nextUrl.length - 1])
+          if (next) {
+            setPlacesList([...placesList, ...res.data.data.data]);
+            setNextPage(nextUrl[nextUrl.length - 1])
+          } else setPlacesList(res.data.data.data);
           props.setLoader(false);
         } else {
           props.setLoader(false);
