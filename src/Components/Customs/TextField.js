@@ -173,7 +173,7 @@ const TextField = (props) => {
         (props.value === "" && isValid) || props.value === "" ? errorText : ""
       }
       onChangeText={(value) => onChange(value)}
-      disabled={props.disable}
+      disabled={props.disabled}
       required={props.reqFlag}
       InputLabelProps={{
         style: { color: props.value === "" && isValid ? "#FA1515" : "" },

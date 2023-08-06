@@ -13,6 +13,7 @@ import GlobalText from "../../Components/Customs/Text";
 import RouteHeadCard from "../../Components/Cards/RouteHeadCard";
 import { StyleSheet } from "react-native";
 import { Text } from "react-native-svg";
+import styles from "./Styles";
 
 const RoutesList = ({ navigation, route }) => {
   const [list, setList] = useState(route.params.item.route_stops);
@@ -26,6 +27,7 @@ const RoutesList = ({ navigation, route }) => {
   }, []);
 
   const renderItem = ({ item, index }) => {
+    console.log('item - ', item);
     let isFirst = index === 0;
     let isLast = index === list.length - 1;
 
@@ -42,11 +44,15 @@ const RoutesList = ({ navigation, route }) => {
         }
         <ListItem.Content>
           <ListItem.Title>
-            <GlobalText text={item.place.name} style={{ color: (isFirst || isLast) && COLOR.themeComicBlue }} />
-            {/* <GlobalText text={item.dept_time} style={{ color: (isFirst || isLast) && COLOR.themeComicBlue }} />
-            <GlobalText text={item.arr_time} style={{ color: (isFirst || isLast) && COLOR.themeComicBlue }} /> */}
-            {/* {JSON.stringify({ item })} */}
-
+            <View style={(isFirst || isLast) ? styles.listItem : styles.listItemMid}>
+              <View>
+                <GlobalText text={item.place.name} style={{ color: (isFirst || isLast) && COLOR.themeComicBlue }} />
+              </View>
+              <View>
+                <GlobalText text={"ETA: " + item.dept_time.slice(0, -3)} style={{ color: (isFirst || isLast) && COLOR.themeComicBlue }} />
+                <GlobalText text={"ETD: " + item.arr_time.slice(0, -3)} style={{ color: (isFirst || isLast) && COLOR.themeComicBlue }} />
+              </View>
+            </View>
           </ListItem.Title>
         </ListItem.Content>
       </ListItem>
@@ -56,7 +62,7 @@ const RoutesList = ({ navigation, route }) => {
   return (
     <ScrollView stickyHeaderIndices={[0]}>
       <Header
-        name={route.params.item.bus_type.type}
+        name={"Route"}
         goBack={() => backPage(navigation)}
         startIcon={
           <Ionicons
@@ -74,7 +80,7 @@ const RoutesList = ({ navigation, route }) => {
         <RouteHeadCard data={route.params.item} cardClick={() => console.log('clicked')} />
       </View>
       <SafeAreaView>
-        <View style={styles1.flatListContainer}>
+        <View style={styles.flatListContainer}>
           <FlatList
             keyExtractor={(item) => item.id}
             data={list}
@@ -85,23 +91,5 @@ const RoutesList = ({ navigation, route }) => {
     </ScrollView>
   );
 };
-
-const styles1 = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  flatListContainer: {
-    margin: 20,
-    borderRadius: 10, // Apply the desired border radius
-    borderWidth: 1, // Apply the desired border width
-    borderColor: "#000", // Apply the desired border color
-    overflow: "hidden", // This will clip the content inside the container with the border radius
-  },
-  item: {
-    padding: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-  },
-});
 
 export default RoutesList;

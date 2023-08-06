@@ -11,19 +11,21 @@ import { comnPost } from '../../Services/Api/CommonServices';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import GlobalText from '../Customs/Text';
 import { navigateTo } from '../../Services/CommonMethods';
+import ComingSoon from '../Common/ComingSoon';
 
 const CityCard = ({ data, reload, navigation }) => {
-    const [isFav, setIsFav] = useState(false)
+    const [isFav, setIsFav] = useState(data.is_favorite)
     const [isLiked, setIsLiked] = useState(false)
     const [rating, setRating] = useState(3.5)
+    const [isVisible, setIsVisible] = useState(false)
 
     const onStarRatingPress = (rate) => {
         setRating(rate)
     }
 
-    const onHeartClick = () => {
+    const onHeartClick = async () => {
         let cityData = {
-            user_id: AsyncStorage.getItem("userId"),
+            user_id: await AsyncStorage.getItem("userId"),
             favouritable_type: "City",
             favouritable_id: data.id
         }
@@ -43,6 +45,10 @@ const CityCard = ({ data, reload, navigation }) => {
 
     const getCity = (id) => {
         // navigateTo(navigation, "CityDetails", { id })
+        setIsVisible(true)
+        setTimeout(() => {
+            setIsVisible(false)
+        }, 2000)
     }
 
     return (
@@ -97,6 +103,7 @@ const CityCard = ({ data, reload, navigation }) => {
                     </View>
                 </View>
             </View>
+            <ComingSoon message={"Coming Soon..."} visible={isVisible} />
         </View>
     )
 }

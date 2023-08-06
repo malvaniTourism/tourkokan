@@ -127,7 +127,7 @@ const EmailSignIn = ({ navigation, ...props }) => {
           setIsSuccess(true)
         } else {
           setIsAlert(true);
-          setAlertMessage(res.data.message);
+          setAlertMessage(res.data.message.email ? res.data.message.email : res.data.message);
           props.setLoader(false);
           setIsSuccess(false)
         }

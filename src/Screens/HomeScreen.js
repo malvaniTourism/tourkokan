@@ -109,7 +109,6 @@ const HomeScreen = ({ navigation, ...props }) => {
     const getUserProfile = () => {
         comnGet("v1/user-profile", props.access_token)
             .then((res) => {
-                console.log(res.data.data);
                 props.setLoader(false);
                 AsyncStorage.setItem('userName', res.data.data.name)
                 AsyncStorage.setItem('userId', JSON.stringify(res.data.data.id))

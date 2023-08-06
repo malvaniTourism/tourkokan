@@ -129,17 +129,24 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     },
     profileImageView: {
-        height: DIMENSIONS.bannerWidth,
+        height: DIMENSIONS.bannerWidth - 90,
         marginTop: -75,
         borderRadius: DIMENSIONS.borderRadius,
         padding: 3
     },
     profileImage: {
         // aspectRatio: 1,
-        height: DIMENSIONS.bannerWidth,
-        borderRadius: DIMENSIONS.borderRadius,
-        resizeMode: 'cover'
+        height: DIMENSIONS.bannerWidth - 90,
+        resizeMode: 'contain'
         // width: '100%',
+    },
+    handPointer: {
+        height: DIMENSIONS.bannerWidth - 90,
+        width: DIMENSIONS.screenWidth,
+        position: "absolute",
+        justifyContent: "center",
+        textAlign: "center",
+        alignItems: "center"
     },
     boldText: {
         fontWeight: 'bold',
@@ -247,6 +254,8 @@ const styles = StyleSheet.create({
         width: DIMENSIONS.detailsImage,
         height: DIMENSIONS.detailsImage,
         borderRadius: DIMENSIONS.borderRadiusLarge,
+        borderWidth: .5,
+        borderColor: COLOR.themeComicBlue
     },
     bioContainer: {
         padding: 15,
@@ -343,7 +352,8 @@ const styles = StyleSheet.create({
     },
     profileButtonStyle: {
         backgroundColor: COLOR.themeComicBlue,
-        width: "auto"
+        width: "auto",
+        paddingVertical: 13
     },
 });
 

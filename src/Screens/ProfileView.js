@@ -34,8 +34,9 @@ import CustomButton from '../Components/Customs/Button';
 import Geolocation from '@react-native-community/geolocation';
 import { Overlay } from '@rneui/themed';
 import MapView, { Marker, Polygon } from 'react-native-maps';
+import Path from '../Services/Api/BaseUrl';
 
-const ProfileView = ({ navigation, ...props }) => {
+const ProfileView = ({ navigation, route, ...props }) => {
   const [currentLatitude, setCurrentLatitude] = useState(37.4220936);
   const [currentLongitude, setCurrentLongitude] = useState(-122.083922);
   const [locationStatus, setLocationStatus] = useState('');
@@ -58,11 +59,15 @@ const ProfileView = ({ navigation, ...props }) => {
     // requestLocationPermission();
     checkLogin(navigation)
     getUserProfile();
+    const unsubscribe = navigation.addListener('focus', () => {
+      getUserProfile();
+    });
     return () => {
       Geolocation.clearWatch(watchID);
       backHandler.remove()
+      unsubscribe()
     };
-  }, []);
+  }, [route]);
 
   const requestLocationPermission = async () => {
     if (Platform.OS === 'ios') {
@@ -221,7 +226,7 @@ const ProfileView = ({ navigation, ...props }) => {
         <View style={styles.profileContainer}>
           <Image
             style={styles.profilePhoto}
-            source={{ uri: 'https://www.bootdey.com/img/Content/avatar/avatar1.png' }}
+            source={{ uri: `${profile.profile_picture ? Path.FTP_PATH1 + profile.profile_picture : "https://api-private.atlassian.com/users/2143ab39b9c73bcab4fe6562fff8d23d/avatar"}` }}
           />
           <GlobalText text={profile.name} style={styles.pricingOptionTitle} />
         </View>

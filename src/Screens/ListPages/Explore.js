@@ -76,7 +76,6 @@ const Explore = ({ route, navigation, ...props }) => {
   }
 
   const goToNext = () => {
-    console.log('nexts');
     props.setLoader(true)
     getPlaces()
   }

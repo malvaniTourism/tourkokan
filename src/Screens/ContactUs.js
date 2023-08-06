@@ -68,7 +68,6 @@ const ContactUs = ({ navigation, route, ...props }) => {
       phone,
       message
     }
-    console.log(data);
 
     comnPost('v1/contact', data)
       .then(res => {

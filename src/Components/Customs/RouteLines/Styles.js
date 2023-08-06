@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         position: "absolute",
         height: 80,
-        top: -21,
+        top: -28,
         left: 5,
     },
     routeLineFirst: {
@@ -24,8 +24,8 @@ const styles = StyleSheet.create({
         borderColor: COLOR.black,
         borderWidth: 1,
         position: "absolute",
-        height: 22,
-        top: -20,
+        height: 24,
+        top: -22,
         left: 5,
     },
     routeDot: {

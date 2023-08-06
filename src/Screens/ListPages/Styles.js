@@ -31,6 +31,33 @@ const styles = StyleSheet.create({
     flexRow: {
         flexDirection: 'row',
         marginBottom: 10
+    },
+    container: {
+        flex: 1,
+    },
+    flatListContainer: {
+        margin: 20,
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: "#000",
+        overflow: "hidden",
+    },
+    item: {
+        padding: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: "#ccc",
+    },
+    listItem: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        minWidth: DIMENSIONS.bannerWidth - 100
+    },
+    listItemMid: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        minWidth: DIMENSIONS.bannerWidth - 85
     }
 })
 

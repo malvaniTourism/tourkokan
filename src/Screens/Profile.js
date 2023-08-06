@@ -4,7 +4,7 @@ import Header from "../Components/Common/Header";
 import COLOR from "../Services/Constants/COLORS";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { comnGet, comnPost } from "../Services/Api/CommonServices";
 import { connect } from "react-redux";
 import Loader from "../Components/Customs/Loader";
@@ -20,6 +20,9 @@ import DropDown from "../Components/Customs/DropDown";
 import { ProfileFields, SignUpFields } from "../Services/Constants/FIELDS";
 import CustomButton from "../Components/Customs/Button";
 import TextField from "../Components/Customs/TextField";
+import Path from "../Services/Api/BaseUrl";
+import { launchImageLibrary } from 'react-native-image-picker'
+import Popup from "../Components/Common/Popup";
 
 const Profile = ({ navigation, ...props }) => {
   const [profile, setProfile] = useState([]);
@@ -27,16 +30,19 @@ const Profile = ({ navigation, ...props }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
-  const [picture, setPicture] = useState("")
-  const [role, setRole] = useState("");
-  const [roles, setRoles] = useState([]);
+  const [profile_picture, setPicture] = useState("")
+  const [alertMessage, setAlertMessage] = useState("");
+  const [isAlert, setIsAlert] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [imageSource, setImageSource] = useState(null);
+  const [uploadImage, setUploadImage] = useState(null);
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
     checkLogin(navigation)
     props.setLoader(true);
     getUserProfile();
-    getRoles()
+
     return () => {
       backHandler.remove()
     }
@@ -45,10 +51,8 @@ const Profile = ({ navigation, ...props }) => {
   const getUserProfile = () => {
     comnGet("v1/user-profile", props.access_token)
       .then((res) => {
-        console.log(res.data.data);
         setProfile(res.data.data); // Update places state with response data
         props.setLoader(false);
-        setRole(res.data.data.role_id)
         setName(res.data.data.name)
         setEmail(res.data.data.email)
         setMobile(res.data.data.mobile)
@@ -60,34 +64,16 @@ const Profile = ({ navigation, ...props }) => {
       });
   }
 
-  const getRoles = () => {
-    comnGet("v1/roleDD")
-      .then((res) => {
-        if (res.data.success) {
-          props.setLoader(false);
-          setRoles(res.data.data);
-        } else {
-          props.setLoader(false);
-        }
-      })
-      .catch((err) => {
-        props.setLoader(false);
-      });
-  }
-
   const setValue = (val, isVal, index) => {
     switch (index) {
       case 0:
         setName(val);
         break;
       case 1:
-        setEmail(val);
-        break;
-      case 2:
         setMobile(val);
         break;
-      default:
-        setRole(val);
+      case 2:
+        setEmail(val);
         break;
     }
   };
@@ -97,16 +83,58 @@ const Profile = ({ navigation, ...props }) => {
       case 0:
         return name;
       case 1:
-        return email;
-      case 2:
         return mobile;
-      default:
-        return role;
+      case 2:
+        return email;
     }
   };
 
-  const updateProfile = () => {
+  const handleImageUpload = () => {
+    launchImageLibrary(
+      {
+        mediaType: 'photo',
+        includeBase64: true, // Set to true to include base64 data
+        maxHeight: 200,
+        maxWidth: 200,
+      },
+      (response) => {
+        if (response.assets) {
+          // Upload the image to the API
+          setUploadImage(`data:${response.assets[0].type};base64,${response.assets[0].base64}`);
+          setImageSource(response.assets[0].uri);
+        }
+      }
+    );
+  };
 
+  const updateProfile = () => {
+    props.setLoader(true);
+    let data = {
+      email,
+      profile_picture: uploadImage
+    }
+
+    comnPost("v1/updateProfile", data)
+      .then(res => {
+        setIsAlert(true);
+        setAlertMessage(res.data.message);
+        props.setLoader(false);
+        if (res.data.success) setIsSuccess(true)
+        else setIsSuccess(false)
+
+      })
+      .catch(err => {
+        setIsAlert(true);
+        setAlertMessage("Failed");
+        props.setLoader(false);
+      })
+  }
+
+  const closePopup = () => {
+    if (isSuccess) {
+      navigateTo(navigation, "ProfileView");
+    }
+    setIsAlert(false)
   }
 
   return (
@@ -120,32 +148,32 @@ const Profile = ({ navigation, ...props }) => {
               name="chevron-back-outline"
               size={24}
               onPress={() => backPage(navigation)}
-              color={COLOR.white}
+              color={COLOR.black}
             />
           }
           endIcon={<></>}
         />
         <Loader />
         <View>
-          <View style={styles.profileImageView}>
-            <Image
-              source={{ uri: 'https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/128009228/original/8e8ad34b012b46ebd403bd4157f8fef6bb2c076b/design-minimalist-flat-cartoon-caricature-avatar-in-6-hours.jpg' }}
+          <TouchableOpacity style={styles.profileImageView} onPress={handleImageUpload}>
+            {imageSource ?
+              <Image source={{ uri: imageSource }} style={styles.profileImage} />
+              :
+              <Image
+              source={{ uri: `${profile_picture ? Path.FTP_PATH1 + profile_picture : "https://api-private.atlassian.com/users/2143ab39b9c73bcab4fe6562fff8d23d/avatar"}` }}
               containerStyle={styles.profileImage}
-            />
-          </View>
+              />
+            }
+            <View style={styles.handPointer}>
+              <FontAwesome
+                name="hand-pointer-o"
+                size={35}
+                color={COLOR.black}
+              />
+              <GlobalText text={"Click to Update"} />
+            </View>
+          </TouchableOpacity>
           <View style={styles.profileDetails}>
-            <DropDown
-              setChild={(v, i) => setValue(v, i)}
-              name={"Role"}
-              label={"Role"}
-              value={role}
-              disable={false}
-              style={styles.roleDropDown}
-              fieldType={"dropDwn"}
-              helperMsg={"Select Role"}
-              List={roles}
-              parentDetails={{ label: "role" }}
-            />
             {ProfileFields.map((field, index) => {
               return (
                 <TextField
@@ -178,6 +206,12 @@ const Profile = ({ navigation, ...props }) => {
           </View>
         </View>
       </ScrollView>
+
+      <Popup
+        message={alertMessage}
+        visible={isAlert}
+        onPress={closePopup}
+      />
     </View>
   );
 };

@@ -111,7 +111,7 @@ const SignUp = ({ navigation, ...props }) => {
       (response) => {
         if (response.assets) {
           // Upload the image to the API
-          setUploadImage(response.assets[0].base64);
+          setUploadImage(`data:${response.assets[0].type};base64,${response.assets[0].base64}`);
           setImageSource(response.assets[0].uri);
         }
       }
@@ -136,19 +136,9 @@ const SignUp = ({ navigation, ...props }) => {
           setAlertMessage("Registration Successful, now login to continue...");
           setIsAlert(true);
           setIsSuccess(true)
-        } else if (res.data.message.email) {
+        } else {
           props.setLoader(false);
-          setAlertMessage("The email has already been taken.");
-          setIsSuccess(false)
-          setIsAlert(true);
-        } else if (res.data.message.mobile) {
-          props.setLoader(false);
-          setAlertMessage("The mobile has already been taken.");
-          setIsSuccess(false)
-          setIsAlert(true);
-        } else if (res.data.message.profile_picture) {
-          props.setLoader(false);
-          setAlertMessage("Select a proper image to upload");
+          setAlertMessage(res.data.message.email ? res.data.message.email : res.data.message.mobile ? res.data.message.mobile : res.data.message.profile_picture);
           setIsSuccess(false)
           setIsAlert(true);
         }
