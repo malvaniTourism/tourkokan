@@ -9,7 +9,7 @@ import COLOR from "../Services/Constants/COLORS";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
 import Explore from "../Screens/ListPages/Explore";
 import ProjectList from "../Screens/ListPages/ProjectList";
-import RoutesList from "../Screens/RoutesList";
+import RoutesList from "../Screens/ListPages/RoutesList";
 import SearchList from "../Screens/SearchList";
 import { PngTree } from "../../Assets/Images/pngtree.png";
 import SvgUri from 'react-native-svg-uri';

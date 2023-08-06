@@ -93,23 +93,15 @@ const SearchList = ({ navigation, route, ...props }) => {
         }
       />
       <Loader />
-      <SafeAreaView>
+      <SafeAreaView style={{ paddingBottom: 150 }}>
         {list.length > 0 ? (
-          route.params && route.params.from === "Search" ? (
-            <View style={styles.cardsWrap}>
-              {list.map((route) => (
-                <RouteHeadCard data={route} cardClick={() => getRoutesList(route)} />
-              ))}
-            </View>
-          ) : (
-            <FlatList
-              keyExtractor={(item) => item.id}
-              data={list}
-              renderItem={({ item }) => (
-                <RouteHeadCard data={item} cardClick={() => getRoutesList(item)} />
-              )}
-            />
-          )
+          <FlatList
+            keyExtractor={(item) => item.id}
+            data={list}
+            renderItem={({ item }) => (
+              <RouteHeadCard data={item} cardClick={() => getRoutesList(item)} />
+            )}
+          />
         ) : (
           <GlobalText text={"No Routes Available"} />
         )}

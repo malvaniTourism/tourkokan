@@ -10,7 +10,7 @@ import GlobalText from "../Components/Customs/Text";
 const SignIn = lazy(() => import("../Screens/AuthScreens/SignIn"));
 const SignUp = lazy(() => import("../Screens/AuthScreens/SignUp"));
 const SearchList = lazy(() => import("../Screens/SearchList"));
-const RoutesList = lazy(() => import("../Screens/RoutesList"));
+const RoutesList = lazy(() => import("../Screens/ListPages/RoutesList"));
 const BusTimings = lazy(() => import("../Screens/BusTimings"));
 const CategoryProjects = lazy(() => import("../Screens/CategoryProjects"));
 const CityDetails = lazy(() => import("../Screens/DetailPages/CityDetails"));

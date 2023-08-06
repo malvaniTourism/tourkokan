@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
     height: DIMENSIONS.halfWidth,
     // elevation: 10,
     animation: "fadeinout 4s infinite",
+    marginBottom: -25
   },
   bannerImage: {
     width: DIMENSIONS.screenWidth,

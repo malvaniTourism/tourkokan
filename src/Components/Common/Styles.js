@@ -4,7 +4,6 @@ import DIMENSIONS from "../../Services/Constants/DIMENSIONS.js";
 
 const styles = StyleSheet.create({
   topComponent: {
-    height: DIMENSIONS.halfWidth,
     width: DIMENSIONS.windowWidth,
     borderBottomLeftRadius: DIMENSIONS.borderRadiusSmall,
     borderBottomRightRadius: DIMENSIONS.borderRadiusSmall,

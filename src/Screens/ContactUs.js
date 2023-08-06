@@ -93,6 +93,7 @@ const ContactUs = ({ navigation, route }) => {
         })}
         <CustomButton
           title={"Submit"}
+          seeMoreStyle={styles.buttonView}
           containerStyle={styles.contactButtonContainer}
           buttonStyle={styles.contactButtonStyle}
           titleStyle={styles.buttonTitle}

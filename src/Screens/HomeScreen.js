@@ -43,6 +43,12 @@ const HomeScreen = ({ navigation, ...props }) => {
     const [cityList, setCityList] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [isLandingDataFetched, setIsLandingDataFetched] = useState(false);
+    const [bannerImages, setBannerImages] = useState([
+        "https://c4.wallpaperflare.com/wallpaper/766/970/409/cities-city-building-cityscape-wallpaper-preview.jpg",
+        "https://c4.wallpaperflare.com/wallpaper/631/683/713/nature-bridge-sky-city-wallpaper-preview.jpg",
+        "https://c4.wallpaperflare.com/wallpaper/977/138/381/tbilisi-georgia-wallpaper-preview.jpg",
+        "https://4kwallpapers.com/images/walls/thumbs_3t/912.jpg",
+    ]);
 
     useEffect(() => {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', () => exitApp());
@@ -124,13 +130,14 @@ const HomeScreen = ({ navigation, ...props }) => {
     }
 
     return (
-        <ScrollView>
+        <ScrollView stickyHeaderIndices={[0]}>
+            <TopComponent navigation={navigation} openLocationSheet={() => openLocationSheet()} />
             {
                 isLoading ?
                     <Loader />
                     :
                     <View style={{ flex: 1, alignItems: "center" }}>
-                        <TopComponent navigation={navigation} openLocationSheet={() => openLocationSheet()} />
+                        <Banner bannerImages={bannerImages} />
                         {CityName.map((field, index) => {
                             return (
                                 <SearchBar

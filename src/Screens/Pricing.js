@@ -25,7 +25,7 @@ const Pricing = ({ navigation, ...props }) => {
   }
 
   return (
-    <ScrollView>
+    <ScrollView stickyHeaderIndices={[0]}>
       <Header
         name="Pricing"
         goBack={() => backPage(navigation)}

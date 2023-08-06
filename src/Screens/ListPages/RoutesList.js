@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, View, SafeAreaView } from "react-native";
+import { FlatList, View, SafeAreaView, ScrollView } from "react-native";
 import { ListItem } from "@rneui/themed";
-import Header from "../Components/Common/Header";
+import Header from "../../Components/Common/Header";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import COLOR from "../Services/Constants/COLORS";
-import DIMENSIONS from "../Services/Constants/DIMENSIONS";
-import RouteLine from "../Components/Customs/RouteLines/RouteLine";
-import { backPage, checkLogin, goBackHandler, navigateTo } from "../Services/CommonMethods";
-import RouteLineFirst from "../Components/Customs/RouteLines/RouteLineFirst";
-import RouteLineLast from "../Components/Customs/RouteLines/RouteLineLast";
-import GlobalText from "../Components/Customs/Text";
-import RouteHeadCard from "../Components/Cards/RouteHeadCard";
+import COLOR from "../../Services/Constants/COLORS";
+import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
+import RouteLine from "../../Components/Customs/RouteLines/RouteLine";
+import { backPage, checkLogin, goBackHandler, navigateTo } from "../../Services/CommonMethods";
+import RouteLineFirst from "../../Components/Customs/RouteLines/RouteLineFirst";
+import RouteLineLast from "../../Components/Customs/RouteLines/RouteLineLast";
+import GlobalText from "../../Components/Customs/Text";
+import RouteHeadCard from "../../Components/Cards/RouteHeadCard";
 import { StyleSheet } from "react-native";
 import { Text } from "react-native-svg";
 
@@ -54,7 +54,7 @@ const RoutesList = ({ navigation, route }) => {
   };
 
   return (
-    <View>
+    <ScrollView stickyHeaderIndices={[0]}>
       <Header
         name={route.params.item.bus_type.type}
         goBack={() => backPage(navigation)}
@@ -82,7 +82,7 @@ const RoutesList = ({ navigation, route }) => {
           />
         </View>
       </SafeAreaView>
-    </View>
+    </ScrollView>
   );
 };
 

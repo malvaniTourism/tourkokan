@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         width: "auto",
     },
     contactButtonContainer: {
-        marginTop: 15,
+        // marginTop: 15,
     },
     containerStyle: {
         borderWidth: 1,
