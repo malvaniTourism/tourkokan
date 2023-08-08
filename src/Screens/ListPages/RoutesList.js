@@ -27,7 +27,6 @@ const RoutesList = ({ navigation, route }) => {
   }, []);
 
   const renderItem = ({ item, index }) => {
-    console.log('item - ', item);
     let isFirst = index === 0;
     let isLast = index === list.length - 1;
 
@@ -49,8 +48,8 @@ const RoutesList = ({ navigation, route }) => {
                 <GlobalText text={item.place.name} style={{ color: (isFirst || isLast) && COLOR.themeComicBlue }} />
               </View>
               <View>
-                <GlobalText text={"ETA: " + item.dept_time.slice(0, -3)} style={{ color: (isFirst || isLast) && COLOR.themeComicBlue }} />
-                <GlobalText text={"ETD: " + item.arr_time.slice(0, -3)} style={{ color: (isFirst || isLast) && COLOR.themeComicBlue }} />
+                <GlobalText text={"ETA: " + item.dept_time.slice(0, -3)} />
+                <GlobalText text={"ETD: " + item.arr_time.slice(0, -3)} />
               </View>
             </View>
           </ListItem.Title>

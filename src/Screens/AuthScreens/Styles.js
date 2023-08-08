@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
   },
   imageContainerStyle: {
     borderWidth: 1,
-    padding: 14,
     borderColor: COLOR.grey,
     borderRadius: DIMENSIONS.borderRadius,
     width: DIMENSIONS.iconXL,

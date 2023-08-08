@@ -50,7 +50,7 @@ const SearchPanel = ({ navigation, ...props }) => {
   };
 
   const checkIsValid = () => {
-    if ((props.source.name) && (props.destination.name)) setIsValid(true)
+    if ((props.source) && (props.destination)) setIsValid(true)
     else setIsValid(false)
   }
 
@@ -113,14 +113,14 @@ const SearchPanel = ({ navigation, ...props }) => {
         />
       </View>
 
-        {!isValid &&
-      <View>
+      {!isValid &&
+        <View>
           <GlobalText
             text={errorText}
             style={styles.errorText}
           />
-      </View>
-        }
+        </View>
+      }
       <CustomButton
         title={"Search"}
         containerStyle={styles.searchButtonContainerStyle}

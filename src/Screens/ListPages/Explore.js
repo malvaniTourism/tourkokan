@@ -119,7 +119,7 @@ const Explore = ({ route, navigation, ...props }) => {
             style={{ marginBottom: 150 }}
           >
             {cities.map((city) => (
-              <CityCard data={city} navigation={navigation} />
+              <CityCard data={city} navigation={navigation} reload={() => getCities()} />
             ))}
           </ScrollView>
           :

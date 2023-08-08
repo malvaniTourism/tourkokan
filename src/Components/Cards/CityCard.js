@@ -32,7 +32,7 @@ const CityCard = ({ data, reload, navigation }) => {
         setIsFav(!isFav)
         comnPost('v1/favourite', cityData)
             .then(res => {
-                // reload()
+                reload()
             })
             .catch(err => {
             })

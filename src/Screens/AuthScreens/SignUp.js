@@ -19,6 +19,7 @@ import Popup from "../../Components/Common/Popup";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import Feather from "react-native-vector-icons/Feather";
+import FontIcons from "react-native-vector-icons/FontAwesome5";
 
 const SignUp = ({ navigation, ...props }) => {
   const [name, setName] = useState("");
@@ -205,7 +206,12 @@ const SignUp = ({ navigation, ...props }) => {
             {imageSource ?
               <Image source={imageSource} style={{ width: 50, height: 50, resizeMode: "contain" }} />
               :
-              <MaterialIcons name='camera' color={COLOR.themeComicBlue} size={DIMENSIONS.userIconSize} />
+              <FontIcons
+                name="user-circle"
+                color={COLOR.themeComicBlue}
+                size={DIMENSIONS.iconLarge}
+                style={styles.userIcon}
+              />
             }
           </TouchableOpacity>
 

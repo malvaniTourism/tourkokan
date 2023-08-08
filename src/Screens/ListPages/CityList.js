@@ -67,7 +67,7 @@ const CityList = ({ navigation, ...props }) => {
         <View style={{ flex: 1, alignItems: "center" }}>
           <View>
             {cities.map((city) => (
-              <CityCard data={city} navigation={navigation} />
+              <CityCard data={city} navigation={navigation} reload={() => getCities()} />
             ))}
           </View>
         </View>
