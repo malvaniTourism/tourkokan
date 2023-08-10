@@ -76,8 +76,8 @@ const Explore = ({ route, navigation, ...props }) => {
   }
 
   const goToNext = () => {
-    props.setLoader(true)
-    getPlaces()
+    // props.setLoader(true)
+    // getPlaces()
   }
 
   return (
@@ -129,9 +129,9 @@ const Explore = ({ route, navigation, ...props }) => {
                 keyExtractor={(item) => item.id}
                 data={places}
                 renderItem={renderPlaces}
-                numColumns={2}
+                // numColumns={2}
                 style={{ paddingBottom: 80 }}
-                onEndReached={goToNext}
+                onEndReached={() => goToNext()}
                 onEndReachedThreshold={0.1}
               />
             </ScrollView>

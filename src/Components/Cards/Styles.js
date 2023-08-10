@@ -144,36 +144,63 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     placeCard: {
-        width: DIMENSIONS.halfWidth - 30,
-        height: DIMENSIONS.halfWidth - 60,
+        width: DIMENSIONS.bannerWidth,
+        height: DIMENSIONS.bannerWidth + 20,
         elevation: 10,
         margin: 10,
         padding: 10,
         backgroundColor: COLOR.white,
-        borderRadius: DIMENSIONS.borderRadiusXS,
-        alignItems: 'center',
-        justifyContent: 'center',
+        borderRadius: DIMENSIONS.borderRadius,
+        justifyContent: 'space-between'
     },
     placeOverlay: {
         ...StyleSheet.absoluteFillObject,
         backgroundColor: COLOR.black,
-        borderRadius: DIMENSIONS.borderRadiusXS
+        borderRadius: DIMENSIONS.borderRadius
+    },
+    placeLikeView: {
+        backgroundColor: COLOR.grayDark,
+        height: 35,
+        width: 35,
+        borderRadius: DIMENSIONS.borderRadius,
+        right: 5,
+        top: 5,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    placeStarView: {
+        backgroundColor: COLOR.grayDark,
+        height: 35,
+        width: 100,
+        left: 5,
+        top: 60,
+        borderRadius: DIMENSIONS.borderRadius,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     placeImage: {
-        width: DIMENSIONS.halfWidth - 30,
-        height: DIMENSIONS.halfWidth - 60,
+        width: DIMENSIONS.bannerWidth,
+        height: DIMENSIONS.bannerWidth + 20,
         position: 'absolute'
     },
     placeImageStyle: {
-        borderRadius: DIMENSIONS.borderRadiusXS,
+        borderRadius: DIMENSIONS.borderRadius,
+    },
+    placeDetailsOverlay: {
+        width: DIMENSIONS.bannerWidth - 40,
+        height: DIMENSIONS.bannerHeight - 40,
+        backgroundColor: COLOR.white,
+        borderRadius: DIMENSIONS.borderRadius,
+        padding: 15,
+        alignSelf: 'center',
+        flexDirection: 'row'
     },
     placeName: {
-        color: COLOR.white,
         fontSize: DIMENSIONS.headerTextSize,
         fontWeight: 'bold'
     },
     placeDesc: {
-        color: COLOR.white
+
     }
 })
 
