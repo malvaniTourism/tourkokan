@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
-    cityContainer: {
+    placeContainer: {
         alignSelf: 'center',
         flex: 1,
         flexDirection: 'row',
@@ -20,10 +20,10 @@ const styles = StyleSheet.create({
         elevation: 5,
         marginVertical: 10
     },
-    cityImageView: {
+    placeImageView: {
         flex: 2,
     },
-    cityImage: {
+    placeImage: {
         flex: 1,
     },
     likeView: {
@@ -37,27 +37,27 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    cityImageStyle: {
+    placeImageStyle: {
         borderTopLeftRadius: DIMENSIONS.borderRadius,
         borderBottomLeftRadius: DIMENSIONS.borderRadius
     },
-    cityContentView: {
+    placeContentView: {
         flex: 3,
         padding: 10,
         flexDirection: 'column',
         justifyContent: 'space-between'
     },
-    cityContentTop: {
+    placeContentTop: {
         flex: 1,
         justifyContent: 'space-between',
         paddingBottom: 10
     },
-    cityName: {
+    placeName: {
         fontSize: DIMENSIONS.headerTextSize,
         fontWeight: 'bold',
         color: COLOR.black
     },
-    cityTag: {
+    placeTag: {
         fontSize: DIMENSIONS.subtitleTextSize,
         fontWeight: 600
     },
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         // width: '50%'
         color: COLOR.yellow
     },
-    cityMetaView: {
+    placeMetaView: {
         paddingTop: 10,
         flexDirection: 'row',
         borderTopWidth: 1,
@@ -143,7 +143,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    placeCard: {
+
+
+
+    cityCard: {
         width: DIMENSIONS.bannerWidth,
         height: DIMENSIONS.bannerWidth + 20,
         elevation: 10,
@@ -153,12 +156,12 @@ const styles = StyleSheet.create({
         borderRadius: DIMENSIONS.borderRadius,
         justifyContent: 'space-between'
     },
-    placeOverlay: {
+    cityOverlay: {
         ...StyleSheet.absoluteFillObject,
         backgroundColor: COLOR.black,
         borderRadius: DIMENSIONS.borderRadius
     },
-    placeLikeView: {
+    cityLikeView: {
         backgroundColor: COLOR.grayDark,
         height: 35,
         width: 35,
@@ -168,38 +171,38 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    placeStarView: {
+    cityStarView: {
         backgroundColor: COLOR.grayDark,
         height: 35,
         width: 100,
         left: 5,
-        top: 60,
+        top: 40,
         borderRadius: DIMENSIONS.borderRadius,
         justifyContent: 'center',
         alignItems: 'center',
     },
-    placeImage: {
+    cityImage: {
         width: DIMENSIONS.bannerWidth,
         height: DIMENSIONS.bannerWidth + 20,
         position: 'absolute'
     },
-    placeImageStyle: {
+    cityImageStyle: {
         borderRadius: DIMENSIONS.borderRadius,
     },
-    placeDetailsOverlay: {
+    cityDetailsOverlay: {
         width: DIMENSIONS.bannerWidth - 40,
-        height: DIMENSIONS.bannerHeight - 40,
+        height: DIMENSIONS.bannerHeight,
         backgroundColor: COLOR.white,
         borderRadius: DIMENSIONS.borderRadius,
         padding: 15,
         alignSelf: 'center',
-        flexDirection: 'row'
+        justifyContent: "space-between"
     },
-    placeName: {
+    cityName: {
         fontSize: DIMENSIONS.headerTextSize,
         fontWeight: 'bold'
     },
-    placeDesc: {
+    cityDesc: {
 
     }
 })

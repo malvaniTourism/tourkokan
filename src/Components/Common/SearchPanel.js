@@ -26,6 +26,7 @@ const SearchPanel = ({ navigation, ...props }) => {
     // setSource(props.source.name || "");
     // setDestination(props.destination.name || "");
     // checkIsValid()
+    checkIsValid()
   }, [props]);
 
   const setValue = (v, i, index) => {
@@ -50,7 +51,7 @@ const SearchPanel = ({ navigation, ...props }) => {
   };
 
   const checkIsValid = () => {
-    if ((props.source) && (props.destination)) setIsValid(true)
+    if ((props.source.name) && (props.destination.name)) setIsValid(true)
     else setIsValid(false)
   }
 

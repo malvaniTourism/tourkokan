@@ -45,8 +45,8 @@ const Explore = ({ route, navigation, ...props }) => {
     }
   }, []);
 
-  const getPlaces = () => {
-    comnGet(`v1/places?page=${nextPage}`, props.access_token)
+  const getPlaces = (ifNext) => {
+    comnGet(`v1/places?page=${ifNext ? nextPage : nextPage - 1}`, props.access_token)
       .then((res) => {
         setPlaces([...places, ...res.data.data.data]);
         props.setLoader(false);
@@ -71,13 +71,14 @@ const Explore = ({ route, navigation, ...props }) => {
 
   const renderPlaces = ({ item, index }) => {
     return (
-      <PlaceCard data={item} navigation={navigation} />
+      <PlaceCard data={item} navigation={navigation} reload={() => getPlaces()} />
     )
   }
 
   const goToNext = () => {
+    console.log('next');
     // props.setLoader(true)
-    // getPlaces()
+    getPlaces(true)
   }
 
   return (
@@ -116,7 +117,7 @@ const Explore = ({ route, navigation, ...props }) => {
       <View style={{ minHeight: DIMENSIONS.screenHeight }}>
         {isEnabled ?
           <ScrollView
-            style={{ marginBottom: 150 }}
+            style={{ marginBottom: 350 }}
           >
             {cities.map((city) => (
               <CityCard data={city} navigation={navigation} reload={() => getCities()} />
@@ -132,7 +133,7 @@ const Explore = ({ route, navigation, ...props }) => {
                 // numColumns={2}
                 style={{ paddingBottom: 80 }}
                 onEndReached={() => goToNext()}
-                onEndReachedThreshold={0.1}
+                onEndReachedThreshold={0.5}
               />
             </ScrollView>
           </SafeAreaView>
