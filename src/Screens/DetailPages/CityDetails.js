@@ -15,6 +15,7 @@ import GlobalText from "../../Components/Customs/Text";
 import styles from "./Styles";
 import TabView from "../../Components/Common/TabView";
 import Path from "../../Services/Api/BaseUrl";
+import STRING from "../../Services/Constants/STRINGS";
 
 const CityDetails = ({ navigation, route, ...props }) => {
     const [city, setCity] = useState([]); // State to store city
@@ -55,7 +56,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
         <ScrollView>
             <Loader />
             <Header
-                name={"City"}
+                name={STRING.HEADER.CITY}
                 startIcon={
                     <Ionicons
                         name="chevron-back-outline"
@@ -98,7 +99,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
                                         />
                                     }
                                     title={place.name}
-                                    onPress={() => handleSmallCardClick("PlaceDetails", place.id)}
+                                    onPress={() => handleSmallCardClick(STRING.SCREEN.PLACE_DETAILS, place.id)}
                                 />
                             ))}
                         </ScrollView>
@@ -117,7 +118,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
                                         />
                                     }
                                     title={project.name}
-                                    onPress={() => handleSmallCardClick("ProjectDetails", project.id)}
+                                    onPress={() => handleSmallCardClick(STRING.SCREEN.PROJECT_DETAILS, project.id)}
                                 />
                             ))}
                         </ScrollView>

@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
         height: 35,
         width: 100,
         left: 5,
-        top: 40,
+        top: 50,
         borderRadius: DIMENSIONS.borderRadius,
         justifyContent: 'center',
         alignItems: 'center',
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     },
     cityDetailsOverlay: {
         width: DIMENSIONS.bannerWidth - 40,
-        height: DIMENSIONS.bannerHeight,
+        height: DIMENSIONS.bannerHeight - 40,
         backgroundColor: COLOR.white,
         borderRadius: DIMENSIONS.borderRadius,
         padding: 15,

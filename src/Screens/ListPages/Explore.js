@@ -15,6 +15,7 @@ import { backPage, checkLogin, goBackHandler, navigateTo } from "../../Services/
 import PlaceCard from "../../Components/Cards/PlaceCard";
 import CityCard from "../../Components/Cards/CityCard";
 import GlobalText from "../../Components/Customs/Text";
+import STRING from "../../Services/Constants/STRINGS";
 
 const Explore = ({ route, navigation, ...props }) => {
   const refRBSheet = useRef();
@@ -22,7 +23,7 @@ const Explore = ({ route, navigation, ...props }) => {
   const [places, setPlaces] = useState([]);
   const [cities, setCities] = useState([]);
   const [error, setError] = useState(null);
-  const [isEnabled, setIsEnabled] = useState(route.name == "Cities")
+  const [isEnabled, setIsEnabled] = useState(route.name == STRING.SCREEN.CITIES)
   const [isLandingDataFetched, setIsLandingDataFetched] = useState(false);
   const [nextPage, setNextPage] = useState(1)
 
@@ -84,7 +85,7 @@ const Explore = ({ route, navigation, ...props }) => {
   return (
     <View style={{ flex: 1, justifyContent: "flex-start" }}>
       <Loader />
-      <Header name={'Explore'}
+      <Header name={STRING.HEADER.EXPLORE}
         startIcon={
           <Ionicons
             name="chevron-back-outline"
@@ -102,7 +103,7 @@ const Explore = ({ route, navigation, ...props }) => {
           resizeMode="cover"
         />
         <View style={styles.details}>
-          <GlobalText text={"Lot more to Explore..."} style={styles.whiteText} />
+          <GlobalText text={STRING.TO_EXPLORE} style={styles.whiteText} />
           {/* <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 10 }}>
             <TouchableOpacity onPress={() => toggleSwitch(true)}>
               <GlobalText text={"Cities"} style={styles.whiteText} />

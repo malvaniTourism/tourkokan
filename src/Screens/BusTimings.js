@@ -6,6 +6,7 @@ import COLOR from "../Services/Constants/COLORS";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { backPage, checkLogin, goBackHandler } from "../Services/CommonMethods";
+import STRING from "../Services/Constants/STRINGS";
 
 const BusTimings = ({ navigation }) => {
 
@@ -20,7 +21,7 @@ const BusTimings = ({ navigation }) => {
   return (
     <View>
       <Header
-        name={"Bus Timings"}
+        name={STRING.HEADER.BUS_TIMINGS}
         startIcon={
           <Ionicons
             name="chevron-back-outline"

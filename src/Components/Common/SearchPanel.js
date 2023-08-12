@@ -17,6 +17,7 @@ import {
   setSource,
 } from "../../Reducers/CommonActions";
 import GlobalText from "../Customs/Text";
+import STRING from "../../Services/Constants/STRINGS";
 
 const SearchPanel = ({ navigation, ...props }) => {
   const [isValid, setIsValid] = useState(false)
@@ -56,15 +57,15 @@ const SearchPanel = ({ navigation, ...props }) => {
   }
 
   const gotoSearch = (type) => {
-    navigateTo(navigation, "SearchPlace", { type });
+    navigateTo(navigation, STRING.SCREEN.SEARCH_PLACE, { type });
   };
 
   const gotoRoutes = () => {
     // props.setSource('')
     // props.setDestination('')
     if (isValid) {
-      navigateTo(navigation, "SearchList", { from: "Search" });
-    } else setErrorText("Source & Destination are required for a Search")
+      navigateTo(navigation, STRING.SCREEN.SEARCH_LIST, { from: STRING.SCREEN.SEARCH });
+    } else setErrorText(STRING.ALERT.SOURCE_DESTINATION_REQUIRED)
   };
 
   const swap = () => {
@@ -123,12 +124,11 @@ const SearchPanel = ({ navigation, ...props }) => {
         </View>
       }
       <CustomButton
-        title={"Search"}
+        title={STRING.BUTTON.SEARCH}
         containerStyle={styles.searchButtonContainerStyle}
         buttonStyle={styles.searchButtonStyle}
         titleStyle={styles.buttonTitleStyle}
         raised={true}
-        type={"Submit"}
         onPress={gotoRoutes}
       />
     </View>

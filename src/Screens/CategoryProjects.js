@@ -16,6 +16,7 @@ import Path from "../Services/Api/BaseUrl";
 import styles from "./Styles";
 import ProjectCard from "../Components/Cards/ProjectCard";
 import GlobalText from "../Components/Customs/Text";
+import STRING from "../Services/Constants/STRINGS";
 
 const CategoryProjects = ({ navigation, route, ...props }) => {
   const [projects, setProjects] = useState([]); // State to store Projects
@@ -45,7 +46,7 @@ const CategoryProjects = ({ navigation, route, ...props }) => {
 
   // Function to handle SmallCard click
   const handleSmallCardClick = (id) => {
-    navigateTo(navigation, "ProjectDetails", { id });
+    navigateTo(navigation, STRING.SCREEN.PROJECT_DETAILS, { id });
   };
 
   return (

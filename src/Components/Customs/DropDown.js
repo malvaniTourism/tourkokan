@@ -30,6 +30,7 @@ const DropDown = ({ ...props }) => {
       selectedTextStyle={styles.selectedTextStyle}
       inputSearchStyle={styles.inputSearchStyle}
       iconStyle={styles.iconStyle}
+      itemTextStyle={styles.itemTextStyle}
       data={props.List}
       search={false}
       maxHeight={300}

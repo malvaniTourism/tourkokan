@@ -11,6 +11,7 @@ import { ListItem } from '@rneui/themed';
 import styles from './Styles';
 import DialogBox from 'react-native-dialogbox';
 import Geolocation from '@react-native-community/geolocation';
+import STRING from '../../Services/Constants/STRINGS';
 
 const LocationSheet = ({ openLocationSheet, closeLocationSheet }) => {
     const refDialogBox = useRef();
@@ -65,8 +66,8 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet }) => {
                 const granted = await PermissionsAndroid.request(
                     PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
                     {
-                        title: 'Location Access Required',
-                        message: 'This App needs to Access your location',
+                        title: STRING.LOCATION_ACCESS_REQUIRED,
+                        message: STRING.NEEDS_TO_ACCESS,
                     }
                 );
                 if (granted === PermissionsAndroid.RESULTS.GRANTED) {
@@ -74,7 +75,7 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet }) => {
                     getOneTimeLocation();
                     subscribeLocation();
                 } else {
-                    setLocationStatus('Permission Denied');
+                    setLocationStatus(STRING.PERMISSION_DENIED);
                 }
             } catch (err) {
                 console.warn(err);
@@ -83,10 +84,10 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet }) => {
     }
 
     const getOneTimeLocation = () => {
-        setLocationStatus('Getting Location ...');
+        setLocationStatus(STRING.GETTING_LOCATION);
         Geolocation.getCurrentPosition(
             (position) => {
-                setLocationStatus('You are Here');
+                setLocationStatus(STRING.YOU_ARE_HERE);
                 const currentLongitude = position.coords.longitude;
                 const currentLatitude = position.coords.latitude;
                 setCurrentLongitude(currentLongitude);
@@ -102,7 +103,7 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet }) => {
     const subscribeLocation = () => {
         let WatchID = Geolocation.watchPosition(
             (position) => {
-                setLocationStatus('You are Here');
+                setLocationStatus(STRING.YOU_ARE_HERE);
                 console.log(position);
                 const currentLongitude = position.coords.longitude;
                 const currentLatitude = position.coords.latitude;
@@ -151,7 +152,7 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet }) => {
 
     const setAddress = async () => {
         if (props.currAddr !== undefined && props.currAddr !== null) {
-            await AsyncStorage.setItem('addr', JSON.stringify(props.currAddr))
+            await AsyncStorage.setItem(STRING.STORAGE.ADDRESS, JSON.stringify(props.currAddr))
         }
     }
 
@@ -160,7 +161,7 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet }) => {
 
         } else {
             const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-            if (granted === 'granted') {
+            if (granted === STRING.GRANTED) {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
                         setLatitude(position.coords.latitude)
@@ -184,7 +185,7 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet }) => {
 
     const getAddress = (position) => {
         closeLocationSheet()
-        fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + position.coords.latitude + ',' + position.coords.longitude + '&key=' + 'AIzaSyCUUzdHc1ccGZhOzia9NoPf8mf3Yv901ZQ')
+        fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + position.coords.latitude + ',' + position.coords.longitude + '&key=' + STRING.GOOGLE_API_KEY)
             .then((response) => response.json())
             .then((json) => {
                 let currentcity = ''; let zip = '', state = 'Maharashtra'; let locality = ''; let locality1 = ''; let locality2 = '';
@@ -247,7 +248,7 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet }) => {
         <View>
             <View style={{ position: 'relative' }}>
                 <Search
-                    placeholder={"Search for area, street name..."}
+                    placeholder={STRING.SEARCH_FOR_AREA}
                     value={searchValue}
                     onChangeText={(text) => searchPlace(text, 'places')}
                 />
@@ -270,11 +271,11 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet }) => {
                     size={DIMENSIONS.userIconSize}
                     style={{ marginRight: 20 }}
                 />
-                <GlobalText text={"Use Current Location"} style={styles.fontBold} />
+                <GlobalText text={STRING.USE_CURRENT_LOCATION} style={styles.fontBold} />
             </TouchableOpacity>
 
             <View style={styles.recentsView}>
-                <GlobalText text={"Recent Location"} style={styles.fontBold} />
+                <GlobalText text={STRING.RECENT_LOCATION} style={styles.fontBold} />
                 <TouchableOpacity style={styles.recentsListView} onPress={() => closeLocationSheet()}>
                     <MaterialIcons
                         name="location-pin"
@@ -283,8 +284,8 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet }) => {
                         style={{ marginRight: 20 }}
                     />
                     <View>
-                        <GlobalText text={"Kankavli"} />
-                        <GlobalText text={"Maharashtra"} />
+                        <GlobalText text={STRING.CITY.KANKAVLI} />
+                        <GlobalText text={STRING.CITY.MAHARASHTRA} />
                     </View>
                 </TouchableOpacity>
             </View>

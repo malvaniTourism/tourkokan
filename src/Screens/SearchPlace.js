@@ -14,6 +14,7 @@ import {
 import Loader from "../Components/Customs/Loader";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { checkLogin, goBackHandler, navigateTo } from "../Services/CommonMethods";
+import STRING from "../Services/Constants/STRINGS";
 
 const SearchPlace = ({ navigation, route, ...props }) => {
   const [searchValue, setSearchValue] = useState("");
@@ -57,12 +58,12 @@ const SearchPlace = ({ navigation, route, ...props }) => {
   };
 
   const setPlace = (place) => {
-    if (route.params.type == "Source") {
+    if (route.params.type == STRING.LABEL.SOURCE) {
       props.setSource(place);
     } else {
       props.setDestination(place);
     }
-    navigateTo(navigation, "Home");
+    navigateTo(navigation, STRING.SCREEN.HOME);
     setSearchValue("");
   };
 

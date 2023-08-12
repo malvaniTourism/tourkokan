@@ -19,6 +19,7 @@ const COLOR = {
   grayDark: "#888",
   greySolid: "#666",
 
+  lightGreen: "#26AE60",
   green: "#28a745",
   yellow: "#fec465",
   red: "#eb5757",

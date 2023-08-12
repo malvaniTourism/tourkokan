@@ -10,6 +10,7 @@ import { checkLogin, goBackHandler, navigateTo } from "../../Services/CommonMeth
 import { comnPost } from "../../Services/Api/CommonServices";
 import GlobalText from "../../Components/Customs/Text";
 import { setLoader } from "../../Reducers/CommonActions";
+import STRING from "../../Services/Constants/STRINGS";
 
 const CityPlaceSearch = ({ navigation, route, ...props }) => {
     const [searchValue, setSearchValue] = useState('');
@@ -22,7 +23,7 @@ const CityPlaceSearch = ({ navigation, route, ...props }) => {
         props.setLoader(true)
         const backHandler = goBackHandler(navigation)
         checkLogin(navigation)
-        searchPlace("", "places")
+        searchPlace("", STRING.TABLE.PLACES)
         return () => {
             backHandler.remove()
         }
@@ -50,18 +51,18 @@ const CityPlaceSearch = ({ navigation, route, ...props }) => {
 
     const onChipClick = (val) => {
         setIsCity(val)
-        let table = 'cities'
+        let table = STRING.TABLE.CITIES
         if (!val) {
-            setTableName('places')
-            table = 'places'
+            setTableName(STRING.TABLE.PLACES)
+            table = STRING.TABLE.PLACES
         }
-        else setTableName('cities')
+        else setTableName(STRING.TABLE.CITIES)
         searchPlace(searchValue, table)
     }
 
     const onListItemClick = (id) => {
-        if (isCity) navigateTo(navigation, "CityDetails", { id });
-        else navigateTo(navigation, "PlaceDetails", { id });
+        if (isCity) navigateTo(navigation, STRING.SCREEN.CITY_DETAILS, { id });
+        else navigateTo(navigation, STRING.SCREEN.PLACE_DETAILS, { id });
     }
 
     const renderItem = ({ item }) => {
@@ -80,7 +81,7 @@ const CityPlaceSearch = ({ navigation, route, ...props }) => {
             <Header
                 Component={
                     <SearchBar
-                        placeholder={`Enter Text`}
+                        placeholder={STRING.PLACEHOLDER.ENTER_TEXT}
                         value={searchValue}
                         onChangeText={(v) => searchPlace(v, tableName)}
                     />

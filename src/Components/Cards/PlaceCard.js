@@ -12,6 +12,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import GlobalText from '../Customs/Text';
 import { navigateTo } from '../../Services/CommonMethods';
 import ComingSoon from '../Common/ComingSoon';
+import STRING from '../../Services/Constants/STRINGS';
 
 const PlaceCard = ({ data, reload, navigation }) => {
     const [isFav, setIsFav] = useState(data.is_favorite)
@@ -25,8 +26,8 @@ const PlaceCard = ({ data, reload, navigation }) => {
 
     const onHeartClick = async () => {
         let cityData = {
-            user_id: await AsyncStorage.getItem("userId"),
-            favouritable_type: "Place",
+            user_id: await AsyncStorage.getItem(STRING.STORAGE.USER_ID),
+            favouritable_type: STRING.TABLE.PLACE,
             favouritable_id: data.id
         }
         setIsFav(!isFav)
@@ -44,7 +45,7 @@ const PlaceCard = ({ data, reload, navigation }) => {
     }
 
     const getPlace = (id) => {
-        // navigateTo(navigation, "PlaceDetails", { id })
+        // navigateTo(navigation, STRING.SCREEN.PLACE_DETAILS, { id })
         setIsVisible(true)
         setTimeout(() => {
             setIsVisible(false)
@@ -103,7 +104,7 @@ const PlaceCard = ({ data, reload, navigation }) => {
                     </View>
                 </View>
             </View>
-            <ComingSoon message={"Coming Soon..."} visible={isVisible} />
+            <ComingSoon message={STRING.COMING_SOON} visible={isVisible} />
         </View>
     )
 }

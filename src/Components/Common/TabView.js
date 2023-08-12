@@ -5,6 +5,7 @@ import styles from './Styles';
 import { Text, Card } from '@rneui/base';
 import COLOR from '../../Services/Constants/COLORS';
 import GlobalText from '../Customs/Text';
+import STRING from '../../Services/Constants/STRINGS';
 
 const TabView = ({ data }) => {
     const [selectedTab, setSelectedTab] = useState(0);
@@ -22,7 +23,7 @@ const TabView = ({ data }) => {
 
     const renderEmptyPlace = () => (
         <View style={styles.emptyPlace}>
-            <GlobalText text={"We are adding new places inside this category soon..!"} />
+            <GlobalText text={STRING.ALERT.ADDING_SOON} />
         </View>
     );
 

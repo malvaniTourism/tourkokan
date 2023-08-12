@@ -23,6 +23,7 @@ import TextField from "../Components/Customs/TextField";
 import Path from "../Services/Api/BaseUrl";
 import { launchImageLibrary } from 'react-native-image-picker'
 import Popup from "../Components/Common/Popup";
+import STRING from "../Services/Constants/STRINGS";
 
 const Profile = ({ navigation, ...props }) => {
   const [profile, setProfile] = useState([]);
@@ -92,7 +93,7 @@ const Profile = ({ navigation, ...props }) => {
   const handleImageUpload = () => {
     launchImageLibrary(
       {
-        mediaType: 'photo',
+        mediaType: STRING.TYPE.PHOTO,
         includeBase64: true, // Set to true to include base64 data
         maxHeight: 200,
         maxWidth: 200,
@@ -125,14 +126,14 @@ const Profile = ({ navigation, ...props }) => {
       })
       .catch(err => {
         setIsAlert(true);
-        setAlertMessage("Failed");
+        setAlertMessage(STRING.ALERT.FAILED);
         props.setLoader(false);
       })
   }
 
   const closePopup = () => {
     if (isSuccess) {
-      navigateTo(navigation, "ProfileView");
+      navigateTo(navigation, STRING.SCREEN.PROFILE_VIEW);
     }
     setIsAlert(false)
   }
@@ -170,7 +171,7 @@ const Profile = ({ navigation, ...props }) => {
                 size={35}
                 color={COLOR.black}
               />
-              <GlobalText text={"Click to Update"} />
+              <GlobalText text={STRING.BUTTON.CLICK_TO_UPDATE} />
             </View>
           </TouchableOpacity>
           <View style={styles.profileDetails}>
@@ -193,14 +194,13 @@ const Profile = ({ navigation, ...props }) => {
               );
             })}
             <CustomButton
-              title={"Update"}
+              title={STRING.BUTTON.UPDATE}
               seeMoreStyle={styles.buttonView}
               containerStyle={styles.buttonContainer}
               buttonStyle={styles.profileButtonStyle}
               titleStyle={styles.buttonTitle}
               disabled={false}
               raised={true}
-              type={"Submit"}
               onPress={() => updateProfile()}
             />
           </View>

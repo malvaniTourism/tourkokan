@@ -10,6 +10,7 @@ import { PngTree } from "../../Assets/Images/pngtree.png";
 import Banner from "../Customs/Banner";
 import { navigateTo } from "../../Services/CommonMethods";
 import GlobalText from "../Customs/Text";
+import STRING from "../../Services/Constants/STRINGS";
 
 const TopComponent = ({ navigation, openLocationSheet }) => {
 
@@ -18,7 +19,7 @@ const TopComponent = ({ navigation, openLocationSheet }) => {
   };
 
   const openProfile = () => {
-    navigateTo(navigation, "ProfileView");
+    navigateTo(navigation, STRING.SCREEN.PROFILE_VIEW);
   };
 
   return (
@@ -33,7 +34,7 @@ const TopComponent = ({ navigation, openLocationSheet }) => {
             style={{ marginRight: 20 }}
             onPress={() => openDrawer()}
           />
-          <GlobalText text={"Devgad"} style={styles.whiteBold} />
+          <GlobalText text={STRING.CITY.DEVGAD} style={styles.whiteBold} />
           <Ionicons
             name="chevron-down"
             color={COLOR.white}

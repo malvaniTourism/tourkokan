@@ -14,6 +14,7 @@ import RouteHeadCard from "../../Components/Cards/RouteHeadCard";
 import { StyleSheet } from "react-native";
 import { Text } from "react-native-svg";
 import styles from "./Styles";
+import STRING from "../../Services/Constants/STRINGS";
 
 const RoutesList = ({ navigation, route }) => {
   const [list, setList] = useState(route.params.item.route_stops);
@@ -48,8 +49,8 @@ const RoutesList = ({ navigation, route }) => {
                 <GlobalText text={item.place.name} style={{ color: (isFirst || isLast) && COLOR.themeComicBlue }} />
               </View>
               <View>
-                <GlobalText text={"ETA: " + item.dept_time.slice(0, -3)} />
-                <GlobalText text={"ETD: " + item.arr_time.slice(0, -3)} />
+                <GlobalText text={STRING.ETA + item.dept_time.slice(0, -3)} />
+                <GlobalText text={STRING.ETD + item.arr_time.slice(0, -3)} />
               </View>
             </View>
           </ListItem.Title>
@@ -61,7 +62,7 @@ const RoutesList = ({ navigation, route }) => {
   return (
     <ScrollView stickyHeaderIndices={[0]}>
       <Header
-        name={"Route"}
+        name={STRING.HEADER.ROUTE}
         goBack={() => backPage(navigation)}
         startIcon={
           <Ionicons
@@ -76,7 +77,7 @@ const RoutesList = ({ navigation, route }) => {
         }
       />
       <View style={{ marginVertical: -15 }}>
-        <RouteHeadCard data={route.params.item} cardClick={() => console.log('clicked')} />
+        <RouteHeadCard data={route.params.item} cardClick={() => console.log("")} />
       </View>
       <SafeAreaView>
         <View style={styles.flatListContainer}>

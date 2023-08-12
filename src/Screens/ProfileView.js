@@ -35,6 +35,7 @@ import Geolocation from '@react-native-community/geolocation';
 import { Overlay } from '@rneui/themed';
 import MapView, { Marker, Polygon } from 'react-native-maps';
 import Path from '../Services/Api/BaseUrl';
+import STRING from '../Services/Constants/STRINGS';
 
 const ProfileView = ({ navigation, route, ...props }) => {
   const [currentLatitude, setCurrentLatitude] = useState(37.4220936);
@@ -59,7 +60,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
     // requestLocationPermission();
     checkLogin(navigation)
     getUserProfile();
-    const unsubscribe = navigation.addListener('focus', () => {
+    const unsubscribe = navigation.addListener(STRING.EVENT.FOCUS, () => {
       getUserProfile();
     });
     return () => {
@@ -78,8 +79,8 @@ const ProfileView = ({ navigation, route, ...props }) => {
         const granted = await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
           {
-            title: 'Location Access Required',
-            message: 'This App needs to Access your location',
+            title: STRING.LOCATION_ACCESS_REQUIRED,
+            message: STRING.NEEDS_TO_ACCESS,
           }
         );
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
@@ -87,7 +88,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
           getOneTimeLocation();
           subscribeLocation();
         } else {
-          setLocationStatus('Permission Denied');
+          setLocationStatus(STRING.PERMISSION_DENIED);
         }
       } catch (err) {
         console.warn(err);
@@ -96,11 +97,11 @@ const ProfileView = ({ navigation, route, ...props }) => {
   };
 
   const getOneTimeLocation = () => {
-    setLocationStatus('Getting Location ...');
+    setLocationStatus(STRING.GETTING_LOCATION);
     Geolocation.getCurrentPosition(
       //Will give you the current location
       (position) => {
-        setLocationStatus('You are Here');
+        setLocationStatus(STRING.YOU_ARE_HERE);
         setInitialLocation(position.coords.longitude, position.coords.latitude)
         const currentLongitude = position.coords.longitude;
         //getting the Longitude from the location json
@@ -121,7 +122,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
   const subscribeLocation = () => {
     let WatchID = Geolocation.watchPosition(
       (position) => {
-        setLocationStatus('You are Here');
+        setLocationStatus(STRING.YOU_ARE_HERE);
         //Will give you the location on location change
         console.log(position);
         const currentLongitude = position.coords.longitude;
@@ -170,7 +171,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
         if (res.data.success) {
           props.setLoader(false);
           AsyncStorage.clear()
-          navigateTo(navigation, "Login");
+          navigateTo(navigation, STRING.SCREEN.LOGIN);
         }
       })
       .catch((error) => {
@@ -179,7 +180,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
   };
 
   const handleEditPress = () => {
-    navigateTo(navigation, "Profile")
+    navigateTo(navigation, STRING.SCREEN.PROFILE)
   }
 
   const setHomeLocation = () => {
@@ -207,7 +208,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
         }
         endIcon={
           <TouchableOpacity onPress={handleLogout}>
-            <GlobalText text={"Logout  "} style={{ color: '#fff' }} />
+            <GlobalText text={STRING.BUTTON.LOGOUT} style={{ color: COLOR.white }} />
           </TouchableOpacity>
         }
       />
@@ -267,38 +268,35 @@ const ProfileView = ({ navigation, route, ...props }) => {
 
       <View style={{ flexDirection: "row", justifyContent: "space-evenly", marginTop: 30 }}>
         <CustomButton
-          title={"Edit Profile"}
+          title={STRING.BUTTON.EDIT_PROFILE}
           seeMoreStyle={styles.editSeeMoreStyle}
           containerStyle={styles.editButtonContainer}
           buttonStyle={styles.planButtonStyle}
           titleStyle={styles.planButtonTitleStyle}
           raised={true}
-          type={"Submit"}
           onPress={handleEditPress}
         />
         <CustomButton
-          title={"Update Location"}
+          title={STRING.BUTTON.UPDATE_LOCATION}
           seeMoreStyle={styles.updateSeeMoreStyle}
           containerStyle={styles.editButtonContainer}
           buttonStyle={styles.planButtonStyle}
           titleStyle={styles.planButtonTitleStyle}
           raised={true}
-          type={"Submit"}
           onPress={() => setShowLocModal(true)}
         />
       </View>
 
       <Overlay style={styles.locationModal} isVisible={showLocModal} onBackdropPress={() => setShowLocModal(false)}>
-        <GlobalText text={"Set Your Primary Location"} style={styles.locationModal} />
+        <GlobalText text={STRING.SET_LOCATION} style={styles.locationModal} />
         <View>
           <CustomButton
-            title={"Home Location"}
+            title={STRING.BUTTON.HOME_LOCATION}
             containerStyle={styles.showMore}
             seeMoreStyle={styles.locBtnStyle}
             buttonStyle={styles.buttonStyle}
             titleStyle={styles.titleStyle}
             raised={false}
-            type={"Submit"}
             onPress={setHomeLocation}
             startIcon={
               <Ionicons
@@ -309,13 +307,12 @@ const ProfileView = ({ navigation, route, ...props }) => {
             }
           />
           <CustomButton
-            title={"Current Location"}
+            title={STRING.BUTTON.CURRENT_LOCATION}
             containerStyle={styles.showMore}
             seeMoreStyle={styles.locBtnStyle}
             buttonStyle={styles.buttonStyle}
             titleStyle={styles.titleStyle}
             raised={false}
-            type={"Submit"}
             onPress={setCurrLocation}
             startIcon={
               <Ionicons

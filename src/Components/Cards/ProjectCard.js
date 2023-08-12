@@ -17,8 +17,8 @@ const ProjectCard = ({ project }) => {
                     resizeMode="cover"
                 />
             </View>
-            <View style={{flex: 1, justifyContent: 'center', paddingLeft: 5}}>
-            <GlobalText text={project.domain_name} />
+            <View style={{ flex: 1, justifyContent: 'center', paddingLeft: 5 }}>
+                <GlobalText text={project.domain_name} />
             </View>
         </View>
     )

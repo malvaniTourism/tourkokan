@@ -1,11 +1,11 @@
 import React, { useState, lazy, Suspense } from "react";
-import { View, ScrollView, Text, TouchableOpacity } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import DrawerNavigator from "./DrawerNavigator";
 import TabNavigator from "./TabNavigator";
 import GlobalText from "../Components/Customs/Text";
+import STRING from "../Services/Constants/STRINGS";
 
 const SignIn = lazy(() => import("../Screens/AuthScreens/SignIn"));
 const SignUp = lazy(() => import("../Screens/AuthScreens/SignUp"));
@@ -35,14 +35,14 @@ const StackNavigator = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   return (
-    <Suspense fallback={<GlobalText text={"Loading..."} />}>
+    <Suspense fallback={<GlobalText text={STRING.ALERT.LOADING} />}>
     <NavigationContainer>
       <Stack.Navigator>
         {isLoggedIn ? (
           // Screens for logged in users
           <Stack.Group screenOptions={{ headerShown: false }}>
             <Stack.Screen
-              name="Root"
+              name={STRING.SCREEN.ROOT}
               component={DrawerNavigator}
               options={{ headerShown: false }}
             />
@@ -51,7 +51,7 @@ const StackNavigator = () => {
         ) : (
           // Auth screens
           <Stack.Group screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="SignIn" component={SignIn} />
+            <Stack.Screen name={STRING.SCREEN.LOGIN} component={SignIn} />
             {/* <Stack.Screen name="SignUp" component={SignUp} /> */}
           </Stack.Group>
         )}
@@ -64,29 +64,27 @@ const StackNavigator = () => {
             component={TabNavigator}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name="SearchList" component={SearchList} />
-          <Stack.Screen name="RoutesList" component={RoutesList} />
-          <Stack.Screen name="BusTimings" component={BusTimings} />
-          <Stack.Screen name="Login" component={SignIn} />
-          <Stack.Screen name="EmailSignIn" component={EmailSignIn} />
-          <Stack.Screen name="VerifyOTP" component={VerifyOTP} />
-          <Stack.Screen name="SignUp" component={SignUp} />
-          <Stack.Screen name="CategoryProjects" component={CategoryProjects} />
-          <Stack.Screen name="CityList" component={CityList} />
-          <Stack.Screen name="Explore" component={Explore} />
-          <Stack.Screen name="ProjectList" component={ProjectList} />
-          <Stack.Screen name="StopList" component={StopList} />
-          <Stack.Screen name="CityDetails" component={CityDetails} />
-          <Stack.Screen name="PlaceDetails" component={PlaceDetails} />
-          <Stack.Screen name="ProjectDetails" component={ProjectDetails} />
-          <Stack.Screen name="StopDetails" component={StopDetails} />
-          <Stack.Screen name="SearchPlace" component={SearchPlace} />
-          <Stack.Screen name="MapScreen" component={MapScreen} />
-          <Stack.Screen name="CityPlaceSearch" component={CityPlaceSearch} />
-          <Stack.Screen name="ProfileView" component={ProfileView} />
-          <Stack.Screen name="Profile" component={Profile} />
-          {/* <Stack.Screen name="Invite" component={Invite} /> */}
-          {/* <Stack.Screen name="Feed" component={Feed} /> */}
+          <Stack.Screen name={STRING.SCREEN.SEARCH_LIST} component={SearchList} />
+          <Stack.Screen name={STRING.SCREEN.ROUTES_LIST} component={RoutesList} />
+          <Stack.Screen name={STRING.SCREEN.BUS_TIMINGS} component={BusTimings} />
+          <Stack.Screen name={STRING.SCREEN.LOGIN} component={SignIn} />
+          <Stack.Screen name={STRING.SCREEN.EMAIL_SIGN_IN} component={EmailSignIn} />
+          <Stack.Screen name={STRING.SCREEN.VERIFY_OTP} component={VerifyOTP} />
+          <Stack.Screen name={STRING.SCREEN.SIGN_UP} component={SignUp} />
+          <Stack.Screen name={STRING.SCREEN.CATEGORY_PROJECTS} component={CategoryProjects} />
+          <Stack.Screen name={STRING.SCREEN.CITY_LIST} component={CityList} />
+          <Stack.Screen name={STRING.SCREEN.EXPLORE} component={Explore} />
+          <Stack.Screen name={STRING.SCREEN.PROJECT_LIST} component={ProjectList} />
+          <Stack.Screen name={STRING.SCREEN.STOP_LIST} component={StopList} />
+          <Stack.Screen name={STRING.SCREEN.CITY_DETAILS} component={CityDetails} />
+          <Stack.Screen name={STRING.SCREEN.PLACE_DETAILS} component={PlaceDetails} />
+          <Stack.Screen name={STRING.SCREEN.PROJECT_DETAILS} component={ProjectDetails} />
+          <Stack.Screen name={STRING.SCREEN.STOP_DETAILS} component={StopDetails} />
+          <Stack.Screen name={STRING.SCREEN.SEARCH_PLACE} component={SearchPlace} />
+          <Stack.Screen name={STRING.SCREEN.MAP_SCREEN} component={MapScreen} />
+          <Stack.Screen name={STRING.SCREEN.CITY_PLACE_SEARCH} component={CityPlaceSearch} />
+          <Stack.Screen name={STRING.SCREEN.PROFILE_VIEW} component={ProfileView} />
+          <Stack.Screen name={STRING.SCREEN.PROFILE} component={Profile} />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>

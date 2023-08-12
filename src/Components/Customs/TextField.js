@@ -2,6 +2,7 @@ import React, { Component, useState } from "react";
 import { Input } from "@rneui/themed";
 import { View } from "react-native";
 import styles from "./Styles";
+import STRING from "../../Services/Constants/STRINGS";
 // import InputAdornment from '@material-ui/core/InputAdornment';
 // import AccountCircle from '@material-ui/icons/AccountCircle';
 
@@ -15,7 +16,7 @@ const TextField = (props) => {
     let txtVal = value.trimLeft();
     if (txtVal !== "") {
       switch (props.fieldType) {
-        case "text": {
+        case STRING.TYPE.TEXT: {
           if (txtVal.match(/^([a-zA-Z])[a-zA-Z-_ ]*$/)) {
             setIsValid(false);
             setValue(txtVal);
@@ -29,7 +30,7 @@ const TextField = (props) => {
             break;
           }
         }
-        case "password": {
+        case STRING.TYPE.PASSWORD: {
           if (txtVal.match(/^([a-zA-Z])[a-zA-Z-_ ]*$/)) {
             setIsValid(false);
             setValue(txtVal);
@@ -43,7 +44,7 @@ const TextField = (props) => {
             break;
           }
         }
-        case "num": {
+        case STRING.TYPE.NUM: {
           if (txtVal.match(/^[0-9]*$/)) {
             if (
               props.name === "Age" ||
@@ -77,7 +78,7 @@ const TextField = (props) => {
             break;
           }
         }
-        case "phone": {
+        case STRING.TYPE.PHONE: {
           if (txtVal.match(/^[0-9]{10}$/)) {
             let value = txtVal !== "" ? Number(txtVal) : "";
             if (value > 1111111111 && value <= 9999999999) {
@@ -101,7 +102,7 @@ const TextField = (props) => {
             break;
           }
         }
-        case "email": {
+        case STRING.TYPE.EMAIL: {
           if (
             txtVal.match(
               /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,3}))$/

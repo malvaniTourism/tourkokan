@@ -3,6 +3,7 @@ import axios from 'axios';
 import { View, Text } from 'react-native';
 import ComingSoon from '../Components/Common/ComingSoon';
 import { navigateTo } from '../Services/CommonMethods';
+import STRING from '../Services/Constants/STRINGS';
 
 const Weather = ({ navigation }) => {
   const [weatherData, setWeatherData] = useState(null);
@@ -22,7 +23,7 @@ const Weather = ({ navigation }) => {
     //   });
     setTimeout(() => {
       setIsVisible(false)
-      navigateTo(navigation, "Home")
+      navigateTo(navigation, STRING.SCREEN.HOME)
     }, 2000)
   }, []);
 
@@ -38,7 +39,7 @@ const Weather = ({ navigation }) => {
           {/* Add more weather data as needed */}
         </View>
       ) : (
-        <ComingSoon message={"Coming Soon..."} visible={isVisible} />
+        <ComingSoon message={STRING.COMING_SOON} visible={isVisible} />
       )}
     </View>
   );

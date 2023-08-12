@@ -12,6 +12,7 @@ import Header from "../../Components/Common/Header";
 import { setLoader } from "../../Reducers/CommonActions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { backPage, checkLogin, goBackHandler, navigateTo } from "../../Services/CommonMethods";
+import STRING from "../../Services/Constants/STRINGS";
 
 const Place_catList = ({ navigation, ...props }) => {
   const [place_cats, setPlace_cats] = useState([]); // State to store place_cats
@@ -40,14 +41,14 @@ const Place_catList = ({ navigation, ...props }) => {
   }
 
   const handleSmallCardClick = (id) => {
-    navigateTo(navigation, "StopDetails", { id });
+    navigateTo(navigation, STRING.SCREEN.STOP_DETAILS, { id });
   };
 
   return (
     <ScrollView>
       <View style={{ flex: 1, alignItems: "center" }}>
         <Loader />
-        <Header name={'Place Categories'}
+        <Header name={STRING.HEADER.PLACE_CATEGORIES}
           startIcon={
             <Ionicons
               name="chevron-back-outline"

@@ -1,6 +1,7 @@
 import axios from "axios";
 import Path from "./BaseUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import STRING from "../Constants/STRINGS";
 
 export const comnGet = async (url, apiToken) => {
   let myUrl = Path.API_PATH + url;
@@ -16,7 +17,7 @@ export const comnGet = async (url, apiToken) => {
 
 export const comnPost = async (url, data) => {
   const myUrl = Path.API_PATH + url;
-  const token = await AsyncStorage.getItem("access_token");
+  const token = await AsyncStorage.getItem(STRING.STORAGE.ACCESS_TOKEN);
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -33,7 +34,7 @@ export const comnPost = async (url, data) => {
 export const comnPut = async (url, data) => {
   const myUrl = Path.API_PATH + url;
   const config = {
-    headers: { Authorization: `Bearer ${localStorage.getItem("apiToken")}` },
+    headers: { Authorization: `Bearer ${localStorage.getItem(STRING.STORAGE.API_TOKEN)}` },
   };
   console.log(myUrl);
   return axios
@@ -45,7 +46,7 @@ export const comnPut = async (url, data) => {
 export const ComnDel = async (url, data) => {
   const myUrl = Path.API_PATH + url;
   const config = {
-    headers: { Authorization: `Bearer ${localStorage.getItem("apiToken")}` },
+    headers: { Authorization: `Bearer ${localStorage.getItem(STRING.STORAGE.API_TOKEN)}` },
   };
   console.log(myUrl);
   return axios

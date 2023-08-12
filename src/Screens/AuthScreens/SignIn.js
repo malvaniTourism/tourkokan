@@ -19,6 +19,7 @@ import { exitApp, navigateTo } from "../../Services/CommonMethods";
 import GlobalText from "../../Components/Customs/Text";
 import Popup from "../../Components/Common/Popup";
 import Feather from "react-native-vector-icons/Feather";
+import STRING from "../../Services/Constants/STRINGS";
 
 const SignIn = ({ navigation, ...props }) => {
   const [mobile, setMobile] = useState("");
@@ -27,7 +28,7 @@ const SignIn = ({ navigation, ...props }) => {
   const [successAlert, setSuccessAlert] = useState(false)
 
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => exitApp());
+    const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => exitApp());
     return () => {
       backHandler.remove();
       setIsAlert(false);
@@ -73,7 +74,7 @@ const SignIn = ({ navigation, ...props }) => {
       .catch((err) => {
         props.setLoader(false);
         setIsAlert(true);
-        setAlertMessage("Something went wrong...");
+        setAlertMessage(STRING.ALERT.WENT_WRONG);
       });
   };
 
@@ -83,15 +84,15 @@ const SignIn = ({ navigation, ...props }) => {
 
   const proceed = () => {
     setIsAlert(false)
-    navigateTo(navigation, "VerifyOTP", { mobile });
+    navigateTo(navigation, STRING.SCREEN.VERIFY_OTP, { mobile });
   }
 
   const signUpScreen = () => {
-    navigateTo(navigation, "SignUp");
+    navigateTo(navigation, STRING.SCREEN.SIGN_UP);
   };
 
   const emailLogin = () => {
-    navigateTo(navigation, "EmailSignIn");
+    navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN);
   };
 
   return (
@@ -125,36 +126,34 @@ const SignIn = ({ navigation, ...props }) => {
         );
       })}
       <CustomButton
-        title={"Send OTP"}
+        title={STRING.BUTTON.SEND_OTP}
         seeMoreStyle={styles.buttonView}
         containerStyle={styles.buttonContainer}
         buttonStyle={styles.buttonStyle}
         titleStyle={styles.buttonTitle}
         disabled={false}
         raised={true}
-        type={"Submit"}
         onPress={() => sendOTP()}
       />
 
       <View style={{ marginTop: 30, alignItems: "center" }}>
-        <GlobalText text={"---------- OR ----------"} style={{ marginBottom: 20 }} />
+        <GlobalText text={STRING.OR} style={{ marginBottom: 20 }} />
         <CustomButton
-          title={"Login with Email"}
+          title={STRING.BUTTON.LOGIN_WITH_EMAIL}
           seeMoreStyle={styles.buttonView}
           containerStyle={styles.buttonContainer}
           buttonStyle={styles.buttonStyle}
           titleStyle={styles.buttonTitle}
           disabled={false}
           raised={true}
-          type={"Submit"}
           onPress={() => emailLogin()}
         />
       </View>
 
       <View style={styles.haveAcc}>
-        <GlobalText text={"Don't have an Account? "} />
+        <GlobalText text={STRING.DONT_HAVE_ACC} />
         <TouchableOpacity onPress={() => signUpScreen()}>
-          <GlobalText text={" Sign-up"} />
+          <GlobalText text={STRING.SIGN_UP} />
         </TouchableOpacity>
       </View>
       <Popup

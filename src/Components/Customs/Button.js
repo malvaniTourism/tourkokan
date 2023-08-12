@@ -2,6 +2,7 @@ import { Button } from "@rneui/themed";
 import React from "react";
 import styles from "./Styles";
 import { TouchableOpacity, View } from "react-native";
+import STRING from "../../Services/Constants/STRINGS";
 
 const CustomButton = ({
   title,
@@ -26,7 +27,7 @@ const CustomButton = ({
         titleStyle={[styles.titleStyle, titleStyle]}
         disabled={isDisabled}
         raised={raised}
-        type={type}
+        type={STRING.BUTTON.SUBMIT}
         onPress={onPress}
       />
       {endIcon}

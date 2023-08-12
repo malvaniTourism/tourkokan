@@ -15,6 +15,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { backPage, checkLogin, goBackHandler } from "../../Services/CommonMethods";
 import CityCard from "../../Components/Cards/CityCard";
 import GlobalText from "../../Components/Customs/Text";
+import STRING from "../../Services/Constants/STRINGS";
 // import SkeletonContent from 'react-native-skeleton-content';
 
 const PlaceDetails = ({ navigation, route, ...props }) => {
@@ -52,7 +53,7 @@ const PlaceDetails = ({ navigation, route, ...props }) => {
     return (
         <ScrollView>
             <Header
-                name={'Place'}
+                name={STRING.HEADER.PLACE}
                 startIcon={
                     <Ionicons
                         name="chevron-back-outline"

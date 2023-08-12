@@ -11,6 +11,8 @@ import TopComponent from "../Components/Common/TopComponent";
 import { Dimensions } from 'react-native';
 import MapView, { Marker, Polygon } from 'react-native-maps';
 import Geolocation from "react-native-geolocation-service";
+import STRING from "../Services/Constants/STRINGS";
+import COLOR from "../Services/Constants/COLORS";
 
 const screenWidth = Dimensions.get('window').width;
 const districtCoordinates = [
@@ -38,7 +40,7 @@ const MapScreen = ({ navigation }) => {
         setCurrentLocation({ latitude, longitude });
       },
       (error) => {
-        console.log("Error getting current location: ", error);
+        console.log(STRING.ALERT.ERROR_CURRENT_LOCATION, error);
       },
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
@@ -86,11 +88,11 @@ const MapScreen = ({ navigation }) => {
         {/* Draw the district boundary polygon */}
         <Polygon
           coordinates={districtCoordinates}
-          strokeColor="rgba(0, 0, 255, 0.5)"
+          strokeColor={COLOR.themeNaviBlue}
           fillColor={
             selectedPolygonId === "district1"
-              ? "rgba(0, 0, 255, 0.5)"
-              : "rgba(0, 0, 255, 0.1)"
+              ? COLOR.themeNaviBlue
+              : COLOR.themeLightBlue
           }
           strokeWidth={2}
           tappable // Enable tappable to make the polygon respond to touch events

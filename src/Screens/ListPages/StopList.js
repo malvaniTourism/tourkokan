@@ -12,6 +12,7 @@ import { setLoader } from "../../Reducers/CommonActions";
 import { backPage, navigateTo } from "../../Services/CommonMethods";
 import styles from "./Styles";
 import Path from "../../Services/Api/BaseUrl";
+import STRING from "../../Services/Constants/STRINGS";
 
 const StopList = ({ navigation, ...props }) => {
   const [stops, setStops] = useState([]); // State to store stops
@@ -31,14 +32,14 @@ const StopList = ({ navigation, ...props }) => {
   }, []);
 
   const handleSmallCardClick = (id) => {
-    navigateTo(navigation, "PlaceDetails", { id });
+    navigateTo(navigation, STRING.SCREEN.PLACE_DETAILS, { id });
   };
 
   return (
     <ScrollView>
       <View style={{ flex: 1, alignItems: "center" }}>
         <Loader />
-        <Header name={"Stops"}
+        <Header name={STRING.HEADER.STOPS}
           startIcon={
             <Ionicons
               name="chevron-back-outline"

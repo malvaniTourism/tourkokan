@@ -15,6 +15,7 @@ import { backPage, checkLogin, goBackHandler, navigateTo } from "../../Services/
 import GlobalText from "../../Components/Customs/Text";
 import RouteHeadCard from "../../Components/Cards/RouteHeadCard";
 import styles from "../Styles";
+import STRING from "../../Services/Constants/STRINGS";
 
 const SearchList = ({ navigation, route, ...props }) => {
   const [list, setList] = useState([]);
@@ -29,11 +30,11 @@ const SearchList = ({ navigation, route, ...props }) => {
   }, []);
 
   const getRoutes = (item) => {
-    navigateTo(navigation, "RoutesList", { item });
+    navigateTo(navigation, STRING.SCREEN.ROUTES_LIST, { item });
   };
 
   const getRoutesList = (item) => {
-    navigateTo(navigation, "RoutesList", { item });
+    navigateTo(navigation, STRING.SCREEN.ROUTES_LIST, { item });
   };
 
   const searchRoute = () => {
@@ -81,7 +82,7 @@ const SearchList = ({ navigation, route, ...props }) => {
   return (
     <View>
       <Header
-        name={"Routes"}
+        name={STRING.HEADER.ROUTES}
         goBack={() => backPage(navigation)}
         startIcon={
           <Ionicons
@@ -103,7 +104,7 @@ const SearchList = ({ navigation, route, ...props }) => {
             )}
           />
         ) : (
-          <GlobalText text={"No Routes Available"} />
+          <GlobalText text={STRING.NO_ROUTES} />
         )}
       </SafeAreaView>
     </View>

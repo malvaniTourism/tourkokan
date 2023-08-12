@@ -23,6 +23,7 @@ const DIMENSIONS = {
     iconLarge: 35,
     iconXL: 60,
     iconXXL: 70,
+    iconXXXL: 90,
 
     borderRadiusLarge: 50,
     borderRadius: 30,
@@ -42,6 +43,9 @@ const DIMENSIONS = {
 
     smallImage: 40,
     detailsImage: 100,
+
+    mobileLength: 10,
+    fieldLength: 50
 
 };
 

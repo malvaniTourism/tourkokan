@@ -4,6 +4,7 @@ import { Overlay } from '@rneui/themed';
 import GlobalText from '../Customs/Text';
 import styles from './Styles';
 import CustomButton from '../Customs/Button';
+import STRING from '../../Services/Constants/STRINGS';
 
 const Popup = ({ message, visible, toggleOverlay, onPress }) => {
     // const [isOpen, setIsOpen] = useState(visible)
@@ -20,12 +21,11 @@ const Popup = ({ message, visible, toggleOverlay, onPress }) => {
                 <GlobalText style={styles.overlayMessage} text={message} />
             </View>
                 <CustomButton
-                    title={"Ok"}
+                    title={STRING.BUTTON.OK}
                     containerStyle={styles.editButtonContainer}
                     buttonStyle={styles.planButtonStyle}
                     titleStyle={styles.planButtonTitleStyle}
                     raised={true}
-                    type={"Submit"}
                     onPress={closePopup}
                 />
         </Overlay>

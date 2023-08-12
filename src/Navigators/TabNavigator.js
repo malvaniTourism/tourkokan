@@ -14,6 +14,7 @@ import SearchList from "../Screens/ListPages/SearchList";
 import { PngTree } from "../../Assets/Images/pngtree.png";
 import SvgUri from 'react-native-svg-uri';
 import BusImg from "../Assets/Images/B3.svg"
+import STRING from "../Services/Constants/STRINGS";
 
 const Tab = createBottomTabNavigator();
 
@@ -28,10 +29,10 @@ const TabNavigator = () => {
       }}
     >
       <Tab.Screen
-        name="Home"
+        name={STRING.SCREEN.HOME}
         component={HomeScreen}
         options={{
-          tabBarLabel: "Home",
+          tabBarLabel: `${STRING.SCREEN.HOME}`,
           tabBarIcon: ({ color, size }) => (
             <Ionicons
               name="home-outline"
@@ -43,11 +44,11 @@ const TabNavigator = () => {
       />
 
       <Tab.Screen
-        name="Cities"
+        name={STRING.SCREEN.CITIES}
         component={Explore}
         options={{
-          pageName: "Cities",
-          tabBarLabel: "Cities",
+          pageName: `${STRING.SCREEN.CITIES}`,
+          tabBarLabel: `${STRING.SCREEN.CITIES}`,
           tabBarIcon: ({ color, size }) => (
             <Ionicons
               name="location-outline"
@@ -59,7 +60,7 @@ const TabNavigator = () => {
       />
 
       <Tab.Screen
-        name="Routes"
+        name={STRING.SCREEN.ROUTES}
         component={SearchList}
         options={{
           tabBarIcon: ({ color, size }) => (
@@ -73,11 +74,11 @@ const TabNavigator = () => {
       />
 
       <Tab.Screen
-        name="Places"
+        name={STRING.SCREEN.PLACES}
         component={Explore}
         options={{
-          pageName: "Places",
-          tabBarLabel: "Places",
+          pageName: `${STRING.SCREEN.PLACES}`,
+          tabBarLabel: `${STRING.SCREEN.PLACES}`,
           tabBarIcon: ({ color, size }) => (
             <Ionicons
               name="md-person-circle-sharp"
@@ -89,10 +90,10 @@ const TabNavigator = () => {
       />
 
       <Tab.Screen
-        name="MapScreen"
+        name={STRING.SCREEN.MAP_SCREEN}
         component={MapScreen}
         options={{
-          tabBarLabel: "Map",
+          tabBarLabel: `${STRING.SCREEN.MAP}`,
           tabBarIcon: ({ color, size }) => (
             <Ionicons
               name="map-outline"

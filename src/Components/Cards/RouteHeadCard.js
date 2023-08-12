@@ -5,6 +5,7 @@ import GlobalText from '../Customs/Text'
 import COLOR from '../../Services/Constants/COLORS'
 import Path from '../../Services/Api/BaseUrl'
 import { SvgCssUri } from 'react-native-svg'
+import STRING from '../../Services/Constants/STRINGS'
 
 const RouteHeadCard = ({ data, cardClick }) => {
 
@@ -18,8 +19,8 @@ const RouteHeadCard = ({ data, cardClick }) => {
                     <GlobalText text={data.name} style={styles.routeHeadCardTitle} />
                     <GlobalText text={`${data.start_time} - ${data.end_time}`} />
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '85%' }}>
-                        <GlobalText text={`\u2022 ${data.route_stops.length} Stops`} />
-                        <GlobalText text={`\u2022 Non Reservation`} />
+                        <GlobalText text={`\u2022 ${data.route_stops.length} ${STRING.STOPS}`} />
+                        <GlobalText text={`\u2022 ${STRING.NON_RESERVATION}`} />
                     </View>
                 </View>
             </View>

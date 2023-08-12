@@ -18,6 +18,7 @@ import Popup from "../Components/Common/Popup";
 import Loader from "../Components/Customs/Loader";
 import { setLoader } from "../Reducers/CommonActions";
 import { connect } from "react-redux";
+import STRING from "../Services/Constants/STRINGS";
 
 const ContactUs = ({ navigation, route, ...props }) => {
   const [email, setEmail] = useState("");
@@ -62,8 +63,8 @@ const ContactUs = ({ navigation, route, ...props }) => {
   const submit = async () => {
     props.setLoader(true);
     let data = {
-      user_id: await AsyncStorage.getItem('userId'),
-      name: await AsyncStorage.getItem('userName'),
+      user_id: await AsyncStorage.getItem(STRING.STORAGE.USER_ID),
+      name: await AsyncStorage.getItem(STRING.STORAGE.USER_NAME),
       email,
       phone,
       message
@@ -80,7 +81,7 @@ const ContactUs = ({ navigation, route, ...props }) => {
       })
       .catch(err => {
         setIsAlert(true);
-        setAlertMessage("Failed");
+        setAlertMessage(STRING.ALERT.FAILED);
         props.setLoader(false);
       })
   }
@@ -92,7 +93,7 @@ const ContactUs = ({ navigation, route, ...props }) => {
   return (
     <View>
       <Header
-        name="Contact Us"
+        name={STRING.HEADER.CONTACT_US}
         goBack={() => backPage(navigation)}
         startIcon={
           <Ionicons
@@ -126,14 +127,13 @@ const ContactUs = ({ navigation, route, ...props }) => {
           );
         })}
         <CustomButton
-          title={"Submit"}
+          title={STRING.BUTTON.SUBMIT}
           seeMoreStyle={styles.buttonView}
           containerStyle={styles.contactButtonContainer}
           buttonStyle={styles.contactButtonStyle}
           titleStyle={styles.buttonTitle}
           disabled={false}
           raised={true}
-          type={"Submit"}
           onPress={() => submit()}
         />
       </SafeAreaView>

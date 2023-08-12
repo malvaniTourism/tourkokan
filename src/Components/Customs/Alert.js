@@ -3,6 +3,7 @@ import { View, Text, Animated, ImageBackground, Image } from "react-native";
 import styles from "./Styles";
 import CustomButton from "./Button";
 import GlobalText from "./Text";
+import STRING from "../../Services/Constants/STRINGS";
 
 const Alert = ({ alertMessage, closeAlert, successAlert, proceed }) => {
   return (
@@ -14,9 +15,9 @@ const Alert = ({ alertMessage, closeAlert, successAlert, proceed }) => {
         <View style={styles.alertButtonView}>
           {
             successAlert ?
-              <CustomButton containerStyle={styles.alertContainerStyle} buttonStyle={styles.alertButtonStyle} title={"Ok"} onPress={proceed} />
+              <CustomButton containerStyle={styles.alertContainerStyle} buttonStyle={styles.alertButtonStyle} title={STRING.BUTTON.OK} onPress={proceed} />
               :
-              <CustomButton containerStyle={styles.alertContainerStyle} buttonStyle={styles.alertButtonStyle} title={"Ok"} onPress={closeAlert} />
+              <CustomButton containerStyle={styles.alertContainerStyle} buttonStyle={styles.alertButtonStyle} title={STRING.BUTTON.OK} onPress={closeAlert} />
           }
         </View>
       </View>

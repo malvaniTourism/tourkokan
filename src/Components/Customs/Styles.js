@@ -132,6 +132,12 @@ const styles = StyleSheet.create({
     borderColor: COLOR.grey,
     color: COLOR.black
   },
+  placeholderStyle: {
+    color: COLOR.grayDark
+  },
+  itemTextStyle: {
+    color: COLOR.black
+  },
   text: {
     color: COLOR.black,
     fontSize: DIMENSIONS.textSize

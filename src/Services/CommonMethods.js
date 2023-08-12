@@ -1,10 +1,11 @@
 import { BackHandler, ToastAndroid } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import STRING from "./Constants/STRINGS";
 
 let lastBackPressed = 0;
 
 export const goBackHandler = (navigation) => {
-    return BackHandler.addEventListener('hardwareBackPress', () => backPage(navigation));
+    return BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => backPage(navigation));
 }
 
 export const backPage = (navigation) => {
@@ -19,10 +20,10 @@ export const navigateTo = (navigation, page, params) => {
 
 export const checkLogin = async (navigation) => {
     if (
-        (await AsyncStorage.getItem("access_token")) == null ||
-        (await AsyncStorage.getItem("access_token")) == ""
+        (await AsyncStorage.getItem(STRING.STORAGE.ACCESS_TOKEN)) == null ||
+        (await AsyncStorage.getItem(STRING.STORAGE.ACCESS_TOKEN)) == ""
     ) {
-        navigateTo(navigation, "Login");
+        navigateTo(navigation, STRING.SCREEN.LOGIN);
     }
 }
 
@@ -33,7 +34,7 @@ export const exitApp = () => {
         BackHandler.exitApp();
         return false;
     } else {
-        ToastAndroid.show('Press back again to exit', ToastAndroid.SHORT);
+        ToastAndroid.show(STRING.PRESS_BACK, ToastAndroid.SHORT);
         lastBackPressed = currentTime;
         return true;
     }

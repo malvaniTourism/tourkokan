@@ -8,6 +8,7 @@ import { checkLogin, backPage, goBackHandler, navigateTo } from "../Services/Com
 import GlobalText from "../Components/Customs/Text";
 import styles from "./Styles";
 import CustomButton from "../Components/Customs/Button";
+import STRING from "../Services/Constants/STRINGS";
 
 
 const Pricing = ({ navigation, ...props }) => {
@@ -21,13 +22,13 @@ const Pricing = ({ navigation, ...props }) => {
   }, []);
 
   const selectPlan = () => {
-    console.log('plan');
+    console.log("");
   }
 
   return (
     <ScrollView stickyHeaderIndices={[0]}>
       <Header
-        name="Pricing"
+        name={STRING.HEADER.PRICING}
         goBack={() => backPage(navigation)}
         startIcon={
           <Ionicons
@@ -50,12 +51,11 @@ const Pricing = ({ navigation, ...props }) => {
             <GlobalText text={"Basic support"} style={styles.pricingOptionFeature} />
           </View>
           <CustomButton
-            title={"Choose Plan"}
+            title={STRING.BUTTON.CHOOSE_PLAN}
             containerStyle={styles.planButtonContainer}
             buttonStyle={styles.planButtonStyle}
             titleStyle={styles.planButtonTitleStyle}
             raised={true}
-            type={"Submit"}
             onPress={selectPlan}
           />
         </View>
@@ -69,12 +69,11 @@ const Pricing = ({ navigation, ...props }) => {
             <GlobalText text={"Priority support"} style={styles.pricingOptionFeature} />
           </View>
           <CustomButton
-            title={"Choose Plan"}
+            title={STRING.BUTTON.CHOOSE_PLAN}
             containerStyle={styles.planButtonContainer}
             buttonStyle={styles.planButtonStyle}
             titleStyle={styles.planButtonTitleStyle}
             raised={true}
-            type={"Submit"}
             onPress={selectPlan}
           />
         </View>
@@ -88,12 +87,11 @@ const Pricing = ({ navigation, ...props }) => {
             <GlobalText text={"24/7 support"} style={styles.pricingOptionFeature} />
           </View>
           <CustomButton
-            title={"Choose Plan"}
+            title={STRING.BUTTON.CHOOSE_PLAN}
             containerStyle={styles.planButtonContainer}
             buttonStyle={styles.planButtonStyle}
             titleStyle={styles.planButtonTitleStyle}
             raised={true}
-            type={"Submit"}
             onPress={selectPlan}
           />
         </View>

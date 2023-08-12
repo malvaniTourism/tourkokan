@@ -14,6 +14,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "./Styles";
 import { backPage, checkLogin, goBackHandler, navigateTo } from "../../Services/CommonMethods";
 import MapView, { Marker } from 'react-native-maps';
+import STRING from "../../Services/Constants/STRINGS";
 
 
 const ProjectList = ({ navigation, ...props }) => {
@@ -44,14 +45,14 @@ const ProjectList = ({ navigation, ...props }) => {
   }
 
   const handleSmallCardClick = (id) => {
-    navigateTo(navigation, "ProjectDetails", { id });
+    navigateTo(navigation, STRING.SCREEN.PROJECT_DETAILS, { id });
   };
 
   return (
     // <ScrollView>
     //   <View style={{ flex: 1, alignItems: "center" }}>
     //     <Loader />
-    //     <Header name={'Projects'}
+    //      <Header name={STRING.HEADER.PROJECTS}
     //       startIcon={
     //         <Ionicons
     //           name="chevron-back-outline"
@@ -98,8 +99,8 @@ const ProjectList = ({ navigation, ...props }) => {
             onDragEnd={
               (e) => alert(JSON.stringify(e.nativeEvent.coordinate))
             }
-            title={'Test Marker'}
-            description={'This is a description of the marker'}
+            title={STRING.TEST_MARKER}
+            description={STRING.MARKER_DESCRIPTION}
           />
         </MapView>
       </View>

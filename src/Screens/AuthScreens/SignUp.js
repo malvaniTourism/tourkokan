@@ -20,6 +20,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import Feather from "react-native-vector-icons/Feather";
 import FontIcons from "react-native-vector-icons/FontAwesome5";
+import STRING from "../../Services/Constants/STRINGS";
 
 const SignUp = ({ navigation, ...props }) => {
   const [name, setName] = useState("");
@@ -38,7 +39,7 @@ const SignUp = ({ navigation, ...props }) => {
   const [showPassword, setShowPassword] = useState(false)
 
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => navigateTo(navigation, 'Login'));
+    const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.LOGIN));
     props.setLoader(true);
     getRoles()
     return () => {
@@ -104,7 +105,7 @@ const SignUp = ({ navigation, ...props }) => {
   const handleImageUpload = () => {
     launchImageLibrary(
       {
-        mediaType: 'photo',
+        mediaType: `${STRING.TYPE.PHOTO}`,
         includeBase64: true, // Set to true to include base64 data
         maxHeight: 200,
         maxWidth: 200,
@@ -132,9 +133,10 @@ const SignUp = ({ navigation, ...props }) => {
     };
     comnPost("auth/register", data)
       .then((res) => {
+        console.log('res: ', res);
         if (res.data.success) {
           props.setLoader(false);
-          setAlertMessage("Registration Successful, now login to continue...");
+          setAlertMessage(STRING.ALERT.REGI_SUCCESS);
           setIsAlert(true);
           setIsSuccess(true)
         } else {
@@ -148,17 +150,17 @@ const SignUp = ({ navigation, ...props }) => {
         props.setLoader(false);
         setIsAlert(true);
         setIsSuccess(false)
-        setAlertMessage("Something went wrong...");
+        setAlertMessage(STRING.ALERT.WENT_WRONG);
       });
   };
 
   const signInScreen = () => {
-    navigateTo(navigation, "Login");
+    navigateTo(navigation, STRING.SCREEN.LOGIN);
   };
 
   const closePopup = () => {
     if (isSuccess) {
-      navigateTo(navigation, "Login");
+      navigateTo(navigation, STRING.SCREEN.LOGIN);
     }
     setIsAlert(false)
   }
@@ -184,7 +186,7 @@ const SignUp = ({ navigation, ...props }) => {
   //   });
   // };
 
-
+  console.log('image: ', imageSource);
   return (
     <View style={{ alignItems: "center" }}>
       <ScrollView>
@@ -196,15 +198,18 @@ const SignUp = ({ navigation, ...props }) => {
         <Loader />
         <View>
           <Image style={styles.loginImage} source={require('../../Assets/Images/tour_set.jpg')} />
-          <GlobalText text={"Sign-up"} style={styles.loginText} />
+          <GlobalText text={STRING.SIGN_UP} style={styles.loginText} />
         </View>
         <View style={{ alignItems: "center" }}>
           <TouchableOpacity
             style={styles.imageContainerStyle}
             onPress={handleImageUpload}
-            title="Select Image">
+          >
             {imageSource ?
-              <Image source={imageSource} style={{ width: 50, height: 50, resizeMode: "contain" }} />
+              <Image
+                source={{ uri: imageSource }}
+                style={styles.imageSourceView}
+              />
               :
               <FontIcons
                 name="user-circle"
@@ -217,13 +222,13 @@ const SignUp = ({ navigation, ...props }) => {
 
           <DropDown
             setChild={(v, i) => setValue(v, i)}
-            name={"Role"}
-            label={"Role"}
+            name={STRING.ROLE}
+            label={STRING.ROLE}
             value={role}
             disable={false}
             style={styles.roleDropDown}
-            fieldType={"dropDwn"}
-            helperMsg={"Select Role"}
+            fieldType={STRING.TYPE.DROP_DWN}
+            helperMsg={STRING.SELECT_ROLE}
             List={roles}
             parentDetails={{ label: "role" }}
           />
@@ -243,7 +248,7 @@ const SignUp = ({ navigation, ...props }) => {
                 inputContainerStyle={styles.inputContainerStyle}
                 isSecure={field.isSecure}
                 rightIcon={
-                  field.type == "password" &&
+                  field.type == `${STRING.TYPE.PASSWORD}` &&
                   <Feather
                     name={field.isSecure ? 'eye' : 'eye-off'}
                     size={24}
@@ -259,21 +264,20 @@ const SignUp = ({ navigation, ...props }) => {
             );
           })}
           <CustomButton
-            title={"Register"}
+            title={STRING.BUTTON.REGISTER}
             seeMoreStyle={styles.buttonView}
             containerStyle={styles.buttonContainer}
             buttonStyle={styles.buttonStyle}
             titleStyle={styles.buttonTitle}
             disabled={false}
             raised={true}
-            type={"Submit"}
             onPress={() => Register()}
           />
           <GlobalText text={errMsg} />
           <View style={styles.haveAcc}>
-            <GlobalText text={"Already have an Account? "} />
+            <GlobalText text={STRING.HAVE_ACC} />
             <TouchableOpacity onPress={() => signInScreen()}>
-              <GlobalText text={" Sign-in"} />
+              <GlobalText text={STRING.SIGN_IN} />
             </TouchableOpacity>
           </View>
         </View>

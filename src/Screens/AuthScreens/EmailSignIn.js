@@ -19,6 +19,7 @@ import GlobalText from "../../Components/Customs/Text";
 import SQLite from 'react-native-sqlite-storage'
 import Popup from "../../Components/Common/Popup";
 import Feather from "react-native-vector-icons/Feather";
+import STRING from "../../Services/Constants/STRINGS";
 
 const EmailSignIn = ({ navigation, ...props }) => {
   const [email, setEmail] = useState("");
@@ -31,7 +32,7 @@ const EmailSignIn = ({ navigation, ...props }) => {
   useEffect(() => {
     // openDB()
     // createUserTable();
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => navigateTo(navigation, 'Login'));
+    const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.LOGIN));
     return () => {
       backHandler.remove();
       setIsAlert(false);
@@ -120,8 +121,8 @@ const EmailSignIn = ({ navigation, ...props }) => {
         if (res.data.success) {
           setIsAlert(true);
           setAlertMessage(res.data.message);
-          AsyncStorage.setItem("access_token", res.data.data.access_token);
-          AsyncStorage.setItem("userId", res.data.data.user.id);
+          AsyncStorage.setItem(STRING.STORAGE.ACCESS_TOKEN, res.data.data.access_token);
+          AsyncStorage.setItem(STRING.STORAGE.USER_ID, res.data.data.user.id);
           props.saveAccess_token(res.data.data.access_token);
           props.setLoader(false);
           setIsSuccess(true)
@@ -135,21 +136,21 @@ const EmailSignIn = ({ navigation, ...props }) => {
       .catch((err) => {
         setIsAlert(true);
         setIsSuccess(false)
-        setAlertMessage("Something went wrong...");
+        setAlertMessage(STRING.ALERT.WENT_WRONG);
         props.setLoader(false);
       });
   };
 
   const closePopup = () => {
     if (isSuccess) {
-      navigateTo(navigation, "Home");
-      AsyncStorage.setItem("isFirstTime", JSON.stringify(true))
+      navigateTo(navigation, STRING.SCREEN.HOME);
+      AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, JSON.stringify(true))
     }
     setIsAlert(false)
   }
 
   const signUpScreen = () => {
-    navigateTo(navigation, "SignUp");
+    navigateTo(navigation, STRING.SCREEN.SIGN_UP);
   };
 
   return (
@@ -180,7 +181,7 @@ const EmailSignIn = ({ navigation, ...props }) => {
             inputContainerStyle={styles.inputContainerStyle}
             isSecure={field.isSecure}
             rightIcon={
-              field.type == "password" &&
+              field.type == `${STRING.TYPE.PASSWORD}` &&
               <Feather
                 name={field.isSecure ? 'eye' : 'eye-off'}
                 size={24}
@@ -196,20 +197,19 @@ const EmailSignIn = ({ navigation, ...props }) => {
         );
       })}
       <CustomButton
-        title={"Login"}
+        title={STRING.BUTTON.LOGIN}
         seeMoreStyle={styles.buttonView}
         containerStyle={styles.buttonContainer}
         buttonStyle={styles.buttonStyle}
         titleStyle={styles.buttonTitle}
         disabled={false}
         raised={true}
-        type={"Submit"}
         onPress={() => Login()}
       />
       <View style={styles.haveAcc}>
-        <GlobalText text={"Don't have an Account? "} />
+        <GlobalText text={STRING.DONT_HAVE_ACC} />
         <TouchableOpacity onPress={() => signUpScreen()}>
-          <GlobalText text={" Sign-up"} />
+          <GlobalText text={STRING.SIGN_UP} />
         </TouchableOpacity>
       </View>
 

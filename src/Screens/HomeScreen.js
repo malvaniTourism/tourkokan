@@ -27,6 +27,7 @@ import GlobalText from "../Components/Customs/Text";
 import BottomSheet from "../Components/Customs/BottomSheet";
 import LocationSheet from "../Components/Common/LocationSheet";
 import RouteHeadCard from "../Components/Cards/RouteHeadCard";
+import STRING from "../Services/Constants/STRINGS";
 
 const HomeScreen = ({ navigation, ...props }) => {
     const refRBSheet = useRef();
@@ -51,7 +52,7 @@ const HomeScreen = ({ navigation, ...props }) => {
     ]);
 
     useEffect(() => {
-        const backHandler = BackHandler.addEventListener('hardwareBackPress', () => exitApp());
+        const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => exitApp());
         if (props.access_token) {
             if (!isLandingDataFetched && props.access_token) {
                 callLandingPageAPI();
@@ -65,23 +66,23 @@ const HomeScreen = ({ navigation, ...props }) => {
 
         return () => {
             backHandler.remove();
-            AsyncStorage.setItem("isFirstTime", JSON.stringify(false))
+            AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, JSON.stringify(false))
         };
     }, [props.access_token]);
 
     const saveToken = async () => {
-        props.saveAccess_token(await AsyncStorage.getItem("access_token"));
+        props.saveAccess_token(await AsyncStorage.getItem(STRING.STORAGE.ACCESS_TOKEN));
         if (
-            (await AsyncStorage.getItem("access_token")) == null ||
-            (await AsyncStorage.getItem("access_token")) == ""
+            (await AsyncStorage.getItem(STRING.STORAGE.ACCESS_TOKEN)) == null ||
+            (await AsyncStorage.getItem(STRING.STORAGE.ACCESS_TOKEN)) == ""
         ) {
-            navigateTo(navigation, "Login");
+            navigateTo(navigation, STRING.SCREEN.LOGIN);
         }
     };
 
     const callLandingPageAPI = async () => {
         props.setLoader(true);
-        let isFirstTime = await AsyncStorage.getItem("isFirstTime")
+        let isFirstTime = await AsyncStorage.getItem(STRING.STORAGE.IS_FIRST_TIME)
         comnGet("v1/landingpage", props.access_token)
             .then((res) => {
                 setCategories(res.data.data.categories);
@@ -96,7 +97,7 @@ const HomeScreen = ({ navigation, ...props }) => {
 
                 if (isFirstTime == "true") {
                     refRBSheet.current.open()
-                    AsyncStorage.setItem("isFirstTime", JSON.stringify(false))
+                    AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, JSON.stringify(false))
                 }
             })
             .catch((error) => {
@@ -110,8 +111,8 @@ const HomeScreen = ({ navigation, ...props }) => {
         comnGet("v1/user-profile", props.access_token)
             .then((res) => {
                 props.setLoader(false);
-                AsyncStorage.setItem('userName', res.data.data.name)
-                AsyncStorage.setItem('userId', JSON.stringify(res.data.data.id))
+                AsyncStorage.setItem(STRING.STORAGE.USER_NAME, res.data.data.name)
+                AsyncStorage.setItem(STRING.STORAGE.USER_ID, JSON.stringify(res.data.data.id))
             })
             .catch((error) => {
                 setError(error.message); // Update error state with error message
@@ -124,15 +125,15 @@ const HomeScreen = ({ navigation, ...props }) => {
     };
 
     const getRoutesList = (item) => {
-        navigateTo(navigation, "RoutesList", { item });
+        navigateTo(navigation, STRING.SCREEN.ROUTES_LIST, { item });
     };
 
     const showMore = (page) => {
-        navigateTo(navigation, page, { from: "Home" });
+        navigateTo(navigation, page, { from: STRING.SCREEN.HOME });
     }
 
     const onSearchFocus = () => {
-        navigateTo(navigation, "CityPlaceSearch")
+        navigateTo(navigation, STRING.SCREEN.CITY_PLACE_SEARCH)
     }
 
     const openLocationSheet = () => {
@@ -215,15 +216,15 @@ const HomeScreen = ({ navigation, ...props }) => {
                         </View> */}
 
                         <View style={styles.sectionView}>
-                            <GlobalText text={"Routes"} style={styles.sectionTitle} />
+                            <GlobalText text={STRING.SCREEN.ROUTES} style={styles.sectionTitle} />
                             <View style={styles.cardsWrap}>
                                 {routes.map((route, index) => (
                                     <RouteHeadCard data={route} cardClick={() => getRoutesList(route)} />
                                 ))}
                             </View>
                             <CustomButton
-                                title={'See More'}
-                                onPress={() => showMore('SearchList')}
+                                title={STRING.BUTTON.SEE_MORE}
+                                onPress={() => showMore(STRING.SCREEN.SEARCH_LIST)}
                                 containerStyle={styles.showMore}
                                 seeMoreStyle={styles.seeMoreStyle}
                                 buttonStyle={styles.buttonStyle}
@@ -239,7 +240,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                         </View>
 
                         <View style={styles.sectionView}>
-                            <GlobalText text={"Cities"} style={styles.sectionTitle} />
+                            <GlobalText text={STRING.SCREEN.CITIES} style={styles.sectionTitle} />
                             <View >
                                 {cities.map((city, index) => (
                                     <CityCard data={city} reload={() => callLandingPageAPI()} navigation={navigation} />
@@ -247,8 +248,8 @@ const HomeScreen = ({ navigation, ...props }) => {
                                 ))}
                             </View>
                             <CustomButton
-                                title={'See More'}
-                                onPress={() => showMore('CityList')}
+                                title={STRING.BUTTON.SEE_MORE}
+                                onPress={() => showMore(STRING.SCREEN.CITY_LIST)}
                                 containerStyle={styles.showMore}
                                 seeMoreStyle={styles.seeMoreStyle}
                                 buttonStyle={styles.buttonStyle}

@@ -40,12 +40,17 @@ const styles = StyleSheet.create({
   imageContainerStyle: {
     borderWidth: 1,
     borderColor: COLOR.grey,
-    borderRadius: DIMENSIONS.borderRadius,
-    width: DIMENSIONS.iconXL,
-    height: DIMENSIONS.iconXL,
+    borderRadius: DIMENSIONS.borderRadiusLarge,
+    width: DIMENSIONS.iconXXXL,
+    height: DIMENSIONS.iconXXXL,
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 20,
+  },
+  imageSourceView: {
+    width: DIMENSIONS.iconXXL,
+    height: DIMENSIONS.iconXXL,
+    borderRadius: DIMENSIONS.borderRadiusLarge,
   },
   inputContainerStyle: {
     borderColor: COLOR.transparent,

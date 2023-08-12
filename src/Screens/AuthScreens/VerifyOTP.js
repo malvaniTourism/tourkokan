@@ -24,6 +24,7 @@ import Alert from "../../Components/Customs/Alert";
 import { navigateTo } from "../../Services/CommonMethods";
 import GlobalText from "../../Components/Customs/Text";
 import Popup from "../../Components/Common/Popup";
+import STRING from "../../Services/Constants/STRINGS";
 
 const VerifyOTP = ({ navigation, route, ...props }) => {
   const [otp, setOtp] = useState(1234);
@@ -34,7 +35,7 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
   const [isSuccess, setIsSuccess] = useState(false)
 
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => navigateTo(navigation, 'Login'));
+    const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.LOGIN));
     // setInterval(() => timer(), 1000);
     startListeningForOtp();
     return () => {
@@ -61,8 +62,8 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
         if (res.data.success) {
           setIsAlert(true);
           setAlertMessage(res.data.message);
-          AsyncStorage.setItem("access_token", res.data.data.access_token);
-          AsyncStorage.setItem("userId", res.data.data.user.id);
+          AsyncStorage.setItem(STRING.STORAGE.ACCESS_TOKEN, res.data.data.access_token);
+          AsyncStorage.setItem(STRING.STORAGE.USER_ID, res.data.data.user.id);
           props.saveAccess_token(res.data.data.access_token);
           props.setLoader(false);
           isSuccess(true)
@@ -76,7 +77,7 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
       .catch((err) => {
         setIsAlert(true);
         setIsSuccess(false)
-        setAlertMessage("Something went wrong...");
+        setAlertMessage(STRING.ALERT.WENT_WRONG);
         props.setLoader(false);
         isSuccess(false)
       });
@@ -84,8 +85,8 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
 
   const closePopup = () => {
     if (isSuccess) {
-      navigateTo(navigation, "Home");
-      AsyncStorage.setItem("isFirstTime", JSON.stringify(true))
+      navigateTo(navigation, STRING.SCREEN.HOME);
+      AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, JSON.stringify(true))
     }
     setIsAlert(false)
   }
@@ -135,7 +136,7 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
 
   return (
     <View style={{ alignItems: "center" }}>
-      <Header name={"Verify OTP"} style={{ marginBottom: 50 }}
+      <Header name={STRING.HEADER.VERIFY_OTP} style={{ marginBottom: 50 }}
         startIcon={<></>}
       />
       <Loader />
@@ -147,9 +148,9 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
       />
       <View>
         <View style={{ marginTop: "5%", marginLeft: "10%" }}>
-          <GlobalText text={"OTP Verification"} style={styles.otpHead} />
-          <GlobalText text={"We have sent an OTP to verify your phone number."} style={styles.otpSubHead} />
-          <GlobalText text={`Sent to +91 ${route.params.mobile}`} style={styles.otpMobile} />
+          <GlobalText text={STRING.OTP_VERIFICATION} style={styles.otpHead} />
+          <GlobalText text={STRING.WE_HAVE_SENT} style={styles.otpSubHead} />
+          <GlobalText text={`${SENT_TO} ${route.params.mobile}`} style={styles.otpMobile} />
         </View>
         <OtpInputs
           style={{ flexDirection: "row" }}
@@ -158,12 +159,12 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
             height: 50,
             width: 40,
             margin: 10,
-            backgroundColor: "#FFFFFF",
+            backgroundColor: COLOR.white,
             borderWidth: 1,
-            borderColor: "#26AE60",
+            borderColor: COLOR.lightGreen,
             textAlign: "center",
             fontSize: 24,
-            color: "#26AE60",
+            color: COLOR.lightGreen,
           }}
           inputContainerStyles={{ marginVertical: 45 }}
           // autofillFromClipboard={true}
@@ -181,22 +182,21 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
         />
       </View>
       <CustomButton
-        title={"Verify"}
+        title={STRING.BUTTON.VERIFY}
         containerStyle={styles.buttonContainer}
         buttonStyle={styles.buttonStyle}
         titleStyle={styles.buttonTitle}
         disabled={false}
         raised={true}
-        type={"Submit"}
         onPress={() => verifyOtp()}
       />
       {sec >= 1 ? (
-        <GlobalText text={`You can resend your OTP within (00:${sec > 9 ? sec : "0" + sec})`} style={styles.countertext} />
+        <GlobalText text={`${STRING.RESEND_WITHIN}${sec > 9 ? sec : "0" + sec})`} style={styles.countertext} />
       ) : (
         <View>
-          <GlobalText text={"I didn't receive a code"} />
+          <GlobalText text={STRING.DIDNT_RECEIVE} />
           <TouchableOpacity onPress={() => resend()}>
-            <GlobalText text={"Resend"} style={styles.counterText1} />
+            <GlobalText text={STRING.RESEND} style={styles.counterText1} />
           </TouchableOpacity>
         </View>
       )}

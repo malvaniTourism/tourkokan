@@ -14,6 +14,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { backPage, checkLogin, goBackHandler, navigateTo } from "../../Services/CommonMethods";
 import styles from "./Styles";
 import CityCard from "../../Components/Cards/CityCard";
+import STRING from "../../Services/Constants/STRINGS";
 
 const CityList = ({ navigation, ...props }) => {
   const [cities, setCities] = useState([]); // State to store cities
@@ -52,7 +53,7 @@ const CityList = ({ navigation, ...props }) => {
 
   return (
     <ScrollView stickyHeaderIndices={[0]}>
-      <Header name={'Cities'}
+      <Header name={STRING.HEADER.CITIES}
         startIcon={
           <Ionicons
             name="chevron-back-outline"

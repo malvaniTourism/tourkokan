@@ -11,6 +11,7 @@ import DIMENSIONS from '../../Services/Constants/DIMENSIONS';
 import StarRating from 'react-native-star-rating';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { comnPost } from '../../Services/Api/CommonServices';
+import STRING from '../../Services/Constants/STRINGS';
 
 const CityCard = ({ data, reload, navigation }) => {
     const [isVisible, setIsVisible] = useState(false)
@@ -18,7 +19,7 @@ const CityCard = ({ data, reload, navigation }) => {
     const [rating, setRating] = useState(data.rating)
 
     const getCity = (id) => {
-        // navigateTo(navigation, "CityDetails", { id })
+        // navigateTo(navigation, STRING.SCREEN.CITY_DETAILS, { id })
         setIsVisible(true)
         setTimeout(() => {
             setIsVisible(false)
@@ -26,16 +27,14 @@ const CityCard = ({ data, reload, navigation }) => {
     }
 
     const onHeartClick = async () => {
-        console.log('click');
         let placeData = {
-            user_id: await AsyncStorage.getItem("userId"),
-            favouritable_type: "City",
+            user_id: await AsyncStorage.getItem(STRING.STORAGE.USER_ID),
+            favouritable_type: STRING.TABLE.CITY,
             favouritable_id: data.id
         }
         setIsFav(!isFav)
         comnPost('v1/favourite', placeData)
             .then(res => {
-                console.log('res: ', res.data);
                 reload()
             })
             .catch(err => {
@@ -82,10 +81,10 @@ const CityCard = ({ data, reload, navigation }) => {
                     </View>
                 </View>
                 <View>
-                    <GlobalText text={data.description && data.description.slice(0, 200) + `..."`} style={styles.cityDesc} />
+                    <GlobalText text={data.tag_line} style={styles.cityDesc} />
                 </View>
             </View>
-            <ComingSoon message={"Coming Soon..."} visible={isVisible} />
+            <ComingSoon message={STRING.COMING_SOON} visible={isVisible} />
         </TouchableOpacity>
     )
 }
