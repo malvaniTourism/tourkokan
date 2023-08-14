@@ -10,13 +10,11 @@ import Loader from "../../Components/Customs/Loader";
 import { connect } from "react-redux";
 import { setLoader } from "../../Reducers/CommonActions";
 import DropDown from "../../Components/Customs/DropDown";
-// import ImagePicker from 'react-native-image-picker';
 import { navigateTo } from "../../Services/CommonMethods";
 import { launchImageLibrary } from 'react-native-image-picker'
 import GlobalText from "../../Components/Customs/Text";
 import COLOR from "../../Services/Constants/COLORS";
 import Popup from "../../Components/Common/Popup";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import Feather from "react-native-vector-icons/Feather";
 import FontIcons from "react-native-vector-icons/FontAwesome5";
@@ -106,7 +104,7 @@ const SignUp = ({ navigation, ...props }) => {
     launchImageLibrary(
       {
         mediaType: `${STRING.TYPE.PHOTO}`,
-        includeBase64: true, // Set to true to include base64 data
+        includeBase64: true,
         maxHeight: 200,
         maxWidth: 200,
       },
@@ -131,6 +129,7 @@ const SignUp = ({ navigation, ...props }) => {
       role_id: role.id,
       profile_picture: uploadImage
     };
+    console.log('data: ', data);
     comnPost("auth/register", data)
       .then((res) => {
         console.log('res: ', res);
@@ -165,28 +164,6 @@ const SignUp = ({ navigation, ...props }) => {
     setIsAlert(false)
   }
 
-  // const selectImage = () => {
-  //   const options = {
-  //     mediaType: 'photo',
-  //     quality: 1,
-  //     includeBase64: false,
-  //   };
-
-  //   ImagePicker.launchImageLibrary(options, (response) => {
-  //     if (response.didCancel) {
-  //     } else if (response.error) {
-  //     } else if (response.customButton) {
-  //     } else {
-  //       // The selected image URI is in response.uri
-  //       const source = { uri: response.uri };
-  //       // Do something with the image source
-  //       // For example, set it as the state of the component
-  //       setImageSource(source);
-  //     }
-  //   });
-  // };
-
-  console.log('image: ', imageSource);
   return (
     <View style={{ alignItems: "center" }}>
       <ScrollView>

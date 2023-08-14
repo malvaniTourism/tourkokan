@@ -168,6 +168,7 @@ const STRING = {
   ETD: "ETD: ",
   NO_ROUTES: "No Routes Available",
   SET_LOCATION: "Set Your Primary Location",
+  NO_INTERNET: "No Internet Connection..."
 };
 
 export default STRING;

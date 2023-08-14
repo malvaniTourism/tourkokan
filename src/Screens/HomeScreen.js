@@ -28,6 +28,7 @@ import BottomSheet from "../Components/Customs/BottomSheet";
 import LocationSheet from "../Components/Common/LocationSheet";
 import RouteHeadCard from "../Components/Cards/RouteHeadCard";
 import STRING from "../Services/Constants/STRINGS";
+import CheckNet from "../Components/Common/CheckNet";
 
 const HomeScreen = ({ navigation, ...props }) => {
     const refRBSheet = useRef();
@@ -147,6 +148,7 @@ const HomeScreen = ({ navigation, ...props }) => {
     return (
         <ScrollView stickyHeaderIndices={[0]}>
             <TopComponent navigation={navigation} openLocationSheet={() => openLocationSheet()} />
+            <CheckNet />
             {
                 isLoading ?
                     <Loader />
