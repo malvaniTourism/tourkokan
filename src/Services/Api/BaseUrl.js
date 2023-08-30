@@ -1,8 +1,8 @@
 const Path = {
-  API_PATH: "https://tour.pranavkamble.in/api/",
-  API_PATH_ADMIN: "https://tour.pranavkamble.in/admin/",
-  FTP_PATH: "https://tour.pranavkamble.in/",
-  FTP_PATH1: "https://tour.pranavkamble.in",
+  API_PATH: "https://tourkokan.com/api/",
+  API_PATH_ADMIN: "https://tourkokan.com/admin/",
+  FTP_PATH: "https://tourkokan.com/",
+  FTP_PATH1: "https://tourkokan.com",
 };
 
 export default Path;
