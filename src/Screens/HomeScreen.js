@@ -58,7 +58,7 @@ const HomeScreen = ({ navigation, ...props }) => {
         const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => exitApp());
         if (props.access_token) {
             if (!isLandingDataFetched && props.access_token) {
-                callLandingPageAPI();
+                // callLandingPageAPI();
                 setIsLandingDataFetched(true); // Mark the data as fetched
                 getUserProfile();
             }

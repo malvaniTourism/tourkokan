@@ -31,7 +31,7 @@ const CityList = ({ navigation, ...props }) => {
 
     if (props.access_token) {
       if (!isLandingDataFetched && props.access_token) {
-        getCities()
+        // getCities()
         setIsLandingDataFetched(true); // Mark the data as fetched
       }
       props.setLoader(false);

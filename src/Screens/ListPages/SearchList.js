@@ -26,7 +26,7 @@ const SearchList = ({ navigation, route, ...props }) => {
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
     checkLogin(navigation)
-    searchRoute();
+    // searchRoute();
 
     const unsubscribe = NetInfo.addEventListener(state => {
       setOffline(false)
