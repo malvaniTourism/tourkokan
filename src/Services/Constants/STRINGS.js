@@ -64,6 +64,11 @@ const STRING = {
     USER_NAME: "userName",
     IS_FIRST_TIME: "isFirstTime",
     API_TOKEN: "apiToken",
+    LANDING_RESPONSE: "landingResponse",
+    PROFILE_RESPONSE: "profileResponse",
+    CITIES_RESPONSE: "citiesResponse",
+    PLACES_RESPONSE: "placesResponse",
+    ROUTES_RESPONSE: "routesResponse"
   },
   HEADER: {
     BUS_TIMINGS: "Bus Timings",
@@ -168,7 +173,7 @@ const STRING = {
   ETD: "ETD: ",
   NO_ROUTES: "No Routes Available",
   SET_LOCATION: "Set Your Primary Location",
-  NO_INTERNET: "No Internet Connection..."
+  NO_INTERNET: "Please check your connectivity... Once data is synced you can use offline."
 };
 
 export default STRING;

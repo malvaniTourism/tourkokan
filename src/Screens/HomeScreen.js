@@ -11,7 +11,7 @@ import styles from "./Styles";
 import COLOR from "../Services/Constants/COLORS";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
 import Feather from "react-native-vector-icons/Feather";
-import { comnGet, comnPost, login } from "../Services/Api/CommonServices";
+import { comnGet, comnPost, dataSync, login, removeFromStorage, saveToStorage } from "../Services/Api/CommonServices";
 import { connect } from "react-redux";
 import { saveAccess_token, setLoader } from "../Reducers/CommonActions";
 import Loader from "../Components/Customs/Loader";
@@ -29,6 +29,7 @@ import LocationSheet from "../Components/Common/LocationSheet";
 import RouteHeadCard from "../Components/Cards/RouteHeadCard";
 import STRING from "../Services/Constants/STRINGS";
 import CheckNet from "../Components/Common/CheckNet";
+import NetInfo from '@react-native-community/netinfo';
 
 const HomeScreen = ({ navigation, ...props }) => {
     const refRBSheet = useRef();
@@ -45,6 +46,7 @@ const HomeScreen = ({ navigation, ...props }) => {
     const [cityList, setCityList] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [isLandingDataFetched, setIsLandingDataFetched] = useState(false);
+    const [offline, setOffline] = useState(false)
     const [bannerImages, setBannerImages] = useState([
         "https://c4.wallpaperflare.com/wallpaper/766/970/409/cities-city-building-cityscape-wallpaper-preview.jpg",
         "https://c4.wallpaperflare.com/wallpaper/631/683/713/nature-bridge-sky-city-wallpaper-preview.jpg",
@@ -64,10 +66,34 @@ const HomeScreen = ({ navigation, ...props }) => {
         LogBox.ignoreAllLogs();
         saveToken();
         SplashScreen.hide();
+        const unsubscribe = NetInfo.addEventListener(state => {
+            setOffline(false)
+
+            dataSync(STRING.STORAGE.LANDING_RESPONSE, callLandingPageAPI())
+                .then(resp => {
+                    let res = JSON.parse(resp)
+                    if (res.data && res.data.data) {
+                        setCategories(res.data.data.categories);
+                        setCities(res.data.data.cities);
+                        setProjects(res.data.data.projects);
+                        setStops(res.data.data.stops);
+                        setPlace_category(res.data.data.place_category);
+                        setPlaces(res.data.data.places);
+                        setRoutes(res.data.data.routes)
+                    } else if (resp) {
+                        setOffline(true)
+                    }
+                    setIsLoading(false)
+                    props.setLoader(false);
+                })
+            // removeFromStorage(STRING.STORAGE.LANDING_RESPONSE)
+        });
+
 
         return () => {
             backHandler.remove();
             AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, JSON.stringify(false))
+            unsubscribe();
         };
     }, [props.access_token]);
 
@@ -86,6 +112,8 @@ const HomeScreen = ({ navigation, ...props }) => {
         let isFirstTime = await AsyncStorage.getItem(STRING.STORAGE.IS_FIRST_TIME)
         comnGet("v1/landingpage", props.access_token)
             .then((res) => {
+                if (res && res.data.data)
+                    saveToStorage(STRING.STORAGE.LANDING_RESPONSE, JSON.stringify(res))
                 setCategories(res.data.data.categories);
                 setCities(res.data.data.cities);
                 setProjects(res.data.data.projects);
@@ -148,7 +176,7 @@ const HomeScreen = ({ navigation, ...props }) => {
     return (
         <ScrollView stickyHeaderIndices={[0]}>
             <TopComponent navigation={navigation} openLocationSheet={() => openLocationSheet()} />
-            <CheckNet />
+            <CheckNet isOff={offline} />
             {
                 isLoading ?
                     <Loader />
@@ -245,7 +273,12 @@ const HomeScreen = ({ navigation, ...props }) => {
                             <GlobalText text={STRING.SCREEN.CITIES} style={styles.sectionTitle} />
                             <View >
                                 {cities.map((city, index) => (
-                                    <CityCard data={city} reload={() => callLandingPageAPI()} navigation={navigation} />
+                                    <CityCard
+                                        data={city}
+                                        reload={() => {
+                                            callLandingPageAPI()
+                                        }}
+                                        navigation={navigation} />
                                     // onPress={() => handleSmallCardClick("CityDetails", city.id)}
                                 ))}
                             </View>

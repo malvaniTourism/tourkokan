@@ -2,6 +2,8 @@ import axios from "axios";
 import Path from "./BaseUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import STRING from "../Constants/STRINGS";
+import NetInfo from '@react-native-community/netinfo';
+import ComingSoon from "../../Components/Common/ComingSoon";
 
 export const comnGet = async (url, apiToken) => {
   let myUrl = Path.API_PATH + url;
@@ -68,3 +70,33 @@ export const login = async () => {
     })
     .catch((err) => err);
 };
+
+export const isOffline = async () => {
+  const state = await NetInfo.fetch();
+  return !state.isConnected
+};
+
+export const saveToStorage = async (name, data) => {
+  return await AsyncStorage.setItem(name, data)
+}
+
+export const getFromStorage = async (name) => {
+  return await AsyncStorage.getItem(name)
+}
+
+export const removeFromStorage = async (name) => {
+  return await AsyncStorage.removeItem(name)
+}
+
+export const dataSync = async (name, callBack) => {
+  if (await isOffline()) {
+    console.log('name, ', await getFromStorage(name));
+    if (await getFromStorage(name)) {
+      return await getFromStorage(name)
+    } else {
+      return await isOffline()
+    }
+  } else {
+    callBack()
+  }
+}

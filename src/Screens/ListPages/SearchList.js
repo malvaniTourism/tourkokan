@@ -16,16 +16,37 @@ import GlobalText from "../../Components/Customs/Text";
 import RouteHeadCard from "../../Components/Cards/RouteHeadCard";
 import styles from "../Styles";
 import STRING from "../../Services/Constants/STRINGS";
+import NetInfo from '@react-native-community/netinfo';
+import CheckNet from "../../Components/Common/CheckNet";
 
 const SearchList = ({ navigation, route, ...props }) => {
   const [list, setList] = useState([]);
+  const [offline, setOffline] = useState(false)
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
     checkLogin(navigation)
     searchRoute();
+
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setOffline(false)
+
+      dataSync(STRING.STORAGE.ROUTES_RESPONSE, searchRoute())
+        .then(resp => {
+          let res = JSON.parse(resp)
+          if (res.data && res.data.data) {
+            setList(res.data.data.data);
+          } else if (resp) {
+            setOffline(true)
+          }
+          props.setLoader(false);
+        })
+      // removeFromStorage(STRING.STORAGE.LANDING_RESPONSE)
+    });
+
     return () => {
       backHandler.remove()
+      unsubscribe();
     }
   }, []);
 
@@ -46,6 +67,8 @@ const SearchList = ({ navigation, route, ...props }) => {
     comnPost("v1/routes", data)
       .then((res) => {
         if (res.data.success) {
+          if (res && res.data.data)
+            saveToStorage(STRING.STORAGE.ROUTES_RESPONSE, JSON.stringify(res))
           setList(res.data.data.data);
           props.setLoader(false);
         } else {
@@ -81,6 +104,7 @@ const SearchList = ({ navigation, route, ...props }) => {
 
   return (
     <View>
+      <CheckNet isOff={offline} />
       <Header
         name={STRING.HEADER.ROUTES}
         goBack={() => backPage(navigation)}

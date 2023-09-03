@@ -4,7 +4,7 @@ import SmallCard from "../../Components/Customs/SmallCard";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
-import { comnGet } from "../../Services/Api/CommonServices";
+import { comnGet, dataSync, saveToStorage } from "../../Services/Api/CommonServices";
 import { connect } from "react-redux";
 import { setLoader } from "../../Reducers/CommonActions";
 import Loader from "../../Components/Customs/Loader";
@@ -16,6 +16,8 @@ import PlaceCard from "../../Components/Cards/PlaceCard";
 import CityCard from "../../Components/Cards/CityCard";
 import GlobalText from "../../Components/Customs/Text";
 import STRING from "../../Services/Constants/STRINGS";
+import NetInfo from '@react-native-community/netinfo';
+import CheckNet from "../../Components/Common/CheckNet";
 
 const Explore = ({ route, navigation, ...props }) => {
   const refRBSheet = useRef();
@@ -26,6 +28,7 @@ const Explore = ({ route, navigation, ...props }) => {
   const [isEnabled, setIsEnabled] = useState(route.name == STRING.SCREEN.CITIES)
   const [isLandingDataFetched, setIsLandingDataFetched] = useState(false);
   const [nextPage, setNextPage] = useState(1)
+  const [offline, setOffline] = useState(false)
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
@@ -41,14 +44,43 @@ const Explore = ({ route, navigation, ...props }) => {
       props.setLoader(false);
     }
 
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setOffline(false)
+
+      dataSync(STRING.STORAGE.CITIES_RESPONSE, getCities())
+        .then(resp => {
+          let res = JSON.parse(resp)
+          if (res.data && res.data.data) {
+            setCities(res.data.data.data);
+          } else if (resp) {
+            setOffline(true)
+          }
+        })
+
+      dataSync(STRING.STORAGE.PLACES_RESPONSE, getPlaces())
+        .then(resp => {
+          let res = JSON.parse(resp)
+          if (res.data && res.data.data) {
+            setPlaces([...places, ...res.data.data.data]);
+          } else if (resp) {
+            setOffline(true)
+          }
+        })
+      props.setLoader(false);
+      // removeFromStorage(STRING.STORAGE.LANDING_RESPONSE)
+    });
+
     return () => {
       backHandler.remove()
+      unsubscribe();
     }
   }, []);
 
   const getPlaces = (ifNext) => {
     comnGet(`v1/places?page=${ifNext ? nextPage : nextPage - 1}`, props.access_token)
       .then((res) => {
+        if (res && res.data.data)
+          saveToStorage(STRING.STORAGE.PLACES_RESPONSE, JSON.stringify(res))
         setPlaces([...places, ...res.data.data.data]);
         props.setLoader(false);
         let nextUrl = res.data.data.next_page_url
@@ -62,6 +94,8 @@ const Explore = ({ route, navigation, ...props }) => {
   const getCities = () => {
     comnGet("v1/cities", props.access_token)
       .then((res) => {
+        if (res && res.data.data)
+          saveToStorage(STRING.STORAGE.CITIES_RESPONSE, JSON.stringify(res))
         setCities(res.data.data.data);
         props.setLoader(false);
       })
@@ -85,6 +119,7 @@ const Explore = ({ route, navigation, ...props }) => {
   return (
     <View style={{ flex: 1, justifyContent: "flex-start" }}>
       <Loader />
+      <CheckNet isOff={offline} />
       <Header name={STRING.HEADER.EXPLORE}
         startIcon={
           <Ionicons

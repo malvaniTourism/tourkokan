@@ -4,31 +4,12 @@ import NetInfo from '@react-native-community/netinfo';
 import ComingSoon from './ComingSoon';
 import STRING from '../../Services/Constants/STRINGS';
 
-const CheckNet = () => {
-    const [isConnected, setIsConnected] = useState(null);
-
-    useEffect(() => {
-        const unsubscribe = NetInfo.addEventListener(state => {
-            setIsConnected(state.isConnected);
-        });
-
-        NetInfo.fetch().then(state => {
-            setIsConnected(state.isConnected);
-        });
-
-        return () => {
-            unsubscribe();
-        };
-    }, []);
+const CheckNet = ({ isOff }) => {
+    const [isOffline, setIsConnected] = useState(isOff);
 
     return (
         <View>
-            {isConnected !== null && (
-                !isConnected ?
-                <ComingSoon message={STRING.NO_INTERNET} visible={!isConnected} />
-                :
-                null
-            )}
+            <ComingSoon message={STRING.NO_INTERNET} visible={isOff} />
         </View>
     )
 }
