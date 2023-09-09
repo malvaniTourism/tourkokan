@@ -30,6 +30,7 @@ import RouteHeadCard from "../Components/Cards/RouteHeadCard";
 import STRING from "../Services/Constants/STRINGS";
 import CheckNet from "../Components/Common/CheckNet";
 import NetInfo from '@react-native-community/netinfo';
+import MyAnimatedLoader from "../Components/Customs/AnimatedLoader";
 
 const HomeScreen = ({ navigation, ...props }) => {
     const refRBSheet = useRef();
@@ -47,6 +48,7 @@ const HomeScreen = ({ navigation, ...props }) => {
     const [isLoading, setIsLoading] = useState(true)
     const [isLandingDataFetched, setIsLandingDataFetched] = useState(false);
     const [offline, setOffline] = useState(false)
+    const [isFetching, setIsFetching] = useState(true)
     const [bannerImages, setBannerImages] = useState([
         "https://c4.wallpaperflare.com/wallpaper/766/970/409/cities-city-building-cityscape-wallpaper-preview.jpg",
         "https://c4.wallpaperflare.com/wallpaper/631/683/713/nature-bridge-sky-city-wallpaper-preview.jpg",
@@ -59,7 +61,7 @@ const HomeScreen = ({ navigation, ...props }) => {
         if (props.access_token) {
             if (!isLandingDataFetched && props.access_token) {
                 // callLandingPageAPI();
-                setIsLandingDataFetched(true); // Mark the data as fetched
+                setIsLandingDataFetched(true);
                 getUserProfile();
             }
         }
@@ -73,17 +75,18 @@ const HomeScreen = ({ navigation, ...props }) => {
                 .then(resp => {
                     let res = JSON.parse(resp)
                     if (res.data && res.data.data) {
-                        setCategories(res.data.data.categories);
                         setCities(res.data.data.cities);
-                        setProjects(res.data.data.projects);
-                        setStops(res.data.data.stops);
-                        setPlace_category(res.data.data.place_category);
-                        setPlaces(res.data.data.places);
                         setRoutes(res.data.data.routes)
+                        setIsFetching(false)
+                        // setCategories(res.data.data.categories);
+                        // setProjects(res.data.data.projects);
+                        // setStops(res.data.data.stops);
+                        // setPlace_category(res.data.data.place_category);
+                        // setPlaces(res.data.data.places);
                     } else if (resp) {
                         setOffline(true)
+                        setIsFetching(false)
                     }
-                    setIsLoading(false)
                     props.setLoader(false);
                 })
             // removeFromStorage(STRING.STORAGE.LANDING_RESPONSE)
@@ -114,15 +117,15 @@ const HomeScreen = ({ navigation, ...props }) => {
             .then((res) => {
                 if (res && res.data.data)
                     saveToStorage(STRING.STORAGE.LANDING_RESPONSE, JSON.stringify(res))
-                setCategories(res.data.data.categories);
                 setCities(res.data.data.cities);
-                setProjects(res.data.data.projects);
-                setStops(res.data.data.stops);
-                setPlace_category(res.data.data.place_category);
-                setPlaces(res.data.data.places);
                 setRoutes(res.data.data.routes)
-                setIsLoading(false)
+                setIsFetching(false)
                 props.setLoader(false);
+                // setCategories(res.data.data.categories);
+                // setProjects(res.data.data.projects);
+                // setStops(res.data.data.stops);
+                // setPlace_category(res.data.data.place_category);
+                // setPlaces(res.data.data.places);
 
                 if (isFirstTime == "true") {
                     refRBSheet.current.open()
@@ -130,7 +133,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                 }
             })
             .catch((error) => {
-                setIsLoading(false)
+                setIsFetching(false)
                 props.setLoader(false);
                 setError(error.message);
             });
@@ -144,14 +147,10 @@ const HomeScreen = ({ navigation, ...props }) => {
                 AsyncStorage.setItem(STRING.STORAGE.USER_ID, JSON.stringify(res.data.data.id))
             })
             .catch((error) => {
-                setError(error.message); // Update error state with error message
+                setError(error.message);
                 props.setLoader(false);
             });
     }
-
-    const handleSmallCardClick = (page, id, name) => {
-        navigateTo(navigation, page, { id, name });
-    };
 
     const getRoutesList = (item) => {
         navigateTo(navigation, STRING.SCREEN.ROUTES_LIST, { item });
@@ -177,9 +176,11 @@ const HomeScreen = ({ navigation, ...props }) => {
         <ScrollView stickyHeaderIndices={[0]}>
             <TopComponent navigation={navigation} openLocationSheet={() => openLocationSheet()} />
             <CheckNet isOff={offline} />
+            <MyAnimatedLoader isVisible={isFetching} />
             {
-                isLoading ?
-                    <Loader />
+                isFetching ?
+                    // <Loader />
+                    <></>
                     :
                     <View style={{ flex: 1, alignItems: "center" }}>
                         <Banner bannerImages={bannerImages} />
@@ -189,61 +190,11 @@ const HomeScreen = ({ navigation, ...props }) => {
                                     style={styles.homeSearchBar}
                                     placeholder={field.placeholder}
                                     value={searchValue}
-                                    // onChangeText={(v) => searchPlace(v)}
                                     onFocus={onSearchFocus}
                                 />
                             );
                         })}
                         <SearchPanel navigation={navigation} />
-
-                        {/* <View style={styles.stopsSectionView}>
-                            <GlobalText text={"Stops"} style={styles.sectionTitle} />
-                            <View style={styles.cardsWrap}>
-                                {stops.map((stop, index) => (
-                                    <SmallCard
-                                        style={styles.stopsCard}
-                                        key={index}
-                                        Icon={
-                                            <Image
-                                                source={{ uri: Path.API_PATH + stop.icon }}
-                                                color={COLOR.yellow}
-                                                size={DIMENSIONS.iconSize}
-                                            />
-                                        }
-                                        title={stop.name}
-                                        onPress={() => handleSmallCardClick("PlaceDetails", stop.id)}
-                                    />
-                                ))}
-                            </View>
-                            <View style={styles.flexRow}>
-                                <CustomButton
-                                    title={'Show More'}
-                                    containerStyle={styles.showMore}
-                                    seeMoreStyle={styles.seeMoreStyle}
-                                    onPress={() => showMore('StopList')}
-                                    buttonStyle={styles.buttonStyle}
-                                />
-                                <CustomButton
-                                    title={'View on MAP'}
-                                    containerStyle={styles.showMore}
-                                    seeMoreStyle={styles.seeMoreStyle}
-                                    onPress={() => showMore('MapScreen')}
-                                    buttonStyle={styles.buttonStyle}
-                                />
-                            </View>
-                        </View> */}
-
-                        {/* <View style={styles.sectionView}>
-                            <GlobalText text={"Categories"} style={styles.sectionTitle} />
-                            <View style={styles.cardsWrap}>
-                                {categories.map((category, index) => (
-                                    <View>
-                                        <CategoryCard data={category} getCategory={() => handleSmallCardClick("CategoryProjects", category.id, category.name)} />
-                                        <GlobalText text={category.name} style={{ textAlign: 'center' }} />
-                                    </View>
-                                ))}
-                            </View>
-                        </View> */}
 
                         <View style={styles.sectionView}>
                             <GlobalText text={STRING.SCREEN.ROUTES} style={styles.sectionTitle} />
@@ -279,7 +230,6 @@ const HomeScreen = ({ navigation, ...props }) => {
                                             callLandingPageAPI()
                                         }}
                                         navigation={navigation} />
-                                    // onPress={() => handleSmallCardClick("CityDetails", city.id)}
                                 ))}
                             </View>
                             <CustomButton
@@ -298,62 +248,6 @@ const HomeScreen = ({ navigation, ...props }) => {
                                 }
                             />
                         </View>
-
-                        {/* <View style={styles.sectionView}>
-                            <GlobalText text={"Projects"} style={styles.sectionTitle} />
-                            <View style={styles.cardsWrap}>
-                                {projects.map((project, index) => (
-                                    <SmallCard
-                                        key={index}
-                                        Icon={
-                                            <Image
-                                                source={{ uri: Path.API_PATH + project.image_url }}
-                                                color={COLOR.yellow}
-                                                size={DIMENSIONS.iconSize}
-                                            />
-                                        }
-                                        title={project.name}
-                                        onPress={() => handleSmallCardClick("ProjectDetails", project.id)}
-                                    />
-                                ))}
-                            </View>
-                            <CustomButton
-                                title={'Show More'}
-                                containerStyle={styles.showMore}
-                                seeMoreStyle={styles.seeMoreStyle}
-                                onPress={() => showMore('ProjectList')}
-                                buttonStyle={styles.buttonStyle}
-                            />
-                        </View> */}
-
-                        {/* <TabView data={place_category} /> */}
-
-                        {/* <View style={styles.sectionView}>
-                            <GlobalText text={"Places"} style={styles.sectionTitle} />
-                            <View style={styles.cardsWrap}>
-                                {places.map((place, index) => (
-                                    <SmallCard
-                                        key={index}
-                                        Icon={
-                                            <Image
-                                                source={{ uri: Path.API_PATH + place.icon }}
-                                                color={COLOR.yellow}
-                                                size={DIMENSIONS.iconSize}
-                                            />
-                                        }
-                                        title={place.name}
-                                        onPress={() => handleSmallCardClick("PlaceDetails", place.id)}
-                                    />
-                                ))}
-                            </View>
-                            <CustomButton
-                                title={'Show More'}
-                                containerStyle={styles.showMore}
-                                seeMoreStyle={styles.seeMoreStyle}
-                                onPress={() => showMore('Explore')}
-                                buttonStyle={styles.buttonStyle}
-                            />
-                        </View> */}
                     </View>
             }
             <BottomSheet

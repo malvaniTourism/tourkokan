@@ -173,7 +173,8 @@ const STRING = {
   ETD: "ETD: ",
   NO_ROUTES: "No Routes Available",
   SET_LOCATION: "Set Your Primary Location",
-  NO_INTERNET: "Please check your connectivity... Once data is synced you can use offline."
+  NO_INTERNET: "Please check your connectivity... Once data is synced you can use offline.",
+  LOADER_TEXT: "Picking Up Your Data..."
 };
 
 export default STRING;
