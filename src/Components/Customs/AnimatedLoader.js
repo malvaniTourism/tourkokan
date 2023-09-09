@@ -31,7 +31,7 @@ const MyAnimatedLoader = ({ isVisible }) => {
     return (
         <Animated.View style={{ opacity: fadeAnim }}>
             <AnimatedLoader
-                visible={isAnimated}
+                visible={isVisible}
                 overlayColor={COLOR.themeComicBlueLight}
                 source={require("./Animations/bus.json")}
                 animationStyle={styles.lottie}

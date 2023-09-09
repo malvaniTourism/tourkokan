@@ -78,6 +78,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                         setCities(res.data.data.cities);
                         setRoutes(res.data.data.routes)
                         setIsFetching(false)
+                        setIsLoading(false)
                         // setCategories(res.data.data.categories);
                         // setProjects(res.data.data.projects);
                         // setStops(res.data.data.stops);
@@ -86,6 +87,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                     } else if (resp) {
                         setOffline(true)
                         setIsFetching(false)
+                        setIsLoading(false)
                     }
                     props.setLoader(false);
                 })
@@ -120,6 +122,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                 setCities(res.data.data.cities);
                 setRoutes(res.data.data.routes)
                 setIsFetching(false)
+                setIsLoading(false)
                 props.setLoader(false);
                 // setCategories(res.data.data.categories);
                 // setProjects(res.data.data.projects);
@@ -133,7 +136,8 @@ const HomeScreen = ({ navigation, ...props }) => {
                 }
             })
             .catch((error) => {
-                setIsFetching(false)
+                setIsFetching(false);
+                setIsLoading(false);
                 props.setLoader(false);
                 setError(error.message);
             });
@@ -176,9 +180,9 @@ const HomeScreen = ({ navigation, ...props }) => {
         <ScrollView stickyHeaderIndices={[0]}>
             <TopComponent navigation={navigation} openLocationSheet={() => openLocationSheet()} />
             <CheckNet isOff={offline} />
-            <MyAnimatedLoader isVisible={isFetching} />
+            <MyAnimatedLoader isVisible={isLoading} />
             {
-                isFetching ?
+                isLoading ?
                     // <Loader />
                     <></>
                     :
