@@ -26,13 +26,33 @@ const SearchPlace = ({ navigation, route, ...props }) => {
     props.setLoader(true)
     const backHandler = goBackHandler(navigation)
     checkLogin(navigation)
-    searchPlace("", nextPage, true);
+    searchPlace("");
     return () => {
       backHandler.remove()
     }
   }, []);
 
-  const searchPlace = (v, page, next) => {
+  const searchPlace = (v) => {
+    setPlacesList([])
+    setSearchValue(v);
+    let data = {
+      search: v,
+    };
+    comnPost(`v1/searchPlace`, data)
+      .then((res) => {
+        if (res.data.success) {
+          props.setLoader(false);
+          setPlacesList(res.data.data.data);
+        } else {
+          props.setLoader(false);
+        }
+      })
+      .catch((err) => {
+        props.setLoader(false);
+      });
+  };
+
+  const scrollPlace = (v, page) => {
     // props.setLoader(true)
     setSearchValue(v);
     let data = {
@@ -41,12 +61,9 @@ const SearchPlace = ({ navigation, route, ...props }) => {
     comnPost(`v1/searchPlace?page=${page}`, data)
       .then((res) => {
         if (res.data.success) {
-          props.setLoader(false);
           let nextUrl = res.data.data.next_page_url
-          if (next) {
-            setPlacesList([...placesList, ...res.data.data.data]);
-            setNextPage(nextUrl[nextUrl.length - 1])
-          } else setPlacesList(res.data.data.data);
+          setPlacesList([...placesList, ...res.data.data.data]);
+          setNextPage(nextUrl[nextUrl.length - 1])
           props.setLoader(false);
         } else {
           props.setLoader(false);
@@ -69,7 +86,7 @@ const SearchPlace = ({ navigation, route, ...props }) => {
 
   const goToNext = () => {
     props.setLoader(true)
-    searchPlace(searchValue, nextPage, true)
+    scrollPlace(searchValue, nextPage)
   }
 
   const renderItem = ({ item }) => {
@@ -88,22 +105,22 @@ const SearchPlace = ({ navigation, route, ...props }) => {
       <Header
         Component={
           <SearchBar
-          style={styles.homeSearchBar}
-          placeholder={`Enter ${route.params.type}`}
-          value={searchValue}
-          onChangeText={(v) => searchPlace(v, nextPage)}
+            style={styles.homeSearchBar}
+            placeholder={`Enter ${route.params.type}`}
+            value={searchValue}
+            onChangeText={(v) => searchPlace(v)}
           />
         }
-        />
-        {/* <ScrollView> */}
-        <FlatList
-          keyExtractor={(item) => item.id}
-          data={placesList}
-          renderItem={renderItem}
-          onEndReached={goToNext}
-          onEndReachedThreshold={0.1}
-          style={{marginBottom: 30}}
-        />
+      />
+      {/* <ScrollView> */}
+      <FlatList
+        keyExtractor={(item) => item.id}
+        data={placesList}
+        renderItem={renderItem}
+        onEndReached={goToNext}
+        onEndReachedThreshold={0.5}
+        style={{ marginBottom: 30 }}
+      />
       {/* </ScrollView> */}
     </View>
   );
