@@ -39,8 +39,8 @@ const Explore = ({ route, navigation, ...props }) => {
 
     if (props.access_token) {
       if (!isLandingDataFetched && props.access_token) {
-        getCities()
-        getPlaces()
+        // getCities()
+        // getPlaces()
         setIsLandingDataFetched(true); // Mark the data as fetched
       }
       props.setLoader(false);

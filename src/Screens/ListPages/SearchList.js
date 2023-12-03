@@ -7,7 +7,7 @@ import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import RouteLine from "../../Components/Customs/RouteLines/RouteLine";
 import { connect } from "react-redux";
-import { comnPost } from "../../Services/Api/CommonServices";
+import { comnPost, dataSync, saveToStorage } from "../../Services/Api/CommonServices";
 import { setLoader } from "../../Reducers/CommonActions";
 import Loader from "../../Components/Customs/Loader";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -26,7 +26,7 @@ const SearchList = ({ navigation, route, ...props }) => {
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
     checkLogin(navigation)
-    searchRoute();
+    // searchRoute();
 
     const unsubscribe = NetInfo.addEventListener(state => {
       setOffline(false)

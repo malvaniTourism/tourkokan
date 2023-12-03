@@ -5,7 +5,7 @@ import COLOR from "../Services/Constants/COLORS";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { comnGet, comnPost } from "../Services/Api/CommonServices";
+import { comnGet, comnPost, dataSync, saveToStorage } from "../Services/Api/CommonServices";
 import { connect } from "react-redux";
 import Loader from "../Components/Customs/Loader";
 import TopComponent from "../Components/Common/TopComponent";
@@ -24,6 +24,8 @@ import Path from "../Services/Api/BaseUrl";
 import { launchImageLibrary } from 'react-native-image-picker'
 import Popup from "../Components/Common/Popup";
 import STRING from "../Services/Constants/STRINGS";
+import NetInfo from '@react-native-community/netinfo';
+import CheckNet from "../Components/Common/CheckNet";
 
 const Profile = ({ navigation, ...props }) => {
   const [profile, setProfile] = useState([]);
@@ -37,21 +39,44 @@ const Profile = ({ navigation, ...props }) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [imageSource, setImageSource] = useState(null);
   const [uploadImage, setUploadImage] = useState(null);
+  const [offline, setOffline] = useState(false)
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
     checkLogin(navigation)
     props.setLoader(true);
-    getUserProfile();
+    // getUserProfile();
+
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setOffline(false)
+      dataSync(STRING.STORAGE.PROFILE_RESPONSE, getUserProfile())
+        .then(resp => {
+          let res = JSON.parse(resp)
+          if (res.data && res.data.data) {
+            setProfile(res.data.data);
+            setName(res.data.data.name)
+            setEmail(res.data.data.email)
+            setMobile(res.data.data.mobile)
+            setPicture(res.data.data.profile_picture)
+          } else if (resp) {
+            setOffline(true)
+          }
+          props.setLoader(false);
+        })
+      // removeFromStorage(STRING.STORAGE.LANDING_RESPONSE)
+    });
 
     return () => {
       backHandler.remove()
+      unsubscribe();
     }
   }, []);
 
   const getUserProfile = () => {
     comnGet("v1/user-profile", props.access_token)
       .then((res) => {
+        if (res && res.data.data)
+          saveToStorage(STRING.STORAGE.PROFILE_RESPONSE, JSON.stringify(res))
         setProfile(res.data.data); // Update places state with response data
         props.setLoader(false);
         setName(res.data.data.name)
@@ -141,6 +166,7 @@ const Profile = ({ navigation, ...props }) => {
   return (
     <View>
       <ScrollView>
+        <CheckNet isOff={offline} />
         <Header
           style={{ backgroundColor: 'transparent', zIndex: 10 }}
           name={""}
@@ -161,8 +187,8 @@ const Profile = ({ navigation, ...props }) => {
               <Image source={{ uri: imageSource }} style={styles.profileImage} />
               :
               <Image
-              source={{ uri: `${profile_picture ? Path.FTP_PATH1 + profile_picture : "https://api-private.atlassian.com/users/2143ab39b9c73bcab4fe6562fff8d23d/avatar"}` }}
-              containerStyle={styles.profileImage}
+                source={{ uri: `${profile_picture ? Path.FTP_PATH1 + profile_picture : "https://api-private.atlassian.com/users/2143ab39b9c73bcab4fe6562fff8d23d/avatar"}` }}
+                containerStyle={styles.profileImage}
               />
             }
             <View style={styles.handPointer}>

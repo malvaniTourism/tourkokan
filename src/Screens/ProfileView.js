@@ -19,7 +19,7 @@ import COLOR from "../Services/Constants/COLORS";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { comnGet, comnPost } from "../Services/Api/CommonServices";
+import { comnGet, comnPost, dataSync, saveToStorage } from "../Services/Api/CommonServices";
 import { connect } from "react-redux";
 import Loader from "../Components/Customs/Loader";
 import TopComponent from "../Components/Common/TopComponent";
@@ -36,6 +36,8 @@ import { Overlay } from '@rneui/themed';
 import MapView, { Marker, Polygon } from 'react-native-maps';
 import Path from '../Services/Api/BaseUrl';
 import STRING from '../Services/Constants/STRINGS';
+import NetInfo from '@react-native-community/netinfo';
+import CheckNet from '../Components/Common/CheckNet';
 
 const ProfileView = ({ navigation, route, ...props }) => {
   const [currentLatitude, setCurrentLatitude] = useState(37.4220936);
@@ -51,22 +53,38 @@ const ProfileView = ({ navigation, route, ...props }) => {
       longitudeDelta: 0.0421
     }
   )
-
   const [profile, setProfile] = useState([]);
   const [error, setError] = useState(null);
+  const [offline, setOffline] = useState(false)
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
     // requestLocationPermission();
     checkLogin(navigation)
-    getUserProfile();
-    const unsubscribe = navigation.addListener(STRING.EVENT.FOCUS, () => {
+    // getUserProfile();
+    const unsubscribeFocus = navigation.addListener(STRING.EVENT.FOCUS, () => {
       getUserProfile();
+    });
+
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setOffline(false)
+      dataSync(STRING.STORAGE.PROFILE_RESPONSE, getUserProfile())
+        .then(resp => {
+          let res = JSON.parse(resp)
+          if (res.data && res.data.data) {
+            setProfile(res.data.data);
+          } else if (resp) {
+            setOffline(true)
+          }
+          props.setLoader(false);
+        })
+      // removeFromStorage(STRING.STORAGE.LANDING_RESPONSE)
     });
     return () => {
       Geolocation.clearWatch(watchID);
       backHandler.remove()
-      unsubscribe()
+      unsubscribeFocus()
+      unsubscribe();
     };
   }, [route]);
 
@@ -155,6 +173,8 @@ const ProfileView = ({ navigation, route, ...props }) => {
   const getUserProfile = () => {
     comnGet("v1/user-profile", props.access_token)
       .then((res) => {
+        if (res && res.data.data)
+          saveToStorage(STRING.STORAGE.PROFILE_RESPONSE, JSON.stringify(res))
         setProfile(res.data.data); // Update places state with response data
         props.setLoader(false);
       })
@@ -195,6 +215,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
 
   return (
     <ScrollView style={styles.container}>
+      <CheckNet isOff={offline} />
       <Header
         // style={{ backgroundColor: 'transparent', zIndex: 10 }}
         name={""}

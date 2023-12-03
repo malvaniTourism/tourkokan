@@ -127,6 +127,16 @@ const styles = StyleSheet.create({
     color: COLOR.black,
     fontSize: DIMENSIONS.textSize,
     textAlign: 'center'
+  },
+  lottie: {
+    width: 200,
+    height: 200,
+    
+  },
+  loaderText: {
+    fontWeight: "bold",
+    color: COLOR.busYellow,
+    fontSize: DIMENSIONS.xlText
   }
 });
 
