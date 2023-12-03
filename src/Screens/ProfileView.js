@@ -30,7 +30,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { checkLogin, backPage, goBackHandler, navigateTo } from "../Services/CommonMethods";
 import SvgUri from 'react-native-svg-uri';
 import GlobalText from "../Components/Customs/Text";
-import CustomButton from '../Components/Customs/Button';
+import CustomButton from '../Components/Customs/Buttons/TextButton';
 import Geolocation from '@react-native-community/geolocation';
 import { Overlay } from '@rneui/themed';
 import MapView, { Marker, Polygon } from 'react-native-maps';

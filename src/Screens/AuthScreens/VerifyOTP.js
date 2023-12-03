@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity, BackHandler } from "react-native";
 import TextField from "../../Components/Customs/TextField";
 import { OTP, SignInFields } from "../../Services/Constants/FIELDS";
 import Header from "../../Components/Common/Header";
-import CustomButton from "../../Components/Customs/Button";
+import CustomButton from "../../Components/Customs/Buttons/TextButton";
 import styles from "./Styles";
 import { comnPost } from "../../Services/Api/CommonServices";
 import { connect } from "react-redux";

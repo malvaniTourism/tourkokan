@@ -2,7 +2,7 @@ import { Button } from "@rneui/themed";
 import React from "react";
 import styles from "./Styles";
 import { TouchableOpacity, View } from "react-native";
-import STRING from "../../Services/Constants/STRINGS";
+import STRING from "../../../Services/Constants/STRINGS";
 
 const CustomButton = ({
   title,

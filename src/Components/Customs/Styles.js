@@ -69,26 +69,11 @@ const styles = StyleSheet.create({
     animation: "fadeinout 4s infinite",
     opacity: 1
   },
-  buttonView: {
-    overflow: 'hidden',
-    borderRadius: DIMENSIONS.borderRadiusXS,
-  },
-  containerStyle: {
-    width: DIMENSIONS.bannerWidth,
-    borderRadius: DIMENSIONS.borderRadiusXS,
-    overflow: 'hidden'
-  },
-  buttonStyle: {
-    width: DIMENSIONS.bannerWidth,
-  },
   alertContainerStyle: {
     width: DIMENSIONS.bannerWidth - 40,
   },
   alertButtonStyle: {
     width: DIMENSIONS.bannerWidth - 40,
-  },
-  titleStyle: {
-    color: COLOR.white,
   },
   spinnerTextStyle: {
     color: "#FFF",
@@ -140,7 +125,8 @@ const styles = StyleSheet.create({
   },
   text: {
     color: COLOR.black,
-    fontSize: DIMENSIONS.textSize
+    fontSize: DIMENSIONS.textSize,
+    textAlign: 'center'
   }
 });
 

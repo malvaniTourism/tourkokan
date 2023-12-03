@@ -7,7 +7,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { checkLogin, backPage, goBackHandler, navigateTo } from "../Services/CommonMethods";
 import GlobalText from "../Components/Customs/Text";
 import styles from "./Styles";
-import CustomButton from "../Components/Customs/Button";
+import CustomButton from "../Components/Customs/Buttons/TextButton";
 import STRING from "../Services/Constants/STRINGS";
 
 

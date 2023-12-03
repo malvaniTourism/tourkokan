@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, BackHandler, Image, ScrollView } from "re
 import { SignUpFields } from "../../Services/Constants/FIELDS";
 import TextField from "../../Components/Customs/TextField";
 import Header from "../../Components/Common/Header";
-import CustomButton from "../../Components/Customs/Button";
+import CustomButton from "../../Components/Customs/Buttons/TextButton";
 import styles from "./Styles";
 import { comnGet, comnPost } from "../../Services/Api/CommonServices";
 import Loader from "../../Components/Customs/Loader";

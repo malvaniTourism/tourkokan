@@ -3,7 +3,7 @@ import { Modal, View } from 'react-native'
 import { Overlay } from '@rneui/themed';
 import GlobalText from '../Customs/Text';
 import styles from './Styles';
-import CustomButton from '../Customs/Button';
+import CustomButton from '../Customs/Buttons/TextButton';
 import STRING from '../../Services/Constants/STRINGS';
 
 const Popup = ({ message, visible, toggleOverlay, onPress }) => {

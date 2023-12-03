@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
     exploreHeaderImage: {
         flex: 1,
         opacity: 0.7,
-        marginTop: -20,
     },
     details: {
         height: DIMENSIONS.bannerHeight - 50,
@@ -174,7 +173,6 @@ const styles = StyleSheet.create({
     overlay: {
         ...StyleSheet.absoluteFillObject,
         backgroundColor: COLOR.black,
-        marginTop: -20,
     },
     categoryImageDetails: {
         height: DIMENSIONS.bannerHeight,
@@ -355,6 +353,12 @@ const styles = StyleSheet.create({
         width: "auto",
         paddingVertical: 13
     },
+    citiesButtonScroll: {
+        flexDirection: 'row',
+    },
+    cityButtonText: {
+        fontSize: DIMENSIONS.textSizeSmall
+    }
 });
 
 export default styles;

@@ -18,7 +18,7 @@ import Loader from "../Components/Customs/Loader";
 import SplashScreen from "react-native-splash-screen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Path from "../Services/Api/BaseUrl";
-import CustomButton from "../Components/Customs/Button";
+import CustomButton from "../Components/Customs/Buttons/TextButton";
 import { exitApp, navigateTo } from "../Services/CommonMethods";
 import TabView from "../Components/Common/TabView";
 import CityCard from "../Components/Cards/CityCard";

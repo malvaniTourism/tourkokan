@@ -18,6 +18,8 @@ import GlobalText from "../../Components/Customs/Text";
 import STRING from "../../Services/Constants/STRINGS";
 import NetInfo from '@react-native-community/netinfo';
 import CheckNet from "../../Components/Common/CheckNet";
+import ImageButton from "../../Components/Customs/Buttons/ImageButton";
+// import InstaStory from 'react-native-insta-story';
 
 const Explore = ({ route, navigation, ...props }) => {
   const refRBSheet = useRef();
@@ -130,6 +132,17 @@ const Explore = ({ route, navigation, ...props }) => {
           />
         }
       />
+      <View style={{ minHeight: DIMENSIONS.iconXXL, marginTop: -10 }}>
+        <ScrollView horizontal style={styles.citiesButtonScroll}>
+          {cities.map((city) => (
+            <ImageButton
+              text={
+                <GlobalText text={city.name} style={styles.cityButtonText} />
+              }
+            />
+          ))}
+        </ScrollView>
+      </View>
       <View style={styles.toggleView}>
         <View style={styles.overlay} />
         <ImageBackground

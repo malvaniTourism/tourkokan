@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, Animated, ImageBackground, Image } from "react-native";
 import styles from "./Styles";
-import CustomButton from "./Button";
+import CustomButton from "./Buttons/TextButton";
 import GlobalText from "./Text";
 import STRING from "../../Services/Constants/STRINGS";
 
