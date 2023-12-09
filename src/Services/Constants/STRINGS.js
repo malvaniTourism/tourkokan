@@ -30,6 +30,7 @@ const STRING = {
     BUS_TIMINGS: "BusTimings",
     CATEGORY_PROJECTS: "CategoryProjects",
     EXPLORE: "Explore",
+    EXPLOREGRID: "ExploreGrid",
     MAP_SCREEN: "MapScreen",
     CITIES: "Cities",
     ROUTES: "Routes",

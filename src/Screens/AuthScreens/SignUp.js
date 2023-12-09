@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, BackHandler, Image, ScrollView } from "re
 import { SignUpFields } from "../../Services/Constants/FIELDS";
 import TextField from "../../Components/Customs/TextField";
 import Header from "../../Components/Common/Header";
-import CustomButton from "../../Components/Customs/Buttons/TextButton";
+import TextButton from "../../Components/Customs/Buttons/TextButton";
 import styles from "./Styles";
 import { comnGet, comnPost } from "../../Services/Api/CommonServices";
 import Loader from "../../Components/Customs/Loader";
@@ -240,7 +240,7 @@ const SignUp = ({ navigation, ...props }) => {
               />
             );
           })}
-          <CustomButton
+          <TextButton
             title={STRING.BUTTON.REGISTER}
             seeMoreStyle={styles.buttonView}
             containerStyle={styles.buttonContainer}

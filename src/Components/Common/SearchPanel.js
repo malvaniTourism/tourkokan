@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { SrcDest } from "../../Services/Constants/FIELDS";
-import CustomButton from "../Customs/Buttons/TextButton";
+import TextButton from "../Customs/Buttons/TextButton";
 import TextField from "../Customs/TextField";
 import styles from "./Styles";
 import { connect } from "react-redux";
@@ -123,7 +123,7 @@ const SearchPanel = ({ navigation, ...props }) => {
           />
         </View>
       }
-      <CustomButton
+      <TextButton
         title={STRING.BUTTON.SEARCH}
         containerStyle={styles.searchButtonContainerStyle}
         buttonStyle={styles.searchButtonStyle}

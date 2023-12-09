@@ -18,7 +18,7 @@ import SvgUri from 'react-native-svg-uri';
 import GlobalText from "../Components/Customs/Text";
 import DropDown from "../Components/Customs/DropDown";
 import { ProfileFields, SignUpFields } from "../Services/Constants/FIELDS";
-import CustomButton from "../Components/Customs/Buttons/TextButton";
+import TextButton from "../Components/Customs/Buttons/TextButton";
 import TextField from "../Components/Customs/TextField";
 import Path from "../Services/Api/BaseUrl";
 import { launchImageLibrary } from 'react-native-image-picker'
@@ -219,7 +219,7 @@ const Profile = ({ navigation, ...props }) => {
                 />
               );
             })}
-            <CustomButton
+            <TextButton
               title={STRING.BUTTON.UPDATE}
               seeMoreStyle={styles.buttonView}
               containerStyle={styles.buttonContainer}

@@ -4,7 +4,7 @@ import styles from "./Styles";
 import { TouchableOpacity, View } from "react-native";
 import STRING from "../../../Services/Constants/STRINGS";
 
-const CustomButton = ({
+const TextButton = ({
   title,
   containerStyle,
   buttonStyle,
@@ -35,4 +35,4 @@ const CustomButton = ({
   );
 };
 
-export default CustomButton;
+export default TextButton;

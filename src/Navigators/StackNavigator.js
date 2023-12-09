@@ -16,6 +16,7 @@ const CategoryProjects = lazy(() => import("../Screens/CategoryProjects"));
 const CityDetails = lazy(() => import("../Screens/DetailPages/CityDetails"));
 const CityList = lazy(() => import("../Screens/ListPages/CityList"));
 const Explore = lazy(() => import("../Screens/ListPages/Explore"));
+const ExploreGrid = lazy(() => import("../Screens/ListPages/ExploreGrid"));
 const ProjectList = lazy(() => import("../Screens/ListPages/ProjectList"));
 const CityPlaceSearch = lazy(() => import("../Screens/ListPages/CityPlaceSearch"));
 const StopList = lazy(() => import("../Screens/ListPages/StopList"));
@@ -85,6 +86,7 @@ const StackNavigator = () => {
           <Stack.Screen name={STRING.SCREEN.CITY_PLACE_SEARCH} component={CityPlaceSearch} />
           <Stack.Screen name={STRING.SCREEN.PROFILE_VIEW} component={ProfileView} />
           <Stack.Screen name={STRING.SCREEN.PROFILE} component={Profile} />
+          <Stack.Screen name={STRING.SCREEN.EXPLOREGRID} component={ExploreGrid} />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>

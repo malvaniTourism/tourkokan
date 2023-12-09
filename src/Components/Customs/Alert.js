@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, Animated, ImageBackground, Image } from "react-native";
 import styles from "./Styles";
-import CustomButton from "./Buttons/TextButton";
+import TextButton from "./Buttons/TextButton";
 import GlobalText from "./Text";
 import STRING from "../../Services/Constants/STRINGS";
 
@@ -15,9 +15,9 @@ const Alert = ({ alertMessage, closeAlert, successAlert, proceed }) => {
         <View style={styles.alertButtonView}>
           {
             successAlert ?
-              <CustomButton containerStyle={styles.alertContainerStyle} buttonStyle={styles.alertButtonStyle} title={STRING.BUTTON.OK} onPress={proceed} />
+              <TextButton containerStyle={styles.alertContainerStyle} buttonStyle={styles.alertButtonStyle} title={STRING.BUTTON.OK} onPress={proceed} />
               :
-              <CustomButton containerStyle={styles.alertContainerStyle} buttonStyle={styles.alertButtonStyle} title={STRING.BUTTON.OK} onPress={closeAlert} />
+              <TextButton containerStyle={styles.alertContainerStyle} buttonStyle={styles.alertButtonStyle} title={STRING.BUTTON.OK} onPress={closeAlert} />
           }
         </View>
       </View>

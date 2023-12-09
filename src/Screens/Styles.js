@@ -289,6 +289,14 @@ const styles = StyleSheet.create({
         borderTopRightRadius: DIMENSIONS.borderRadius,
         borderBottomRightRadius: DIMENSIONS.borderRadius
     },
+    seeMoreContainer: {
+        alignSelf: "flex-end",
+        width: DIMENSIONS.halfWidth / 2,
+        marginRight: 25
+    },
+    seeButtonStyle: {
+        width: DIMENSIONS.halfWidth / 2,
+    },
     containerHome: {
         flex: 1,
         backgroundColor: 'white',

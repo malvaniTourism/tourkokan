@@ -30,7 +30,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { checkLogin, backPage, goBackHandler, navigateTo } from "../Services/CommonMethods";
 import SvgUri from 'react-native-svg-uri';
 import GlobalText from "../Components/Customs/Text";
-import CustomButton from '../Components/Customs/Buttons/TextButton';
+import TextButton from '../Components/Customs/Buttons/TextButton';
 import Geolocation from '@react-native-community/geolocation';
 import { Overlay } from '@rneui/themed';
 import MapView, { Marker, Polygon } from 'react-native-maps';
@@ -288,7 +288,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
       </View>
 
       <View style={{ flexDirection: "row", justifyContent: "space-evenly", marginTop: 30 }}>
-        <CustomButton
+        <TextButton
           title={STRING.BUTTON.EDIT_PROFILE}
           seeMoreStyle={styles.editSeeMoreStyle}
           containerStyle={styles.editButtonContainer}
@@ -297,7 +297,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
           raised={true}
           onPress={handleEditPress}
         />
-        <CustomButton
+        <TextButton
           title={STRING.BUTTON.UPDATE_LOCATION}
           seeMoreStyle={styles.updateSeeMoreStyle}
           containerStyle={styles.editButtonContainer}
@@ -311,7 +311,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
       <Overlay style={styles.locationModal} isVisible={showLocModal} onBackdropPress={() => setShowLocModal(false)}>
         <GlobalText text={STRING.SET_LOCATION} style={styles.locationModal} />
         <View>
-          <CustomButton
+          <TextButton
             title={STRING.BUTTON.HOME_LOCATION}
             containerStyle={styles.showMore}
             seeMoreStyle={styles.locBtnStyle}
@@ -327,7 +327,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
               />
             }
           />
-          <CustomButton
+          <TextButton
             title={STRING.BUTTON.CURRENT_LOCATION}
             containerStyle={styles.showMore}
             seeMoreStyle={styles.locBtnStyle}

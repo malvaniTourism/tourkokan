@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity, BackHandler, ToastAndroid, Image, StatusB
 import TextField from "../../Components/Customs/TextField";
 import { MobileNo, SignInFields } from "../../Services/Constants/FIELDS";
 import Header from "../../Components/Common/Header";
-import CustomButton from "../../Components/Customs/Buttons/TextButton";
+import TextButton from "../../Components/Customs/Buttons/TextButton";
 import styles from "./Styles";
 import { comnPost } from "../../Services/Api/CommonServices";
 import { connect } from "react-redux";
@@ -125,7 +125,7 @@ const SignIn = ({ navigation, ...props }) => {
           />
         );
       })}
-      <CustomButton
+      <TextButton
         title={STRING.BUTTON.SEND_OTP}
         seeMoreStyle={styles.buttonView}
         containerStyle={styles.buttonContainer}
@@ -138,7 +138,7 @@ const SignIn = ({ navigation, ...props }) => {
 
       <View style={{ marginTop: 30, alignItems: "center" }}>
         <GlobalText text={STRING.OR} style={{ marginBottom: 20 }} />
-        <CustomButton
+        <TextButton
           title={STRING.BUTTON.LOGIN_WITH_EMAIL}
           seeMoreStyle={styles.buttonView}
           containerStyle={styles.buttonContainer}

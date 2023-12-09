@@ -18,7 +18,7 @@ import Loader from "../Components/Customs/Loader";
 import SplashScreen from "react-native-splash-screen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Path from "../Services/Api/BaseUrl";
-import CustomButton from "../Components/Customs/Buttons/TextButton";
+import TextButton from "../Components/Customs/Buttons/TextButton";
 import { exitApp, navigateTo } from "../Services/CommonMethods";
 import TabView from "../Components/Common/TabView";
 import CityCard from "../Components/Cards/CityCard";
@@ -207,7 +207,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                                     <RouteHeadCard data={route} cardClick={() => getRoutesList(route)} />
                                 ))}
                             </View>
-                            <CustomButton
+                            <TextButton
                                 title={STRING.BUTTON.SEE_MORE}
                                 onPress={() => showMore(STRING.SCREEN.SEARCH_LIST)}
                                 containerStyle={styles.showMore}
@@ -236,7 +236,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                                         navigation={navigation} />
                                 ))}
                             </View>
-                            <CustomButton
+                            <TextButton
                                 title={STRING.BUTTON.SEE_MORE}
                                 onPress={() => showMore(STRING.SCREEN.CITY_LIST)}
                                 containerStyle={styles.showMore}

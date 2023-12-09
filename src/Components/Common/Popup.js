@@ -3,7 +3,7 @@ import { Modal, View } from 'react-native'
 import { Overlay } from '@rneui/themed';
 import GlobalText from '../Customs/Text';
 import styles from './Styles';
-import CustomButton from '../Customs/Buttons/TextButton';
+import TextButton from '../Customs/Buttons/TextButton';
 import STRING from '../../Services/Constants/STRINGS';
 
 const Popup = ({ message, visible, toggleOverlay, onPress }) => {
@@ -20,7 +20,7 @@ const Popup = ({ message, visible, toggleOverlay, onPress }) => {
             <View style={styles.popupView}>
                 <GlobalText style={styles.overlayMessage} text={message} />
             </View>
-                <CustomButton
+                <TextButton
                     title={STRING.BUTTON.OK}
                     containerStyle={styles.editButtonContainer}
                     buttonStyle={styles.planButtonStyle}

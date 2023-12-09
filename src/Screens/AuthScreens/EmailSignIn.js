@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity, BackHandler, Image } from "react-native";
 import TextField from "../../Components/Customs/TextField";
 import { SignInFields } from "../../Services/Constants/FIELDS";
 import Header from "../../Components/Common/Header";
-import CustomButton from "../../Components/Customs/Buttons/TextButton";
+import TextButton from "../../Components/Customs/Buttons/TextButton";
 import styles from "./Styles";
 import { comnPost } from "../../Services/Api/CommonServices";
 import { connect } from "react-redux";
@@ -196,7 +196,7 @@ const EmailSignIn = ({ navigation, ...props }) => {
           />
         );
       })}
-      <CustomButton
+      <TextButton
         title={STRING.BUTTON.LOGIN}
         seeMoreStyle={styles.buttonView}
         containerStyle={styles.buttonContainer}

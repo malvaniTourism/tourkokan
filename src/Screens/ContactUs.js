@@ -11,7 +11,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { backPage, checkLogin, goBackHandler, navigateTo } from "../Services/CommonMethods";
 import { ContactUsFields } from "../Services/Constants/FIELDS";
 import TextField from "../Components/Customs/TextField";
-import CustomButton from "../Components/Customs/Buttons/TextButton";
+import TextButton from "../Components/Customs/Buttons/TextButton";
 import styles from "./Styles";
 import { comnPost } from "../Services/Api/CommonServices";
 import Popup from "../Components/Common/Popup";
@@ -126,7 +126,7 @@ const ContactUs = ({ navigation, route, ...props }) => {
             />
           );
         })}
-        <CustomButton
+        <TextButton
           title={STRING.BUTTON.SUBMIT}
           seeMoreStyle={styles.buttonView}
           containerStyle={styles.contactButtonContainer}

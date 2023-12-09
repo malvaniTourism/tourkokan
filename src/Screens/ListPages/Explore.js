@@ -19,6 +19,7 @@ import STRING from "../../Services/Constants/STRINGS";
 import NetInfo from '@react-native-community/netinfo';
 import CheckNet from "../../Components/Common/CheckNet";
 import ImageButton from "../../Components/Customs/Buttons/ImageButton";
+import TextButton from "../../Components/Customs/Buttons/TextButton";
 // import InstaStory from 'react-native-insta-story';
 
 const Explore = ({ route, navigation, ...props }) => {
@@ -118,6 +119,10 @@ const Explore = ({ route, navigation, ...props }) => {
     getPlaces(true)
   }
 
+  const seeMore = () => {
+    navigateTo(navigation, STRING.SCREEN.EXPLOREGRID, { cities })
+  }
+
   return (
     <View style={{ flex: 1, justifyContent: "flex-start" }}>
       <Loader />
@@ -162,6 +167,16 @@ const Explore = ({ route, navigation, ...props }) => {
             </TouchableOpacity>
           </View> */}
         </View>
+      </View>
+      <View>
+        <TextButton
+          title={STRING.BUTTON.SEE_MORE}
+          containerStyle={styles.seeMoreContainer}
+          buttonStyle={styles.seeButtonStyle}
+          titleStyle={styles.planButtonTitleStyle}
+          raised={true}
+          onPress={() => seeMore()}
+        />
       </View>
       <View style={{ minHeight: DIMENSIONS.screenHeight }}>
         {isEnabled ?

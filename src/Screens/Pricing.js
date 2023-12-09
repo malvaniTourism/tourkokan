@@ -7,7 +7,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { checkLogin, backPage, goBackHandler, navigateTo } from "../Services/CommonMethods";
 import GlobalText from "../Components/Customs/Text";
 import styles from "./Styles";
-import CustomButton from "../Components/Customs/Buttons/TextButton";
+import TextButton from "../Components/Customs/Buttons/TextButton";
 import STRING from "../Services/Constants/STRINGS";
 
 
@@ -50,7 +50,7 @@ const Pricing = ({ navigation, ...props }) => {
             <GlobalText text={"10GB storage"} style={styles.pricingOptionFeature} />
             <GlobalText text={"Basic support"} style={styles.pricingOptionFeature} />
           </View>
-          <CustomButton
+          <TextButton
             title={STRING.BUTTON.CHOOSE_PLAN}
             containerStyle={styles.planButtonContainer}
             buttonStyle={styles.planButtonStyle}
@@ -68,7 +68,7 @@ const Pricing = ({ navigation, ...props }) => {
             <GlobalText text={"100GB storage"} style={styles.pricingOptionFeature} />
             <GlobalText text={"Priority support"} style={styles.pricingOptionFeature} />
           </View>
-          <CustomButton
+          <TextButton
             title={STRING.BUTTON.CHOOSE_PLAN}
             containerStyle={styles.planButtonContainer}
             buttonStyle={styles.planButtonStyle}
@@ -86,7 +86,7 @@ const Pricing = ({ navigation, ...props }) => {
             <GlobalText text={"1000GB storage"} style={styles.pricingOptionFeature} />
             <GlobalText text={"24/7 support"} style={styles.pricingOptionFeature} />
           </View>
-          <CustomButton
+          <TextButton
             title={STRING.BUTTON.CHOOSE_PLAN}
             containerStyle={styles.planButtonContainer}
             buttonStyle={styles.planButtonStyle}
