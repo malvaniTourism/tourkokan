@@ -21,8 +21,8 @@ const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
   return (
     <Tab.Navigator
-      screenOptions={{ headerShown: false, presentation: "modal" }}
-      tabBarOptions={{
+      screenOptions={{
+        headerShown: false, presentation: "modal",
         activeTintColor: COLOR.themeComicBlue, // Set the active tab color
         inactiveTintColor: COLOR.black, // Set the inactive tab color
         labelStyle: { paddingBottom: 4 }, // Add padding to the tab labels
