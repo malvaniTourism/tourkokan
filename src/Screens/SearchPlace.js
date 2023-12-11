@@ -37,9 +37,12 @@ const SearchPlace = ({ navigation, route, ...props }) => {
     setSearchValue(v);
     let data = {
       search: v,
+      apitype: 'dropdown',
+      type: 'bus'
     };
-    comnPost(`v1/searchPlace`, data)
+    comnPost(`v2/sites`, data)
       .then((res) => {
+        console.log(res.data);
         if (res.data.success) {
           props.setLoader(false);
           setPlacesList(res.data.data.data);
@@ -57,8 +60,10 @@ const SearchPlace = ({ navigation, route, ...props }) => {
     setSearchValue(v);
     let data = {
       search: v,
+      apitype: 'dropdown',
+      type: 'bus'
     };
-    comnPost(`v1/searchPlace?page=${page}`, data)
+    comnPost(`v2/sites?page=${page}`, data)
       .then((res) => {
         if (res.data.success) {
           let nextUrl = res.data.data.next_page_url

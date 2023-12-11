@@ -10,7 +10,7 @@ export const comnGet = async (url, apiToken) => {
   const config = {
     headers: { Authorization: `Bearer ${apiToken}` },
   };
-  console.log(myUrl);
+  console.log('url:: ', myUrl);
   return axios
     .get(myUrl, config)
     .then((res) => res)

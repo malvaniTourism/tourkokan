@@ -4,7 +4,7 @@ import SmallCard from "../../Components/Customs/SmallCard";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
-import { comnGet, dataSync, saveToStorage } from "../../Services/Api/CommonServices";
+import { comnGet, comnPost, dataSync, saveToStorage } from "../../Services/Api/CommonServices";
 import { connect } from "react-redux";
 import { setLoader } from "../../Reducers/CommonActions";
 import Loader from "../../Components/Customs/Loader";
@@ -80,7 +80,7 @@ const Explore = ({ route, navigation, ...props }) => {
   }, []);
 
   const getPlaces = (ifNext) => {
-    comnGet(`v1/places?page=${ifNext ? nextPage : nextPage - 1}`, props.access_token)
+    comnPost(`v2/places?page=${ifNext ? nextPage : nextPage - 1}`, props.access_token)
       .then((res) => {
         if (res && res.data.data)
           saveToStorage(STRING.STORAGE.PLACES_RESPONSE, JSON.stringify(res))
@@ -95,7 +95,12 @@ const Explore = ({ route, navigation, ...props }) => {
   }
 
   const getCities = () => {
-    comnGet("v1/cities", props.access_token)
+    let data = {
+      apitype: 'list',
+      // parent_id: 1,
+      category: "city"
+    };
+    comnPost("v2/sites", data)
       .then((res) => {
         if (res && res.data.data)
           saveToStorage(STRING.STORAGE.CITIES_RESPONSE, JSON.stringify(res))
@@ -127,7 +132,7 @@ const Explore = ({ route, navigation, ...props }) => {
     <View style={{ flex: 1, justifyContent: "flex-start" }}>
       <Loader />
       <CheckNet isOff={offline} />
-      <Header name={STRING.HEADER.EXPLORE}
+      <Header name={""}
         startIcon={
           <Ionicons
             name="chevron-back-outline"
@@ -137,7 +142,7 @@ const Explore = ({ route, navigation, ...props }) => {
           />
         }
       />
-      <View style={{ minHeight: DIMENSIONS.iconXXL, marginTop: -10 }}>
+      <View style={styles.horizontalCityScroll}>
         <ScrollView horizontal style={styles.citiesButtonScroll}>
           {cities.map((city) => (
             <ImageButton

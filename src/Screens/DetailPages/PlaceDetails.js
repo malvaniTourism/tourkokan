@@ -37,7 +37,7 @@ const PlaceDetails = ({ navigation, route, ...props }) => {
     const getDetails = () => {
         setIsLoading(true)
         props.setLoader(true);
-        comnGet(`v1/place/${route.params.id}`, props.access_token)
+        comnPost(`v2/place/${route.params.id}`, props.access_token)
             .then((res) => {
                 setPlace(res.data.data); // Update city state with response data
                 setIsLoading(false)

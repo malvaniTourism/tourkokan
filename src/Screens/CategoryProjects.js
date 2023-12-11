@@ -33,7 +33,7 @@ const CategoryProjects = ({ navigation, route, ...props }) => {
   }, []);
 
   const getAllProjects = () => {
-    comnGet(`v1/category/${route.params.id}/projects`, props.access_token)
+    comnPost(`v2/category/${route.params.id}/projects`, props.access_token)
       .then((res) => {
         setProjects(res.data.data[0]); // Update Projects state with response data
         props.setLoader(false);

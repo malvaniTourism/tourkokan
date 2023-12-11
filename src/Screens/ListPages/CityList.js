@@ -4,7 +4,7 @@ import SmallCard from "../../Components/Customs/SmallCard";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
-import { comnGet, dataSync, saveToStorage } from "../../Services/Api/CommonServices";
+import { comnGet, comnPost, dataSync, saveToStorage } from "../../Services/Api/CommonServices";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native"; // Import the navigation hook from your navigation library
 import Loader from "../../Components/Customs/Loader";
@@ -60,7 +60,12 @@ const CityList = ({ navigation, ...props }) => {
   }, []);
 
   const getCities = () => {
-    comnGet("v1/cities", props.access_token)
+    let data = {
+      apitype: 'list',
+      // parent_id: 1,
+      category: "city"
+    };
+    comnPost("v2/sites", data)
       .then((res) => {
         if (res && res.data.data)
           saveToStorage(STRING.STORAGE.CITIES_RESPONSE, JSON.stringify(res))

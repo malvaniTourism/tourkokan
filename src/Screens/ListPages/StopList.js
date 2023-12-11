@@ -20,7 +20,7 @@ const StopList = ({ navigation, ...props }) => {
 
   useEffect(() => {
     props.setLoader(true);
-    comnGet("v1/stops", props.access_token)
+    comnPost("v2/stops", props.access_token)
       .then((res) => {
         setStops(res.data.data.data); // Update stops state with response data
         props.setLoader(false);

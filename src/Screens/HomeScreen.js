@@ -115,8 +115,9 @@ const HomeScreen = ({ navigation, ...props }) => {
     const callLandingPageAPI = async () => {
         props.setLoader(true);
         let isFirstTime = await AsyncStorage.getItem(STRING.STORAGE.IS_FIRST_TIME)
-        comnGet("v1/landingpage", props.access_token)
+        comnPost("v2/landingpage")
             .then((res) => {
+                console.log('routes: ', res.data.data.routes[3]);
                 if (res && res.data.data)
                     saveToStorage(STRING.STORAGE.LANDING_RESPONSE, JSON.stringify(res))
                 setCities(res.data.data.cities);
@@ -144,7 +145,7 @@ const HomeScreen = ({ navigation, ...props }) => {
     };
 
     const getUserProfile = () => {
-        comnGet("v1/user-profile", props.access_token)
+        comnPost("v2/user-profile", props.access_token)
             .then((res) => {
                 props.setLoader(false);
                 AsyncStorage.setItem(STRING.STORAGE.USER_NAME, res.data.data.name)

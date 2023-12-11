@@ -34,7 +34,7 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet }) => {
             table_name: table
         }
         if (val.length >= 1) {
-            comnPost("v1/search", data)
+            comnPost("v2/search", data)
                 .then((res) => {
                     setPlacesList(res.data.data.data)
                 })

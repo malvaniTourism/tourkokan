@@ -279,6 +279,9 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         width: DIMENSIONS.halfWidth - 20,
     },
+    editButtonStyle: {
+        width: DIMENSIONS.halfWidth - 20
+    },
     editSeeMoreStyle: {
         borderRadius: 0,
         borderTopLeftRadius: DIMENSIONS.borderRadius,
@@ -360,6 +363,11 @@ const styles = StyleSheet.create({
         backgroundColor: COLOR.themeComicBlue,
         width: "auto",
         paddingVertical: 13
+    },
+    horizontalCityScroll: {
+        minHeight: DIMENSIONS.iconXXL,
+        marginTop: -40,
+        marginBottom: 10
     },
     citiesButtonScroll: {
         flexDirection: 'row',

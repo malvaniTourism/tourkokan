@@ -15,6 +15,7 @@ import { PngTree } from "../../Assets/Images/pngtree.png";
 import SvgUri from 'react-native-svg-uri';
 import BusImg from "../Assets/Images/B3.svg"
 import STRING from "../Services/Constants/STRINGS";
+import ExploreGrid from "../Screens/ListPages/ExploreGrid";
 
 const Tab = createBottomTabNavigator();
 
@@ -44,11 +45,11 @@ const TabNavigator = () => {
       />
 
       <Tab.Screen
-        name={STRING.SCREEN.CITIES}
+        name={STRING.SCREEN.EXPLORE}
         component={Explore}
         options={{
-          pageName: `${STRING.SCREEN.CITIES}`,
-          tabBarLabel: `${STRING.SCREEN.CITIES}`,
+          pageName: `${STRING.SCREEN.EXPLORE}`,
+          tabBarLabel: `${STRING.SCREEN.EXPLORE}`,
           tabBarIcon: ({ color, size }) => (
             <Ionicons
               name="location-outline"
@@ -74,11 +75,11 @@ const TabNavigator = () => {
       />
 
       <Tab.Screen
-        name={STRING.SCREEN.PLACES}
-        component={Explore}
+        name={STRING.SCREEN.CATEGORIES}
+        component={ExploreGrid}
         options={{
-          pageName: `${STRING.SCREEN.PLACES}`,
-          tabBarLabel: `${STRING.SCREEN.PLACES}`,
+          pageName: `${STRING.SCREEN.EXPLOREGRID}`,
+          tabBarLabel: `${STRING.SCREEN.CATEGORIES}`,
           tabBarIcon: ({ color, size }) => (
             <Ionicons
               name="md-person-circle-sharp"

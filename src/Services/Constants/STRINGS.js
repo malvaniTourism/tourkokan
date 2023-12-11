@@ -29,6 +29,7 @@ const STRING = {
     PROFILE_VIEW: "ProfileView",
     BUS_TIMINGS: "BusTimings",
     CATEGORY_PROJECTS: "CategoryProjects",
+    CATEGORIES: "Categories",
     EXPLORE: "Explore",
     EXPLOREGRID: "ExploreGrid",
     MAP_SCREEN: "MapScreen",
@@ -69,7 +70,8 @@ const STRING = {
     PROFILE_RESPONSE: "profileResponse",
     CITIES_RESPONSE: "citiesResponse",
     PLACES_RESPONSE: "placesResponse",
-    ROUTES_RESPONSE: "routesResponse"
+    ROUTES_RESPONSE: "routesResponse",
+    EXPLORE_CITIES_RESPONSE: "exploreCitiesResponse"
   },
   HEADER: {
     BUS_TIMINGS: "Bus Timings",

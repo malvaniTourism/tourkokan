@@ -28,7 +28,7 @@ const Place_catDetails = ({ navigation, route, ...props }) => {
     }, []);
 
     const getDetails = () => {
-        comnGet(`v1/place_cat/${route.params.id}`, props.access_token)
+        comnPost(`v2/place_cat/${route.params.id}`, props.access_token)
             .then((res) => {
                 setPlace_cat(res.data.data);
                 props.setLoader(false);

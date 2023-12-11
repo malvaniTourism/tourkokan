@@ -28,7 +28,7 @@ const ProjectDetails = ({ navigation, route, ...props }) => {
     }, []);
 
     const getDetails = () => {
-        comnGet(`v1/project/${route.params.id}`, props.access_token)
+        comnPost(`v2/project/${route.params.id}`, props.access_token)
             .then((res) => {
                 setProject(res.data.data); // Update city state with response data
                 props.setLoader(false);

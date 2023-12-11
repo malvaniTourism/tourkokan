@@ -28,7 +28,7 @@ const StopDetails = ({ navigation, route, ...props }) => {
     }, []);
 
     const getDetails = () => {
-        comnGet(`v1/stop/${route.params.id}`, props.access_token)
+        comnPost(`v2/stop/${route.params.id}`, props.access_token)
             .then((res) => {
                 setStop(res.data.data); // Update city state with response data
                 props.setLoader(false);

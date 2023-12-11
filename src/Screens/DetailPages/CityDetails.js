@@ -32,7 +32,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
     }, []);
 
     const getDetails = () => {
-        comnGet(`v1/city/${route.params.id}`, props.access_token)
+        comnPost(`v2/city/${route.params.id}`, props.access_token)
             .then((res) => {
                 if (res.data.success) {
                     setCity(res.data.data);

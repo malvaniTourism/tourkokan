@@ -73,7 +73,7 @@ const Profile = ({ navigation, ...props }) => {
   }, []);
 
   const getUserProfile = () => {
-    comnGet("v1/user-profile", props.access_token)
+    comnPost("v2/user-profile", props.access_token)
       .then((res) => {
         if (res && res.data.data)
           saveToStorage(STRING.STORAGE.PROFILE_RESPONSE, JSON.stringify(res))
@@ -140,7 +140,7 @@ const Profile = ({ navigation, ...props }) => {
       profile_picture: uploadImage
     }
 
-    comnPost("v1/updateProfile", data)
+    comnPost("v2/updateProfile", data)
       .then(res => {
         setIsAlert(true);
         setAlertMessage(res.data.message);

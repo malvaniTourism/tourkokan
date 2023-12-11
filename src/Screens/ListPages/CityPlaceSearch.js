@@ -36,7 +36,7 @@ const CityPlaceSearch = ({ navigation, route, ...props }) => {
             table_name: table
         }
         // if (searchValue.length > 2) {
-        comnPost("v1/search", data)
+        comnPost("v2/search", data)
             .then((res) => {
                 setPlacesList(res.data.data.data)
                 setIsLoading(false)

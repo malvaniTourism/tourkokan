@@ -31,7 +31,7 @@ const PlaceCard = ({ data, reload, navigation }) => {
             favouritable_id: data.id
         }
         setIsFav(!isFav)
-        comnPost('v1/favourite', cityData)
+        comnPost('v2/favourite', cityData)
             .then(res => {
                 reload()
             })

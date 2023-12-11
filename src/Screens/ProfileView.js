@@ -171,7 +171,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
   }
 
   const getUserProfile = () => {
-    comnGet("v1/user-profile", props.access_token)
+    comnPost("v2/user-profile", props.access_token)
       .then((res) => {
         if (res && res.data.data)
           saveToStorage(STRING.STORAGE.PROFILE_RESPONSE, JSON.stringify(res))
@@ -186,7 +186,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
 
   const handleLogout = () => {
     props.setLoader(true);
-    comnPost("v1/logout")
+    comnPost("v2/logout")
       .then((res) => {
         if (res.data.success) {
           props.setLoader(false);
@@ -292,7 +292,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
           title={STRING.BUTTON.EDIT_PROFILE}
           seeMoreStyle={styles.editSeeMoreStyle}
           containerStyle={styles.editButtonContainer}
-          buttonStyle={styles.planButtonStyle}
+          buttonStyle={styles.editButtonStyle}
           titleStyle={styles.planButtonTitleStyle}
           raised={true}
           onPress={handleEditPress}
@@ -301,7 +301,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
           title={STRING.BUTTON.UPDATE_LOCATION}
           seeMoreStyle={styles.updateSeeMoreStyle}
           containerStyle={styles.editButtonContainer}
-          buttonStyle={styles.planButtonStyle}
+          buttonStyle={styles.editButtonStyle}
           titleStyle={styles.planButtonTitleStyle}
           raised={true}
           onPress={() => setShowLocModal(true)}

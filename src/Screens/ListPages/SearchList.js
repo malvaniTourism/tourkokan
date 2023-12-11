@@ -64,7 +64,7 @@ const SearchList = ({ navigation, route, ...props }) => {
       source_place_id: props.source.id,
       destination_place_id: props.destination.id,
     };
-    comnPost("v1/routes", data)
+    comnPost("v2/routes", data)
       .then((res) => {
         if (res.data.success) {
           if (res && res.data.data)
