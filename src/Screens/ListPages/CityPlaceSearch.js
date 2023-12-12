@@ -32,11 +32,12 @@ const CityPlaceSearch = ({ navigation, route, ...props }) => {
     const searchPlace = (val, table) => {
         setSearchValue(val);
         const data = {
-            string: val,
-            table_name: table
+            search: val,
+            apitype: "dropdown",
+            global: 1
         }
         // if (searchValue.length > 2) {
-        comnPost("v2/search", data)
+        comnPost("v2/sites", data)
             .then((res) => {
                 setPlacesList(res.data.data.data)
                 setIsLoading(false)

@@ -32,6 +32,7 @@ const Explore = ({ route, navigation, ...props }) => {
   const [isLandingDataFetched, setIsLandingDataFetched] = useState(false);
   const [nextPage, setNextPage] = useState(1)
   const [offline, setOffline] = useState(false)
+  const [selectedCity, setSelectedCity] = useState(null);
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
@@ -125,8 +126,14 @@ const Explore = ({ route, navigation, ...props }) => {
   }
 
   const seeMore = () => {
-    navigateTo(navigation, STRING.SCREEN.EXPLOREGRID, { cities })
+    navigateTo(navigation, STRING.SCREEN.CITY_LIST, { cities })
   }
+
+  const handleCityPress = (city) => {
+    console.log('city: ', city.name);
+    setSelectedCity(city.name);
+    // Perform other actions on button press if needed
+  };
 
   return (
     <View style={{ flex: 1, justifyContent: "flex-start" }}>
@@ -146,6 +153,9 @@ const Explore = ({ route, navigation, ...props }) => {
         <ScrollView horizontal style={styles.citiesButtonScroll}>
           {cities.map((city) => (
             <ImageButton
+              key={city.id}
+              onPress={() => handleCityPress(city)}
+              isSelected={selectedCity === city.name}
               text={
                 <GlobalText text={city.name} style={styles.cityButtonText} />
               }

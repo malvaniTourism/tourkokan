@@ -26,14 +26,28 @@ const styles = StyleSheet.create({
   imageButtonCircle: {
     height: DIMENSIONS.iconXXL,
     width: DIMENSIONS.iconXXL,
-    backgroundColor: COLOR.themeComicBlue,
-    borderRadius: DIMENSIONS.borderRadiusLarge
+    borderRadius: DIMENSIONS.borderRadiusLarge,
+    borderWidth: 4,
+    borderColor: COLOR.transparent,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  selectedCircle: {
+    borderColor: COLOR.themeComicBlue,
+    shadowColor: COLOR.themeComicBlue,
+  shadowOffset: { width: 4, height: 4 },
+  shadowOpacity: 1,
+  shadowRadius: 2,
+  elevation: 10,
+  },
+  selectedText: {
+    fontWeight: 'bold'
   },
   catCardIcon: {
-    height: DIMENSIONS.iconXXL,
-    width: DIMENSIONS.iconXXL,
+    height: DIMENSIONS.iconXXL - 4,
+    width: DIMENSIONS.iconXXL - 4,
     borderRadius: DIMENSIONS.borderRadiusLarge
-  }
+  },
 });
 
 export default styles;

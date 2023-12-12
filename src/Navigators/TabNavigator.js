@@ -45,11 +45,11 @@ const TabNavigator = () => {
       />
 
       <Tab.Screen
-        name={STRING.SCREEN.EXPLORE}
+        name={STRING.SCREEN.CITIES}
         component={Explore}
         options={{
           pageName: `${STRING.SCREEN.EXPLORE}`,
-          tabBarLabel: `${STRING.SCREEN.EXPLORE}`,
+          tabBarLabel: `${STRING.SCREEN.CITIES}`,
           tabBarIcon: ({ color, size }) => (
             <Ionicons
               name="location-outline"
@@ -75,11 +75,11 @@ const TabNavigator = () => {
       />
 
       <Tab.Screen
-        name={STRING.SCREEN.CATEGORIES}
+        name={STRING.SCREEN.EXPLORE}
         component={ExploreGrid}
         options={{
           pageName: `${STRING.SCREEN.EXPLOREGRID}`,
-          tabBarLabel: `${STRING.SCREEN.CATEGORIES}`,
+          tabBarLabel: `${STRING.SCREEN.EXPLORE}`,
           tabBarIcon: ({ color, size }) => (
             <Ionicons
               name="md-person-circle-sharp"
