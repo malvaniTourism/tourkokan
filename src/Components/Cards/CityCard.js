@@ -50,12 +50,28 @@ const CityCard = ({ data, reload, navigation }) => {
             <View style={styles.cityOverlay} />
             <ImageBackground source={{ uri: Path.FTP_PATH + data.image_url }} style={styles.cityImage} imageStyle={styles.cityImageStyle} resizeMode="cover" />
             <View style={{ alignItems: 'flex-end' }}>
+                <TouchableOpacity style={styles.cityLikeView1} onPress={() => onHeartClick()}>
+                    {
+                        isFav ?
+                            <Octicons name='comment' color={COLOR.red} size={DIMENSIONS.iconSize} />
+                            :
+                            <Octicons name='comment' color={COLOR.black} size={DIMENSIONS.iconSize} />
+                    }
+                </TouchableOpacity>
                 <TouchableOpacity style={styles.cityLikeView} onPress={() => onHeartClick()}>
                     {
                         isFav ?
                             <Octicons name='heart-fill' color={COLOR.red} size={DIMENSIONS.iconSize} />
                             :
                             <Octicons name='heart' color={COLOR.black} size={DIMENSIONS.iconSize} />
+                    }
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.cityLikeView} onPress={() => onHeartClick()}>
+                    {
+                        isFav ?
+                            <Octicons name='share' color={COLOR.red} size={DIMENSIONS.iconSize} />
+                            :
+                            <Octicons name='share' color={COLOR.black} size={DIMENSIONS.iconSize} />
                     }
                 </TouchableOpacity>
             </View>

@@ -24,12 +24,13 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
     const [citiesData, setCitiesData] = useState([])
     const [offline, setOffline] = useState(false)
     const [searchValue, setSearchValue] = useState("");
-  const [placesList, setPlacesList] = useState([]);
+    const [placesList, setPlacesList] = useState([]);
+    const [nextPage, setNextPage] = useState(1)
 
     // route.params.cities
 
     useEffect(() => {
-        getData()
+        getData('')
     }, [])
 
     useEffect(() => {
@@ -69,15 +70,43 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
         setSearchValue(v);
         let data = {
             apitype: "list",
-            category: "city",
+            // category: "city",
+            global: 1,
             search: v
         }
-        comnPost('v2/sites', data)
+        comnPost(`v2/sites`, data)
             .then(res => {
                 console.log(res.data);
                 if (res.data.success) {
                     props.setLoader(false);
                     setCitiesData(res.data.data.data);
+                } else {
+                    props.setLoader(false);
+                }
+            })
+            .catch(err => {
+                props.setLoader(false);
+            })
+    }
+
+    const getScrollData = (v, page) => {
+        props.setLoader(true)
+        setSearchValue(v);
+        let data = {
+            apitype: "list",
+            // category: "city",
+            global: 1,
+            search: v
+        }
+        console.log('load - - - - - - - - - - -');
+        comnPost(`v2/sites?page=${page}`, data)
+            .then(res => {
+                console.log('00--', res.data.data);
+                if (res.data.success) {
+                    props.setLoader(false);
+                    let nextUrl = res.data.data.next_page_url
+                    setCitiesData([...citiesData, ...res.data.data.data]);
+                    setNextPage(nextUrl[nextUrl.length - 1])
                 } else {
                     props.setLoader(false);
                 }
@@ -101,7 +130,7 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
                     />
                 }
             />
-            <MasonryGrid data={citiesData} />
+            <MasonryGrid data={citiesData} loadMore={() => getScrollData('', nextPage)} />
         </View>
     )
 }

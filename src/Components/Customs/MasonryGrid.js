@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity, FlatList, Modal, TouchableWithoutFeedback, Dimensions } from 'react-native';
 import Path from '../../Services/Api/BaseUrl';
 
-const MasonryGrid = ({ data }) => {
+const MasonryGrid = ({ data, loadMore }) => {
     const [selectedImage, setSelectedImage] = useState(null);
     const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
 
@@ -47,8 +47,6 @@ const MasonryGrid = ({ data }) => {
         };
     });
 
-    console.log('----------', images);
-
     const renderItem = ({ item }) => (
         <TouchableOpacity
             onLongPress={() => handleLongPress(item)}
@@ -71,6 +69,8 @@ const MasonryGrid = ({ data }) => {
                 keyExtractor={(item) => item.index.toString()}
                 renderItem={renderItem}
                 contentContainerStyle={styles.flatListContainer}
+                onEndReached={loadMore}
+                onEndReachedThreshold={0.5}
             />
 
             <Modal

@@ -167,6 +167,17 @@ const styles = StyleSheet.create({
         width: 35,
         borderRadius: DIMENSIONS.borderRadius,
         right: 5,
+        top: -30,
+        marginBottom: 10,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    cityLikeView1: {
+        backgroundColor: COLOR.grayDark,
+        height: 35,
+        width: 35,
+        borderRadius: DIMENSIONS.borderRadius,
+        right: 50,
         top: 5,
         justifyContent: 'center',
         alignItems: 'center'
@@ -175,8 +186,8 @@ const styles = StyleSheet.create({
         backgroundColor: COLOR.grayDark,
         height: 35,
         width: 100,
-        left: 5,
-        top: 50,
+        left: 10,
+        top: 10,
         borderRadius: DIMENSIONS.borderRadius,
         justifyContent: 'center',
         alignItems: 'center',

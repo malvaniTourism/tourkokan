@@ -58,18 +58,20 @@ const SearchList = ({ navigation, route, ...props }) => {
     navigateTo(navigation, STRING.SCREEN.ROUTES_LIST, { item });
   };
 
-  const searchRoute = () => {
+  const searchRoute = (page) => {
     props.setLoader(true);
     const data = {
       source_place_id: props.source.id,
       destination_place_id: props.destination.id,
     };
-    comnPost("v2/routes", data)
+    comnPost(`v2/routes?page=${page}`, data)
       .then((res) => {
         if (res.data.success) {
           if (res && res.data.data)
             saveToStorage(STRING.STORAGE.ROUTES_RESPONSE, JSON.stringify(res))
-          setList(res.data.data.data);
+          let nextUrl = res.data.data.next_page_url
+          setList([...list, ...res.data.data.data]);
+          setNextPage(nextUrl[nextUrl.length - 1])
           props.setLoader(false);
         } else {
           props.setLoader(false);
@@ -123,6 +125,8 @@ const SearchList = ({ navigation, route, ...props }) => {
           <FlatList
             keyExtractor={(item) => item.id}
             data={list}
+            onEndReached={searchRoute}
+            onEndReachedThreshold={0.5}
             renderItem={({ item }) => (
               <RouteHeadCard data={item} cardClick={() => getRoutesList(item)} />
             )}

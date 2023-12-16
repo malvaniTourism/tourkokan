@@ -32,7 +32,7 @@ const Explore = ({ route, navigation, ...props }) => {
   const [isLandingDataFetched, setIsLandingDataFetched] = useState(false);
   const [nextPage, setNextPage] = useState(1)
   const [offline, setOffline] = useState(false)
-  const [selectedCity, setSelectedCity] = useState(null);
+  const [selectedCity, setSelectedCity] = useState("");
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
@@ -106,6 +106,7 @@ const Explore = ({ route, navigation, ...props }) => {
         if (res && res.data.data)
           saveToStorage(STRING.STORAGE.CITIES_RESPONSE, JSON.stringify(res))
         setCities(res.data.data.data);
+        setSelectedCity(res.data.data.data[0].name)
         props.setLoader(false);
       })
       .catch((error) => {
