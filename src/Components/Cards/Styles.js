@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
         opacity: 0.7
     },
     routeHeadCard: {
-        height: DIMENSIONS.bannerHeight / 2 + 20,
+        height: DIMENSIONS.bannerHeight / 2 + 32,
         width: DIMENSIONS.bannerWidth,
         backgroundColor: COLOR.white,
         alignSelf: 'center',
@@ -126,13 +126,14 @@ const styles = StyleSheet.create({
     routeHeadCardTitle: {
         fontWeight: 'bold',
         color: COLOR.themeComicBlue,
-        lineHeight: 25
+        lineHeight: 25,
+        fontSize: DIMENSIONS.subtitleTextSize
     },
     routeHeadCardBottom: {
         borderBottomLeftRadius: DIMENSIONS.borderRadiusXS,
         borderBottomRightRadius: DIMENSIONS.borderRadiusXS,
         alignItems: 'center',
-        paddingVertical: 2
+        paddingVertical: 4
     },
     busImage: {
         height: DIMENSIONS.iconXXL,
@@ -162,28 +163,18 @@ const styles = StyleSheet.create({
         borderRadius: DIMENSIONS.borderRadius
     },
     cityLikeView: {
-        backgroundColor: COLOR.grayDark,
+        backgroundColor: COLOR.white,
         height: 35,
         width: 35,
         borderRadius: DIMENSIONS.borderRadius,
         right: 5,
-        top: -30,
+        top: 0,
         marginBottom: 10,
         justifyContent: 'center',
         alignItems: 'center'
     },
-    cityLikeView1: {
-        backgroundColor: COLOR.grayDark,
-        height: 35,
-        width: 35,
-        borderRadius: DIMENSIONS.borderRadius,
-        right: 50,
-        top: 5,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
     cityStarView: {
-        backgroundColor: COLOR.grayDark,
+        backgroundColor: COLOR.white,
         height: 35,
         width: 100,
         left: 10,

@@ -16,6 +16,9 @@ const styles = StyleSheet.create({
         marginVertical: DIMENSIONS.sectionGap,
         alignItems: "center",
     },
+    routeHeadCard: {
+        marginVertical: 10
+    },
     stopsSectionView: {
         margin: DIMENSIONS.sectionGap,
         paddingVertical: DIMENSIONS.sectionGap,

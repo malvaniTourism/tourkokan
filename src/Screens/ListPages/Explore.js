@@ -39,15 +39,6 @@ const Explore = ({ route, navigation, ...props }) => {
     checkLogin(navigation)
     props.setLoader(true);
 
-    if (props.access_token) {
-      if (!isLandingDataFetched && props.access_token) {
-        // getCities()
-        // getPlaces()
-        setIsLandingDataFetched(true); // Mark the data as fetched
-      }
-      props.setLoader(false);
-    }
-
     const unsubscribe = NetInfo.addEventListener(state => {
       setOffline(false)
 
@@ -61,16 +52,15 @@ const Explore = ({ route, navigation, ...props }) => {
           }
         })
 
-      dataSync(STRING.STORAGE.PLACES_RESPONSE, getPlaces())
-        .then(resp => {
-          let res = JSON.parse(resp)
-          if (res.data && res.data.data) {
-            setPlaces([...places, ...res.data.data.data]);
-          } else if (resp) {
-            setOffline(true)
-          }
-        })
-      props.setLoader(false);
+      // dataSync(STRING.STORAGE.PLACES_RESPONSE, getPlaces())
+      //   .then(resp => {
+      //     let res = JSON.parse(resp)
+      //     if (res.data && res.data.data) {
+      //       setPlaces([...places, ...res.data.data.data]);
+      //     } else if (resp) {
+      //       setOffline(true)
+      //     }
+      //   })
       // removeFromStorage(STRING.STORAGE.LANDING_RESPONSE)
     });
 
@@ -96,6 +86,7 @@ const Explore = ({ route, navigation, ...props }) => {
   }
 
   const getCities = () => {
+    props.setLoader(true)
     let data = {
       apitype: 'list',
       // parent_id: 1,
@@ -164,16 +155,18 @@ const Explore = ({ route, navigation, ...props }) => {
           ))}
         </ScrollView>
       </View>
-      <View style={styles.toggleView}>
-        <View style={styles.overlay} />
-        <ImageBackground
-          source={{ uri: "https://c4.wallpaperflare.com/wallpaper/766/970/409/cities-city-building-cityscape-wallpaper-preview.jpg" }}
-          style={styles.exploreHeaderImage} imageStyle={styles.cityImageStyle}
-          resizeMode="cover"
-        />
-        <View style={styles.details}>
-          <GlobalText text={STRING.TO_EXPLORE} style={styles.whiteText} />
-          {/* <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 10 }}>
+      {cities[0] &&
+        <View>
+          <View style={styles.toggleView}>
+            <View style={styles.overlay} />
+            <ImageBackground
+              source={{ uri: "https://c4.wallpaperflare.com/wallpaper/766/970/409/cities-city-building-cityscape-wallpaper-preview.jpg" }}
+              style={styles.exploreHeaderImage} imageStyle={styles.cityImageStyle}
+              resizeMode="cover"
+            />
+            <View style={styles.details}>
+              <GlobalText text={STRING.TO_EXPLORE} style={styles.whiteText} />
+              {/* <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 10 }}>
             <TouchableOpacity onPress={() => toggleSwitch(true)}>
               <GlobalText text={"Cities"} style={styles.whiteText} />
             </TouchableOpacity>
@@ -182,18 +175,20 @@ const Explore = ({ route, navigation, ...props }) => {
               <GlobalText text={"Places"} style={styles.whiteText} />
             </TouchableOpacity>
           </View> */}
+            </View>
+          </View>
+          <View>
+            <TextButton
+              title={STRING.BUTTON.SEE_MORE}
+              containerStyle={styles.seeMoreContainer}
+              buttonStyle={styles.seeButtonStyle}
+              titleStyle={styles.planButtonTitleStyle}
+              raised={true}
+              onPress={() => seeMore()}
+            />
+          </View>
         </View>
-      </View>
-      <View>
-        <TextButton
-          title={STRING.BUTTON.SEE_MORE}
-          containerStyle={styles.seeMoreContainer}
-          buttonStyle={styles.seeButtonStyle}
-          titleStyle={styles.planButtonTitleStyle}
-          raised={true}
-          onPress={() => seeMore()}
-        />
-      </View>
+      }
       <View style={{ minHeight: DIMENSIONS.screenHeight }}>
         {isEnabled ?
           <ScrollView

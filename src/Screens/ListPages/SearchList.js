@@ -21,7 +21,9 @@ import CheckNet from "../../Components/Common/CheckNet";
 
 const SearchList = ({ navigation, route, ...props }) => {
   const [list, setList] = useState([]);
-  const [offline, setOffline] = useState(false)
+  const [offline, setOffline] = useState(false);
+  const [nextPage, setNextPage] = useState(1);
+  const [nextUrl, setNextUrl] = useState(1)
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
@@ -58,28 +60,31 @@ const SearchList = ({ navigation, route, ...props }) => {
     navigateTo(navigation, STRING.SCREEN.ROUTES_LIST, { item });
   };
 
-  const searchRoute = (page) => {
-    props.setLoader(true);
-    const data = {
-      source_place_id: props.source.id,
-      destination_place_id: props.destination.id,
-    };
-    comnPost(`v2/routes?page=${page}`, data)
-      .then((res) => {
-        if (res.data.success) {
-          if (res && res.data.data)
-            saveToStorage(STRING.STORAGE.ROUTES_RESPONSE, JSON.stringify(res))
-          let nextUrl = res.data.data.next_page_url
-          setList([...list, ...res.data.data.data]);
-          setNextPage(nextUrl[nextUrl.length - 1])
+  const searchRoute = () => {
+    if (nextUrl && nextPage >= 1) {
+      props.setLoader(true);
+      const data = {
+        source_place_id: props.source.id,
+        destination_place_id: props.destination.id,
+      };
+      comnPost(`v2/routes?page=${nextPage}`, data)
+        .then((res) => {
+          if (res.data.success) {
+            if (res && res.data.data)
+              saveToStorage(STRING.STORAGE.ROUTES_RESPONSE, JSON.stringify(res))
+            let myNextUrl = res.data.data.next_page_url
+            setNextUrl(myNextUrl)
+            setList([...list, ...res.data.data.data]);
+            setNextPage(myNextUrl[myNextUrl.length - 1])
+            props.setLoader(false);
+          } else {
+            props.setLoader(false);
+          }
+        })
+        .catch((err) => {
           props.setLoader(false);
-        } else {
-          props.setLoader(false);
-        }
-      })
-      .catch((err) => {
-        props.setLoader(false);
-      });
+        });
+    }
   };
 
   const renderItem = ({ item }) => {
@@ -126,9 +131,9 @@ const SearchList = ({ navigation, route, ...props }) => {
             keyExtractor={(item) => item.id}
             data={list}
             onEndReached={searchRoute}
-            onEndReachedThreshold={0.5}
+            onEndReachedThreshold={0.25}
             renderItem={({ item }) => (
-              <RouteHeadCard data={item} cardClick={() => getRoutesList(item)} />
+              <RouteHeadCard data={item} cardClick={() => getRoutesList(item)} style={styles.routeHeadCard} />
             )}
           />
         ) : (
