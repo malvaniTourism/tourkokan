@@ -25,7 +25,7 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
     const [offline, setOffline] = useState(false)
     const [searchValue, setSearchValue] = useState("");
     const [placesList, setPlacesList] = useState([]);
-    const [nextPage, setNextPage] = useState(1)
+    const [nextPage, setNextPage] = useState(2)
 
     // route.params.cities
 
