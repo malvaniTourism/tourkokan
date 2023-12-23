@@ -46,10 +46,10 @@ const PlaceCard = ({ data, reload, navigation }) => {
 
     const getPlace = (id) => {
         // navigateTo(navigation, STRING.SCREEN.PLACE_DETAILS, { id })
-        setIsVisible(true)
-        setTimeout(() => {
-            setIsVisible(false)
-        }, 2000)
+        // setIsVisible(true)
+        // setTimeout(() => {
+        //     setIsVisible(false)
+        // }, 2000)
     }
 
     return (

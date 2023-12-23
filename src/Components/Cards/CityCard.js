@@ -19,22 +19,24 @@ const CityCard = ({ data, reload, navigation }) => {
     const [rating, setRating] = useState(data.rating)
 
     const getCity = (id) => {
-        // navigateTo(navigation, STRING.SCREEN.CITY_DETAILS, { id })
-        setIsVisible(true)
-        setTimeout(() => {
-            setIsVisible(false)
-        }, 2000)
+        navigateTo(navigation, STRING.SCREEN.CITY_DETAILS, { id })
+        // setIsVisible(true)
+        // setTimeout(() => {
+        //     setIsVisible(false)
+        // }, 2000)
     }
 
     const onHeartClick = async () => {
         let placeData = {
             user_id: await AsyncStorage.getItem(STRING.STORAGE.USER_ID),
-            favouritable_type: STRING.TABLE.CITY,
+            favouritable_type: STRING.TABLE.SITES,
             favouritable_id: data.id
         }
+        console.log(placeData);
         setIsFav(!isFav)
         comnPost('v2/favourite', placeData)
             .then(res => {
+                console.log(res);
                 reload()
             })
             .catch(err => {

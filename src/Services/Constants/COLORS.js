@@ -5,6 +5,7 @@ const COLOR = {
   themeLightBlue: "#2E67F8",
   themeComicBlue: "#00AEEF",
   themeComicBlueLight: "rgba(0, 174, 239, .5)",
+  blackOpacity: "rgba(0, 0, 0, 0.5)",
   verified: '#3086e3',
   busYellow: "#ffce40",
 

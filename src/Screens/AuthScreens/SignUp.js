@@ -46,7 +46,7 @@ const SignUp = ({ navigation, ...props }) => {
   }, []);
 
   const getRoles = () => {
-    comnPost("v2/roleDD")
+    comnGet("v2/roleDD")
       .then((res) => {
         if (res.data.success) {
           props.setLoader(false);

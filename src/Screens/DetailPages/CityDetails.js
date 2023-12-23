@@ -4,7 +4,7 @@ import SmallCard from "../../Components/Customs/SmallCard";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
-import { comnGet } from "../../Services/Api/CommonServices";
+import { comnGet, comnPost } from "../../Services/Api/CommonServices";
 import { connect } from "react-redux";
 import { setLoader } from "../../Reducers/CommonActions";
 import Loader from "../../Components/Customs/Loader";
@@ -32,7 +32,10 @@ const CityDetails = ({ navigation, route, ...props }) => {
     }, []);
 
     const getDetails = () => {
-        comnPost(`v2/city/${route.params.id}`, props.access_token)
+        let data = {
+            id: route.params.id
+        }
+        comnPost(`v2/getSite`, data)
             .then((res) => {
                 if (res.data.success) {
                     setCity(res.data.data);

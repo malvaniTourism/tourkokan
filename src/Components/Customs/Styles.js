@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     position: "absolute",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: COLOR.blackOpacity,
   },
   alertContainer: {
     zIndex: 100,
@@ -131,13 +131,54 @@ const styles = StyleSheet.create({
   lottie: {
     width: 200,
     height: 200,
-    
+
   },
   loaderText: {
     fontWeight: "bold",
     color: COLOR.busYellow,
     fontSize: DIMENSIONS.xlText
-  }
+  },
+  masonryContainer: {
+    overflow: 'hidden',
+    position: 'relative',
+  },
+  gridImage: {
+    flex: 1,
+    resizeMode: 'cover',
+  },
+  gridText: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: 8,
+    backgroundColor: COLOR.blackOpacity,
+    color: 'white',
+  },
+  flatListContainer: {
+    justifyContent: 'space-between',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLOR.blackOpacity
+  },
+  modalImage: {
+    height: DIMENSIONS.bannerHeight,
+    width: DIMENSIONS.bannerWidth - 40,
+    resizeMode: 'cover',
+  },
+  masonryTextContainer: {
+    backgroundColor: COLOR.white,
+    width: DIMENSIONS.bannerWidth - 40,
+    borderBottomEndRadius: DIMENSIONS.borderRadius,
+    borderBottomStartRadius: DIMENSIONS.borderRadius,
+    paddingVertical: 10,
+  },
+  modalText: {
+    color: COLOR.black,
+  },
 });
 
 export default styles;

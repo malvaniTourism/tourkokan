@@ -102,6 +102,7 @@ const STRING = {
     PLACE: "Place",
     CITIES: "cities",
     PLACES: "places",
+    SITES: "Sites"
   },
   CITY: {
     DEVGAD: "Devgad",

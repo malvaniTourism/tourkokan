@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity, FlatList, Modal, TouchableWithoutFeedback, Dimensions } from 'react-native';
+import { View, Text, Image, TouchableOpacity, FlatList, Modal, TouchableWithoutFeedback, Dimensions } from 'react-native';
 import Path from '../../Services/Api/BaseUrl';
+import styles from './Styles';
+import GlobalText from './Text';
 
 const MasonryGrid = ({ data, loadMore }) => {
     const [selectedImage, setSelectedImage] = useState(null);
@@ -51,12 +53,12 @@ const MasonryGrid = ({ data, loadMore }) => {
         <TouchableOpacity
             onLongPress={() => handleLongPress(item)}
         >
-            <View style={[styles.container, { width: item.dimensions.width, height: item.dimensions.height }]}>
+            <View style={[styles.masonryContainer, { width: item.dimensions.width, height: item.dimensions.height }]}>
                 <Image
                     source={{ uri: item.uri }}
-                    style={styles.image}
+                    style={styles.gridImage}
                 />
-                <Text style={styles.text}>{item.text}</Text>
+                <Text style={styles.gridText}>{item.text}</Text>
             </View>
         </TouchableOpacity>
     );
@@ -85,56 +87,14 @@ const MasonryGrid = ({ data, loadMore }) => {
                             source={{ uri: selectedImage?.uri }}
                             style={styles.modalImage}
                         />
-                        <Text style={styles.modalText}>{selectedImage?.text}</Text>
-                        <TouchableOpacity onPress={closeModal}>
-                            <Text style={styles.closeButton}>Close</Text>
-                        </TouchableOpacity>
+                        <View style={styles.masonryTextContainer}>
+                            <GlobalText text={selectedImage?.text} style={styles.modalText} />
+                        </View>
                     </View>
                 </TouchableWithoutFeedback>
             </Modal>
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        overflow: 'hidden',
-        position: 'relative',
-    },
-    image: {
-        flex: 1,
-        resizeMode: 'cover',
-    },
-    text: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        padding: 8,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        color: 'white',
-    },
-    flatListContainer: {
-        justifyContent: 'space-between',
-    },
-    modalContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    modalImage: {
-        height: '80%', // Adjust the size as needed
-        width: '80%', // Adjust the size as needed
-        resizeMode: 'contain',
-    },
-    modalText: {
-        color: 'white',
-        marginTop: 10,
-    },
-    closeButton: {
-        color: 'white',
-        marginTop: 20,
-    },
-});
 
 export default MasonryGrid;
