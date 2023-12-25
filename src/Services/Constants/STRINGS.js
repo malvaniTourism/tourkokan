@@ -87,6 +87,7 @@ const STRING = {
     ROUTE: "Route",
     ROUTES: "Routes",
     STOPS: "Stops",
+    COMMENTS: "Comments"
   },
   ALERT: {
     FAILED: "Failed",

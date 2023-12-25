@@ -27,7 +27,7 @@ const PlaceCard = ({ data, reload, navigation }) => {
     const onHeartClick = async () => {
         let cityData = {
             user_id: await AsyncStorage.getItem(STRING.STORAGE.USER_ID),
-            favouritable_type: STRING.TABLE.PLACE,
+            favouritable_type: STRING.TABLE.SITES,
             favouritable_id: data.id
         }
         setIsFav(!isFav)
@@ -55,7 +55,7 @@ const PlaceCard = ({ data, reload, navigation }) => {
     return (
         <View style={styles.placeContainer}>
             <View style={styles.placeImageView}>
-                <ImageBackground source={{ uri: Path.FTP_PATH + data.image_url }} style={styles.placeImage} imageStyle={styles.placeImageStyle} resizeMode="cover" />
+                <ImageBackground source={{ uri: Path.FTP_PATH + data.image }} style={styles.placeImage} imageStyle={styles.placeImageStyle} resizeMode="cover" />
                 <TouchableOpacity style={styles.likeView} onPress={() => onHeartClick()}>
                     {
                         isFav ?

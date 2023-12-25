@@ -16,6 +16,7 @@ import styles from "./Styles";
 import TabView from "../../Components/Common/TabView";
 import Path from "../../Services/Api/BaseUrl";
 import STRING from "../../Services/Constants/STRINGS";
+import PlaceCard from "../../Components/Cards/PlaceCard";
 
 const CityDetails = ({ navigation, route, ...props }) => {
     const [city, setCity] = useState([]); // State to store city
@@ -38,6 +39,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
         comnPost(`v2/getSite`, data)
             .then((res) => {
                 if (res.data.success) {
+                    console.log(res.data.data);
                     setCity(res.data.data);
                     props.setLoader(false);
                 } else {
@@ -90,20 +92,21 @@ const CityDetails = ({ navigation, route, ...props }) => {
                     <GlobalText text={`photos: ${JSON.stringify(city.photos)}`} />
 
                     <View style={styles.sectionView}>
-                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                            {city.places && city.places.map((place, index) => (
-                                <SmallCard
-                                    key={index}
-                                    Icon={
-                                        <Image
-                                            source={{ uri: Path.API_PATH + place.icon }}
-                                            color={COLOR.yellow}
-                                            size={DIMENSIONS.iconSize}
-                                        />
-                                    }
-                                    title={place.name}
-                                    onPress={() => handleSmallCardClick(STRING.SCREEN.PLACE_DETAILS, place.id)}
-                                />
+                        <ScrollView showsHorizontalScrollIndicator={false}>
+                            {city.sites && city.sites.map((place, index) => (
+                                <PlaceCard data={place} />
+                                // <SmallCard
+                                //     key={index}
+                                //     Icon={
+                                //         <Image
+                                //             source={{ uri: Path.API_PATH + place.icon }}
+                                //             color={COLOR.yellow}
+                                //             size={DIMENSIONS.iconSize}
+                                //         />
+                                //     }
+                                //     title={place.name}
+                                //     onPress={() => handleSmallCardClick(STRING.SCREEN.PLACE_DETAILS, place.id)}
+                                // />
                             ))}
                         </ScrollView>
                     </View>

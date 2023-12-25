@@ -21,6 +21,8 @@ import CheckNet from "../../Components/Common/CheckNet";
 import ImageButton from "../../Components/Customs/Buttons/ImageButton";
 import TextButton from "../../Components/Customs/Buttons/TextButton";
 // import InstaStory from 'react-native-insta-story';
+import CommentsSheet from "../../Components/Common/CommentsSheet";
+import BottomSheet from "../../Components/Customs/BottomSheet";
 
 const Explore = ({ route, navigation, ...props }) => {
   const refRBSheet = useRef();
@@ -127,6 +129,15 @@ const Explore = ({ route, navigation, ...props }) => {
     // Perform other actions on button press if needed
   };
 
+  const openCommentsSheet = () => {
+    console.log('open');
+    refRBSheet.current.open()
+}
+
+const closeCommentsSheet = () => {
+    refRBSheet.current.close()
+}
+
   return (
     <View style={{ flex: 1, justifyContent: "flex-start" }}>
       <Loader />
@@ -195,7 +206,7 @@ const Explore = ({ route, navigation, ...props }) => {
             style={{ marginBottom: 350 }}
           >
             {cities.map((city) => (
-              <CityCard data={city} navigation={navigation} reload={() => getCities()} />
+              <CityCard data={city} navigation={navigation} reload={() => getCities()} addComment={() => openCommentsSheet()} />
             ))}
           </ScrollView>
           :
@@ -214,6 +225,16 @@ const Explore = ({ route, navigation, ...props }) => {
           </SafeAreaView>
         }
       </View>
+      <BottomSheet
+        refRBSheet={refRBSheet}
+        height={DIMENSIONS.screenHeight - DIMENSIONS.headerSpace}
+        Component={<CommentsSheet
+          openCommentsSheet={() => openCommentsSheet()}
+          closeCommentsSheet={() => closeCommentsSheet()}
+        />}
+        openCommentsSheet={() => openCommentsSheet()}
+        closeCommentsSheet={() => closeCommentsSheet()}
+      />
     </View>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, ImageBackground, TouchableOpacity } from 'react-native'
+import { View, Text, ImageBackground, TouchableOpacity, Share } from 'react-native'
 import styles from './Styles'
 import Path from '../../Services/Api/BaseUrl';
 import GlobalText from '../Customs/Text';
@@ -13,7 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { comnPost } from '../../Services/Api/CommonServices';
 import STRING from '../../Services/Constants/STRINGS';
 
-const CityCard = ({ data, reload, navigation }) => {
+const CityCard = ({ data, reload, navigation, addComment }) => {
     const [isVisible, setIsVisible] = useState(false)
     const [isFav, setIsFav] = useState(data.is_favorite)
     const [rating, setRating] = useState(data.rating)
@@ -43,6 +43,26 @@ const CityCard = ({ data, reload, navigation }) => {
             })
     }
 
+    const onShareClick = async () => {
+        try {
+            const result = await Share.share({
+                message:
+                    'Share with you friends and loved ones!!!',
+            });
+            if (result.action === Share.sharedAction) {
+                if (result.activityType) {
+                    // shared with activity type of result.activityType
+                } else {
+                    // shared
+                }
+            } else if (result.action === Share.dismissedAction) {
+                // dismissed
+            }
+        } catch (error) {
+            Alert.alert(error.message);
+        }
+    }
+
     const onStarRatingPress = (rate) => {
         setRating(rate)
     }
@@ -60,10 +80,10 @@ const CityCard = ({ data, reload, navigation }) => {
                             <Octicons name='heart' color={COLOR.black} size={DIMENSIONS.iconSize} />
                     }
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.cityLikeView} onPress={() => onHeartClick()}>
+                <TouchableOpacity style={styles.cityLikeView} onPress={() => addComment()}>
                     <Octicons name='comment' color={COLOR.black} size={DIMENSIONS.iconSize} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.cityLikeView} onPress={() => onHeartClick()}>
+                <TouchableOpacity style={styles.cityLikeView} onPress={() => onShareClick()}>
                     <Octicons name='share' color={COLOR.black} size={DIMENSIONS.iconSize} />
                 </TouchableOpacity>
             </View>

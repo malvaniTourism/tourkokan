@@ -31,7 +31,8 @@ const DIMENSIONS = {
     borderRadiusXS: 10,
     borderRadiusXXS: 5,
 
-    headerHeight: sw / 7,
+    headerHeight: sh / 100 * 6,
+    headerSpace: (sh / 100 * 6) * 2.5,
 
     xlText: sw / 20,
     largeText: sw / 23,
