@@ -45,23 +45,23 @@ const CityCard = ({ data, reload, navigation, addComment }) => {
 
     const onShareClick = async () => {
         try {
+            const deepLink = `awesomeapp://citydetails?id=${data.id}`; // Replace with your custom scheme and path
+            const shareMessage = `Explore the details of this amazing city in TourKokan! 🌍🏙️ Check out what makes it unique and discover more about its culture, attractions, and hidden gems. Open the link to dive into the City Details now! 📱👀`;
+            const shareUrl = deepLink;
             const result = await Share.share({
-                message:
-                    'Share with you friends and loved ones!!!',
+                message: shareMessage,
+                url: shareUrl,
             });
+
             if (result.action === Share.sharedAction) {
-                if (result.activityType) {
-                    // shared with activity type of result.activityType
-                } else {
-                    // shared
-                }
+                console.log('Content shared successfully');
             } else if (result.action === Share.dismissedAction) {
-                // dismissed
+                console.log('Share dismissed');
             }
         } catch (error) {
-            Alert.alert(error.message);
+            console.error('Error sharing content:', error.message);
         }
-    }
+    };
 
     const onStarRatingPress = (rate) => {
         setRating(rate)
