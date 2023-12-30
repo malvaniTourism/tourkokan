@@ -35,6 +35,7 @@ const Explore = ({ route, navigation, ...props }) => {
   const [nextPage, setNextPage] = useState(1)
   const [offline, setOffline] = useState(false)
   const [selectedCity, setSelectedCity] = useState("");
+  const [selectedSites, setSelectedSites] = useState([])
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
@@ -100,17 +101,12 @@ const Explore = ({ route, navigation, ...props }) => {
           saveToStorage(STRING.STORAGE.CITIES_RESPONSE, JSON.stringify(res))
         setCities(res.data.data.data);
         setSelectedCity(res.data.data.data[0].name)
+        setSelectedSites(res.data.data.data[0].sites)
         props.setLoader(false);
       })
       .catch((error) => {
         props.setLoader(false);
       });
-  }
-
-  const renderPlaces = ({ item, index }) => {
-    return (
-      <PlaceCard data={item} navigation={navigation} reload={() => getPlaces()} />
-    )
   }
 
   const goToNext = () => {
@@ -126,17 +122,16 @@ const Explore = ({ route, navigation, ...props }) => {
   const handleCityPress = (city) => {
     console.log('city: ', city.name);
     setSelectedCity(city.name);
-    // Perform other actions on button press if needed
+    setSelectedSites(cities.find((item) => item.name === city.name).sites)
   };
 
   const openCommentsSheet = () => {
-    console.log('open');
     refRBSheet.current.open()
-}
+  }
 
-const closeCommentsSheet = () => {
+  const closeCommentsSheet = () => {
     refRBSheet.current.close()
-}
+  }
 
   return (
     <View style={{ flex: 1, justifyContent: "flex-start" }}>
@@ -177,15 +172,6 @@ const closeCommentsSheet = () => {
             />
             <View style={styles.details}>
               <GlobalText text={STRING.TO_EXPLORE} style={styles.whiteText} />
-              {/* <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 10 }}>
-            <TouchableOpacity onPress={() => toggleSwitch(true)}>
-              <GlobalText text={"Cities"} style={styles.whiteText} />
-            </TouchableOpacity>
-            <View style={styles.lineVert} />
-            <TouchableOpacity onPress={() => toggleSwitch(false)}>
-              <GlobalText text={"Places"} style={styles.whiteText} />
-            </TouchableOpacity>
-          </View> */}
             </View>
           </View>
           <View>
@@ -201,28 +187,19 @@ const closeCommentsSheet = () => {
         </View>
       }
       <View style={{ minHeight: DIMENSIONS.screenHeight }}>
-        {isEnabled ?
-          <ScrollView
-            style={{ marginBottom: 350 }}
-          >
-            {cities.map((city) => (
-              <CityCard data={city} navigation={navigation} reload={() => getCities()} addComment={() => openCommentsSheet()} />
-            ))}
-          </ScrollView>
-          :
-          <SafeAreaView style={{ alignItems: "center", marginBottom: 270 }}>
-            <ScrollView>
-              <FlatList
-                keyExtractor={(item) => item.id}
-                data={places}
-                renderItem={renderPlaces}
-                // numColumns={2}
-                style={{ paddingBottom: 80 }}
-                onEndReached={() => goToNext()}
-                onEndReachedThreshold={0.5}
-              />
+        {
+          selectedSites[0] ?
+            <ScrollView
+              style={{ marginBottom: 350 }}
+            >
+              {selectedSites.map((place) => (
+                <PlaceCard data={place} navigation={navigation} reload={() => getPlaces()} />
+              ))}
             </ScrollView>
-          </SafeAreaView>
+            :
+            <View style={styles.pricingView}>
+              <GlobalText text={STRING.ADDED} style={styles.boldText} />
+            </View>
         }
       </View>
       <BottomSheet
