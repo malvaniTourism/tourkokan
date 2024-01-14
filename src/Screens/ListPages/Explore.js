@@ -200,7 +200,7 @@ const Explore = ({ route, navigation, ...props }) => {
               style={{ marginBottom: 450 }}
             >
               {selectedSites.map((place) => (
-                <CityCard data={place} navigation={navigation} reload={() => getPlaces()} onClick={() => getCityDetails(place.id)} />
+                <CityCard data={place} navigation={navigation} reload={() => getPlaces()} onClick={() => getCityDetails(place.id)} addComment={() => openCommentsSheet()} />
               ))}
             </ScrollView>
             :

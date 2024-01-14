@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { View, ScrollView, Text, ImageBackground, Image, TouchableOpacity } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { View, ScrollView, Text, ImageBackground, Image, TouchableOpacity, Share } from "react-native";
 import SmallCard from "../../Components/Customs/SmallCard";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import COLOR from "../../Services/Constants/COLORS";
@@ -19,11 +19,15 @@ import STRING from "../../Services/Constants/STRINGS";
 import PlaceCard from "../../Components/Cards/PlaceCard";
 import CityCard from "../../Components/Cards/CityCard";
 import Octicons from "react-native-vector-icons/Octicons";
+import CommentsSheet from "../../Components/Common/CommentsSheet";
+import BottomSheet from "../../Components/Customs/BottomSheet";
 
 const CityDetails = ({ navigation, route, ...props }) => {
+    const refRBSheet = useRef();
     const [city, setCity] = useState([]); // State to store city
     const [error, setError] = useState(null); // State to store error message
-    const [cityId, setCityId] = useState(route.params.id)
+    const [cityId, setCityId] = useState(route.params.id);
+    const [isFav, setIsFav] = useState(false)
 
     useEffect(() => {
         const backHandler = goBackHandler(navigation)
@@ -45,6 +49,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
                 if (res.data.success) {
                     console.log(res.data.data);
                     setCity(res.data.data);
+                    setIsFav(res.data.data.is_favorite)
                     props.setLoader(false);
                 } else {
                     setError(res.data.message);
@@ -58,11 +63,13 @@ const CityDetails = ({ navigation, route, ...props }) => {
     }
 
     const onHeartClick = async () => {
+        props.setLoader(true)
         let placeData = {
             user_id: await AsyncStorage.getItem(STRING.STORAGE.USER_ID),
             favouritable_type: STRING.TABLE.SITES,
             favouritable_id: city.id
         }
+        setIsFav(!isFav)
         comnPost('v2/favourite', placeData)
             .then(res => {
                 getDetails()
@@ -70,6 +77,34 @@ const CityDetails = ({ navigation, route, ...props }) => {
             .catch(err => {
             })
     }
+
+    const openCommentsSheet = () => {
+        refRBSheet.current.open()
+    }
+
+    const closeCommentsSheet = () => {
+        refRBSheet.current.close()
+    }
+
+    const onShareClick = async () => {
+        try {
+            const deepLink = `awesomeapp://citydetails?id=${data.id}`; // Replace with your custom scheme and path
+            const shareMessage = `Explore the details of this amazing city in TourKokan! 🌍🏙️ Check out what makes it unique and discover more about its culture, attractions, and hidden gems. Open the link to dive into the City Details now! 📱👀`;
+            const shareUrl = deepLink;
+            const result = await Share.share({
+                message: shareMessage,
+                url: shareUrl,
+            });
+
+            if (result.action === Share.sharedAction) {
+                console.log('Content shared successfully');
+            } else if (result.action === Share.dismissedAction) {
+                console.log('Share dismissed');
+            }
+        } catch (error) {
+            console.error('Error sharing content:', error.message);
+        }
+    };
 
     return (
         <ScrollView>
@@ -85,6 +120,16 @@ const CityDetails = ({ navigation, route, ...props }) => {
                         style={styles.backIcon}
                     />
                 }
+                endIcon={
+                    <TouchableOpacity style={styles.cityLikeView} onPress={() => onHeartClick()}>
+                        {
+                            isFav ?
+                                <Octicons name='heart-fill' color={COLOR.red} size={DIMENSIONS.iconSize} />
+                                :
+                                <Octicons name='heart' color={COLOR.black} size={DIMENSIONS.iconSize} />
+                        }
+                    </TouchableOpacity>
+                }
                 style={styles.cityHeader}
             />
 
@@ -92,16 +137,8 @@ const CityDetails = ({ navigation, route, ...props }) => {
                 <View>
                     <View style={styles.placeImageView}>
                         <ImageBackground source={{ uri: Path.FTP_PATH + city.image }} style={styles.placeImage} />
-                        <View style={{ alignItems: 'flex-end' }}>
-                            <TouchableOpacity style={styles.cityLikeView} onPress={() => onHeartClick()}>
-                                {
-                                    city.is_favorite ?
-                                        <Octicons name='heart-fill' color={COLOR.red} size={DIMENSIONS.iconSize} />
-                                        :
-                                        <Octicons name='heart' color={COLOR.black} size={DIMENSIONS.iconSize} />
-                                }
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.cityLikeView} onPress={() => addComment()}>
+                        <View style={{ alignItems: 'flex-end', top: 50, right: 7 }}>
+                            <TouchableOpacity style={styles.cityLikeView} onPress={() => openCommentsSheet()}>
                                 <Octicons name='comment' color={COLOR.black} size={DIMENSIONS.iconSize} />
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.cityLikeView} onPress={() => onShareClick()}>
@@ -129,7 +166,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
                         <View style={styles.sectionView}>
                             <ScrollView showsHorizontalScrollIndicator={false}>
                                 {city.sites && city.sites.map((place, index) => (
-                                    <CityCard data={place} navigation={navigation} reload={() => getDetails()} onClick={() => getDetails(place.id)} />
+                                    <CityCard data={place} navigation={navigation} reload={() => getDetails()} onClick={() => getDetails(place.id)} addComment={() => openCommentsSheet()} />
                                 ))}
                             </ScrollView>
                         </View>
@@ -137,6 +174,16 @@ const CityDetails = ({ navigation, route, ...props }) => {
                     </View>
                 </View>
             }
+            <BottomSheet
+                refRBSheet={refRBSheet}
+                height={DIMENSIONS.screenHeight - DIMENSIONS.headerSpace}
+                Component={<CommentsSheet
+                    openCommentsSheet={() => openCommentsSheet()}
+                    closeCommentsSheet={() => closeCommentsSheet()}
+                />}
+                openCommentsSheet={() => openCommentsSheet()}
+                closeCommentsSheet={() => closeCommentsSheet()}
+            />
         </ScrollView>
     );
 };

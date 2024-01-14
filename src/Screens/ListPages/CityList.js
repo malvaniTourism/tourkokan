@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { View, ScrollView, Text, TouchableOpacity } from "react-native";
 import SmallCard from "../../Components/Customs/SmallCard";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -17,8 +17,11 @@ import CityCard from "../../Components/Cards/CityCard";
 import STRING from "../../Services/Constants/STRINGS";
 import NetInfo from '@react-native-community/netinfo';
 import CheckNet from "../../Components/Common/CheckNet";
+import CommentsSheet from "../../Components/Common/CommentsSheet";
+import BottomSheet from "../../Components/Customs/BottomSheet";
 
 const CityList = ({ navigation, ...props }) => {
+  const refRBSheet = useRef();
   const [cities, setCities] = useState([]); // State to store cities
   const [error, setError] = useState(null); // State to store error message
   const [isLandingDataFetched, setIsLandingDataFetched] = useState(false);
@@ -82,6 +85,14 @@ const CityList = ({ navigation, ...props }) => {
     navigateTo(navigation, STRING.SCREEN.CITY_DETAILS, { id })
   }
 
+  const openCommentsSheet = () => {
+    refRBSheet.current.open()
+  }
+
+  const closeCommentsSheet = () => {
+    refRBSheet.current.close()
+  }
+
   return (
     <ScrollView stickyHeaderIndices={[0]}>
       <CheckNet isOff={offline} />
@@ -100,11 +111,21 @@ const CityList = ({ navigation, ...props }) => {
         <View style={{ flex: 1, alignItems: "center" }}>
           <View>
             {cities.map((city) => (
-              <CityCard data={city} navigation={navigation} reload={() => getCities()} onClick={() => getCityDetails(city.id)} />
+              <CityCard data={city} navigation={navigation} reload={() => getCities()} onClick={() => getCityDetails(city.id)} addComment={() => openCommentsSheet()} />
             ))}
           </View>
         </View>
       </View>
+      <BottomSheet
+        refRBSheet={refRBSheet}
+        height={DIMENSIONS.screenHeight - DIMENSIONS.headerSpace}
+        Component={<CommentsSheet
+          openCommentsSheet={() => openCommentsSheet()}
+          closeCommentsSheet={() => closeCommentsSheet()}
+        />}
+        openCommentsSheet={() => openCommentsSheet()}
+        closeCommentsSheet={() => closeCommentsSheet()}
+      />
     </ScrollView>
   );
 };

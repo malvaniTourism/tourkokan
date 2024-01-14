@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
         top: 10,
         marginBottom: 10,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        zIndex: 2
     },
     cityStarView: {
         backgroundColor: COLOR.white,

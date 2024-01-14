@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { View, ScrollView, Text, ImageBackground } from "react-native";
 import SmallCard from "../../Components/Customs/SmallCard";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -16,9 +16,11 @@ import { backPage, checkLogin, goBackHandler } from "../../Services/CommonMethod
 import CityCard from "../../Components/Cards/CityCard";
 import GlobalText from "../../Components/Customs/Text";
 import STRING from "../../Services/Constants/STRINGS";
+import CommentsSheet from "../../Components/Common/CommentsSheet";
 // import SkeletonContent from 'react-native-skeleton-content';
 
 const PlaceDetails = ({ navigation, route, ...props }) => {
+    const refRBSheet = useRef();
     const [place, setPlace] = useState([]); // State to store city
     const [error, setError] = useState(null); // State to store error message
     const [isLoading, setIsLoading] = useState(true)
@@ -48,6 +50,14 @@ const PlaceDetails = ({ navigation, route, ...props }) => {
                 setIsLoading(false)
                 props.setLoader(false);
             });
+    }
+
+    const openCommentsSheet = () => {
+        refRBSheet.current.open()
+    }
+
+    const closeCommentsSheet = () => {
+        refRBSheet.current.close()
     }
 
     return (
@@ -92,12 +102,22 @@ const PlaceDetails = ({ navigation, route, ...props }) => {
 
                                 <View style={styles.sectionView}>
                                     <GlobalText text={"Located In:"} style={styles.sectionTitle} />
-                                    <CityCard data={place.city} reload={() => getDetails()} navigation={navigation} />
+                                    <CityCard data={place.city} reload={() => getDetails()} navigation={navigation} addComment={() => openCommentsSheet()} />
                                 </View>
                             </View>
                         }
                     </View>
             }
+            <BottomSheet
+                refRBSheet={refRBSheet}
+                height={DIMENSIONS.screenHeight - DIMENSIONS.headerSpace}
+                Component={<CommentsSheet
+                    openCommentsSheet={() => openCommentsSheet()}
+                    closeCommentsSheet={() => closeCommentsSheet()}
+                />}
+                openCommentsSheet={() => openCommentsSheet()}
+                closeCommentsSheet={() => closeCommentsSheet()}
+            />
         </ScrollView>
     );
 };
