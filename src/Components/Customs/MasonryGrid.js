@@ -42,7 +42,7 @@ const MasonryGrid = ({ data, loadMore }) => {
     const images = data.map((item, index) => {
         const { width, height } = calculateImageDimensions();
         return {
-            uri: Path.FTP_PATH1 + item.image,
+            uri: Path.FTP_PATH + item.image,
             text: item.name,
             dimensions: { width, height },
             index,

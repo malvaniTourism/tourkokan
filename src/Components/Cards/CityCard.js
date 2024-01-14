@@ -13,18 +13,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { comnPost } from '../../Services/Api/CommonServices';
 import STRING from '../../Services/Constants/STRINGS';
 
-const CityCard = ({ data, reload, navigation, addComment }) => {
+const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
     const [isVisible, setIsVisible] = useState(false)
     const [isFav, setIsFav] = useState(data.is_favorite)
     const [rating, setRating] = useState(data.rating)
-
-    const getCity = (id) => {
-        navigateTo(navigation, STRING.SCREEN.CITY_DETAILS, { id })
-        // setIsVisible(true)
-        // setTimeout(() => {
-        //     setIsVisible(false)
-        // }, 2000)
-    }
+    const [cardType, setCardType] = useState(data.category?.code)
 
     const onHeartClick = async () => {
         let placeData = {
@@ -68,9 +61,9 @@ const CityCard = ({ data, reload, navigation, addComment }) => {
     }
 
     return (
-        <TouchableOpacity style={styles.cityCard} onPress={() => getCity(data.id)}>
+        <TouchableOpacity style={cardType == "city" ? styles.cityCard : styles.placeCard} onPress={() => onClick()}>
             <View style={styles.cityOverlay} />
-            <ImageBackground source={{ uri: Path.FTP_PATH1 + data.image }} style={styles.cityImage} imageStyle={styles.cityImageStyle} resizeMode="cover" />
+            <ImageBackground source={{ uri: Path.FTP_PATH + data.image }} style={cardType == "city" ? styles.cityImage : styles.placeImage} imageStyle={styles.cityImageStyle} resizeMode="cover" />
             <View style={{ alignItems: 'flex-end' }}>
                 <TouchableOpacity style={styles.cityLikeView} onPress={() => onHeartClick()}>
                     {
@@ -88,7 +81,7 @@ const CityCard = ({ data, reload, navigation, addComment }) => {
                 </TouchableOpacity>
             </View>
 
-            <View style={styles.cityStarView}>
+            <View style={cardType == "city" ? styles.cityStarView : styles.placeStarView}>
                 <StarRating
                     disabled={false}
                     maxStars={5}
@@ -100,7 +93,7 @@ const CityCard = ({ data, reload, navigation, addComment }) => {
                 />
             </View>
 
-            <View style={styles.cityDetailsOverlay}>
+            <View style={cardType == "city" ? styles.cityDetailsOverlay : styles.placeDetailsOverlay}>
                 <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
                     <GlobalText text={data.name} style={styles.cityName} />
                     <View>

@@ -17,10 +17,12 @@ import TabView from "../../Components/Common/TabView";
 import Path from "../../Services/Api/BaseUrl";
 import STRING from "../../Services/Constants/STRINGS";
 import PlaceCard from "../../Components/Cards/PlaceCard";
+import CityCard from "../../Components/Cards/CityCard";
 
 const CityDetails = ({ navigation, route, ...props }) => {
     const [city, setCity] = useState([]); // State to store city
     const [error, setError] = useState(null); // State to store error message
+    const [cityId, setCityId] = useState(route.params.id)
 
     useEffect(() => {
         const backHandler = goBackHandler(navigation)
@@ -30,11 +32,13 @@ const CityDetails = ({ navigation, route, ...props }) => {
         return () => {
             backHandler.remove()
         }
-    }, []);
+    }, [cityId]);
 
-    const getDetails = () => {
+    const getDetails = (place) => {
+        console.log('cityId:: ', cityId);
+        console.log('place:: ', place);
         let data = {
-            id: route.params.id
+            id: place || cityId
         }
         comnPost(`v2/getSite`, data)
             .then((res) => {
@@ -94,41 +98,11 @@ const CityDetails = ({ navigation, route, ...props }) => {
                     <View style={styles.sectionView}>
                         <ScrollView showsHorizontalScrollIndicator={false}>
                             {city.sites && city.sites.map((place, index) => (
-                                <PlaceCard data={place} />
-                                // <SmallCard
-                                //     key={index}
-                                //     Icon={
-                                //         <Image
-                                //             source={{ uri: Path.API_PATH + place.icon }}
-                                //             color={COLOR.yellow}
-                                //             size={DIMENSIONS.iconSize}
-                                //         />
-                                //     }
-                                //     title={place.name}
-                                //     onPress={() => handleSmallCardClick(STRING.SCREEN.PLACE_DETAILS, place.id)}
-                                // />
+                                <CityCard data={place} navigation={navigation} reload={() => getDetails()} onClick={() => getDetails(place.id)} />
                             ))}
                         </ScrollView>
                     </View>
 
-                    <View style={styles.sectionView}>
-                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                            {city.projects && city.projects.map((project, index) => (
-                                <SmallCard
-                                    key={index}
-                                    Icon={
-                                        <Image
-                                            source={{ uri: Path.API_PATH + project.icon }}
-                                            color={COLOR.yellow}
-                                            size={DIMENSIONS.iconSize}
-                                        />
-                                    }
-                                    title={project.name}
-                                    onPress={() => handleSmallCardClick(STRING.SCREEN.PROJECT_DETAILS, project.id)}
-                                />
-                            ))}
-                        </ScrollView>
-                    </View>
                 </View>
             }
         </ScrollView>

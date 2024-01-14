@@ -157,6 +157,16 @@ const styles = StyleSheet.create({
         borderRadius: DIMENSIONS.borderRadius,
         justifyContent: 'space-between'
     },
+    placeCard: {
+        width: DIMENSIONS.bannerWidth,
+        height: DIMENSIONS.bannerHeight + 100,
+        elevation: 10,
+        margin: 10,
+        padding: 10,
+        backgroundColor: COLOR.white,
+        borderRadius: DIMENSIONS.borderRadius,
+        justifyContent: 'space-between'
+    },
     cityOverlay: {
         ...StyleSheet.absoluteFillObject,
         backgroundColor: COLOR.black,
@@ -183,9 +193,24 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    placeStarView: {
+        backgroundColor: COLOR.white,
+        height: 35,
+        width: 100,
+        left: 10,
+        top: -10,
+        borderRadius: DIMENSIONS.borderRadius,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     cityImage: {
         width: DIMENSIONS.bannerWidth,
         height: DIMENSIONS.bannerWidth + 20,
+        position: 'absolute'
+    },
+    placeImage: {
+        width: DIMENSIONS.bannerWidth,
+        height: DIMENSIONS.bannerHeight + 100,
         position: 'absolute'
     },
     cityImageStyle: {
@@ -194,6 +219,15 @@ const styles = StyleSheet.create({
     cityDetailsOverlay: {
         width: DIMENSIONS.bannerWidth - 40,
         height: DIMENSIONS.bannerHeight - 40,
+        backgroundColor: COLOR.white,
+        borderRadius: DIMENSIONS.borderRadius,
+        padding: 15,
+        alignSelf: 'center',
+        justifyContent: "space-between"
+    },
+    placeDetailsOverlay: {
+        width: DIMENSIONS.bannerWidth - 40,
+        height: DIMENSIONS.bannerHeight / 2,
         backgroundColor: COLOR.white,
         borderRadius: DIMENSIONS.borderRadius,
         padding: 15,

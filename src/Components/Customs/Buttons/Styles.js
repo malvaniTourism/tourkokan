@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     width: DIMENSIONS.iconXXL,
     borderRadius: DIMENSIONS.borderRadiusLarge,
     borderWidth: 4,
-    borderColor: COLOR.transparent,
+    borderColor: COLOR.grey,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -46,7 +46,8 @@ const styles = StyleSheet.create({
   catCardIcon: {
     height: DIMENSIONS.iconXXL - 4,
     width: DIMENSIONS.iconXXL - 4,
-    borderRadius: DIMENSIONS.borderRadiusLarge
+    borderRadius: DIMENSIONS.borderRadiusLarge,
+    resizeMode: "cover"
   },
 });
 

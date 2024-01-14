@@ -177,6 +177,10 @@ const HomeScreen = ({ navigation, ...props }) => {
         refRBSheet.current.close()
     }
 
+    const getCityDetails = (id) => {
+        navigateTo(navigation, STRING.SCREEN.CITY_DETAILS, { id })
+    }
+
     return (
         <ScrollView stickyHeaderIndices={[0]}>
             <TopComponent navigation={navigation} openLocationSheet={() => openLocationSheet()} />
@@ -234,7 +238,9 @@ const HomeScreen = ({ navigation, ...props }) => {
                                         reload={() => {
                                             callLandingPageAPI()
                                         }}
-                                        navigation={navigation} />
+                                        navigation={navigation}
+                                        onClick={() => getCityDetails(city.id)}
+                                    />
                                 ))}
                             </View>
                             <TextButton

@@ -17,6 +17,7 @@ const STRING = {
     VERIFY: "Verify",
     CLICK_TO_UPDATE: "Click to Update",
     LOGOUT: "Logout  ",
+    SEE_CITIES: "See all Cities"
   },
   SCREEN: {
     ROOT: "Root",

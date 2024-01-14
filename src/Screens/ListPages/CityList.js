@@ -78,6 +78,10 @@ const CityList = ({ navigation, ...props }) => {
       });
   }
 
+  const getCityDetails = (id) => {
+    navigateTo(navigation, STRING.SCREEN.CITY_DETAILS, { id })
+  }
+
   return (
     <ScrollView stickyHeaderIndices={[0]}>
       <CheckNet isOff={offline} />
@@ -96,7 +100,7 @@ const CityList = ({ navigation, ...props }) => {
         <View style={{ flex: 1, alignItems: "center" }}>
           <View>
             {cities.map((city) => (
-              <CityCard data={city} navigation={navigation} reload={() => getCities()} />
+              <CityCard data={city} navigation={navigation} reload={() => getCities()} onClick={() => getCityDetails(city.id)} />
             ))}
           </View>
         </View>

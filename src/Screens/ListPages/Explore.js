@@ -88,7 +88,7 @@ const Explore = ({ route, navigation, ...props }) => {
       });
   }
 
-  const getCities = () => {
+  const getCities = (selectedCity) => {
     props.setLoader(true)
     let data = {
       apitype: 'list',
@@ -100,8 +100,9 @@ const Explore = ({ route, navigation, ...props }) => {
         if (res && res.data.data)
           saveToStorage(STRING.STORAGE.CITIES_RESPONSE, JSON.stringify(res))
         setCities(res.data.data.data);
-        setSelectedCity(res.data.data.data[0].name)
-        setSelectedSites(res.data.data.data[0].sites)
+        setSelectedCity(selectedCity || res.data.data.data[0].name)
+        setSelectedSites(selectedCity ? cities.find((item) => item.name === selectedCity).sites : res.data.data.data[0].sites)
+        // setSelectedSites(res.data.data.data[0].sites)
         props.setLoader(false);
       })
       .catch((error) => {
@@ -122,7 +123,7 @@ const Explore = ({ route, navigation, ...props }) => {
   const handleCityPress = (city) => {
     console.log('city: ', city.name);
     setSelectedCity(city.name);
-    setSelectedSites(cities.find((item) => item.name === city.name).sites)
+    getCities(city.name)
   };
 
   const openCommentsSheet = () => {
@@ -131,6 +132,10 @@ const Explore = ({ route, navigation, ...props }) => {
 
   const closeCommentsSheet = () => {
     refRBSheet.current.close()
+  }
+
+  const getCityDetails = (id) => {
+    navigateTo(navigation, STRING.SCREEN.CITY_DETAILS, { id })
   }
 
   return (
@@ -154,12 +159,24 @@ const Explore = ({ route, navigation, ...props }) => {
               key={city.id}
               onPress={() => handleCityPress(city)}
               isSelected={selectedCity === city.name}
+              image={city.image}
               text={
                 <GlobalText text={city.name} style={styles.cityButtonText} />
               }
             />
           ))}
         </ScrollView>
+        <View style={{paddingBottom: 10}}>
+            <TextButton
+              title={STRING.BUTTON.SEE_CITIES}
+              containerStyle={styles.seeCitiesContainer}
+              seeMoreStyle={styles.seeCitiesContainer}
+              buttonStyle={styles.seeCitiesButtonStyle}
+              titleStyle={styles.citiesButtonTitleStyle}
+              raised={false}
+              onPress={() => seeMore()}
+            />
+          </View>
       </View>
       {cities[0] &&
         <View>
@@ -174,30 +191,20 @@ const Explore = ({ route, navigation, ...props }) => {
               <GlobalText text={STRING.TO_EXPLORE} style={styles.whiteText} />
             </View>
           </View>
-          <View>
-            <TextButton
-              title={STRING.BUTTON.SEE_MORE}
-              containerStyle={styles.seeMoreContainer}
-              buttonStyle={styles.seeButtonStyle}
-              titleStyle={styles.planButtonTitleStyle}
-              raised={true}
-              onPress={() => seeMore()}
-            />
-          </View>
         </View>
       }
       <View style={{ minHeight: DIMENSIONS.screenHeight }}>
         {
           selectedSites[0] ?
             <ScrollView
-              style={{ marginBottom: 350 }}
+              style={{ marginBottom: 450 }}
             >
               {selectedSites.map((place) => (
-                <PlaceCard data={place} navigation={navigation} reload={() => getPlaces()} />
+                <CityCard data={place} navigation={navigation} reload={() => getPlaces()} onClick={() => getCityDetails(place.id)} />
               ))}
             </ScrollView>
             :
-            <View style={styles.pricingView}>
+            <View style={{marginTop: 20}}>
               <GlobalText text={STRING.ADDED} style={styles.boldText} />
             </View>
         }

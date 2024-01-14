@@ -303,6 +303,21 @@ const styles = StyleSheet.create({
     seeButtonStyle: {
         width: DIMENSIONS.halfWidth / 2,
     },
+    seeCitiesContainer: {
+        alignSelf: "flex-end",
+        width: DIMENSIONS.halfWidth,
+        backgroundColor: COLOR.transparent,
+    },
+    seeCitiesButtonStyle: {
+        width: DIMENSIONS.halfWidth,
+        backgroundColor: COLOR.transparent,
+        alignItems: 'flex-end',
+        justifyContent: 'flex-end',
+    },
+    citiesButtonTitleStyle: {
+        color: COLOR.themeComicBlue,
+        textAlign: 'right'
+    },
     containerHome: {
         flex: 1,
         backgroundColor: 'white',
