@@ -1,4 +1,6 @@
 const STRING = {
+  appName: "TourKokan",
+
   BUTTON: {
     OK: "Ok",
     SEARCH: "Search",

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { View, Text, TouchableOpacity, BackHandler } from "react-native";
+import { View, Text, TouchableOpacity, BackHandler, ImageBackground } from "react-native";
 import TextField from "../../Components/Customs/TextField";
 import { OTP, SignInFields } from "../../Services/Constants/FIELDS";
 import Header from "../../Components/Common/Header";
@@ -135,76 +135,85 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
   };
 
   return (
-    <View style={{ alignItems: "center" }}>
-      <Header name={STRING.HEADER.VERIFY_OTP} style={{ marginBottom: 50 }}
+    <View style={{ alignItems: "center", flex: 1 }}>
+      <ImageBackground style={styles.loginImage} source={require('../../Assets/Images/kokan1.jpeg')} />
+      {/* <Header name={STRING.HEADER.VERIFY_OTP} style={{ marginBottom: 50 }}
         startIcon={<></>}
-      />
+      /> */}
+      <View style={styles.appName}>
+        <GlobalText text={STRING.appName} style={styles.appNameText} />
+      </View>
+
       <Loader />
-      <FontIcons
-        name="user-circle"
-        color={COLOR.black}
-        size={DIMENSIONS.userIconSize}
-        style={styles.appLogo}
-      />
-      <View>
-        <View style={{ marginTop: "5%", marginLeft: "10%" }}>
-          <GlobalText text={STRING.OTP_VERIFICATION} style={styles.otpHead} />
-          <GlobalText text={STRING.WE_HAVE_SENT} style={styles.otpSubHead} />
-          <GlobalText text={`${SENT_TO} ${route.params.mobile}`} style={styles.otpMobile} />
+      <View style={styles.loginContentsBox}>
+        <FontIcons
+          name="user-circle"
+          color={COLOR.white}
+          size={DIMENSIONS.userIconSize}
+          style={styles.appLogo}
+        />
+        <View>
+          <View style={{ marginLeft: "10%" }}>
+            <GlobalText text={STRING.OTP_VERIFICATION} style={styles.whiteText} />
+            <GlobalText text={STRING.WE_HAVE_SENT} style={styles.whiteText} />
+            <GlobalText text={`${STRING.SENT_TO} ${route.params.mobile}`} style={styles.whiteText} />
+          </View>
+          <OtpInputs
+            style={{ flexDirection: "row" }}
+            numberOfInputs={6}
+            inputStyles={{
+              height: 50,
+              width: 40,
+              margin: 10,
+              backgroundColor: COLOR.white,
+              borderWidth: 1,
+              borderColor: COLOR.lightGreen,
+              textAlign: "center",
+              fontSize: 24,
+              color: COLOR.lightGreen,
+            }}
+            inputContainerStyles={{ marginVertical: 45 }}
+            // autofillFromClipboard={true}
+            defaultValue={otp}
+            // code={this.state.fillOtp} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
+            // onChangeText={code => { this.setState({ otp: code }) }}
+            handleChange={(code) => {
+              setOtp(code);
+            }}
+          // onCodeChanged={code => { this.setState({ otp: code }) }}
+          // autoFocusOnLoad
+          // codeInputFieldStyle={styles.underlineStyleBase}
+          // codeInputHighlightStyle={styles.underlineStyleHighLighted}
+          // onCodeFilled = {(code => this.setState({otp: code}))}
+          />
         </View>
-        <OtpInputs
-          style={{ flexDirection: "row" }}
-          numberOfInputs={6}
-          inputStyles={{
-            height: 50,
-            width: 40,
-            margin: 10,
-            backgroundColor: COLOR.white,
-            borderWidth: 1,
-            borderColor: COLOR.lightGreen,
-            textAlign: "center",
-            fontSize: 24,
-            color: COLOR.lightGreen,
-          }}
-          inputContainerStyles={{ marginVertical: 45 }}
-          // autofillFromClipboard={true}
-          defaultValue={otp}
-          // code={this.state.fillOtp} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
-          // onChangeText={code => { this.setState({ otp: code }) }}
-          handleChange={(code) => {
-            setOtp(code);
-          }}
-        // onCodeChanged={code => { this.setState({ otp: code }) }}
-        // autoFocusOnLoad
-        // codeInputFieldStyle={styles.underlineStyleBase}
-        // codeInputHighlightStyle={styles.underlineStyleHighLighted}
-        // onCodeFilled = {(code => this.setState({otp: code}))}
+        <TextButton
+          title={STRING.BUTTON.VERIFY}
+          containerStyle={styles.buttonContainer}
+          buttonStyle={styles.buttonStyle}
+          titleStyle={styles.buttonTitle}
+          disabled={false}
+          raised={true}
+          onPress={() => verifyOtp()}
+        />
+        <View style={{marginVertical: 10}}>
+          {sec >= 1 ? (
+            <GlobalText text={`${STRING.RESEND_WITHIN}${sec > 9 ? sec : "0" + sec})`} style={styles.whiteText} />
+          ) : (
+            <View>
+              <GlobalText style={styles.whiteText} text={STRING.DIDNT_RECEIVE} />
+              <TouchableOpacity onPress={() => resend()}>
+                <GlobalText text={STRING.RESEND} style={styles.whiteText} />
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
+        <Popup
+          message={alertMessage}
+          visible={isAlert}
+          onPress={closePopup}
         />
       </View>
-      <TextButton
-        title={STRING.BUTTON.VERIFY}
-        containerStyle={styles.buttonContainer}
-        buttonStyle={styles.buttonStyle}
-        titleStyle={styles.buttonTitle}
-        disabled={false}
-        raised={true}
-        onPress={() => verifyOtp()}
-      />
-      {sec >= 1 ? (
-        <GlobalText text={`${STRING.RESEND_WITHIN}${sec > 9 ? sec : "0" + sec})`} style={styles.countertext} />
-      ) : (
-        <View>
-          <GlobalText text={STRING.DIDNT_RECEIVE} />
-          <TouchableOpacity onPress={() => resend()}>
-            <GlobalText text={STRING.RESEND} style={styles.counterText1} />
-          </TouchableOpacity>
-        </View>
-      )}
-      <Popup
-        message={alertMessage}
-        visible={isAlert}
-        onPress={closePopup}
-      />
     </View>
   );
 };

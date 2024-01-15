@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     padding: 7,
     borderWidth: 1,
     borderColor: COLOR.grey,
-    color: COLOR.black
+    color: COLOR.white
   },
   placeholderStyle: {
     color: COLOR.grayDark

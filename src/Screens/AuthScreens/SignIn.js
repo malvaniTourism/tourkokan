@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { View, Text, TouchableOpacity, BackHandler, ToastAndroid, Image, StatusBar } from "react-native";
+import { View, Text, TouchableOpacity, BackHandler, ToastAndroid, Image, StatusBar, ImageBackground } from "react-native";
 import TextField from "../../Components/Customs/TextField";
 import { MobileNo, SignInFields } from "../../Services/Constants/FIELDS";
 import Header from "../../Components/Common/Header";
@@ -96,71 +96,75 @@ const SignIn = ({ navigation, ...props }) => {
   };
 
   return (
-    <View style={{ alignItems: "center" }}>
-      <StatusBar backgroundColor={COLOR.loginImageBackground} />
-      <Header
+    <View style={{ alignItems: "center", flex: 1 }}>
+      <ImageBackground style={styles.loginImage} source={require('../../Assets/Images/kokan1.jpeg')} />
+      {/* <Header
         name={""}
         startIcon={<View></View>}
         style={styles.loginHeader}
-      />
-      <Loader />
-      <View>
-        <Image style={styles.loginImage} source={require('../../Assets/Images/tour_set.jpg')} />
-        <GlobalText text={"Log-in"} style={styles.loginText} />
-      </View>
-      {MobileNo.map((field, index) => {
-        return (
-          <TextField
-            name={field.name}
-            label={field.name}
-            placeholder={field.placeholder}
-            fieldType={field.type}
-            length={field.length}
-            required={field.required}
-            disabled={field.disabled}
-            value={getValue(index)}
-            setChild={(v, i) => setValue(v, i, index)}
-            style={styles.containerStyle}
-            inputContainerStyle={styles.inputContainerStyle}
-          />
-        );
-      })}
-      <TextButton
-        title={STRING.BUTTON.SEND_OTP}
-        seeMoreStyle={styles.buttonView}
-        containerStyle={styles.buttonContainer}
-        buttonStyle={styles.buttonStyle}
-        titleStyle={styles.buttonTitle}
-        disabled={false}
-        raised={true}
-        onPress={() => sendOTP()}
-      />
+      /> */}
 
-      <View style={{ marginTop: 30, alignItems: "center" }}>
-        <GlobalText text={STRING.OR} style={{ marginBottom: 20 }} />
+      <View style={styles.appName}>
+        <GlobalText text={STRING.appName} style={styles.appNameText} />
+      </View>
+
+      <Loader />
+      <View style={styles.loginContentsBox}>
+        <GlobalText text={"Log-in"} style={styles.loginText} />
+        {MobileNo.map((field, index) => {
+          return (
+            <TextField
+              name={field.name}
+              label={field.name}
+              placeholder={field.placeholder}
+              fieldType={field.type}
+              length={field.length}
+              required={field.required}
+              disabled={field.disabled}
+              value={getValue(index)}
+              setChild={(v, i) => setValue(v, i, index)}
+              style={styles.containerStyle}
+              inputContainerStyle={styles.inputContainerStyle}
+            />
+          );
+        })}
         <TextButton
-          title={STRING.BUTTON.LOGIN_WITH_EMAIL}
+          title={STRING.BUTTON.SEND_OTP}
           seeMoreStyle={styles.buttonView}
           containerStyle={styles.buttonContainer}
           buttonStyle={styles.buttonStyle}
           titleStyle={styles.buttonTitle}
           disabled={false}
           raised={true}
-          onPress={() => emailLogin()}
+          onPress={() => sendOTP()}
+        />
+
+        <View style={{ marginTop: 20, alignItems: "center" }}>
+          <GlobalText text={STRING.OR} style={styles.whiteText} />
+          <TextButton
+            title={STRING.BUTTON.LOGIN_WITH_EMAIL}
+            seeMoreStyle={styles.buttonView}
+            containerStyle={styles.buttonContainer}
+            buttonStyle={styles.buttonStyle}
+            titleStyle={styles.buttonTitle}
+            disabled={false}
+            raised={true}
+            onPress={() => emailLogin()}
+          />
+        </View>
+
+        <View style={styles.haveAcc}>
+          <GlobalText style={styles.whiteText} text={STRING.DONT_HAVE_ACC} />
+          <TouchableOpacity onPress={() => signUpScreen()}>
+            <GlobalText style={styles.whiteText} text={STRING.SIGN_UP} />
+          </TouchableOpacity>
+        </View>
+        <Popup
+          message={alertMessage}
+          visible={isAlert}
+          onPress={closePopup}
         />
       </View>
-
-      <View style={styles.haveAcc}>
-        <GlobalText text={STRING.DONT_HAVE_ACC} />
-        <TouchableOpacity onPress={() => signUpScreen()}>
-          <GlobalText text={STRING.SIGN_UP} />
-        </TouchableOpacity>
-      </View>
-      <Popup
-        message={alertMessage}
-        visible={isAlert}
-        onPress={closePopup}
-      />
     </View>
   );
 };

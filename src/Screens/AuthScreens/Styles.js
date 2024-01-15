@@ -4,7 +4,8 @@ import COLOR from "../../Services/Constants/COLORS";
 
 const styles = StyleSheet.create({
   appLogo: {
-    height: 100,
+    height: 70,
+    marginTop: 30
   },
   buttonView: {
     borderRadius: DIMENSIONS.borderRadius,
@@ -18,13 +19,14 @@ const styles = StyleSheet.create({
   buttonTitle: {},
   haveAcc: {
     flexDirection: "row",
-    marginVertical: 30,
+    marginVertical: 20,
   },
   containerStyle: {
     borderWidth: 1,
     padding: 10,
-    borderColor: COLOR.grey,
-    borderRadius: DIMENSIONS.borderRadius
+    borderColor: COLOR.white,
+    borderRadius: DIMENSIONS.borderRadius,
+    color: COLOR.white
   },
   eyeIcon: {
     position: "absolute",
@@ -36,6 +38,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     borderColor: COLOR.grey,
     borderRadius: DIMENSIONS.borderRadius,
+    color: COLOR.white
+  },
+  selectedTextStyle: {
+    color: COLOR.white
   },
   imageContainerStyle: {
     borderWidth: 1,
@@ -57,18 +63,48 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   loginHeader: {
-    backgroundColor: COLOR.loginImageBackground,
-    marginBottom: -20
   },
   loginImage: {
-    height: DIMENSIONS.bannerHeight,
-    width: DIMENSIONS.screenWidth
+    height: DIMENSIONS.screenHeight,
+    width: DIMENSIONS.screenWidth,
+    position: "absolute"
   },
   loginText: {
     fontWeight: "bold",
     fontSize: DIMENSIONS.headerTextSize,
     padding: 30,
-    paddingBottom: 10
+    paddingBottom: 10,
+    color: COLOR.white
+  },
+  appName: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: COLOR.white,
+    width: DIMENSIONS.screenWidth / 2,
+    maxHeight: DIMENSIONS.xlText * 2,
+    borderRadius: DIMENSIONS.borderRadius,
+    marginTop: 50,
+    shadowColor: COLOR.black,
+    shadowOffset: {
+      width: 10,
+      height: 10,
+    },
+    elevation: 10,
+  },
+  appNameText: {
+    fontSize: DIMENSIONS.xlText,
+    fontWeight: "bold"
+  },
+  loginContentsBox: {
+    backgroundColor: COLOR.blackOpacityDark,
+    borderRadius: DIMENSIONS.borderRadius,
+    justifyContent: 'center',
+    alignItems: "center",
+    marginBottom: 10
+  },
+  whiteText: {
+    color: COLOR.white
   }
 });
 

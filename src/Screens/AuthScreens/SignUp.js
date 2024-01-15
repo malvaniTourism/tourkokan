@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, BackHandler, Image, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, BackHandler, Image, ScrollView, ImageBackground } from "react-native";
 import { SignUpFields } from "../../Services/Constants/FIELDS";
 import TextField from "../../Components/Customs/TextField";
 import Header from "../../Components/Common/Header";
@@ -165,105 +165,107 @@ const SignUp = ({ navigation, ...props }) => {
   }
 
   return (
-    <View style={{ alignItems: "center" }}>
-      <ScrollView>
-        <Header
+    <View style={{ alignItems: "center", flex: 1 }}>
+      <ImageBackground style={styles.loginImage} source={require('../../Assets/Images/kokan1.jpeg')} />
+
+      <Loader />
+      <View style={[styles.loginContentsBox, {marginTop: 20}]}>
+        <ScrollView>
+          {/* <Header
           name={""}
           startIcon={<View></View>}
           style={styles.loginHeader}
-        />
-        <Loader />
-        <View>
-          <Image style={styles.loginImage} source={require('../../Assets/Images/tour_set.jpg')} />
+        /> */}
           <GlobalText text={STRING.SIGN_UP} style={styles.loginText} />
-        </View>
-        <View style={{ alignItems: "center" }}>
-          <TouchableOpacity
-            style={styles.imageContainerStyle}
-            onPress={handleImageUpload}
-          >
-            {imageSource ?
-              <Image
-                source={{ uri: imageSource }}
-                style={styles.imageSourceView}
-              />
-              :
-              <FontIcons
-                name="user-circle"
-                color={COLOR.themeComicBlue}
-                size={DIMENSIONS.iconLarge}
-                style={styles.userIcon}
-              />
-            }
-          </TouchableOpacity>
-
-          <DropDown
-            setChild={(v, i) => setValue(v, i)}
-            name={STRING.ROLE}
-            label={STRING.ROLE}
-            value={role}
-            disable={false}
-            style={styles.roleDropDown}
-            fieldType={STRING.TYPE.DROP_DWN}
-            helperMsg={STRING.SELECT_ROLE}
-            List={roles}
-            parentDetails={{ label: "role" }}
-          />
-          {SignUpFields.map((field, index) => {
-            return (
-              <TextField
-                name={field.name}
-                label={field.name}
-                placeholder={field.placeholder}
-                fieldType={field.type}
-                length={field.length}
-                required={field.required}
-                disabled={field.disabled}
-                value={getValue(index)}
-                setChild={(v, i) => setValue(v, i, index)}
-                style={styles.containerStyle}
-                inputContainerStyle={styles.inputContainerStyle}
-                isSecure={field.isSecure}
-                rightIcon={
-                  field.type == `${STRING.TYPE.PASSWORD}` &&
-                  <Feather
-                    name={field.isSecure ? 'eye' : 'eye-off'}
-                    size={24}
-                    color={COLOR.themeComicBlue}
-                    onPress={() => {
-                      field.isSecure = !showPassword
-                      setShowPassword(!showPassword)
-                    }}
-                    style={styles.eyeIcon}
-                  />
-                }
-              />
-            );
-          })}
-          <TextButton
-            title={STRING.BUTTON.REGISTER}
-            seeMoreStyle={styles.buttonView}
-            containerStyle={styles.buttonContainer}
-            buttonStyle={styles.buttonStyle}
-            titleStyle={styles.buttonTitle}
-            disabled={false}
-            raised={true}
-            onPress={() => Register()}
-          />
-          <GlobalText text={errMsg} />
-          <View style={styles.haveAcc}>
-            <GlobalText text={STRING.HAVE_ACC} />
-            <TouchableOpacity onPress={() => signInScreen()}>
-              <GlobalText text={STRING.SIGN_IN} />
+          <View style={{ alignItems: "center" }}>
+            <TouchableOpacity
+              style={styles.imageContainerStyle}
+              onPress={handleImageUpload}
+            >
+              {imageSource ?
+                <Image
+                  source={{ uri: imageSource }}
+                  style={styles.imageSourceView}
+                />
+                :
+                <FontIcons
+                  name="user-circle"
+                  color={COLOR.themeComicBlue}
+                  size={DIMENSIONS.iconLarge}
+                  style={styles.userIcon}
+                />
+              }
             </TouchableOpacity>
+
+            <DropDown
+              setChild={(v, i) => setValue(v, i)}
+              name={STRING.ROLE}
+              label={STRING.ROLE}
+              value={role}
+              disable={false}
+              style={styles.roleDropDown}
+              fieldType={STRING.TYPE.DROP_DWN}
+              helperMsg={STRING.SELECT_ROLE}
+              List={roles}
+              parentDetails={{ label: "role" }}
+              selectedTextStyle={styles.selectedTextStyle}
+            />
+            {SignUpFields.map((field, index) => {
+              return (
+                <TextField
+                  name={field.name}
+                  label={field.name}
+                  placeholder={field.placeholder}
+                  fieldType={field.type}
+                  length={field.length}
+                  required={field.required}
+                  disabled={field.disabled}
+                  value={getValue(index)}
+                  setChild={(v, i) => setValue(v, i, index)}
+                  style={styles.containerStyle}
+                  inputContainerStyle={styles.inputContainerStyle}
+                  isSecure={field.isSecure}
+                  rightIcon={
+                    field.type == `${STRING.TYPE.PASSWORD}` &&
+                    <Feather
+                      name={field.isSecure ? 'eye' : 'eye-off'}
+                      size={24}
+                      color={COLOR.themeComicBlue}
+                      onPress={() => {
+                        field.isSecure = !showPassword
+                        setShowPassword(!showPassword)
+                      }}
+                      style={styles.eyeIcon}
+                    />
+                  }
+                />
+              );
+            })}
+            <TextButton
+              title={STRING.BUTTON.REGISTER}
+              seeMoreStyle={styles.buttonView}
+              containerStyle={styles.buttonContainer}
+              buttonStyle={styles.buttonStyle}
+              titleStyle={styles.buttonTitle}
+              disabled={false}
+              raised={true}
+              onPress={() => Register()}
+            />
+            <GlobalText text={errMsg} />
+            <View style={styles.haveAcc}>
+              <GlobalText style={styles.whiteText} text={STRING.HAVE_ACC} />
+              <TouchableOpacity onPress={() => signInScreen()}>
+                <GlobalText style={styles.whiteText} text={STRING.SIGN_IN} />
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </ScrollView>
-      <Popup
-        message={alertMessage}
-        visible={isAlert}
-        onPress={closePopup}
-      />
+        </ScrollView>
+        <Popup
+          message={alertMessage}
+          visible={isAlert}
+          onPress={closePopup}
+        />
+      </View>
     </View>
   );
 };

@@ -27,7 +27,7 @@ const DropDown = ({ ...props }) => {
     <Dropdown
       style={[styles.dropdown, isFocus && { borderColor: "blue" }, props.style]}
       placeholderStyle={styles.placeholderStyle}
-      selectedTextStyle={styles.selectedTextStyle}
+      selectedTextStyle={props.selectedTextStyle}
       inputSearchStyle={styles.inputSearchStyle}
       iconStyle={styles.iconStyle}
       itemTextStyle={styles.itemTextStyle}

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { View, Text, TouchableOpacity, BackHandler, Image } from "react-native";
+import { View, Text, TouchableOpacity, BackHandler, Image, ImageBackground } from "react-native";
 import TextField from "../../Components/Customs/TextField";
 import { SignInFields } from "../../Services/Constants/FIELDS";
 import Header from "../../Components/Common/Header";
@@ -154,70 +154,75 @@ const EmailSignIn = ({ navigation, ...props }) => {
   };
 
   return (
-    <View style={{ alignItems: "center" }}>
-      <Header
+    <View style={{ alignItems: "center", flex: 1 }}>
+      <ImageBackground style={styles.loginImage} source={require('../../Assets/Images/kokan1.jpeg')} />
+      {/* <Header
         name={""}
         startIcon={<View></View>}
         style={styles.loginHeader}
-      />
-      <View>
-        <Image style={styles.loginImage} source={require('../../Assets/Images/tour_set.jpg')} />
-        <GlobalText text={"Log-in"} style={styles.loginText} />
-      </View>
-      <Loader />
-      {SignInFields.map((field, index) => {
-        return (
-          <TextField
-            name={field.name}
-            label={field.name}
-            placeholder={field.placeholder}
-            fieldType={field.type}
-            length={field.length}
-            required={field.required}
-            disabled={field.disabled}
-            value={getValue(index)}
-            setChild={(v, i) => setValue(v, i, index)}
-            style={styles.containerStyle}
-            inputContainerStyle={styles.inputContainerStyle}
-            isSecure={field.isSecure}
-            rightIcon={
-              field.type == `${STRING.TYPE.PASSWORD}` &&
-              <Feather
-                name={field.isSecure ? 'eye' : 'eye-off'}
-                size={24}
-                color={COLOR.themeComicBlue}
-                onPress={() => {
-                  field.isSecure = !showPassword
-                  setShowPassword(!showPassword)
-                }}
-                style={styles.eyeIcon}
-              />
-            }
-          />
-        );
-      })}
-      <TextButton
-        title={STRING.BUTTON.LOGIN}
-        seeMoreStyle={styles.buttonView}
-        containerStyle={styles.buttonContainer}
-        buttonStyle={styles.buttonStyle}
-        titleStyle={styles.buttonTitle}
-        disabled={false}
-        raised={true}
-        onPress={() => Login()}
-      />
-      <View style={styles.haveAcc}>
-        <GlobalText text={STRING.DONT_HAVE_ACC} />
-        <TouchableOpacity onPress={() => signUpScreen()}>
-          <GlobalText text={STRING.SIGN_UP} />
-        </TouchableOpacity>
+      /> */}
+
+      <View style={styles.appName}>
+        <GlobalText text={STRING.appName} style={styles.appNameText} />
       </View>
 
-      <Popup
-        message={alertMessage}
-        onPress={closePopup}
-        visible={isAlert}
-      />
+      <Loader />
+      <View style={styles.loginContentsBox}>
+        <GlobalText text={"Log-in"} style={styles.loginText} />
+        {SignInFields.map((field, index) => {
+          return (
+            <TextField
+              name={field.name}
+              label={field.name}
+              placeholder={field.placeholder}
+              fieldType={field.type}
+              length={field.length}
+              required={field.required}
+              disabled={field.disabled}
+              value={getValue(index)}
+              setChild={(v, i) => setValue(v, i, index)}
+              style={styles.containerStyle}
+              inputContainerStyle={styles.inputContainerStyle}
+              isSecure={field.isSecure}
+              rightIcon={
+                field.type == `${STRING.TYPE.PASSWORD}` &&
+                <Feather
+                  name={field.isSecure ? 'eye' : 'eye-off'}
+                  size={24}
+                  color={COLOR.themeComicBlue}
+                  onPress={() => {
+                    field.isSecure = !showPassword
+                    setShowPassword(!showPassword)
+                  }}
+                  style={styles.eyeIcon}
+                />
+              }
+            />
+          );
+        })}
+        <TextButton
+          title={STRING.BUTTON.LOGIN}
+          seeMoreStyle={styles.buttonView}
+          containerStyle={styles.buttonContainer}
+          buttonStyle={styles.buttonStyle}
+          titleStyle={styles.buttonTitle}
+          disabled={false}
+          raised={true}
+          onPress={() => Login()}
+        />
+        <View style={styles.haveAcc}>
+          <GlobalText style={styles.whiteText} text={STRING.DONT_HAVE_ACC} />
+          <TouchableOpacity onPress={() => signUpScreen()}>
+            <GlobalText style={styles.whiteText} text={STRING.SIGN_UP} />
+          </TouchableOpacity>
+        </View>
+
+        <Popup
+          message={alertMessage}
+          onPress={closePopup}
+          visible={isAlert}
+        />
+      </View>
     </View>
   );
 };

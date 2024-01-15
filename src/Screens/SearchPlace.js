@@ -40,6 +40,7 @@ const SearchPlace = ({ navigation, route, ...props }) => {
       apitype: 'dropdown',
       type: 'bus'
     };
+    console.log('data: ', data);
     comnPost(`v2/sites`, data)
       .then((res) => {
         console.log(res.data);
@@ -63,10 +64,12 @@ const SearchPlace = ({ navigation, route, ...props }) => {
       apitype: 'dropdown',
       type: 'bus'
     };
+    console.log('data:: ', data);
     comnPost(`v2/sites?page=${page}`, data)
       .then((res) => {
         if (res.data.success) {
           let nextUrl = res.data.data.next_page_url
+          console.log('res.data.data.data:: ', res.data.data.data);
           setPlacesList([...placesList, ...res.data.data.data]);
           setNextPage(nextUrl[nextUrl.length - 1])
           props.setLoader(false);
