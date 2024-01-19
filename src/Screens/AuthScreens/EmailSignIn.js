@@ -20,6 +20,7 @@ import SQLite from 'react-native-sqlite-storage'
 import Popup from "../../Components/Common/Popup";
 import Feather from "react-native-vector-icons/Feather";
 import STRING from "../../Services/Constants/STRINGS";
+import AppLogo from "../../Assets/Images/tourKokan.png";
 
 const EmailSignIn = ({ navigation, ...props }) => {
   const [email, setEmail] = useState("");
@@ -163,7 +164,7 @@ const EmailSignIn = ({ navigation, ...props }) => {
       /> */}
 
       <View style={styles.appName}>
-        <GlobalText text={STRING.appName} style={styles.appNameText} />
+        <Image source={AppLogo} style={styles.appLogo} />
       </View>
 
       <Loader />

@@ -24,7 +24,9 @@ const DIMENSIONS = {
     iconXL: 60,
     iconXXL: 70,
     iconXXXL: 90,
+    appLogo: 70,
 
+    borderRadiusXL: 80,
     borderRadiusLarge: 50,
     borderRadius: 30,
     borderRadiusSmall: 20,

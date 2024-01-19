@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { View, Text, TouchableOpacity, BackHandler, ImageBackground } from "react-native";
+import { View, Text, TouchableOpacity, BackHandler, ImageBackground, Image } from "react-native";
 import TextField from "../../Components/Customs/TextField";
 import { OTP, SignInFields } from "../../Services/Constants/FIELDS";
 import Header from "../../Components/Common/Header";
@@ -25,6 +25,7 @@ import { navigateTo } from "../../Services/CommonMethods";
 import GlobalText from "../../Components/Customs/Text";
 import Popup from "../../Components/Common/Popup";
 import STRING from "../../Services/Constants/STRINGS";
+import AppLogo from "../../Assets/Images/tourKokan.png";
 
 const VerifyOTP = ({ navigation, route, ...props }) => {
   const [otp, setOtp] = useState(1234);
@@ -141,7 +142,7 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
         startIcon={<></>}
       /> */}
       <View style={styles.appName}>
-        <GlobalText text={STRING.appName} style={styles.appNameText} />
+        <Image source={AppLogo} style={styles.appLogo} />
       </View>
 
       <Loader />
