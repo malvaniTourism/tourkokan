@@ -14,9 +14,6 @@ prepare_react_native_project!
 #     ...(process.env.NO_FLIPPER ? { 'react-native-flipper': { platforms: { ios: null } } } : {}),
 # ```
 flipper_config = ENV['NO_FLIPPER'] == "1" ? FlipperConfiguration.disabled : FlipperConfiguration.enabled
-pod 'React', :path => '../node_modules/react-native', :subspecs => [
-  'Reanimated',
-]
 linkage = ENV['USE_FRAMEWORKS']
 if linkage != nil
   Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
@@ -28,8 +25,6 @@ target 'tourkokan' do
 
   # Flags change depending on the env values.
   flags = get_default_flags()
-  pod 'React', :path => '../node_modules/react-native'
-
   use_react_native!(
     :path => config[:reactNativePath],
     # Hermes is now enabled by default. Disable by setting this flag to false.
@@ -58,6 +53,5 @@ target 'tourkokan' do
       # necessary for Mac Catalyst builds
       :mac_catalyst_enabled => false
     )
-    __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end
 end
