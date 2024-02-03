@@ -19,7 +19,7 @@ import {
 import GlobalText from "../Customs/Text";
 import STRING from "../../Services/Constants/STRINGS";
 
-const SearchPanel = ({ navigation, ...props }) => {
+const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
   const [isValid, setIsValid] = useState(false)
   const [errorText, setErrorText] = useState("")
 
@@ -57,22 +57,31 @@ const SearchPanel = ({ navigation, ...props }) => {
   }
 
   const gotoSearch = (type) => {
-    navigateTo(navigation, STRING.SCREEN.SEARCH_PLACE, { type });
+    navigateTo(navigation, STRING.SCREEN.SEARCH_PLACE, { type, from });
   };
 
   const gotoRoutes = () => {
     // props.setSource('')
     // props.setDestination('')
     if (isValid) {
-      navigateTo(navigation, STRING.SCREEN.SEARCH_LIST, { from: STRING.SCREEN.SEARCH });
+      navigateTo(navigation, STRING.SCREEN.SEARCH_LIST, { from });
     } else setErrorText(STRING.ALERT.SOURCE_DESTINATION_REQUIRED)
   };
 
-  const swap = () => {
+  const swap = async () => {
     let a = props.source
     let b = props.destination
-    props.setSource(b);
-    props.setDestination(a)
+    await props.setSource(b);
+    await props.setDestination(a)
+    onSwap(a.id, b.id)
+  }
+
+  const refresh = async () => {
+    let a = ""
+    let b = ""
+    await props.setSource("");
+    await props.setDestination("")
+    onSwap(a, b)
   }
 
   return (
@@ -114,6 +123,13 @@ const SearchPanel = ({ navigation, ...props }) => {
           onPress={isValid ? swap : null}
         />
       </View>
+        <Ionicons
+          style={styles.refreshIcon}
+          name="refresh-circle"
+          color={isValid ? COLOR.themeComicBlue : COLOR.grey}
+          size={DIMENSIONS.iconLarge}
+          onPress={isValid ? refresh : null}
+        />
 
       {!isValid &&
         <View>
@@ -123,14 +139,16 @@ const SearchPanel = ({ navigation, ...props }) => {
           />
         </View>
       }
-      <TextButton
+      { from == STRING.SCREEN.SEARCH_LIST ?
+      null :
+        <TextButton
         title={STRING.BUTTON.SEARCH}
         containerStyle={styles.searchButtonContainerStyle}
         buttonStyle={styles.searchButtonStyle}
         titleStyle={styles.buttonTitleStyle}
         raised={true}
         onPress={gotoRoutes}
-      />
+      />}
     </View>
   );
 };

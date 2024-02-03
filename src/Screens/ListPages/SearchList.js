@@ -18,6 +18,7 @@ import styles from "../Styles";
 import STRING from "../../Services/Constants/STRINGS";
 import NetInfo from '@react-native-community/netinfo';
 import CheckNet from "../../Components/Common/CheckNet";
+import SearchPanel from "../../Components/Common/SearchPanel";
 
 const SearchList = ({ navigation, route, ...props }) => {
   const [list, setList] = useState([]);
@@ -60,12 +61,12 @@ const SearchList = ({ navigation, route, ...props }) => {
     navigateTo(navigation, STRING.SCREEN.ROUTES_LIST, { item });
   };
 
-  const searchRoute = () => {
+  const searchRoute = (a, b) => {
     if (nextUrl && nextPage >= 1) {
       props.setLoader(true);
       const data = {
-        source_place_id: props.source.id,
-        destination_place_id: props.destination.id,
+        source_place_id: a || props.source.id,
+        destination_place_id: b || props.destination.id,
       };
       comnPost(`v2/routes?page=${nextPage}`, data)
         .then((res) => {
@@ -125,6 +126,9 @@ const SearchList = ({ navigation, route, ...props }) => {
         }
       />
       <Loader />
+      <View style={{ marginTop: -50, alignItems: "center" }}>
+      <SearchPanel navigation={navigation} from={STRING.SCREEN.SEARCH_LIST} onSwap={(a, b) => searchRoute(a, b)} />
+      </View>
       <SafeAreaView style={{ paddingBottom: 150 }}>
         {list.length > 0 ? (
           <FlatList

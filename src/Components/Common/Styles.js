@@ -118,6 +118,11 @@ const styles = StyleSheet.create({
     top: '39.5%',
     left: '80%'
   },
+  refreshIcon: {
+    position: 'absolute',
+    top: 120,
+    left: '40%'
+  },
   errorText: {
     color: COLOR.red,
     textAlign: "center",

@@ -213,7 +213,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                                 />
                             );
                         })}
-                        <SearchPanel navigation={navigation} />
+                        <SearchPanel navigation={navigation} from={STRING.SCREEN.HOME} />
 
                         <View style={styles.sectionView}>
                             <GlobalText text={STRING.SCREEN.ROUTES} style={styles.sectionTitle} />

@@ -88,7 +88,7 @@ const SearchPlace = ({ navigation, route, ...props }) => {
     } else {
       props.setDestination(place);
     }
-    navigateTo(navigation, STRING.SCREEN.HOME);
+    navigateTo(navigation, route.params.from);
     setSearchValue("");
   };
 
