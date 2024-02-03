@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
     lineHeight: 20,
-    paddingTop: 5
+    paddingTop: 10
   },
   tabView: {
     width: DIMENSIONS.screenWidth,

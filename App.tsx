@@ -13,16 +13,16 @@ import COLOR from './src/Services/Constants/COLORS';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-LogBox.ignoreAllLogs();
+  LogBox.ignoreAllLogs();
 
   return (
-  <Provider store={store}>
-    <SafeAreaProvider>
-      {/* <StatusBar
+    <Provider store={store}>
+      <SafeAreaProvider>
+        {/* <StatusBar
         backgroundColor={COLOR.yellow}
       /> */}
-      <StackNavigator />
-    </SafeAreaProvider>
-      </Provider>
+        <StackNavigator />
+      </SafeAreaProvider>
+    </Provider>
   );
 }

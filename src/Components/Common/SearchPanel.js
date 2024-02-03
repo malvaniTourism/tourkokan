@@ -123,32 +123,32 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
           onPress={isValid ? swap : null}
         />
       </View>
-        <Ionicons
-          style={styles.refreshIcon}
-          name="refresh-circle"
-          color={isValid ? COLOR.themeComicBlue : COLOR.grey}
-          size={DIMENSIONS.iconLarge}
-          onPress={isValid ? refresh : null}
-        />
+      <Ionicons
+        style={styles.refreshIcon}
+        name="refresh-circle"
+        color={isValid ? COLOR.themeComicBlue : COLOR.grey}
+        size={DIMENSIONS.iconLarge}
+        onPress={isValid ? refresh : null}
+      />
 
-      {!isValid &&
-        <View>
+      <View style={{ minHeight: 20 }}>
+        {!isValid &&
           <GlobalText
             text={errorText}
             style={styles.errorText}
           />
-        </View>
-      }
-      { from == STRING.SCREEN.SEARCH_LIST ?
-      null :
+        }
+      </View>
+      {from == STRING.SCREEN.SEARCH_LIST ?
+        null :
         <TextButton
-        title={STRING.BUTTON.SEARCH}
-        containerStyle={styles.searchButtonContainerStyle}
-        buttonStyle={styles.searchButtonStyle}
-        titleStyle={styles.buttonTitleStyle}
-        raised={true}
-        onPress={gotoRoutes}
-      />}
+          title={STRING.BUTTON.SEARCH}
+          containerStyle={styles.searchButtonContainerStyle}
+          buttonStyle={styles.searchButtonStyle}
+          titleStyle={styles.buttonTitleStyle}
+          raised={true}
+          onPress={gotoRoutes}
+        />}
     </View>
   );
 };
