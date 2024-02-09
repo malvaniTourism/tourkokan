@@ -7,6 +7,7 @@ import DrawerNavigator from "./DrawerNavigator";
 import TabNavigator from "./TabNavigator";
 import GlobalText from "../Components/Customs/Text";
 import STRING from "../Services/Constants/STRINGS";
+import AllRoutesSearch from "../Screens/ListPages/AllRoutesSearch";
 
 const SignIn = lazy(() => import("../Screens/AuthScreens/SignIn"));
 const SignUp = lazy(() => import("../Screens/AuthScreens/SignUp"));
@@ -77,6 +78,7 @@ const StackNavigator = () => {
               options={{ headerShown: false }}
             />
             <Stack.Screen name={STRING.SCREEN.SEARCH_LIST} component={SearchList} />
+            <Stack.Screen name={STRING.SCREEN.ALL_ROUTES_SEARCH} component={AllRoutesSearch} />
             <Stack.Screen name={STRING.SCREEN.ROUTES_LIST} component={RoutesList} />
             <Stack.Screen name={STRING.SCREEN.BUS_TIMINGS} component={BusTimings} />
             <Stack.Screen name={STRING.SCREEN.LOGIN} component={SignIn} />

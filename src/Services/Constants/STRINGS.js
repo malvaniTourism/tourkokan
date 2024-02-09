@@ -52,6 +52,7 @@ const STRING = {
 
     ROUTES_LIST: "RoutesList",
     SEARCH_LIST: "SearchList",
+    ALL_ROUTES_SEARCH: "AllRoutesSearch",
     ROUTES_LIST: "RoutesList",
     CITY_LIST: "CityList",
     PROJECT_LIST: "ProjectList",

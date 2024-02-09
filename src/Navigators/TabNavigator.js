@@ -16,6 +16,7 @@ import SvgUri from 'react-native-svg-uri';
 import BusImg from "../Assets/Images/B3.svg"
 import STRING from "../Services/Constants/STRINGS";
 import ExploreGrid from "../Screens/ListPages/ExploreGrid";
+import AllRoutesSearch from "../Screens/ListPages/AllRoutesSearch";
 
 const Tab = createBottomTabNavigator();
 
@@ -62,7 +63,7 @@ const TabNavigator = () => {
 
       <Tab.Screen
         name={STRING.SCREEN.ROUTES}
-        component={SearchList}
+        component={AllRoutesSearch}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Image

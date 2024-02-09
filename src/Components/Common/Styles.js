@@ -79,6 +79,39 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     paddingLeft: 40,
   },
+  routesFieldsView: {
+    borderWidth: .5,
+    borderColor: COLOR.themeComicBlue,
+    borderRadius: DIMENSIONS.borderRadius,
+    paddingBottom: 10,
+    backgroundColor: COLOR.white,
+    alignItems: "flex-start",
+    flexDirection: "row"
+  },
+  routesTextContainerStyle: {
+    width: DIMENSIONS.bannerWidth / 2,
+    marginBottom: -32
+  },
+  routesInputContainerStyle: {
+    borderWidth: .5,
+    borderRadius: DIMENSIONS.borderRadius,
+    borderColor: COLOR.grey,
+    width: DIMENSIONS.bannerWidth / 2 - 10
+  },
+  routesSearchPanelField: {
+    borderWidth: 0,
+    paddingLeft: 40,
+  },
+  routesSwapIcon: {
+    position: 'absolute',
+    top: '30%',
+    left: '44%'
+  },
+  routesRefreshIcon: {
+    position: 'absolute',
+    top: 60,
+    left: '40%'
+  },
   searchButtonContainerStyle: {
     marginTop: 10,
     borderRadius: DIMENSIONS.borderRadiusSmall,

@@ -119,7 +119,6 @@ const HomeScreen = ({ navigation, ...props }) => {
         let isFirstTime = await AsyncStorage.getItem(STRING.STORAGE.IS_FIRST_TIME)
         comnPost("v2/landingpage")
             .then((res) => {
-                console.log('routes: ', res.data.data.routes[3]);
                 if (res && res.data.data)
                     saveToStorage(STRING.STORAGE.LANDING_RESPONSE, JSON.stringify(res))
                 setCities(res.data.data.cities);

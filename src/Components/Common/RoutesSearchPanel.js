@@ -19,7 +19,7 @@ import {
 import GlobalText from "../Customs/Text";
 import STRING from "../../Services/Constants/STRINGS";
 
-const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
+const SearchPanel = ({ navigation, from, onSwap, source, destination, setSource, setDestination, searchRoutes, ...props }) => {
   const [isValid, setIsValid] = useState(false)
   const [errorText, setErrorText] = useState("")
 
@@ -45,14 +45,14 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
   const getValue = (i) => {
     switch (i) {
       case 0:
-        return props.source.name;
+        return source?.name;
       case 1:
-        return props.destination.name;
+        return destination?.name;
     }
   };
 
   const checkIsValid = () => {
-    if ((props.source.name) && (props.destination.name)) setIsValid(true)
+    if ((source?.name) && (destination?.name)) setIsValid(true)
     else setIsValid(false)
   }
 
@@ -61,33 +61,31 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
   };
 
   const gotoRoutes = () => {
-    // props.setSource('')
-    // props.setDestination('')
-    let screen = from == STRING.SCREEN.ALL_ROUTES_SEARCH ? STRING.SCREEN.ALL_ROUTES_SEARCH : STRING.SCREEN.SEARCH_LIST
+    // setSource('')
+    // setDestination('')
     if (isValid) {
-      navigateTo(navigation, screen, { from });
+      searchRoutes()
     } else setErrorText(STRING.ALERT.SOURCE_DESTINATION_REQUIRED)
   };
 
   const swap = async () => {
-    let a = props.source
-    let b = props.destination
-    await props.setSource(b);
-    await props.setDestination(a)
-    onSwap(a.id, b.id)
+    let a = source
+    let b = destination
+    setSource(b);
+    setDestination(a)
   }
 
   const refresh = async () => {
     let a = ""
     let b = ""
-    await props.setSource("");
-    await props.setDestination("")
+    setSource("");
+    setDestination("")
     onSwap(a, b)
   }
 
   return (
     <View style={{ marginVertical: 20 }}>
-      <View style={styles.fieldsView}>
+      <View style={styles.routesFieldsView}>
         {SrcDest.map((field, index) => {
           return (
             <TextField
@@ -101,9 +99,9 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
               disabled={field.disabled}
               value={getValue(index)}
               setChild={(val, i) => setValue(val, i, index)}
-              style={styles.searchPanelField}
-              containerStyle={styles.textContainerStyle}
-              inputContainerStyle={styles.inputContainerStyle}
+              style={styles.routesSearchPanelField}
+              containerStyle={styles.routesTextContainerStyle}
+              inputContainerStyle={styles.routesInputContainerStyle}
               leftIcon={
                 <Ionicons
                   style={styles.swapIcon}
@@ -117,15 +115,15 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
           );
         })}
         <MaterialIcons
-          style={styles.swapIcon}
-          name="swap-vert-circle"
+          style={styles.routesSwapIcon}
+          name="swap-horizontal-circle"
           color={isValid ? COLOR.themeComicBlue : COLOR.grey}
           size={DIMENSIONS.iconLarge}
           onPress={isValid ? swap : null}
         />
       </View>
       <Ionicons
-        style={styles.refreshIcon}
+        style={styles.routesRefreshIcon}
         name="refresh-circle"
         color={isValid ? COLOR.themeComicBlue : COLOR.grey}
         size={DIMENSIONS.iconLarge}
