@@ -392,6 +392,13 @@ const styles = StyleSheet.create({
     },
     cityButtonText: {
         fontSize: DIMENSIONS.textSizeSmall
+    },
+    routesSearchPanelView: {
+        alignItems: "center",
+        position: "absolute",
+        zIndex: 20,
+        alignSelf: "center",
+        marginTop: 20
     }
 });
 

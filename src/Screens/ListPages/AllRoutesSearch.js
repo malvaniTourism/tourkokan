@@ -65,18 +65,20 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
   };
 
   const searchRoute = (a, b, isNext) => {
-    if (nextUrl && nextPage >= 1) {
+    if (nextPage >= 1) {
       props.setLoader(true);
       const data = {
         source_place_id: a || source,
         destination_place_id: b || destination,
       };
+      console.log('data:: ', data);
       comnPost(`v2/routes?page=${isNext ? nextPage : 1}`, data)
         .then((res) => {
           if (res.data.success) {
             if (res && res.data.data)
               saveToStorage(STRING.STORAGE.ROUTES_RESPONSE, JSON.stringify(res))
             let myNextUrl = res.data.data.next_page_url
+            console.log('myNextUrl:: ', myNextUrl);
             setNextUrl(myNextUrl)
             isNext ?
               setList([...list, ...res.data.data.data])
@@ -132,16 +134,16 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
         }
       />
       <Loader />
-      <View style={{ marginTop: -50, alignItems: "center" }}>
+      <View style={styles.routesSearchPanelView}>
         <RoutesSearchPanel source={source} destination={destination} setSourceId={(v) => setSource(v)} setDestinationId={(v) => setDestination(v)} route={route} navigation={navigation} from={STRING.SCREEN.ALL_ROUTES_SEARCH} searchRoutes={() => searchRoute()} onSwap={(a, b) => searchRoute(a, b)} />
       </View>
-      <SafeAreaView style={{ paddingBottom: 150 }}>
+      <SafeAreaView style={{ paddingBottom: 150, position: "relative", marginTop: 150 }}>
         {list.length > 0 ? (
           <FlatList
             keyExtractor={(item) => item.id}
             data={list}
             onEndReached={() => searchRoute("", "", true)}
-            onEndReachedThreshold={0.1}
+            onEndReachedThreshold={0.5}
             renderItem={({ item }) => (
               <RouteHeadCard data={item} cardClick={() => getRoutesList(item)} style={styles.routeHeadCard} />
             )}

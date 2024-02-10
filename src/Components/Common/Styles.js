@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   routesRefreshIcon: {
     position: 'absolute',
     top: 56,
-    left: '40%'
+    left: '44%'
   },
   searchButtonContainerStyle: {
     marginTop: 10,
