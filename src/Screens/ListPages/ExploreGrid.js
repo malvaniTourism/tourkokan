@@ -76,7 +76,6 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
         }
         comnPost(`v2/sites`, data)
             .then(res => {
-                console.log(res.data);
                 if (res.data.success) {
                     props.setLoader(false);
                     setCitiesData(res.data.data.data);
@@ -98,10 +97,8 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
             global: 1,
             search: v
         }
-        console.log('load - - - - - - - - - - -');
         comnPost(`v2/sites?page=${page}`, data)
             .then(res => {
-                console.log('00--', res.data.data);
                 if (res.data.success) {
                     props.setLoader(false);
                     let nextUrl = res.data.data.next_page_url

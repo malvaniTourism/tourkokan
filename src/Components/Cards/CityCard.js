@@ -25,11 +25,9 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
             favouritable_type: STRING.TABLE.SITES,
             favouritable_id: data.id
         }
-        console.log(placeData);
         setIsFav(!isFav)
         comnPost('v2/favourite', placeData)
             .then(res => {
-                console.log(res);
                 reload()
             })
             .catch(err => {

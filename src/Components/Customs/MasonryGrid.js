@@ -21,7 +21,6 @@ const MasonryGrid = ({ data, loadMore }) => {
     }, []);
 
     const handleLongPress = (image) => {
-        console.log('Long pressed on image:', image);
         setSelectedImage(image);
     };
 

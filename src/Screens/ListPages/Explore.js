@@ -111,7 +111,6 @@ const Explore = ({ route, navigation, ...props }) => {
   }
 
   const goToNext = () => {
-    console.log('next');
     // props.setLoader(true)
     getPlaces(true)
   }
@@ -121,7 +120,6 @@ const Explore = ({ route, navigation, ...props }) => {
   }
 
   const handleCityPress = (city) => {
-    console.log('city: ', city.name);
     setSelectedCity(city.name);
     getCities(city.name)
   };

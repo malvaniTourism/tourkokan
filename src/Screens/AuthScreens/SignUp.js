@@ -129,10 +129,8 @@ const SignUp = ({ navigation, ...props }) => {
       role_id: role.id,
       profile_picture: uploadImage
     };
-    console.log('data: ', data);
     comnPost("auth/register", data)
       .then((res) => {
-        console.log('res: ', res);
         if (res.data.success) {
           props.setLoader(false);
           setAlertMessage(STRING.ALERT.REGI_SUCCESS);

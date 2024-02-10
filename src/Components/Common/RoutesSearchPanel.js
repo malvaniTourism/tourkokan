@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
+import { FlatList, View } from "react-native";
 import { SrcDest } from "../../Services/Constants/FIELDS";
 import TextButton from "../Customs/Buttons/TextButton";
 import TextField from "../Customs/TextField";
@@ -18,10 +18,18 @@ import {
 } from "../../Reducers/CommonActions";
 import GlobalText from "../Customs/Text";
 import STRING from "../../Services/Constants/STRINGS";
+import SearchDropdown from "./SearchDropdown";
 
-const SearchPanel = ({ navigation, from, onSwap, source, destination, setSource, setDestination, searchRoutes, ...props }) => {
+const RoutesSearchPanel = ({ navigation, from, onSwap, setSourceId, setDestinationId, searchRoutes, ...props }) => {
   const [isValid, setIsValid] = useState(false)
+  const [isOneValid, setIsOneValid] = useState(false)
   const [errorText, setErrorText] = useState("")
+  const [placesList, setPlacesList] = useState([]);
+  const [nextPage, setNextPage] = useState(1);
+  const [searchValue, setSearchValue] = useState("");
+  const [fieldType, setFieldType] = useState("");
+  const [source, setSource] = useState({});
+  const [destination, setDestination] = useState({})
 
   useEffect(() => {
     // setSource(props.source.name || "");
@@ -30,7 +38,7 @@ const SearchPanel = ({ navigation, from, onSwap, source, destination, setSource,
     checkIsValid()
   }, [props]);
 
-  const setValue = (v, i, index) => {
+  const setValue = (v, i, index, type) => {
     switch (index) {
       case 0:
         setSource(v);
@@ -39,6 +47,8 @@ const SearchPanel = ({ navigation, from, onSwap, source, destination, setSource,
         setDestination(v);
         break;
     }
+    searchPlace(v)
+    setFieldType(type)
     checkIsValid()
   };
 
@@ -54,11 +64,9 @@ const SearchPanel = ({ navigation, from, onSwap, source, destination, setSource,
   const checkIsValid = () => {
     if ((source?.name) && (destination?.name)) setIsValid(true)
     else setIsValid(false)
+    if ((source?.name) || (destination?.name)) setIsOneValid(true)
+    else setIsOneValid(false)
   }
-
-  const gotoSearch = (type) => {
-    navigateTo(navigation, STRING.SCREEN.SEARCH_PLACE, { type, from });
-  };
 
   const gotoRoutes = () => {
     // setSource('')
@@ -72,15 +80,90 @@ const SearchPanel = ({ navigation, from, onSwap, source, destination, setSource,
     let a = source
     let b = destination
     setSource(b);
+    setSourceId(b.id)
     setDestination(a)
+    setDestinationId(a.id)
   }
 
   const refresh = async () => {
     let a = ""
     let b = ""
     setSource("");
+    setSourceId(null)
     setDestination("")
+    setDestinationId(null)
     onSwap(a, b)
+  }
+
+  const searchPlace = (v) => {
+    setSearchValue(v);
+    let data = {
+      search: v,
+      apitype: 'dropdown',
+      type: 'bus'
+    };
+    comnPost(`v2/sites`, data)
+      .then((res) => {
+        if (res.data.success) {
+          props.setLoader(false);
+          setPlacesList(res.data.data.data);
+        } else {
+          props.setLoader(false);
+        }
+      })
+      .catch((err) => {
+        props.setLoader(false);
+      });
+  };
+
+  const scrollPlace = (v, page) => {
+    // props.setLoader(true)
+    setSearchValue(v);
+    let data = {
+      search: v,
+      apitype: 'dropdown',
+      type: 'bus'
+    };
+    comnPost(`v2/sites?page=${page}`, data)
+      .then((res) => {
+        if (res.data.success) {
+          let nextUrl = res.data.data.next_page_url
+          setPlacesList([...placesList, ...res.data.data.data]);
+          setNextPage(nextUrl[nextUrl.length - 1])
+          props.setLoader(false);
+        } else {
+          props.setLoader(false);
+        }
+      })
+      .catch((err) => {
+        props.setLoader(false);
+      });
+  };
+
+  const setPlace = (place) => {
+    let newSource = {}
+    let newDestination = {}
+    if (fieldType == STRING.LABEL.SOURCE) {
+      setSource(place);
+      setSourceId(place.id)
+      newSource = place
+    } else {
+      setDestination(place);
+      setDestinationId(place.id)
+      newDestination = place
+    }
+    setSearchValue("");
+    setPlacesList([])
+  };
+
+  const goToNext = () => {
+    props.setLoader(true)
+    scrollPlace(searchValue, nextPage)
+  }
+
+  const pressed = (type) => {
+    searchPlace()
+    setFieldType(type)
   }
 
   return (
@@ -89,16 +172,16 @@ const SearchPanel = ({ navigation, from, onSwap, source, destination, setSource,
         {SrcDest.map((field, index) => {
           return (
             <TextField
-              onPress={() => gotoSearch(field.name)}
+              onPress={() => pressed(field.name)}
               name={field.name}
               label={field.name}
               placeholder={field.placeholder}
               fieldType={field.type}
               length={field.length}
               required={field.required}
-              disabled={field.disabled}
+              disabled={false}
               value={getValue(index)}
-              setChild={(val, i) => setValue(val, i, index)}
+              setChild={(val, i) => setValue(val, i, index, field.name)}
               style={styles.routesSearchPanelField}
               containerStyle={styles.routesTextContainerStyle}
               inputContainerStyle={styles.routesInputContainerStyle}
@@ -125,9 +208,9 @@ const SearchPanel = ({ navigation, from, onSwap, source, destination, setSource,
       <Ionicons
         style={styles.routesRefreshIcon}
         name="refresh-circle"
-        color={isValid ? COLOR.themeComicBlue : COLOR.grey}
+        color={isOneValid ? COLOR.themeComicBlue : COLOR.grey}
         size={DIMENSIONS.iconLarge}
-        onPress={isValid ? refresh : null}
+        onPress={isOneValid ? refresh : null}
       />
 
       <View style={{ minHeight: 20 }}>
@@ -138,39 +221,34 @@ const SearchPanel = ({ navigation, from, onSwap, source, destination, setSource,
           />
         }
       </View>
-      {from == STRING.SCREEN.SEARCH_LIST ?
-        null :
-        <TextButton
-          title={STRING.BUTTON.SEARCH}
-          containerStyle={styles.searchButtonContainerStyle}
-          buttonStyle={styles.searchButtonStyle}
-          titleStyle={styles.buttonTitleStyle}
-          raised={true}
-          onPress={gotoRoutes}
-        />}
+      <TextButton
+        title={STRING.BUTTON.SEARCH}
+        containerStyle={styles.searchButtonContainerStyle}
+        buttonStyle={styles.searchButtonStyle}
+        titleStyle={styles.buttonTitleStyle}
+        raised={true}
+        onPress={gotoRoutes}
+      />
+      <View style={{position: "relative"}}>
+        {placesList[0] &&
+          <SearchDropdown placesList={placesList} goToNext={goToNext} setPlace={setPlace} closeDropdown={() => setPlacesList([])} />
+        }
+      </View>
     </View>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
-    source: state.commonState.source,
-    destination: state.commonState.destination,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setSource: (data) => {
-      dispatch(setSource(data));
-    },
-    setDestination: (data) => {
-      dispatch(setDestination(data));
-    },
     setLoader: (data) => {
       dispatch(setLoader(data));
     },
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchPanel);
+export default connect(mapStateToProps, mapDispatchToProps)(RoutesSearchPanel);

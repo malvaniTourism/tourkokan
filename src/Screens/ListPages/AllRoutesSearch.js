@@ -26,13 +26,12 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
   const [offline, setOffline] = useState(false);
   const [nextPage, setNextPage] = useState(1);
   const [nextUrl, setNextUrl] = useState(1)
-  const [source, setSource] = useState(route.params?.source || null);
-  const [destination, setDestination] = useState(route.params?.destination || null)
+  const [source, setSource] = useState();
+  const [destination, setDestination] = useState()
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
     checkLogin(navigation)
-    console.log("route.params:::: ", route.params);
     // searchRoute();
 
     const unsubscribe = NetInfo.addEventListener(state => {
@@ -65,12 +64,12 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
     navigateTo(navigation, STRING.SCREEN.ROUTES_LIST, { item });
   };
 
-  const searchRoute = (isNext) => {
+  const searchRoute = (a, b, isNext) => {
     if (nextUrl && nextPage >= 1) {
       props.setLoader(true);
       const data = {
-        source_place_id: source?.id,
-        destination_place_id: destination?.id,
+        source_place_id: a || source,
+        destination_place_id: b || destination,
       };
       comnPost(`v2/routes?page=${isNext ? nextPage : 1}`, data)
         .then((res) => {
@@ -80,9 +79,9 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
             let myNextUrl = res.data.data.next_page_url
             setNextUrl(myNextUrl)
             isNext ?
-            setList([...list, ...res.data.data.data])
-            :
-            setList([...res.data.data.data])
+              setList([...list, ...res.data.data.data])
+              :
+              setList([...res.data.data.data])
             setNextPage(myNextUrl[myNextUrl.length - 1])
             props.setLoader(false);
           } else {
@@ -134,14 +133,14 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
       />
       <Loader />
       <View style={{ marginTop: -50, alignItems: "center" }}>
-      <RoutesSearchPanel source={source} destination={destination} setSource={setSource} setDestination={setDestination} route={route} navigation={navigation} from={STRING.SCREEN.ALL_ROUTES_SEARCH} searchRoutes={() => searchRoute()} onSwap={(a, b) => searchRoute(a, b)} />
+        <RoutesSearchPanel source={source} destination={destination} setSourceId={(v) => setSource(v)} setDestinationId={(v) => setDestination(v)} route={route} navigation={navigation} from={STRING.SCREEN.ALL_ROUTES_SEARCH} searchRoutes={() => searchRoute()} onSwap={(a, b) => searchRoute(a, b)} />
       </View>
       <SafeAreaView style={{ paddingBottom: 150 }}>
         {list.length > 0 ? (
           <FlatList
             keyExtractor={(item) => item.id}
             data={list}
-            onEndReached={() => searchRoute(true)}
+            onEndReached={() => searchRoute("", "", true)}
             onEndReachedThreshold={0.1}
             renderItem={({ item }) => (
               <RouteHeadCard data={item} cardClick={() => getRoutesList(item)} style={styles.routeHeadCard} />
@@ -157,8 +156,6 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
 
 const mapStateToProps = (state) => {
   return {
-    source: state.commonState.source,
-    destination: state.commonState.destination,
   };
 };
 

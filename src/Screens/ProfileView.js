@@ -142,7 +142,6 @@ const ProfileView = ({ navigation, route, ...props }) => {
       (position) => {
         setLocationStatus(STRING.YOU_ARE_HERE);
         //Will give you the location on location change
-        console.log(position);
         const currentLongitude = position.coords.longitude;
         //getting the Longitude from the location json
         const currentLatitude = position.coords.latitude;

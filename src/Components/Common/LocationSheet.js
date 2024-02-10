@@ -104,7 +104,6 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet }) => {
         let WatchID = Geolocation.watchPosition(
             (position) => {
                 setLocationStatus(STRING.YOU_ARE_HERE);
-                console.log(position);
                 const currentLongitude = position.coords.longitude;
                 const currentLatitude = position.coords.latitude;
                 setCurrentLongitude(currentLongitude);

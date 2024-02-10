@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   },
   routesRefreshIcon: {
     position: 'absolute',
-    top: 60,
+    top: 56,
     left: '40%'
   },
   searchButtonContainerStyle: {
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   },
   swapIcon: {
     position: 'absolute',
-    top: '39.5%',
+    top: '38%',
     left: '80%'
   },
   refreshIcon: {
@@ -192,6 +192,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: DIMENSIONS.bannerHeight / 2
+  },
+  searchDropView: {
+    zIndex: 10,
+    top: -70,
+    borderWidth: 2,
+    borderRadius: DIMENSIONS.borderRadiusSmall,
+    borderColor: COLOR.themeComicBlue,
+    backgroundColor: COLOR.cardBackground
+  },
+  dropCloseIcon: {
+    alignSelf: "flex-end"
   }
 });
 
