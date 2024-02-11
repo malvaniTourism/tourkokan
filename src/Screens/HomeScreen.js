@@ -57,6 +57,7 @@ const HomeScreen = ({ navigation, ...props }) => {
         "https://c4.wallpaperflare.com/wallpaper/977/138/381/tbilisi-georgia-wallpaper-preview.jpg",
         "https://4kwallpapers.com/images/walls/thumbs_3t/912.jpg",
     ]);
+    const [currentCity, setCurrentCity] = useState(STRING.CITY.DEVGAD)
 
     useEffect(() => {
         const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => exitApp());
@@ -192,7 +193,7 @@ const HomeScreen = ({ navigation, ...props }) => {
 
     return (
         <ScrollView stickyHeaderIndices={[0]}>
-            <TopComponent navigation={navigation} openLocationSheet={() => openLocationSheet()} />
+            <TopComponent currentCity={currentCity} navigation={navigation} openLocationSheet={() => openLocationSheet()} />
             <CheckNet isOff={offline} />
             <MyAnimatedLoader isVisible={isLoading} />
             {
@@ -202,7 +203,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                     :
                     <View style={{ flex: 1, alignItems: "center" }}>
                         <Banner bannerImages={bannerImages} />
-                        {CityName.map((field, index) => {
+                        {/* {CityName.map((field, index) => {
                             return (
                                 <SearchBar
                                     style={styles.homeSearchBar}
@@ -211,7 +212,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                                     onFocus={onSearchFocus}
                                 />
                             );
-                        })}
+                        })} */}
                         <SearchPanel navigation={navigation} from={STRING.SCREEN.HOME} />
 
                         <View style={styles.sectionView}>
@@ -275,6 +276,7 @@ const HomeScreen = ({ navigation, ...props }) => {
                 refRBSheet={refRBSheet}
                 height={300}
                 Component={<LocationSheet
+                    setCurrentCity={(name) => setCurrentCity(name)}
                     openLocationSheet={() => openLocationSheet()}
                     closeLocationSheet={() => closeLocationSheet()}
                 />}

@@ -28,7 +28,6 @@ import { Image } from "@rneui/themed";
 import styles from "./Styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { checkLogin, backPage, goBackHandler, navigateTo } from "../Services/CommonMethods";
-import SvgUri from 'react-native-svg-uri';
 import GlobalText from "../Components/Customs/Text";
 import TextButton from '../Components/Customs/Buttons/TextButton';
 import Geolocation from '@react-native-community/geolocation';
@@ -247,7 +246,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
         <View style={styles.profileContainer}>
           <Image
             style={styles.profilePhoto}
-            source={{ uri: `${profile.profile_picture ? Path.FTP_PATH1 + profile.profile_picture : "https://api-private.atlassian.com/users/2143ab39b9c73bcab4fe6562fff8d23d/avatar"}` }}
+            source={{ uri: `${profile.profile_picture ? Path.FTP_PATH + profile.profile_picture : "https://api-private.atlassian.com/users/2143ab39b9c73bcab4fe6562fff8d23d/avatar"}` }}
           />
           <GlobalText text={profile.name} style={styles.pricingOptionTitle} />
         </View>
@@ -269,9 +268,9 @@ const ProfileView = ({ navigation, route, ...props }) => {
             : null
           }
         </View>
-        <GlobalText text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed etullamcorper nisi."} style={styles.bioText}></GlobalText>
+        {/* <GlobalText text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed etullamcorper nisi."} style={styles.bioText}></GlobalText> */}
       </View>
-      <View style={styles.statsContainer}>
+      {/* <View style={styles.statsContainer}>
         <View style={styles.statContainer}>
           <GlobalText text={"1234"} style={styles.statCount} />
           <GlobalText text={"Posts"} style={styles.statLabel} />
@@ -284,7 +283,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
           <GlobalText text={"9101"} style={styles.statCount} />
           <GlobalText text={"Following"} style={styles.statLabel} />
         </View>
-      </View>
+      </View> */}
 
       <View style={{ flexDirection: "row", justifyContent: "space-evenly", marginTop: 30 }}>
         <TextButton

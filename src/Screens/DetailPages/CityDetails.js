@@ -21,13 +21,15 @@ import CityCard from "../../Components/Cards/CityCard";
 import Octicons from "react-native-vector-icons/Octicons";
 import CommentsSheet from "../../Components/Common/CommentsSheet";
 import BottomSheet from "../../Components/Customs/BottomSheet";
+import StarRating from 'react-native-star-rating';
 
 const CityDetails = ({ navigation, route, ...props }) => {
     const refRBSheet = useRef();
     const [city, setCity] = useState([]); // State to store city
     const [error, setError] = useState(null); // State to store error message
     const [cityId, setCityId] = useState(route.params.id);
-    const [isFav, setIsFav] = useState(false)
+    const [isFav, setIsFav] = useState(false);
+    const [rating, setRating] = useState(0)
 
     useEffect(() => {
         const backHandler = goBackHandler(navigation)
@@ -141,8 +143,19 @@ const CityDetails = ({ navigation, route, ...props }) => {
                                 <Octicons name='comment' color={COLOR.black} size={DIMENSIONS.iconSize} />
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.cityLikeView} onPress={() => onShareClick()}>
-                                <Octicons name='share' color={COLOR.black} size={DIMENSIONS.iconSize} />
+                                <Octicons name='star' color={COLOR.black} size={DIMENSIONS.iconSize} />
                             </TouchableOpacity>
+                        </View>
+                        <View style={styles.cityStarView}>
+                            <StarRating
+                                disabled={false}
+                                maxStars={5}
+                                rating={rating}
+                                selectedStar={(rating) => onStarRatingPress(rating)}
+                                starSize={14}
+                                starStyle={styles.starStyle}
+                                halfStarEnabled
+                            />
                         </View>
                     </View>
                     <View style={{ flex: 1, padding: 10 }}>
@@ -150,7 +163,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
                             <GlobalText text={city.name} style={styles.detailTitle} />
                             <GlobalText text={city.tag_line} style={styles.detailTitle} />
                         </View>
-                        <GlobalText text={city.description} />
+                        <GlobalText text={city.description} style={{ textAlign: "left" }} />
                         <GlobalText text={`projects: ${city.projects_count}`} />
                         <GlobalText text={`places: ${city.places_count}`} />
                         <GlobalText text={`uploads: ${city.photos_count}`} />

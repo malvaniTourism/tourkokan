@@ -20,8 +20,6 @@ const SearchPlace = ({ navigation, route, ...props }) => {
   const [searchValue, setSearchValue] = useState("");
   const [placesList, setPlacesList] = useState([]);
   const [nextPage, setNextPage] = useState(1);
-  const [source, setSource] = useState("");
-  const [destination, setDestination] = useState("")
   let saveNext = 1
 
   useEffect(() => {
@@ -81,19 +79,13 @@ const SearchPlace = ({ navigation, route, ...props }) => {
   };
 
   const setPlace = (place) => {
-    let newSource = {}
-    let newDestination = {}
     if (route.params.type == STRING.LABEL.SOURCE) {
       props.setSource(place);
-      setSource(place);
-      newSource = place
     } else {
       props.setDestination(place);
-      setDestination(place);
-      newDestination = place
     }
-    navigateTo(navigation, route.params.from, { source: newSource, destination: newDestination });
     setSearchValue("");
+    navigateTo(navigation, STRING.SCREEN.HOME);
   };
 
   const goToNext = () => {

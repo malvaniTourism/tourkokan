@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     },
     placeImageView: {
         height: DIMENSIONS.screenHeight / 100 * 40,
+        justifyContent: "space-between"
     },
     cityLikeView: {
         backgroundColor: COLOR.white,
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
         height: 35,
         width: 100,
         left: 10,
-        top: 10,
+        top: -10,
         borderRadius: DIMENSIONS.borderRadius,
         justifyContent: 'center',
         alignItems: 'center',
@@ -65,6 +66,12 @@ const styles = StyleSheet.create({
     sectionView: {
         marginVertical: DIMENSIONS.sectionGap,
         alignItems: "center",
+    },
+    starStyle: {
+        // width: '50%'
+        color: COLOR.yellow,
+        bottom: 0,
+        justifyContent: "flex-end",
     },
 })
 

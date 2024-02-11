@@ -14,7 +14,6 @@ import { Image } from "@rneui/themed";
 import styles from "./Styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { checkLogin, backPage, goBackHandler, navigateTo } from "../Services/CommonMethods";
-import SvgUri from 'react-native-svg-uri';
 import GlobalText from "../Components/Customs/Text";
 import DropDown from "../Components/Customs/DropDown";
 import { ProfileFields, SignUpFields } from "../Services/Constants/FIELDS";
@@ -187,7 +186,7 @@ const Profile = ({ navigation, ...props }) => {
               <Image source={{ uri: imageSource }} style={styles.profileImage} />
               :
               <Image
-                source={{ uri: `${profile_picture ? Path.FTP_PATH1 + profile_picture : "https://api-private.atlassian.com/users/2143ab39b9c73bcab4fe6562fff8d23d/avatar"}` }}
+                source={{ uri: `${profile_picture ? Path.FTP_PATH + profile_picture : "https://api-private.atlassian.com/users/2143ab39b9c73bcab4fe6562fff8d23d/avatar"}` }}
                 containerStyle={styles.profileImage}
               />
             }

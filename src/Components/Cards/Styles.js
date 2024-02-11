@@ -127,7 +127,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: COLOR.themeComicBlue,
         lineHeight: 25,
-        fontSize: DIMENSIONS.subtitleTextSize
+        fontSize: DIMENSIONS.subtitleTextSize,
+        textAlign: "left"
     },
     routeHeadCardBottom: {
         borderBottomLeftRadius: DIMENSIONS.borderRadiusXS,

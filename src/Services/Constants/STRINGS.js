@@ -25,6 +25,7 @@ const STRING = {
     ROOT: "Root",
     HOME: "Home",
     PRICING: "Pricing",
+    REQUEST_PAID_ADVERTISEMENT: "Request Paid Advertisement",
     CONTACT_US: "Contact Us",
     EMERGENCY: "Emergency",
     WEATHER: "Weather",
@@ -80,6 +81,7 @@ const STRING = {
   HEADER: {
     BUS_TIMINGS: "Bus Timings",
     CONTACT_US: "Contact Us",
+    EMERGENCY: "Emergency",
     PRICING: "Pricing",
     VERIFY_OTP: "Verify OTP",
     CITY: "City",

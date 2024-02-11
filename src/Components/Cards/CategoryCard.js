@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { TouchableOpacity, View, Image } from 'react-native'
 import styles from './Styles'
 import { Text } from 'react-native-svg'
-import SvgUri from 'react-native-svg-uri'
 import DIMENSIONS from '../../Services/Constants/DIMENSIONS'
 
 const CategoryCard = ({ data, getCategory }) => {

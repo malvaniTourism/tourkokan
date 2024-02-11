@@ -89,14 +89,15 @@ export const removeFromStorage = async (name) => {
 }
 
 export const dataSync = async (name, callBack) => {
-  if (await isOffline()) {
-    console.log('name, ', await getFromStorage(name));
-    if (await getFromStorage(name)) {
-      return await getFromStorage(name)
-    } else {
-      return await isOffline()
-    }
-  } else {
-    callBack()
-  }
+  // if (await isOffline()) {
+  //   console.log('name, ', await getFromStorage(name));
+  //   if (await getFromStorage(name)) {
+  //     return await getFromStorage(name)
+  //   } else {
+  //     return await isOffline()
+  //   }
+  // } else {
+  //   callBack()
+  // }
+  callBack()
 }

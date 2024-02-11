@@ -12,7 +12,7 @@ import { navigateTo } from "../../Services/CommonMethods";
 import GlobalText from "../Customs/Text";
 import STRING from "../../Services/Constants/STRINGS";
 
-const TopComponent = ({ navigation, openLocationSheet }) => {
+const TopComponent = ({ navigation, openLocationSheet, currentCity }) => {
 
   const openDrawer = () => {
     navigation.openDrawer();
@@ -34,7 +34,7 @@ const TopComponent = ({ navigation, openLocationSheet }) => {
             style={{ marginRight: 20 }}
             onPress={() => openDrawer()}
           />
-          <GlobalText text={STRING.CITY.DEVGAD} style={styles.whiteBold} />
+          <GlobalText text={currentCity} style={styles.whiteBold} />
           <Ionicons
             name="chevron-down"
             color={COLOR.white}

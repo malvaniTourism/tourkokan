@@ -75,7 +75,7 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
                     <Octicons name='comment' color={COLOR.black} size={DIMENSIONS.iconSize} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.cityLikeView} onPress={() => onShareClick()}>
-                    <Octicons name='share' color={COLOR.black} size={DIMENSIONS.iconSize} />
+                    <Octicons name='star' color={COLOR.black} size={DIMENSIONS.iconSize} />
                 </TouchableOpacity>
             </View>
 

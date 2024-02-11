@@ -22,14 +22,13 @@ import SearchDropdown from "./SearchDropdown";
 
 const RoutesSearchPanel = ({ navigation, from, onSwap, setSourceId, setDestinationId, searchRoutes, ...props }) => {
   const [isValid, setIsValid] = useState(false)
-  const [isOneValid, setIsOneValid] = useState(false)
   const [errorText, setErrorText] = useState("")
   const [placesList, setPlacesList] = useState([]);
   const [nextPage, setNextPage] = useState(1);
   const [searchValue, setSearchValue] = useState("");
   const [fieldType, setFieldType] = useState("");
   const [source, setSource] = useState({});
-  const [destination, setDestination] = useState({})
+  const [destination, setDestination] = useState({});
 
   useEffect(() => {
     // setSource(props.source.name || "");
@@ -64,8 +63,6 @@ const RoutesSearchPanel = ({ navigation, from, onSwap, setSourceId, setDestinati
   const checkIsValid = () => {
     if ((source?.name) && (destination?.name)) setIsValid(true)
     else setIsValid(false)
-    if ((source?.name) || (destination?.name)) setIsOneValid(true)
-    else setIsOneValid(false)
   }
 
   const gotoRoutes = () => {
@@ -141,16 +138,12 @@ const RoutesSearchPanel = ({ navigation, from, onSwap, setSourceId, setDestinati
   };
 
   const setPlace = (place) => {
-    let newSource = {}
-    let newDestination = {}
     if (fieldType == STRING.LABEL.SOURCE) {
       setSource(place);
       setSourceId(place.id)
-      newSource = place
     } else {
       setDestination(place);
       setDestinationId(place.id)
-      newDestination = place
     }
     setSearchValue("");
     setPlacesList([])
@@ -166,6 +159,16 @@ const RoutesSearchPanel = ({ navigation, from, onSwap, setSourceId, setDestinati
     setFieldType(type)
   }
 
+  const closeDropdown = () => {
+    console.log("fieldType:: ", fieldType);
+    setPlacesList([])
+    if (fieldType == STRING.LABEL.SOURCE) {
+      setSource({name: ""})
+    } else {
+      setDestination({name: ""})
+    }
+  }
+
   return (
     <View style={{ marginVertical: 20 }}>
       <View style={styles.routesFieldsView}>
@@ -179,7 +182,7 @@ const RoutesSearchPanel = ({ navigation, from, onSwap, setSourceId, setDestinati
               fieldType={field.type}
               length={field.length}
               required={field.required}
-              disabled={false}
+              disabled={index == 1 && (source.name == "" || source.name == null)}
               value={getValue(index)}
               setChild={(val, i) => setValue(val, i, index, field.name)}
               style={styles.routesSearchPanelField}
@@ -208,9 +211,9 @@ const RoutesSearchPanel = ({ navigation, from, onSwap, setSourceId, setDestinati
       <Ionicons
         style={styles.routesRefreshIcon}
         name="refresh-circle"
-        color={isOneValid ? COLOR.themeComicBlue : COLOR.grey}
+        color={source.name ? COLOR.themeComicBlue : COLOR.grey}
         size={DIMENSIONS.iconLarge}
-        onPress={isOneValid ? refresh : null}
+        onPress={source.name ? refresh : null}
       />
 
       <View style={{ minHeight: 20 }}>
@@ -231,7 +234,7 @@ const RoutesSearchPanel = ({ navigation, from, onSwap, setSourceId, setDestinati
       />
       <View style={{position: "relative"}}>
         {placesList[0] &&
-          <SearchDropdown placesList={placesList} goToNext={goToNext} setPlace={setPlace} closeDropdown={() => setPlacesList([])} />
+          <SearchDropdown placesList={placesList} goToNext={goToNext} setPlace={setPlace} closeDropdown={() => closeDropdown()} />
         }
       </View>
     </View>

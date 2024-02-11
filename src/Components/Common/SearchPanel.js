@@ -19,7 +19,7 @@ import {
 import GlobalText from "../Customs/Text";
 import STRING from "../../Services/Constants/STRINGS";
 
-const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
+const SearchPanel = ({ navigation, onSwap, ...props }) => {
   const [isValid, setIsValid] = useState(false)
   const [errorText, setErrorText] = useState("")
 
@@ -57,15 +57,14 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
   }
 
   const gotoSearch = (type) => {
-    navigateTo(navigation, STRING.SCREEN.SEARCH_PLACE, { type, from });
+    navigateTo(navigation, STRING.SCREEN.SEARCH_PLACE, { type });
   };
 
   const gotoRoutes = () => {
     // props.setSource('')
     // props.setDestination('')
-    let screen = from == STRING.SCREEN.ALL_ROUTES_SEARCH ? STRING.SCREEN.ALL_ROUTES_SEARCH : STRING.SCREEN.SEARCH_LIST
     if (isValid) {
-      navigateTo(navigation, screen, { from });
+      navigateTo(navigation, STRING.SCREEN.SEARCH_LIST);
     } else setErrorText(STRING.ALERT.SOURCE_DESTINATION_REQUIRED)
   };
 
@@ -98,7 +97,7 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
               fieldType={field.type}
               length={field.length}
               required={field.required}
-              disabled={field.disabled}
+              disabled={index == 1 && (props.source.name == "" || props.source.name == null)}
               value={getValue(index)}
               setChild={(val, i) => setValue(val, i, index)}
               style={styles.searchPanelField}
@@ -127,9 +126,9 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
       <Ionicons
         style={styles.refreshIcon}
         name="refresh-circle"
-        color={isValid ? COLOR.themeComicBlue : COLOR.grey}
+        color={props.source.name ? COLOR.themeComicBlue : COLOR.grey}
         size={DIMENSIONS.iconLarge}
-        onPress={isValid ? refresh : null}
+        onPress={props.source.name ? refresh : null}
       />
 
       <View style={{ minHeight: 20 }}>
@@ -140,8 +139,6 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
           />
         }
       </View>
-      {from == STRING.SCREEN.SEARCH_LIST ?
-        null :
         <TextButton
           title={STRING.BUTTON.SEARCH}
           containerStyle={styles.searchButtonContainerStyle}
@@ -149,7 +146,7 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
           titleStyle={styles.buttonTitleStyle}
           raised={true}
           onPress={gotoRoutes}
-        />}
+        />
     </View>
   );
 };

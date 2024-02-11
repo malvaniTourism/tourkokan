@@ -13,7 +13,7 @@ import DialogBox from 'react-native-dialogbox';
 import Geolocation from '@react-native-community/geolocation';
 import STRING from '../../Services/Constants/STRINGS';
 
-const LocationSheet = ({ openLocationSheet, closeLocationSheet }) => {
+const LocationSheet = ({ openLocationSheet, closeLocationSheet, setCurrentCity }) => {
     const refDialogBox = useRef();
 
     const [searchValue, setSearchValue] = useState('');
@@ -25,27 +25,33 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet }) => {
     const [currentLongitude, setCurrentLongitude] = useState(null);
     const [locationStatus, setLocationStatus] = useState('');
     const [watchID, setWatchID] = useState("");
-  
+
 
     const searchPlace = (val, table) => {
         setSearchValue(val);
-        const data = {
-            string: val,
-            table_name: table
-        }
+        let data = {
+            apitype: 'list',
+            search: val,
+            category: "city"
+        };
         if (val.length >= 1) {
-            comnPost("v2/search", data)
-                .then((res) => {
-                    setPlacesList(res.data.data.data)
-                })
-                .catch((err) => {
-                });
-        } else setPlacesList([])
+            comnPost("v2/sites", data)
+            .then((res) => {
+                if (res && res.data.data)
+                    setPlacesList(res.data.data.data);
+                props.setLoader(false);
+            })
+            .catch((error) => {
+                props.setLoader(false);
+            });
+        } else {
+            setPlacesList([]);
+        }
     };
 
     const renderItem = ({ item }) => {
         return (
-            <ListItem bottomDivider onPress={() => onListItemClick(item.id)}>
+            <ListItem bottomDivider onPress={() => onListItemClick(item.name)}>
                 <ListItem.Content>
                     <ListItem.Title>{item.name}</ListItem.Title>
                 </ListItem.Content>
@@ -53,7 +59,8 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet }) => {
         );
     };
 
-    const onListItemClick = (id) => {
+    const onListItemClick = (name) => {
+        setCurrentCity(name)
         closeLocationSheet()
     }
 
