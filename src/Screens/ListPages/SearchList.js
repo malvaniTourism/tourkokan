@@ -65,8 +65,8 @@ const SearchList = ({ navigation, route, ...props }) => {
     if (nextUrl && nextPage >= 1) {
       props.setLoader(true);
       const data = {
-        source_place_id: a || props.source.id,
-        destination_place_id: b || props.destination.id,
+        source_place_id: route.params?.source.id,
+        destination_place_id: route.params?.destination.id,
       };
       comnPost(`v2/routes?page=${nextPage}`, data)
         .then((res) => {
@@ -126,8 +126,8 @@ const SearchList = ({ navigation, route, ...props }) => {
         }
       />
       <Loader />
-      <View style={{ marginTop: -50, alignItems: "center" }}>
-      <SearchPanel navigation={navigation} from={STRING.SCREEN.SEARCH_LIST} onSwap={(a, b) => searchRoute(a, b)} />
+      <View style={{ alignItems: "center" }}>
+      {/* <SearchPanel navigation={navigation} from={STRING.SCREEN.SEARCH_LIST} onSwap={(a, b) => searchRoute(a, b)} /> */}
       </View>
       <SafeAreaView style={{ paddingBottom: 150 }}>
         {list.length > 0 ? (

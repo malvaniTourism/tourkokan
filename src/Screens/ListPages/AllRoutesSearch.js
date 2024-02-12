@@ -71,14 +71,12 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
         source_place_id: a || source,
         destination_place_id: b || destination,
       };
-      console.log('data:: ', data);
       comnPost(`v2/routes?page=${isNext ? nextPage : 1}`, data)
         .then((res) => {
           if (res.data.success) {
             if (res && res.data.data)
               saveToStorage(STRING.STORAGE.ROUTES_RESPONSE, JSON.stringify(res))
             let myNextUrl = res.data.data.next_page_url
-            console.log('myNextUrl:: ', myNextUrl);
             setNextUrl(myNextUrl)
             isNext ?
               setList([...list, ...res.data.data.data])

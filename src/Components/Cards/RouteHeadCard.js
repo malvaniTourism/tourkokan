@@ -7,16 +7,20 @@ import Path from '../../Services/Api/BaseUrl'
 import { SvgCssUri } from 'react-native-svg'
 import STRING from '../../Services/Constants/STRINGS'
 import Url from '../../Assets/Images/Buses/Shivshahi.svg'
+import { Image } from 'react-native'
 
-const RouteHeadCard = ({ data, cardClick, style }) => {
-let url = `../../Assets/Images/Buses/${data.bus_type.type}.svg`;
-    console.log('-- -- ', url);
+const RouteHeadCard = ({ data, cardClick, style, bus }) => {
+    let imagePath = `../../Assets/Images/Buses/OrdinaryExpress.png`;
 
     return (
         <TouchableOpacity style={[styles.routeHeadCard, style]} onPress={() => cardClick()}>
             <View style={{ flex: 1, flexDirection: 'row' }}>
                 <View style={styles.routeHeadCardImage}>
-                    <SvgCssUri uri={url} style={styles.busImage} />
+                    {typeof imagePath === 'string' && imagePath.endsWith('.png') ? (
+                        <Image source={require(imagePath)} style={styles.busImage} />
+                    ) : (
+                        <Image source={{ uri: imagePath }} style={styles.busImage} />
+                    )}
                 </View>
                 <View style={{ flex: 3, justifyContent: 'space-around' }}>
                     <GlobalText text={data.name} style={styles.routeHeadCardTitle} />

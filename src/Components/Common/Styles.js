@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
   refreshIcon: {
     position: 'absolute',
     top: 120,
-    left: '40%'
+    left: '45%'
   },
   errorText: {
     color: COLOR.red,

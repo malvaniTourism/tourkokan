@@ -160,7 +160,6 @@ const RoutesSearchPanel = ({ navigation, from, onSwap, setSourceId, setDestinati
   }
 
   const closeDropdown = () => {
-    console.log("fieldType:: ", fieldType);
     setPlacesList([])
     if (fieldType == STRING.LABEL.SOURCE) {
       setSource({name: ""})

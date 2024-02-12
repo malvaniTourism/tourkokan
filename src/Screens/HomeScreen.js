@@ -33,7 +33,7 @@ import NetInfo from '@react-native-community/netinfo';
 import MyAnimatedLoader from "../Components/Customs/AnimatedLoader";
 import CommentsSheet from "../Components/Common/CommentsSheet";
 
-const HomeScreen = ({ navigation, ...props }) => {
+const HomeScreen = ({ navigation, route, ...props }) => {
     const refRBSheet = useRef();
     const refRBCommentsSheet = useRef();
 
@@ -213,13 +213,14 @@ const HomeScreen = ({ navigation, ...props }) => {
                                 />
                             );
                         })} */}
-                        <SearchPanel navigation={navigation} from={STRING.SCREEN.HOME} />
-
+                        <View style={{marginTop: -59}}>
+                        <SearchPanel route={route} navigation={navigation} from={STRING.SCREEN.HOME} />
+                        </View>
                         <View style={styles.sectionView}>
                             <GlobalText text={STRING.SCREEN.ROUTES} style={styles.sectionTitle} />
                             <View style={styles.cardsWrap}>
                                 {routes.map((route, index) => (
-                                    <RouteHeadCard data={route} cardClick={() => getRoutesList(route)} />
+                                    route && <RouteHeadCard data={route} bus={"Hirkani"} cardClick={() => getRoutesList(route)} />
                                 ))}
                             </View>
                             <TextButton
