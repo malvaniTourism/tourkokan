@@ -189,7 +189,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
         if (res.data.success) {
           props.setLoader(false);
           AsyncStorage.clear()
-          navigateTo(navigation, STRING.SCREEN.LOGIN);
+          navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN);
         }
       })
       .catch((error) => {

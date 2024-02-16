@@ -111,7 +111,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
             (await AsyncStorage.getItem(STRING.STORAGE.ACCESS_TOKEN)) == null ||
             (await AsyncStorage.getItem(STRING.STORAGE.ACCESS_TOKEN)) == ""
         ) {
-            navigateTo(navigation, STRING.SCREEN.LOGIN);
+            navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN);
         }
     };
 

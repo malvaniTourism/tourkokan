@@ -69,7 +69,7 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
     // setSource('')
     // setDestination('')
     if (isValid) {
-      navigateTo(navigation, STRING.SCREEN.SEARCH_LIST, { source, destination });
+      navigateTo(navigation, STRING.SCREEN.ALL_ROUTES_SEARCH, { source, destination });
     } else setErrorText(STRING.ALERT.SOURCE_DESTINATION_REQUIRED)
     setSource({})
     setDestination({})

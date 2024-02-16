@@ -23,7 +23,7 @@ export const checkLogin = async (navigation) => {
         (await AsyncStorage.getItem(STRING.STORAGE.ACCESS_TOKEN)) == null ||
         (await AsyncStorage.getItem(STRING.STORAGE.ACCESS_TOKEN)) == ""
     ) {
-        navigateTo(navigation, STRING.SCREEN.LOGIN);
+        navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN);
     }
 }
 

@@ -37,7 +37,7 @@ const SignUp = ({ navigation, ...props }) => {
   const [showPassword, setShowPassword] = useState(false)
 
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.LOGIN));
+    const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN));
     props.setLoader(true);
     getRoles()
     return () => {
@@ -152,12 +152,12 @@ const SignUp = ({ navigation, ...props }) => {
   };
 
   const signInScreen = () => {
-    navigateTo(navigation, STRING.SCREEN.LOGIN);
+    navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN);
   };
 
   const closePopup = () => {
     if (isSuccess) {
-      navigateTo(navigation, STRING.SCREEN.LOGIN);
+      navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN);
     }
     setIsAlert(false)
   }

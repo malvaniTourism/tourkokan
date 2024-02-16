@@ -26,8 +26,8 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
   const [offline, setOffline] = useState(false);
   const [nextPage, setNextPage] = useState(1);
   const [nextUrl, setNextUrl] = useState(1)
-  const [source, setSource] = useState();
-  const [destination, setDestination] = useState()
+  const [source, setSource] = useState(route?.params?.source.id);
+  const [destination, setDestination] = useState(route?.params?.destination.id)
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)

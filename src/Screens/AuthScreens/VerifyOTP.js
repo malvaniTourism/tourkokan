@@ -15,11 +15,11 @@ import FontIcons from "react-native-vector-icons/FontAwesome5";
 import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import OtpInputs from "react-native-otp-inputs";
-import {
-  getHash,
-  startOtpListener,
-  useOtpVerify,
-} from "react-native-otp-verify";
+// import {
+//   getHash,
+//   startOtpListener,
+//   useOtpVerify,
+// } from "react-native-otp-verify";
 import Alert from "../../Components/Customs/Alert";
 import { navigateTo } from "../../Services/CommonMethods";
 import GlobalText from "../../Components/Customs/Text";
@@ -36,7 +36,7 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
   const [isSuccess, setIsSuccess] = useState(false)
 
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.LOGIN));
+    const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN));
     // setInterval(() => timer(), 1000);
     startListeningForOtp();
     return () => {
@@ -86,8 +86,8 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
 
   const closePopup = () => {
     if (isSuccess) {
-      navigateTo(navigation, STRING.SCREEN.HOME);
       AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, JSON.stringify(true))
+      navigateTo(navigation, STRING.SCREEN.HOME);
     }
     setIsAlert(false)
   }

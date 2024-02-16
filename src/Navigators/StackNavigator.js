@@ -64,7 +64,7 @@ const StackNavigator = () => {
           ) : (
             // Auth screens
             <Stack.Group screenOptions={{ headerShown: false }}>
-              <Stack.Screen name={STRING.SCREEN.LOGIN} component={SignIn} />
+              <Stack.Screen name={STRING.SCREEN.EMAIL_SIGN_IN} component={EmailSignIn} />
               {/* <Stack.Screen name="SignUp" component={SignUp} /> */}
             </Stack.Group>
           )}

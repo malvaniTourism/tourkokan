@@ -33,7 +33,7 @@ const EmailSignIn = ({ navigation, ...props }) => {
   useEffect(() => {
     // openDB()
     // createUserTable();
-    const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.LOGIN));
+    const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN));
     return () => {
       backHandler.remove();
       setIsAlert(false);
@@ -144,8 +144,8 @@ const EmailSignIn = ({ navigation, ...props }) => {
 
   const closePopup = () => {
     if (isSuccess) {
-      navigateTo(navigation, STRING.SCREEN.HOME);
       AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, JSON.stringify(true))
+      navigateTo(navigation, STRING.SCREEN.HOME);
     }
     setIsAlert(false)
   }
