@@ -1,9 +1,9 @@
-import React from 'react'
-import { ImageBackground, View } from 'react-native'
-import styles from './Styles'
-import { Text } from '@rneui/base'
-import Path from '../../Services/Api/BaseUrl'
-import GlobalText from '../Customs/Text'
+import React from "react"
+import { ImageBackground, View } from "react-native"
+import styles from "./Styles"
+import { Text } from "@rneui/base"
+import Path from "../../Services/Api/BaseUrl"
+import GlobalText from "../Customs/Text"
 
 const ProjectCard = ({ project }) => {
     return (
@@ -17,7 +17,7 @@ const ProjectCard = ({ project }) => {
                     resizeMode="cover"
                 />
             </View>
-            <View style={{ flex: 1, justifyContent: 'center', paddingLeft: 5 }}>
+            <View style={{ flex: 1, justifyContent: "center", paddingLeft: 5 }}>
                 <GlobalText text={project.domain_name} />
             </View>
         </View>

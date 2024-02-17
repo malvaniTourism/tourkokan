@@ -9,7 +9,7 @@ const Loader = (props) => {
     <View style={styles.container}>
       <Spinner
         visible={props.isLoading}
-        // textContent={'Loading...'}
+        // textContent={"Loading..."}
         textStyle={styles.spinnerTextStyle}
       />
     </View>

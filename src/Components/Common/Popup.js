@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-import { Modal, View } from 'react-native'
-import { Overlay } from '@rneui/themed';
-import GlobalText from '../Customs/Text';
-import styles from './Styles';
-import TextButton from '../Customs/Buttons/TextButton';
-import STRING from '../../Services/Constants/STRINGS';
+import React, { useState } from "react"
+import { Modal, View } from "react-native"
+import { Overlay } from "@rneui/themed";
+import GlobalText from "../Customs/Text";
+import styles from "./Styles";
+import TextButton from "../Customs/Buttons/TextButton";
+import STRING from "../../Services/Constants/STRINGS";
 
 const Popup = ({ message, visible, toggleOverlay, onPress }) => {
     // const [isOpen, setIsOpen] = useState(visible)

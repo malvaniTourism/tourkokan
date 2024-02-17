@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, Image, StyleSheet, ActivityIndicator } from 'react-native';
+import { FlatList, Image, StyleSheet, ActivityIndicator } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../Screens/HomeScreen";
 import MapScreen from "../Screens/MapScreen";
@@ -8,6 +8,7 @@ import Fontisto from "react-native-vector-icons/Fontisto";
 import COLOR from "../Services/Constants/COLORS";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
 import Explore from "../Screens/ListPages/Explore";
+import Categories from "../Screens/ListPages/Categories";
 import ProjectList from "../Screens/ListPages/ProjectList";
 import RoutesList from "../Screens/ListPages/RoutesList";
 import SearchList from "../Screens/ListPages/SearchList";
@@ -66,7 +67,7 @@ const TabNavigator = () => {
         options={{
           tabBarIcon: ({ color, size }) => (
             <Image
-              source={require('../Assets/Images/Bus1_png_high.png')}
+              source={require("../Assets/Images/Bus1_png_high.png")}
               style={{ width: 40, height: 40 }}
             />
           ),
@@ -75,11 +76,11 @@ const TabNavigator = () => {
       />
 
       <Tab.Screen
-        name={STRING.SCREEN.EXPLORE}
-        component={ExploreGrid}
+        name={STRING.SCREEN.CATEGORIES}
+        component={Categories}
         options={{
-          pageName: `${STRING.SCREEN.EXPLOREGRID}`,
-          tabBarLabel: `${STRING.SCREEN.EXPLORE}`,
+          pageName: `${STRING.SCREEN.CATEGORIES}`,
+          tabBarLabel: `${STRING.SCREEN.CATEGORIES}`,
           tabBarIcon: ({ color, size }) => (
             <Ionicons
               name="md-person-circle-sharp"

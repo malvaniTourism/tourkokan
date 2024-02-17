@@ -1,17 +1,17 @@
-import React, { useState } from 'react'
-import { View, Text, ImageBackground, TouchableOpacity, Share } from 'react-native'
-import styles from './Styles'
-import Path from '../../Services/Api/BaseUrl';
-import GlobalText from '../Customs/Text';
-import { navigateTo } from '../../Services/CommonMethods';
-import ComingSoon from '../Common/ComingSoon';
+import React, { useState } from "react"
+import { View, Text, ImageBackground, TouchableOpacity, Share } from "react-native"
+import styles from "./Styles"
+import Path from "../../Services/Api/BaseUrl";
+import GlobalText from "../Customs/Text";
+import { navigateTo } from "../../Services/CommonMethods";
+import ComingSoon from "../Common/ComingSoon";
 import Octicons from "react-native-vector-icons/Octicons";
-import COLOR from '../../Services/Constants/COLORS';
-import DIMENSIONS from '../../Services/Constants/DIMENSIONS';
-import StarRating from 'react-native-star-rating';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { comnPost } from '../../Services/Api/CommonServices';
-import STRING from '../../Services/Constants/STRINGS';
+import COLOR from "../../Services/Constants/COLORS";
+import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
+import StarRating from "react-native-star-rating";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { comnPost } from "../../Services/Api/CommonServices";
+import STRING from "../../Services/Constants/STRINGS";
 
 const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
     const [isVisible, setIsVisible] = useState(false)
@@ -26,7 +26,7 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
             favouritable_id: data.id
         }
         setIsFav(!isFav)
-        comnPost('v2/favourite', placeData)
+        comnPost("v2/favourite", placeData)
             .then(res => {
                 reload()
             })
@@ -45,12 +45,12 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
             });
 
             if (result.action === Share.sharedAction) {
-                console.log('Content shared successfully');
+                console.log("Content shared successfully");
             } else if (result.action === Share.dismissedAction) {
-                console.log('Share dismissed');
+                console.log("Share dismissed");
             }
         } catch (error) {
-            console.error('Error sharing content:', error.message);
+            console.error("Error sharing content:", error.message);
         }
     };
 
@@ -61,21 +61,25 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
     return (
         <TouchableOpacity style={cardType == "city" ? styles.cityCard : styles.placeCard} onPress={() => onClick()}>
             <View style={styles.cityOverlay} />
-            <ImageBackground source={{ uri: Path.FTP_PATH + data.image }} style={cardType == "city" ? styles.cityImage : styles.placeImage} imageStyle={styles.cityImageStyle} resizeMode="cover" />
-            <View style={{ alignItems: 'flex-end' }}>
+            {data.image ?
+                <ImageBackground source={{ uri: Path.FTP_PATH + data.image }} style={cardType == "city" ? styles.cityImage : styles.placeImage} imageStyle={styles.cityImageStyle} resizeMode="cover" />
+                :
+                <ImageBackground source={require("../../Assets/Images/nature.jpeg")} style={cardType == "city" ? styles.cityImage : styles.placeImage} imageStyle={styles.cityImageStyle} resizeMode="cover" />
+            }
+            <View style={{ alignItems: "flex-end" }}>
                 <TouchableOpacity style={styles.cityLikeView} onPress={() => onHeartClick()}>
                     {
                         isFav ?
-                            <Octicons name='heart-fill' color={COLOR.red} size={DIMENSIONS.iconSize} />
+                            <Octicons name="heart-fill" color={COLOR.red} size={DIMENSIONS.iconSize} />
                             :
-                            <Octicons name='heart' color={COLOR.black} size={DIMENSIONS.iconSize} />
+                            <Octicons name="heart" color={COLOR.black} size={DIMENSIONS.iconSize} />
                     }
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.cityLikeView} onPress={() => addComment()}>
-                    <Octicons name='comment' color={COLOR.black} size={DIMENSIONS.iconSize} />
+                    <Octicons name="comment" color={COLOR.black} size={DIMENSIONS.iconSize} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.cityLikeView} onPress={() => onShareClick()}>
-                    <Octicons name='star' color={COLOR.black} size={DIMENSIONS.iconSize} />
+                    <Octicons name="star" color={COLOR.black} size={DIMENSIONS.iconSize} />
                 </TouchableOpacity>
             </View>
 
@@ -92,7 +96,7 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
             </View>
 
             <View style={cardType == "city" ? styles.cityDetailsOverlay : styles.placeDetailsOverlay}>
-                <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
+                <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                     <GlobalText text={data.name} style={styles.cityName} />
                     <View>
                         <GlobalText text={data.latitude} />
@@ -100,7 +104,8 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
                     </View>
                 </View>
                 <View>
-                    <GlobalText text={data.tag_line} style={styles.cityDesc} />
+                    <GlobalText text={`${data.description != undefined ? data.description.slice(0, 80) + "..." : ""}`} />
+                    <GlobalText text={data.tag_line} style={styles.boldText} />
                 </View>
             </View>
             <ComingSoon message={STRING.COMING_SOON} visible={isVisible} />

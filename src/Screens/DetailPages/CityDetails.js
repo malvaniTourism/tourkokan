@@ -21,7 +21,7 @@ import CityCard from "../../Components/Cards/CityCard";
 import Octicons from "react-native-vector-icons/Octicons";
 import CommentsSheet from "../../Components/Common/CommentsSheet";
 import BottomSheet from "../../Components/Customs/BottomSheet";
-import StarRating from 'react-native-star-rating';
+import StarRating from "react-native-star-rating";
 
 const CityDetails = ({ navigation, route, ...props }) => {
     const refRBSheet = useRef();
@@ -71,7 +71,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
             favouritable_id: city.id
         }
         setIsFav(!isFav)
-        comnPost('v2/favourite', placeData)
+        comnPost("v2/favourite", placeData)
             .then(res => {
                 getDetails()
             })
@@ -98,12 +98,12 @@ const CityDetails = ({ navigation, route, ...props }) => {
             });
 
             if (result.action === Share.sharedAction) {
-                console.log('Content shared successfully');
+                console.log("Content shared successfully");
             } else if (result.action === Share.dismissedAction) {
-                console.log('Share dismissed');
+                console.log("Share dismissed");
             }
         } catch (error) {
-            console.error('Error sharing content:', error.message);
+            console.error("Error sharing content:", error.message);
         }
     };
 
@@ -125,9 +125,9 @@ const CityDetails = ({ navigation, route, ...props }) => {
                     <TouchableOpacity style={styles.cityLikeView} onPress={() => onHeartClick()}>
                         {
                             isFav ?
-                                <Octicons name='heart-fill' color={COLOR.red} size={DIMENSIONS.iconSize} />
+                                <Octicons name="heart-fill" color={COLOR.red} size={DIMENSIONS.iconSize} />
                                 :
-                                <Octicons name='heart' color={COLOR.black} size={DIMENSIONS.iconSize} />
+                                <Octicons name="heart" color={COLOR.black} size={DIMENSIONS.iconSize} />
                         }
                     </TouchableOpacity>
                 }
@@ -138,12 +138,12 @@ const CityDetails = ({ navigation, route, ...props }) => {
                 <View>
                     <View style={styles.placeImageView}>
                         <ImageBackground source={{ uri: Path.FTP_PATH + city.image }} style={styles.placeImage} />
-                        <View style={{ alignItems: 'flex-end', top: 50, right: 7 }}>
+                        <View style={{ alignItems: "flex-end", top: 50, right: 7 }}>
                             <TouchableOpacity style={styles.cityLikeView} onPress={() => openCommentsSheet()}>
-                                <Octicons name='comment' color={COLOR.black} size={DIMENSIONS.iconSize} />
+                                <Octicons name="comment" color={COLOR.black} size={DIMENSIONS.iconSize} />
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.cityLikeView} onPress={() => onShareClick()}>
-                                <Octicons name='star' color={COLOR.black} size={DIMENSIONS.iconSize} />
+                                <Octicons name="star" color={COLOR.black} size={DIMENSIONS.iconSize} />
                             </TouchableOpacity>
                         </View>
                         <View style={styles.cityStarView}>

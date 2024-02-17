@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
   buttonView: {
     borderRadius: DIMENSIONS.borderRadius,
-    overflow: 'hidden',
+    overflow: "hidden",
     marginTop: 30
   },
   buttonContainer: {},
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   loginContentsBox: {
     backgroundColor: COLOR.blackOpacityDark,
     borderRadius: DIMENSIONS.borderRadius,
-    justifyContent: 'center',
+    justifyContent: "center",
     alignItems: "center",
     marginBottom: 10
   },

@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     },
     cityListView: {
         zIndex: 1,
-        position: 'absolute',
+        position: "absolute",
         top: 240,
         width: DIMENSIONS.bannerWidth
     },
@@ -52,10 +52,10 @@ const styles = StyleSheet.create({
     details: {
         height: DIMENSIONS.bannerHeight - 50,
         width: DIMENSIONS.bannerWidth,
-        position: 'absolute',
-        alignSelf: 'center',
-        justifyContent: 'center',
-        textAlign: 'center'
+        position: "absolute",
+        alignSelf: "center",
+        justifyContent: "center",
+        textAlign: "center"
     },
     lineVert: {
         borderWidth: 1,
@@ -114,19 +114,19 @@ const styles = StyleSheet.create({
     },
     showMore: {
         width: "auto",
-        alignItems: 'center'
+        alignItems: "center"
     },
     seeMoreStyle: {
         width: DIMENSIONS.bannerWidth,
         alignItems: "center",
-        flexDirection: 'row',
+        flexDirection: "row",
         justifyContent: "flex-end",
         marginTop: 10
     },
     locBtnStyle: {
         width: DIMENSIONS.bannerWidth,
         alignItems: "center",
-        flexDirection: 'row',
+        flexDirection: "row",
         justifyContent: "center",
         marginVertical: 10,
     },
@@ -139,8 +139,8 @@ const styles = StyleSheet.create({
     profileImage: {
         // aspectRatio: 1,
         height: DIMENSIONS.bannerWidth - 90,
-        resizeMode: 'contain'
-        // width: '100%',
+        resizeMode: "contain"
+        // width: "100%",
     },
     handPointer: {
         height: DIMENSIONS.bannerWidth - 90,
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     boldText: {
-        fontWeight: 'bold',
+        fontWeight: "bold",
         fontSize: 16
     },
     profileDetails: {
@@ -159,8 +159,8 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     flexRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between'
+        flexDirection: "row",
+        justifyContent: "space-between"
     },
     prjImgContainer: {
         marginBottom: 20,
@@ -180,26 +180,26 @@ const styles = StyleSheet.create({
     categoryImageDetails: {
         height: DIMENSIONS.bannerHeight,
         width: DIMENSIONS.bannerWidth,
-        position: 'absolute',
-        alignSelf: 'center',
-        justifyContent: 'center',
-        textAlign: 'center'
+        position: "absolute",
+        alignSelf: "center",
+        justifyContent: "center",
+        textAlign: "center"
     },
     catTitle: {
         color: COLOR.white,
-        fontWeight: 'bold',
+        fontWeight: "bold",
         fontSize: DIMENSIONS.headerTextSize,
-        textAlign: 'center'
+        textAlign: "center"
     },
     catSubTitle: {
         color: COLOR.white,
         fontSize: DIMENSIONS.subtitleTextSize,
-        textAlign: 'center'
+        textAlign: "center"
     },
     pricingView: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
+        alignItems: "center",
+        justifyContent: "center",
         marginTop: 20,
     },
     pricingCard: {
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     },
     pricingOptionTitle: {
         fontSize: DIMENSIONS.xlText,
-        fontWeight: 'bold',
+        fontWeight: "bold",
         marginBottom: 10,
     },
     pricingOptionPrice: {
@@ -240,14 +240,14 @@ const styles = StyleSheet.create({
         width: "auto",
     },
     headerContainer: {
-        alignItems: 'center',
+        alignItems: "center",
     },
     coverPhoto: {
-        width: '100%',
+        width: "100%",
         height: 200,
     },
     profileContainer: {
-        alignItems: 'center',
+        alignItems: "center",
         marginTop: -50,
         zIndex: 10
     },
@@ -262,17 +262,17 @@ const styles = StyleSheet.create({
         padding: 15,
     },
     statsContainer: {
-        flexDirection: 'row',
+        flexDirection: "row",
         marginTop: 20,
         marginBottom: 20,
     },
     statContainer: {
-        alignItems: 'center',
+        alignItems: "center",
         flex: 1,
     },
     statCount: {
         fontSize: DIMENSIONS.largeText,
-        fontWeight: 'bold',
+        fontWeight: "bold",
     },
     statLabel: {
         fontSize: DIMENSIONS.subtitleTextSize,
@@ -311,37 +311,37 @@ const styles = StyleSheet.create({
     seeCitiesButtonStyle: {
         width: DIMENSIONS.halfWidth,
         backgroundColor: COLOR.transparent,
-        alignItems: 'flex-end',
-        justifyContent: 'flex-end',
+        alignItems: "flex-end",
+        justifyContent: "flex-end",
     },
     citiesButtonTitleStyle: {
         color: COLOR.themeComicBlue,
-        textAlign: 'right'
+        textAlign: "right"
     },
     containerHome: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: "white",
         padding: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
+        alignItems: "center",
+        justifyContent: "center",
     },
     boldTextHome: {
         fontSize: 25,
-        color: 'red',
+        color: "red",
         marginVertical: 16,
     },
 
     containerMap: {
-        position: 'absolute',
+        position: "absolute",
         top: 0,
         left: 0,
         right: 0,
         bottom: 0,
-        alignItems: 'center',
-        justifyContent: 'flex-end',
+        alignItems: "center",
+        justifyContent: "flex-end",
     },
     mapStyle: {
-        position: 'absolute',
+        position: "absolute",
         top: 0,
         left: 0,
         right: 0,
@@ -349,8 +349,8 @@ const styles = StyleSheet.create({
     },
     locationModal: {
         padding: 10,
-        textAlign: 'center',
-        fontWeight: 'bold',
+        textAlign: "center",
+        fontWeight: "bold",
         fontSize: DIMENSIONS.headerTextSize
     },
     profileMapView: {
@@ -374,7 +374,7 @@ const styles = StyleSheet.create({
     },
     buttonView: {
         borderRadius: DIMENSIONS.borderRadius,
-        overflow: 'hidden',
+        overflow: "hidden",
         marginVertical: 30
     },
     profileButtonStyle: {
@@ -388,7 +388,54 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     citiesButtonScroll: {
-        flexDirection: 'row',
+        flexDirection: "row",
+    },
+    horizontalCategoriesScroll: {
+        minHeight: DIMENSIONS.iconXXL,
+        marginTop: -10,
+        marginBottom: 10
+    },
+    categoriesButtonScroll: {
+        flexDirection: "row",
+    },
+    categoryButtonText: {
+        fontSize: DIMENSIONS.textSizeSmall
+    },
+    subCatContainer: {
+        minHeight: DIMENSIONS.screenHeight,
+        backgroundColor: COLOR.themeComicBlueULight,
+        borderTopRightRadius: DIMENSIONS.borderRadius,
+        borderTopLeftRadius: DIMENSIONS.borderRadius,
+    },
+    subCatHeader: {
+        textAlign: "left",
+        margin: 15,
+        fontWeight: "bold",
+        color: COLOR.labelActiveColor,
+        fontSize: DIMENSIONS.headerTextSize
+    },
+    subCatView: {
+        flex: 1,
+        flexDirection: "row",
+        marginBottom: 300
+    },
+    verticalNameContainer: {
+        height: DIMENSIONS.screenHeight,
+        flex: 1,
+    },
+    verticalName: {
+        transform: [{ rotate: '270deg' }],
+        fontWeight: "bold",
+        color: COLOR.labelActiveColor,
+        fontSize: DIMENSIONS.xlText,
+        letterSpacing: 7,
+        width: DIMENSIONS.screenHeight / 3,
+        left: -DIMENSIONS.screenWidth / 4,
+        top: DIMENSIONS.screenHeight / 4
+    },
+    subCatCardsContainer: {
+        flex: 3,
+        overflow: "scroll"
     },
     cityButtonText: {
         fontSize: DIMENSIONS.textSizeSmall

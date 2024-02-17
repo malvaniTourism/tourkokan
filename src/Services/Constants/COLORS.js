@@ -5,9 +5,10 @@ const COLOR = {
   themeLightBlue: "#2E67F8",
   themeComicBlue: "#00AEEF",
   themeComicBlueLight: "rgba(0, 174, 239, .5)",
+  themeComicBlueULight: "rgba(0, 174, 239, .2)",
   blackOpacity: "rgba(0, 0, 0, 0.5)",
   blackOpacityDark: "rgba(0, 0, 0, 0.8)",
-  verified: '#3086e3',
+  verified: "#3086e3",
   busYellow: "#ffce40",
 
   primaryColor: "#543379",
@@ -17,7 +18,7 @@ const COLOR = {
   white: "#ffffff",
 
   black: "#000000",
-  lightBlack: '#222',
+  lightBlack: "#222",
 
   grey: "#bbb",
   grayDark: "#888",

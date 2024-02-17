@@ -98,7 +98,7 @@ const SignIn = ({ navigation, ...props }) => {
 
   return (
     <View style={{ alignItems: "center", flex: 1 }}>
-      <ImageBackground style={styles.loginImage} source={require('../../Assets/Images/kokan1.jpeg')} />
+      <ImageBackground style={styles.loginImage} source={require("../../Assets/Images/kokan1.jpeg")} />
       {/* <Header
         name={""}
         startIcon={<View></View>}

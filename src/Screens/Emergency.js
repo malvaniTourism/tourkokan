@@ -33,8 +33,9 @@ const Emergency = ({ navigation, route, ...props }) => {
   }, []);
 
   const getData = () => {
+    props.setLoader(true);
     let data = {
-      apitype: 'list',
+      apitype: "list",
       // parent_id: 1,
       category: "emergency"
     };

@@ -15,12 +15,12 @@ import { backPage, checkLogin, goBackHandler, navigateTo } from "../../Services/
 import styles from "./Styles";
 import CityCard from "../../Components/Cards/CityCard";
 import STRING from "../../Services/Constants/STRINGS";
-import NetInfo from '@react-native-community/netinfo';
+import NetInfo from "@react-native-community/netinfo";
 import CheckNet from "../../Components/Common/CheckNet";
 import CommentsSheet from "../../Components/Common/CommentsSheet";
 import BottomSheet from "../../Components/Customs/BottomSheet";
 
-const CityList = ({ navigation, ...props }) => {
+const CityList = ({ navigation, route, ...props }) => {
   const refRBSheet = useRef();
   const [cities, setCities] = useState([]); // State to store cities
   const [error, setError] = useState(null); // State to store error message
@@ -63,10 +63,11 @@ const CityList = ({ navigation, ...props }) => {
   }, []);
 
   const getCities = () => {
+    props.setLoader(true);
     let data = {
-      apitype: 'list',
-      // parent_id: 1,
-      category: "city"
+      apitype: "list",
+      parent_id: route?.params?.parent_id,
+      category: route?.params?.subCat || "other"
     };
     comnPost("v2/sites", data)
       .then((res) => {
@@ -96,7 +97,7 @@ const CityList = ({ navigation, ...props }) => {
   return (
     <ScrollView stickyHeaderIndices={[0]}>
       <CheckNet isOff={offline} />
-      <Header name={STRING.HEADER.CITIES}
+      <Header name={route?.params?.subCat || STRING.HEADER.CITIES}
         startIcon={
           <Ionicons
             name="chevron-back-outline"

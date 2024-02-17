@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react"
 import { Animated } from "react-native";
 import AnimatedLoader from "react-native-animated-loader";
-import styles from './Styles';
-import COLOR from '../../Services/Constants/COLORS';
-import GlobalText from './Text';
-import STRING from '../../Services/Constants/STRINGS';
+import styles from "./Styles";
+import COLOR from "../../Services/Constants/COLORS";
+import GlobalText from "./Text";
+import STRING from "../../Services/Constants/STRINGS";
 
 const MyAnimatedLoader = ({ isVisible }) => {
     const [fadeAnim, setFadeAnim] = useState(new Animated.Value(1))

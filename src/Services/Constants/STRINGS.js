@@ -76,7 +76,8 @@ const STRING = {
     CITIES_RESPONSE: "citiesResponse",
     PLACES_RESPONSE: "placesResponse",
     ROUTES_RESPONSE: "routesResponse",
-    EXPLORE_CITIES_RESPONSE: "exploreCitiesResponse"
+    EXPLORE_CITIES_RESPONSE: "exploreCitiesResponse",
+    CATEGORIES_RESPONSE: "categoriesResponse"
   },
   HEADER: {
     BUS_TIMINGS: "Bus Timings",
@@ -93,7 +94,9 @@ const STRING = {
     ROUTE: "Route",
     ROUTES: "Routes",
     STOPS: "Stops",
-    COMMENTS: "Comments"
+    COMMENTS: "Comments",
+    SUBCATEGORIES: "sub-categories",
+    CLASSIFICATIONS: "Classifications",
   },
   ALERT: {
     FAILED: "Failed",
@@ -122,7 +125,7 @@ const STRING = {
     NUM: "num",
     PHONE: "phone",
     EMAIL: "email",
-    PHOTO: 'photo',
+    PHOTO: "photo",
     DROP_DWN: "dropDwn",
   },
   PLACEHOLDER: {
@@ -143,7 +146,8 @@ const STRING = {
     OTP: "OTP",
     CONFIRM_PASSWORD: "Confirm Password",
     CITY_NAME: "City Name",
-    MESSAGE: "Message"
+    MESSAGE: "Message",
+    COMMENT: "Comment"
   },
   EVENT: {
     HARDWARE_BACK_PRESS: "hardwareBackPress",
@@ -186,7 +190,9 @@ const STRING = {
   SET_LOCATION: "Set Your Primary Location",
   NO_INTERNET: "Please check your connectivity... Once data is synced you can use offline.",
   LOADER_TEXT: "Picking Up Your Data...",
-  ADDED: "Places will be added soon..."
+  ADDED: "Places will be added soon...",
+  NO_COMMENTS: "No comments yet",
+  START_CONVO: "Start Conversation"
 };
 
 export default STRING;

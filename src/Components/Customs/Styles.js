@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   text: {
     color: COLOR.black,
     fontSize: DIMENSIONS.textSize,
-    textAlign: 'center'
+    textAlign: "center"
   },
   lottie: {
     width: 200,
@@ -139,35 +139,35 @@ const styles = StyleSheet.create({
     fontSize: DIMENSIONS.xlText
   },
   masonryContainer: {
-    overflow: 'hidden',
-    position: 'relative',
+    overflow: "hidden",
+    position: "relative",
   },
   gridImage: {
     flex: 1,
-    resizeMode: 'cover',
+    resizeMode: "cover",
   },
   gridText: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
     padding: 8,
     backgroundColor: COLOR.blackOpacity,
-    color: 'white',
+    color: "white",
   },
   flatListContainer: {
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
   modalContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: COLOR.blackOpacity
   },
   modalImage: {
     height: DIMENSIONS.bannerHeight,
     width: DIMENSIONS.bannerWidth - 40,
-    resizeMode: 'cover',
+    resizeMode: "cover",
   },
   masonryTextContainer: {
     backgroundColor: COLOR.white,

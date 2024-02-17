@@ -46,14 +46,14 @@ const Banner = ({ style, bannerImages }) => {
     <View style={[styles.banner, style]}>
       <Carousel
         loop
-        // mode={'parallax'}
+        // mode={"parallax"}
         // customAnimation={animationStyle}
         width={DIMENSIONS.windowWidth}
         height={DIMENSIONS.windowWidth / 2}
         autoPlay={true}
         data={bannerImages}
         scrollAnimationDuration={1000}
-        // onSnapToItem={(index) => console.log('current index:', index)}
+        // onSnapToItem={(index) => console.log("current index:", index)}
         renderItem={({ index }) => (
           <AnimationStyle
             source={{ uri: `${bannerImages[index]}` }}

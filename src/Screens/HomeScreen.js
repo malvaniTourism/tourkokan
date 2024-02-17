@@ -29,7 +29,7 @@ import LocationSheet from "../Components/Common/LocationSheet";
 import RouteHeadCard from "../Components/Cards/RouteHeadCard";
 import STRING from "../Services/Constants/STRINGS";
 import CheckNet from "../Components/Common/CheckNet";
-import NetInfo from '@react-native-community/netinfo';
+import NetInfo from "@react-native-community/netinfo";
 import MyAnimatedLoader from "../Components/Customs/AnimatedLoader";
 import CommentsSheet from "../Components/Common/CommentsSheet";
 
@@ -163,8 +163,8 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         navigateTo(navigation, STRING.SCREEN.ROUTES_LIST, { item });
     };
 
-    const showMore = (page) => {
-        navigateTo(navigation, page, { from: STRING.SCREEN.HOME });
+    const showMore = (page, subCat) => {
+        navigateTo(navigation, page, { from: STRING.SCREEN.HOME, subCat });
     }
 
     const onSearchFocus = () => {
@@ -257,7 +257,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                             </View>
                             <TextButton
                                 title={STRING.BUTTON.SEE_MORE}
-                                onPress={() => showMore(STRING.SCREEN.CITY_LIST)}
+                                onPress={() => showMore(STRING.SCREEN.CITY_LIST, "city")}
                                 containerStyle={styles.showMore}
                                 seeMoreStyle={styles.seeMoreStyle}
                                 buttonStyle={styles.buttonStyle}

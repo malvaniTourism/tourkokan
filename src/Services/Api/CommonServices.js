@@ -2,7 +2,7 @@ import axios from "axios";
 import Path from "./BaseUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import STRING from "../Constants/STRINGS";
-import NetInfo from '@react-native-community/netinfo';
+import NetInfo from "@react-native-community/netinfo";
 import ComingSoon from "../../Components/Common/ComingSoon";
 
 export const comnGet = async (url, apiToken) => {
@@ -10,7 +10,7 @@ export const comnGet = async (url, apiToken) => {
   const config = {
     headers: { Authorization: `Bearer ${apiToken}` },
   };
-  console.log('url:: ', myUrl);
+  console.log("url:: ", myUrl);
   return axios
     .get(myUrl, config)
     .then((res) => res)
@@ -90,7 +90,7 @@ export const removeFromStorage = async (name) => {
 
 export const dataSync = async (name, callBack) => {
   // if (await isOffline()) {
-  //   console.log('name, ', await getFromStorage(name));
+  //   console.log("name, ", await getFromStorage(name));
   //   if (await getFromStorage(name)) {
   //     return await getFromStorage(name)
   //   } else {

@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         color: COLOR.white
     },
     flexRow: {
-        flexDirection: 'row',
+        flexDirection: "row",
         marginBottom: 10
     },
     container: {

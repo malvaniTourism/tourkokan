@@ -4,13 +4,13 @@ import DIMENSIONS from "../../../Services/Constants/DIMENSIONS";
 
 const styles = StyleSheet.create({
   buttonView: {
-    overflow: 'hidden',
+    overflow: "hidden",
     borderRadius: DIMENSIONS.borderRadiusXS,
   },
   containerStyle: {
     width: DIMENSIONS.bannerWidth,
     borderRadius: DIMENSIONS.borderRadiusXS,
-    overflow: 'hidden'
+    overflow: "hidden"
   },
   buttonStyle: {
     width: DIMENSIONS.bannerWidth,
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     color: COLOR.white,
   },
   imageButtonContainer: {
-    width: DIMENSIONS.iconXXL,
+    width: "auto",
     margin: DIMENSIONS.sectionGap / 2,
   },
   imageButtonCircle: {
@@ -29,8 +29,8 @@ const styles = StyleSheet.create({
     borderRadius: DIMENSIONS.borderRadiusLarge,
     borderWidth: 4,
     borderColor: COLOR.grey,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   selectedCircle: {
     borderColor: COLOR.themeComicBlue,
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   elevation: 10,
   },
   selectedText: {
-    fontWeight: 'bold'
+    fontWeight: "bold"
   },
   catCardIcon: {
     height: DIMENSIONS.iconXXL - 4,

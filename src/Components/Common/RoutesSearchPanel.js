@@ -66,8 +66,8 @@ const RoutesSearchPanel = ({ navigation, from, onSwap, setSourceId, setDestinati
   }
 
   const gotoRoutes = () => {
-    // setSource('')
-    // setDestination('')
+    // setSource("")
+    // setDestination("")
     if (isValid) {
       searchRoutes()
     } else setErrorText(STRING.ALERT.SOURCE_DESTINATION_REQUIRED)
@@ -96,8 +96,8 @@ const RoutesSearchPanel = ({ navigation, from, onSwap, setSourceId, setDestinati
     setSearchValue(v);
     let data = {
       search: v,
-      apitype: 'dropdown',
-      type: 'bus'
+      apitype: "dropdown",
+      type: "bus"
     };
     comnPost(`v2/sites`, data)
       .then((res) => {
@@ -118,8 +118,8 @@ const RoutesSearchPanel = ({ navigation, from, onSwap, setSourceId, setDestinati
     setSearchValue(v);
     let data = {
       search: v,
-      apitype: 'dropdown',
-      type: 'bus'
+      apitype: "dropdown",
+      type: "bus"
     };
     comnPost(`v2/sites?page=${page}`, data)
       .then((res) => {

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, BackHandler, Image, ScrollView, ImageBackground } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { View, Text, TouchableOpacity, BackHandler, Image, ScrollView, ImageBackground, Animated, PermissionsAndroid } from "react-native";
 import { SignUpFields } from "../../Services/Constants/FIELDS";
 import TextField from "../../Components/Customs/TextField";
 import Header from "../../Components/Common/Header";
@@ -11,16 +11,20 @@ import { connect } from "react-redux";
 import { setLoader } from "../../Reducers/CommonActions";
 import DropDown from "../../Components/Customs/DropDown";
 import { navigateTo } from "../../Services/CommonMethods";
-import { launchImageLibrary } from 'react-native-image-picker'
+import { launchImageLibrary } from "react-native-image-picker"
 import GlobalText from "../../Components/Customs/Text";
 import COLOR from "../../Services/Constants/COLORS";
 import Popup from "../../Components/Common/Popup";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import Feather from "react-native-vector-icons/Feather";
 import FontIcons from "react-native-vector-icons/FontAwesome5";
+import IonIcons from "react-native-vector-icons/Ionicons";
 import STRING from "../../Services/Constants/STRINGS";
+import * as Animatable from 'react-native-animatable';
+import Geolocation from "@react-native-community/geolocation";
 
 const SignUp = ({ navigation, ...props }) => {
+  const opacity = useRef(new Animated.Value(0)).current;
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
@@ -34,16 +38,49 @@ const SignUp = ({ navigation, ...props }) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [isAlert, setIsAlert] = useState(false);
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+  const [locationError, setLocationError] = useState(false);
+  const [isLocationEnabled, setIsLocationEnabled] = useState(false);
+  const [latitude, setLatitude] = useState("")
+  const [longitude, setLongitude] = useState("")
+  const [currentLatitude, setCurrentLatitude] = useState(null);
+  const [currentLongitude, setCurrentLongitude] = useState(null);
+  const [locationStatus, setLocationStatus] = useState("");
+  const [watchID, setWatchID] = useState("");
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN));
     props.setLoader(true);
     getRoles()
     return () => {
-      backHandler.remove()
+      backHandler.remove();
     }
   }, []);
+
+
+  useEffect(() => {
+    const animateRipple = () => {
+      Animated.sequence([
+        Animated.timing(opacity, {
+          toValue: 0.6,
+          duration: 500,
+          useNativeDriver: false,
+        }),
+        Animated.timing(opacity, {
+          toValue: 0,
+          duration: 500,
+          useNativeDriver: false,
+        }),
+      ]).start(animateRipple);
+    };
+
+    animateRipple();
+
+    return () => {
+      // Cleanup on component unmount
+      Animated.timing(opacity).stop();
+    };
+  }, [opacity]);
 
   const getRoles = () => {
     comnGet("v2/roleDD")
@@ -162,12 +199,72 @@ const SignUp = ({ navigation, ...props }) => {
     setIsAlert(false)
   }
 
+  const myLocationPress = async () => {
+    if (Platform.OS === "ios") {
+      getOneTimeLocation();
+      subscribeLocation();
+    } else {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            title: STRING.LOCATION_ACCESS_REQUIRED,
+            message: STRING.NEEDS_TO_ACCESS,
+          }
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          //To Check, If Permission is granted
+          getOneTimeLocation();
+          subscribeLocation();
+        } else {
+          setLocationStatus(STRING.PERMISSION_DENIED);
+        }
+      } catch (err) {
+        console.warn(err);
+      }
+    }
+  }
+
+  const getOneTimeLocation = () => {
+    setLocationStatus(STRING.GETTING_LOCATION);
+    Geolocation.getCurrentPosition(
+      (position) => {
+        setLocationStatus(STRING.YOU_ARE_HERE);
+        const currentLongitude = position.coords.longitude;
+        const currentLatitude = position.coords.latitude;
+        setCurrentLongitude(currentLongitude);
+        setCurrentLatitude(currentLatitude);
+      },
+      (error) => {
+        setLocationStatus(error.message);
+      },
+      { enableHighAccuracy: false, timeout: 30000, maximumAge: 1000 }
+    );
+  };
+
+  const subscribeLocation = () => {
+    let WatchID = Geolocation.watchPosition(
+      (position) => {
+        setLocationStatus(STRING.YOU_ARE_HERE);
+        const currentLongitude = position.coords.longitude;
+        const currentLatitude = position.coords.latitude;
+        setCurrentLongitude(currentLongitude);
+        setCurrentLatitude(currentLatitude);
+      },
+      (error) => {
+        setLocationStatus(error.message);
+      },
+      { enableHighAccuracy: false, maximumAge: 1000 }
+    );
+    setWatchID(WatchID)
+  };
+
   return (
     <View style={{ alignItems: "center", flex: 1 }}>
-      <ImageBackground style={styles.loginImage} source={require('../../Assets/Images/kokan1.jpeg')} />
+      <ImageBackground style={styles.loginImage} source={require("../../Assets/Images/kokan1.jpeg")} />
 
       <Loader />
-      <View style={[styles.loginContentsBox, {marginTop: 20}]}>
+      <View style={[styles.loginContentsBox, { marginTop: 20 }]}>
         <ScrollView>
           {/* <Header
           name={""}
@@ -176,24 +273,56 @@ const SignUp = ({ navigation, ...props }) => {
         /> */}
           <GlobalText text={STRING.SIGN_UP} style={styles.loginText} />
           <View style={{ alignItems: "center" }}>
-            <TouchableOpacity
-              style={styles.imageContainerStyle}
-              onPress={handleImageUpload}
-            >
-              {imageSource ?
-                <Image
-                  source={{ uri: imageSource }}
-                  style={styles.imageSourceView}
-                />
-                :
-                <FontIcons
-                  name="user-circle"
-                  color={COLOR.themeComicBlue}
-                  size={DIMENSIONS.iconLarge}
-                  style={styles.userIcon}
-                />
-              }
-            </TouchableOpacity>
+            <View style={{ flexDirection: "row", justifyContent: "space-evenly", width: "100%" }}>
+              <TouchableOpacity
+                style={styles.imageContainerStyle}
+                onPress={handleImageUpload}
+              >
+                {imageSource ?
+                  <Image
+                    source={{ uri: imageSource }}
+                    style={styles.imageSourceView}
+                  />
+                  :
+                  <FontIcons
+                    name="user-circle"
+                    color={COLOR.themeComicBlue}
+                    size={DIMENSIONS.iconLarge}
+                    style={styles.userIcon}
+                  />
+                }
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.imageContainerStyle}
+                onPress={myLocationPress}
+              >
+                {/* <Animated.View
+                  style={{
+                    width: DIMENSIONS.iconLarge,
+                    height: DIMENSIONS.iconLarge,
+                    borderRadius: 150,
+                    backgroundColor: '#bfbfbf',
+                    opacity: opacity,
+                  }}
+                > */}
+                {locationError ?
+                  <IonIcons
+                    name="location"
+                    color={COLOR.red}
+                    size={DIMENSIONS.iconLarge}
+                    style={styles.userIcon}
+                  />
+                  :
+                  <IonIcons
+                    name="location"
+                    color={COLOR.themeComicBlue}
+                    size={DIMENSIONS.iconLarge}
+                    style={styles.userIcon}
+                  />
+                }
+                {/* </Animated.View> */}
+              </TouchableOpacity>
+            </View>
 
             <DropDown
               setChild={(v, i) => setValue(v, i)}
@@ -226,7 +355,7 @@ const SignUp = ({ navigation, ...props }) => {
                   rightIcon={
                     field.type == `${STRING.TYPE.PASSWORD}` &&
                     <Feather
-                      name={field.isSecure ? 'eye' : 'eye-off'}
+                      name={field.isSecure ? "eye" : "eye-off"}
                       size={24}
                       color={COLOR.themeComicBlue}
                       onPress={() => {

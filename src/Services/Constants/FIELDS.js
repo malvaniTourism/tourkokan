@@ -193,3 +193,14 @@ export const ContactUsFields = [
     disabled: false,
   },
 ]
+
+export const Comment = [
+  {
+    name: STRING.LABEL.COMMENT,
+    placeholder: STRING.LABEL.COMMENT,
+    type: STRING.TYPE.TEXT,
+    length: DIMENSIONS.fieldLength,
+    required: true,
+    disabled: false,
+  }
+];

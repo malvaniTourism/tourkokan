@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import { TouchableOpacity, View, Image } from 'react-native'
-import styles from './Styles'
-import { Text } from 'react-native-svg'
-import DIMENSIONS from '../../Services/Constants/DIMENSIONS'
+import React, { useState } from "react"
+import { TouchableOpacity, View, Image } from "react-native"
+import styles from "./Styles"
+import { Text } from "react-native-svg"
+import DIMENSIONS from "../../Services/Constants/DIMENSIONS"
 
 const CategoryCard = ({ data, getCategory }) => {
     const [cat, setCat] = useState(data)
@@ -15,7 +15,7 @@ const CategoryCard = ({ data, getCategory }) => {
         <View style={styles.catCardContainer}>
             <TouchableOpacity style={styles.catCardIcon} onPress={() => onIconCLick()}>
                 <Image
-                    source={require('../../Assets/Images/beach.png')}
+                    source={require("../../Assets/Images/beach.png")}
                     style={styles.catCardIcon}
                 />
             </TouchableOpacity>

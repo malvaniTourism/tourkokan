@@ -1,18 +1,18 @@
-import React, { useState } from 'react'
-import { View, Text, ImageBackground, TouchableOpacity } from 'react-native'
-import styles from './Styles'
-import Path from '../../Services/Api/BaseUrl'
+import React, { useState } from "react"
+import { View, Text, ImageBackground, TouchableOpacity } from "react-native"
+import styles from "./Styles"
+import Path from "../../Services/Api/BaseUrl"
 import Octicons from "react-native-vector-icons/Octicons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import COLOR from '../../Services/Constants/COLORS';
-import DIMENSIONS from '../../Services/Constants/DIMENSIONS';
-import StarRating from 'react-native-star-rating';
-import { comnPost } from '../../Services/Api/CommonServices';
+import COLOR from "../../Services/Constants/COLORS";
+import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
+import StarRating from "react-native-star-rating";
+import { comnPost } from "../../Services/Api/CommonServices";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import GlobalText from '../Customs/Text';
-import { navigateTo } from '../../Services/CommonMethods';
-import ComingSoon from '../Common/ComingSoon';
-import STRING from '../../Services/Constants/STRINGS';
+import GlobalText from "../Customs/Text";
+import { navigateTo } from "../../Services/CommonMethods";
+import ComingSoon from "../Common/ComingSoon";
+import STRING from "../../Services/Constants/STRINGS";
 
 const PlaceCard = ({ data, reload, navigation }) => {
     const [isFav, setIsFav] = useState(data.is_favorite)
@@ -31,7 +31,7 @@ const PlaceCard = ({ data, reload, navigation }) => {
             favouritable_id: data.id
         }
         setIsFav(!isFav)
-        comnPost('v2/favourite', cityData)
+        comnPost("v2/favourite", cityData)
             .then(res => {
                 reload()
             })
@@ -59,9 +59,9 @@ const PlaceCard = ({ data, reload, navigation }) => {
                 <TouchableOpacity style={styles.likeView} onPress={() => onHeartClick()}>
                     {
                         isFav ?
-                            <Octicons name='heart-fill' color={COLOR.red} size={DIMENSIONS.iconSize} />
+                            <Octicons name="heart-fill" color={COLOR.red} size={DIMENSIONS.iconSize} />
                             :
-                            <Octicons name='heart' color={COLOR.black} size={DIMENSIONS.iconSize} />
+                            <Octicons name="heart" color={COLOR.black} size={DIMENSIONS.iconSize} />
                     }
                 </TouchableOpacity>
             </View>
@@ -72,7 +72,7 @@ const PlaceCard = ({ data, reload, navigation }) => {
                         <GlobalText text={data.tag_line} style={styles.placeTag} />
                     </TouchableOpacity>
                     <View style={styles.flexRow}>
-                        <View style={{ width: '40%' }}>
+                        <View style={{ width: "40%" }}>
                             <StarRating
                                 disabled={false}
                                 maxStars={5}
@@ -86,9 +86,9 @@ const PlaceCard = ({ data, reload, navigation }) => {
                         <TouchableOpacity onPress={() => onLikeClick()}>
                             {
                                 isLiked ?
-                                    <FontAwesome name='thumbs-up' color={COLOR.intentColor} size={DIMENSIONS.iconSize} />
+                                    <FontAwesome name="thumbs-up" color={COLOR.intentColor} size={DIMENSIONS.iconSize} />
                                     :
-                                    <FontAwesome name='thumbs-o-up' color={COLOR.black} size={DIMENSIONS.iconSize} />
+                                    <FontAwesome name="thumbs-o-up" color={COLOR.black} size={DIMENSIONS.iconSize} />
                             }
                         </TouchableOpacity>
                     </View>

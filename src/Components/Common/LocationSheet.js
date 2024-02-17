@@ -1,36 +1,36 @@
-import React, { useState, useRef } from 'react'
-import { FlatList, SafeAreaView, ScrollView, View, Platform, TouchableOpacity, PermissionsAndroid } from 'react-native'
-import GlobalText from '../Customs/Text'
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import React, { useState, useRef } from "react"
+import { FlatList, SafeAreaView, ScrollView, View, Platform, TouchableOpacity, PermissionsAndroid } from "react-native"
+import GlobalText from "../Customs/Text"
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import COLOR from '../../Services/Constants/COLORS';
-import DIMENSIONS from '../../Services/Constants/DIMENSIONS';
-import Search from '../Customs/Search';
-import { comnPost } from '../../Services/Api/CommonServices';
-import { ListItem } from '@rneui/themed';
-import styles from './Styles';
-import DialogBox from 'react-native-dialogbox';
-import Geolocation from '@react-native-community/geolocation';
-import STRING from '../../Services/Constants/STRINGS';
+import COLOR from "../../Services/Constants/COLORS";
+import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
+import Search from "../Customs/Search";
+import { comnPost } from "../../Services/Api/CommonServices";
+import { ListItem } from "@rneui/themed";
+import styles from "./Styles";
+import DialogBox from "react-native-dialogbox";
+import Geolocation from "@react-native-community/geolocation";
+import STRING from "../../Services/Constants/STRINGS";
 
 const LocationSheet = ({ openLocationSheet, closeLocationSheet, setCurrentCity }) => {
     const refDialogBox = useRef();
 
-    const [searchValue, setSearchValue] = useState('');
+    const [searchValue, setSearchValue] = useState("");
     const [placesList, setPlacesList] = useState([]);
     const [isLocationEnabled, setIsLocationEnabled] = useState(false);
-    const [latitude, setLatitude] = useState('')
-    const [longitude, setLongitude] = useState('')
+    const [latitude, setLatitude] = useState("")
+    const [longitude, setLongitude] = useState("")
     const [currentLatitude, setCurrentLatitude] = useState(null);
     const [currentLongitude, setCurrentLongitude] = useState(null);
-    const [locationStatus, setLocationStatus] = useState('');
+    const [locationStatus, setLocationStatus] = useState("");
     const [watchID, setWatchID] = useState("");
 
 
     const searchPlace = (val, table) => {
         setSearchValue(val);
         let data = {
-            apitype: 'list',
+            apitype: "list",
             search: val,
             category: "city"
         };
@@ -65,7 +65,7 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet, setCurrentCity }
     }
 
     const myLocationPress = async () => {
-        if (Platform.OS === 'ios') {
+        if (Platform.OS === "ios") {
             getOneTimeLocation();
             subscribeLocation();
         } else {
@@ -125,7 +125,7 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet, setCurrentCity }
     };
 
     const getCurrentLoc = () => {
-        if (Platform.OS === 'ios') {
+        if (Platform.OS === "ios") {
             try {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
@@ -163,7 +163,7 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet, setCurrentCity }
     }
 
     setPermissions = async () => {
-        if (Platform.OS === 'ios') {
+        if (Platform.OS === "ios") {
 
         } else {
             const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
@@ -191,32 +191,32 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet, setCurrentCity }
 
     const getAddress = (position) => {
         closeLocationSheet()
-        fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + position.coords.latitude + ',' + position.coords.longitude + '&key=' + STRING.GOOGLE_API_KEY)
+        fetch("https://maps.googleapis.com/maps/api/geocode/json?address=" + position.coords.latitude + "," + position.coords.longitude + "&key=" + STRING.GOOGLE_API_KEY)
             .then((response) => response.json())
             .then((json) => {
-                let currentcity = ''; let zip = '', state = 'Maharashtra'; let locality = ''; let locality1 = ''; let locality2 = '';
+                let currentcity = ""; let zip = "", state = "Maharashtra"; let locality = ""; let locality1 = ""; let locality2 = "";
                 for (let i = 0; i < json.results[0].address_components.length; i++) {
                     for (let j = 0; j < json.results[0].address_components[i].types.length; j++) {
-                        if (json.results[0].address_components[i].types[j] === 'locality') {
+                        if (json.results[0].address_components[i].types[j] === "locality") {
                             currentcity = json.results[0].address_components[i].long_name;
                         }
-                        if (json.results[0].address_components[i].types[j] === 'postal_code') {
+                        if (json.results[0].address_components[i].types[j] === "postal_code") {
                             zip = json.results[0].address_components[i].long_name;
                         }
-                        if (json.results[0].address_components[i].types[j] === 'administrative_area_level_1') {
+                        if (json.results[0].address_components[i].types[j] === "administrative_area_level_1") {
                             state = json.results[0].address_components[i].long_name;
                         }
-                        if (json.results[0].address_components[i].types[j] === 'sublocality_level_2' || json.results[0].address_components[i].types[j] === "route") {
+                        if (json.results[0].address_components[i].types[j] === "sublocality_level_2" || json.results[0].address_components[i].types[j] === "route") {
                             locality1 = json.results[0].address_components[i].long_name;
                         }
-                        if (json.results[0].address_components[i].types[j] === 'sublocality_level_1') {
+                        if (json.results[0].address_components[i].types[j] === "sublocality_level_1") {
                             locality2 = json.results[0].address_components[i].long_name;
                         }
                     }
                 }
 
-                if (locality1 !== '') {
-                    locality = locality1 + ', ' + locality2 + ', ' + currentcity
+                if (locality1 !== "") {
+                    locality = locality1 + ", " + locality2 + ", " + currentcity
                 } else {
                     locality = json.results[0].formatted_address
                 }
@@ -231,7 +231,7 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet, setCurrentCity }
                     loacaity1: locality1,
                     locality2: locality2,
                     state: state,
-                    country: 'INDIA'
+                    country: "INDIA"
                 }
                 var rgData = {
                     addr: json.results[0].formatted_address,
@@ -242,7 +242,7 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet, setCurrentCity }
                     loacaity1: locality1,
                     locality2: locality2,
                     state: state,
-                    country: 'INDIA'
+                    country: "INDIA"
                 }
                 setCurrAddr(addr)
             })
@@ -252,11 +252,11 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet, setCurrentCity }
 
     return (
         <View>
-            <View style={{ position: 'relative' }}>
+            <View style={{ position: "relative" }}>
                 <Search
                     placeholder={STRING.SEARCH_FOR_AREA}
                     value={searchValue}
-                    onChangeText={(text) => searchPlace(text, 'places')}
+                    onChangeText={(text) => searchPlace(text, "places")}
                 />
             </View>
             {placesList[0] &&

@@ -20,10 +20,10 @@ import { ProfileFields, SignUpFields } from "../Services/Constants/FIELDS";
 import TextButton from "../Components/Customs/Buttons/TextButton";
 import TextField from "../Components/Customs/TextField";
 import Path from "../Services/Api/BaseUrl";
-import { launchImageLibrary } from 'react-native-image-picker'
+import { launchImageLibrary } from "react-native-image-picker"
 import Popup from "../Components/Common/Popup";
 import STRING from "../Services/Constants/STRINGS";
-import NetInfo from '@react-native-community/netinfo';
+import NetInfo from "@react-native-community/netinfo";
 import CheckNet from "../Components/Common/CheckNet";
 
 const Profile = ({ navigation, ...props }) => {
@@ -167,7 +167,7 @@ const Profile = ({ navigation, ...props }) => {
       <ScrollView>
         <CheckNet isOff={offline} />
         <Header
-          style={{ backgroundColor: 'transparent', zIndex: 10 }}
+          style={{ backgroundColor: "transparent", zIndex: 10 }}
           name={""}
           startIcon={
             <Ionicons

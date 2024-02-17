@@ -70,7 +70,7 @@ const ContactUs = ({ navigation, route, ...props }) => {
       message
     }
 
-    comnPost('v2/contact', data)
+    comnPost("v2/contact", data)
       .then(res => {
         setIsAlert(true);
         setAlertMessage(res.data.message);

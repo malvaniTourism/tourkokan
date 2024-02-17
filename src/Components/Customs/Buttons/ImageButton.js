@@ -1,9 +1,9 @@
-import React from 'react'
-import { TouchableOpacity } from 'react-native'
-import styles from './Styles'
-import { Image } from '@rneui/base'
-import GlobalText from '../Text'
-import Path from '../../../Services/Api/BaseUrl'
+import React from "react"
+import { TouchableOpacity } from "react-native"
+import styles from "./Styles"
+import { Image } from "@rneui/base"
+import GlobalText from "../Text"
+import Path from "../../../Services/Api/BaseUrl"
 
 const ImageButton = ({ image, onPress, buttonStyle, text, isSelected }) => {
 

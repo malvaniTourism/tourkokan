@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, FlatList, Modal, TouchableWithoutFeedback, Dimensions } from 'react-native';
-import Path from '../../Services/Api/BaseUrl';
-import styles from './Styles';
-import GlobalText from './Text';
+import React, { useState, useEffect } from "react";
+import { View, Text, Image, TouchableOpacity, FlatList, Modal, TouchableWithoutFeedback, Dimensions } from "react-native";
+import Path from "../../Services/Api/BaseUrl";
+import styles from "./Styles";
+import GlobalText from "./Text";
 
 const MasonryGrid = ({ data, loadMore }) => {
     const [selectedImage, setSelectedImage] = useState(null);
-    const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
+    const [screenWidth, setScreenWidth] = useState(Dimensions.get("window").width);
 
     useEffect(() => {
         const updateDimensions = () => {
-            setScreenWidth(Dimensions.get('window').width);
+            setScreenWidth(Dimensions.get("window").width);
         };
 
-        Dimensions.addEventListener('change', updateDimensions);
+        Dimensions.addEventListener("change", updateDimensions);
 
         return () => {
-            Dimensions.removeEventListener('change', updateDimensions);
+            Dimensions.removeEventListener("change", updateDimensions);
         };
     }, []);
 

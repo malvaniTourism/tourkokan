@@ -16,7 +16,7 @@ import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import { navigateTo } from "../../Services/CommonMethods";
 import GlobalText from "../../Components/Customs/Text";
-import SQLite from 'react-native-sqlite-storage'
+import SQLite from "react-native-sqlite-storage"
 import Popup from "../../Components/Common/Popup";
 import Feather from "react-native-vector-icons/Feather";
 import STRING from "../../Services/Constants/STRINGS";
@@ -42,18 +42,18 @@ const EmailSignIn = ({ navigation, ...props }) => {
   }, []);
 
   const openDB = () => {
-    const db = SQLite.openDatabase({ name: 'mydb.db', createFromLocation: '~mydata.db' });
+    const db = SQLite.openDatabase({ name: "mydb.db", createFromLocation: "~mydata.db" });
     if (db) {
       // Database initialization successful, proceed with queries
     } else {
-      console.error('Failed to initialize the database.');
+      console.error("Failed to initialize the database.");
     }
   }
 
   const createUserTable = () => {
     db.transaction((tx) => {
       tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT)'
+        "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT)"
       );
     });
   }
@@ -61,13 +61,13 @@ const EmailSignIn = ({ navigation, ...props }) => {
   const createUser = () => {
     db.transaction((tx) => {
       tx.executeSql(
-        'INSERT INTO users (name, email) VALUES (?, ?)',
-        ['John Doe', 'john@example.com'],
+        "INSERT INTO users (name, email) VALUES (?, ?)",
+        ["John Doe", "john@example.com"],
         (tx, results) => {
           if (results.rowsAffected > 0) {
-            console.log('Record inserted successfully.');
+            console.log("Record inserted successfully.");
           } else {
-            console.log('Failed to insert record.');
+            console.log("Failed to insert record.");
           }
         }
       );
@@ -77,7 +77,7 @@ const EmailSignIn = ({ navigation, ...props }) => {
   const getUserData = () => {
     db.transaction((tx) => {
       tx.executeSql(
-        'SELECT * FROM users',
+        "SELECT * FROM users",
         [],
         (tx, results) => {
           const len = results.rows.length;
@@ -156,7 +156,7 @@ const EmailSignIn = ({ navigation, ...props }) => {
 
   return (
     <View style={{ alignItems: "center", flex: 1 }}>
-      <ImageBackground style={styles.loginImage} source={require('../../Assets/Images/kokan1.jpeg')} />
+      <ImageBackground style={styles.loginImage} source={require("../../Assets/Images/kokan1.jpeg")} />
       {/* <Header
         name={""}
         startIcon={<View></View>}
@@ -188,7 +188,7 @@ const EmailSignIn = ({ navigation, ...props }) => {
               rightIcon={
                 field.type == `${STRING.TYPE.PASSWORD}` &&
                 <Feather
-                  name={field.isSecure ? 'eye' : 'eye-off'}
+                  name={field.isSecure ? "eye" : "eye-off"}
                   size={24}
                   color={COLOR.themeComicBlue}
                   onPress={() => {

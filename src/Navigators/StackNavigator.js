@@ -1,7 +1,7 @@
 import React, { useState, lazy, Suspense } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Linking } from 'react-native';
+import { Linking } from "react-native";
 
 import DrawerNavigator from "./DrawerNavigator";
 import TabNavigator from "./TabNavigator";
@@ -18,6 +18,7 @@ const CategoryProjects = lazy(() => import("../Screens/CategoryProjects"));
 const CityDetails = lazy(() => import("../Screens/DetailPages/CityDetails"));
 const CityList = lazy(() => import("../Screens/ListPages/CityList"));
 const Explore = lazy(() => import("../Screens/ListPages/Explore"));
+const Categories = lazy(() => import("../Screens/ListPages/Categories"));
 const ExploreGrid = lazy(() => import("../Screens/ListPages/ExploreGrid"));
 const ProjectList = lazy(() => import("../Screens/ListPages/ProjectList"));
 const CityPlaceSearch = lazy(() => import("../Screens/ListPages/CityPlaceSearch"));
@@ -35,11 +36,11 @@ const Profile = lazy(() => import("../Screens/Profile"));
 const Stack = createNativeStackNavigator();
 
 const linking = {
-  prefixes: ['myapp://'],
+  prefixes: ["myapp://"],
   config: {
     screens: {
-      Home: 'home',
-      Details: 'details',
+      Home: "home",
+      Details: "details",
     },
   },
 };
@@ -88,6 +89,7 @@ const StackNavigator = () => {
             <Stack.Screen name={STRING.SCREEN.CATEGORY_PROJECTS} component={CategoryProjects} />
             <Stack.Screen name={STRING.SCREEN.CITY_LIST} component={CityList} />
             <Stack.Screen name={STRING.SCREEN.EXPLORE} component={Explore} />
+            <Stack.Screen name={STRING.SCREEN.CATEGORIES} component={Categories} />
             <Stack.Screen name={STRING.SCREEN.PROJECT_LIST} component={ProjectList} />
             <Stack.Screen name={STRING.SCREEN.STOP_LIST} component={StopList} />
             <Stack.Screen name={STRING.SCREEN.CITY_DETAILS} component={CityDetails} />

@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react'
-import MasonryGrid from '../../Components/Customs/MasonryGrid';
-import { comnPost, dataSync } from '../../Services/Api/CommonServices';
-import { View } from 'react-native';
-import Loader from '../../Components/Customs/Loader';
+import React, { useEffect, useState } from "react"
+import MasonryGrid from "../../Components/Customs/MasonryGrid";
+import { comnPost, dataSync } from "../../Services/Api/CommonServices";
+import { View } from "react-native";
+import Loader from "../../Components/Customs/Loader";
 import {
     setDestination,
     setLoader,
     setSource,
 } from "../../Reducers/CommonActions";
-import { connect } from 'react-redux';
-import Header from '../../Components/Common/Header';
-import STRING from '../../Services/Constants/STRINGS';
-import COLOR from '../../Services/Constants/COLORS';
-import DIMENSIONS from '../../Services/Constants/DIMENSIONS';
+import { connect } from "react-redux";
+import Header from "../../Components/Common/Header";
+import STRING from "../../Services/Constants/STRINGS";
+import COLOR from "../../Services/Constants/COLORS";
+import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { backPage, checkLogin, goBackHandler, navigateTo } from "../../Services/CommonMethods";
-import CheckNet from '../../Components/Common/CheckNet';
-import NetInfo from '@react-native-community/netinfo';
-import Search from '../../Components/Customs/Search';
-import styles from './Styles';
+import CheckNet from "../../Components/Common/CheckNet";
+import NetInfo from "@react-native-community/netinfo";
+import Search from "../../Components/Customs/Search";
+import styles from "./Styles";
 
 const ExploreGrid = ({ route, navigation, ...props }) => {
     const [citiesData, setCitiesData] = useState([])
@@ -30,7 +30,7 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
     // route.params.cities
 
     useEffect(() => {
-        getData('')
+        getData("")
     }, [])
 
     useEffect(() => {
@@ -127,7 +127,7 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
                     />
                 }
             />
-            <MasonryGrid data={citiesData} loadMore={() => getScrollData('', nextPage)} />
+            <MasonryGrid data={citiesData} loadMore={() => getScrollData("", nextPage)} />
         </View>
     )
 }

@@ -66,8 +66,8 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
   }
 
   const gotoRoutes = () => {
-    // setSource('')
-    // setDestination('')
+    // setSource("")
+    // setDestination("")
     if (isValid) {
       navigateTo(navigation, STRING.SCREEN.ALL_ROUTES_SEARCH, { source, destination });
     } else setErrorText(STRING.ALERT.SOURCE_DESTINATION_REQUIRED)
@@ -94,8 +94,8 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
     setSearchValue(v);
     let data = {
       search: v,
-      apitype: 'dropdown',
-      type: 'bus'
+      apitype: "dropdown",
+      type: "bus"
     };
     comnPost(`v2/sites`, data)
       .then((res) => {
@@ -116,8 +116,8 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
     setSearchValue(v);
     let data = {
       search: v,
-      apitype: 'dropdown',
-      type: 'bus'
+      apitype: "dropdown",
+      type: "bus"
     };
     comnPost(`v2/sites?page=${page}`, data)
       .then((res) => {

@@ -12,7 +12,7 @@ import {
   PermissionsAndroid,
   Button,
   Platform
-} from 'react-native';
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import Header from "../Components/Common/Header";
 import COLOR from "../Services/Constants/COLORS";
@@ -29,19 +29,19 @@ import styles from "./Styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { checkLogin, backPage, goBackHandler, navigateTo } from "../Services/CommonMethods";
 import GlobalText from "../Components/Customs/Text";
-import TextButton from '../Components/Customs/Buttons/TextButton';
-import Geolocation from '@react-native-community/geolocation';
-import { Overlay } from '@rneui/themed';
-import MapView, { Marker, Polygon } from 'react-native-maps';
-import Path from '../Services/Api/BaseUrl';
-import STRING from '../Services/Constants/STRINGS';
-import NetInfo from '@react-native-community/netinfo';
-import CheckNet from '../Components/Common/CheckNet';
+import TextButton from "../Components/Customs/Buttons/TextButton";
+import Geolocation from "@react-native-community/geolocation";
+import { Overlay } from "@rneui/themed";
+import MapView, { Marker, Polygon } from "react-native-maps";
+import Path from "../Services/Api/BaseUrl";
+import STRING from "../Services/Constants/STRINGS";
+import NetInfo from "@react-native-community/netinfo";
+import CheckNet from "../Components/Common/CheckNet";
 
 const ProfileView = ({ navigation, route, ...props }) => {
   const [currentLatitude, setCurrentLatitude] = useState(37.4220936);
   const [currentLongitude, setCurrentLongitude] = useState(-122.083922);
-  const [locationStatus, setLocationStatus] = useState('');
+  const [locationStatus, setLocationStatus] = useState("");
   const [watchID, setWatchID] = useState("");
   const [showLocModal, setShowLocModal] = useState(false);
   const [initialRegion, setInitialRegion] = useState(
@@ -88,7 +88,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
   }, [route]);
 
   const requestLocationPermission = async () => {
-    if (Platform.OS === 'ios') {
+    if (Platform.OS === "ios") {
       getOneTimeLocation();
       subscribeLocation();
     } else {
@@ -215,7 +215,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
     <ScrollView style={styles.container}>
       <CheckNet isOff={offline} />
       <Header
-        // style={{ backgroundColor: 'transparent', zIndex: 10 }}
+        // style={{ backgroundColor: "transparent", zIndex: 10 }}
         name={""}
         startIcon={
           <Ionicons

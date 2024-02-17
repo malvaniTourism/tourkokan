@@ -3,8 +3,8 @@ import { Input } from "@rneui/themed";
 import { View } from "react-native";
 import styles from "./Styles";
 import STRING from "../../Services/Constants/STRINGS";
-// import InputAdornment from '@material-ui/core/InputAdornment';
-// import AccountCircle from '@material-ui/icons/AccountCircle';
+// import InputAdornment from "@material-ui/core/InputAdornment";
+// import AccountCircle from "@material-ui/icons/AccountCircle";
 
 const TextField = (props) => {
   const [errorText, setErrorText] = useState("");

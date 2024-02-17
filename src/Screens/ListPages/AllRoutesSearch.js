@@ -16,7 +16,7 @@ import GlobalText from "../../Components/Customs/Text";
 import RouteHeadCard from "../../Components/Cards/RouteHeadCard";
 import styles from "../Styles";
 import STRING from "../../Services/Constants/STRINGS";
-import NetInfo from '@react-native-community/netinfo';
+import NetInfo from "@react-native-community/netinfo";
 import CheckNet from "../../Components/Common/CheckNet";
 import SearchPanel from "../../Components/Common/SearchPanel";
 import RoutesSearchPanel from "../../Components/Common/RoutesSearchPanel";
@@ -26,8 +26,8 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
   const [offline, setOffline] = useState(false);
   const [nextPage, setNextPage] = useState(1);
   const [nextUrl, setNextUrl] = useState(1)
-  const [source, setSource] = useState(route?.params?.source.id);
-  const [destination, setDestination] = useState(route?.params?.destination.id)
+  const [source, setSource] = useState(route?.params?.source?.id);
+  const [destination, setDestination] = useState(route?.params?.destination?.id)
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
@@ -55,10 +55,6 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
       unsubscribe();
     }
   }, []);
-
-  const getRoutes = (item) => {
-    navigateTo(navigation, STRING.SCREEN.ROUTES_LIST, { item });
-  };
 
   const getRoutesList = (item) => {
     navigateTo(navigation, STRING.SCREEN.ROUTES_LIST, { item });

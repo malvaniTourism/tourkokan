@@ -5,7 +5,7 @@ const { StyleSheet } = require("react-native");
 
 const styles = StyleSheet.create({
     center: {
-        justifyContent: 'center'
+        justifyContent: "center"
     },
     placeImageTitleView: {
         height: DIMENSIONS.detailsImage,
@@ -13,8 +13,8 @@ const styles = StyleSheet.create({
         borderRadius: DIMENSIONS.borderRadiusLarge,
     },
     cityImageView: {
-        alignItems: 'center',
-        justifyContent: 'center',
+        alignItems: "center",
+        justifyContent: "center",
         height: DIMENSIONS.detailsImage,
     },
     cityHeader: {
@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
         right: 5,
         top: 10,
         marginBottom: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
         zIndex: 2
     },
     cityStarView: {
@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
         left: 10,
         top: -10,
         borderRadius: DIMENSIONS.borderRadius,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
     },
     backIcon: {
         backgroundColor: COLOR.white,
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     },
     detailTitle: {
         fontSize: DIMENSIONS.headerTextSize,
-        fontWeight: 'bold',
+        fontWeight: "bold",
         color: COLOR.headingColor2
     },
     sectionView: {
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     starStyle: {
-        // width: '50%'
+        // width: "50%"
         color: COLOR.yellow,
         bottom: 0,
         justifyContent: "flex-end",

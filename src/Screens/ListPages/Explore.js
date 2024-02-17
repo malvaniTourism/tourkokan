@@ -16,11 +16,11 @@ import PlaceCard from "../../Components/Cards/PlaceCard";
 import CityCard from "../../Components/Cards/CityCard";
 import GlobalText from "../../Components/Customs/Text";
 import STRING from "../../Services/Constants/STRINGS";
-import NetInfo from '@react-native-community/netinfo';
+import NetInfo from "@react-native-community/netinfo";
 import CheckNet from "../../Components/Common/CheckNet";
 import ImageButton from "../../Components/Customs/Buttons/ImageButton";
 import TextButton from "../../Components/Customs/Buttons/TextButton";
-// import InstaStory from 'react-native-insta-story';
+// import InstaStory from "react-native-insta-story";
 import CommentsSheet from "../../Components/Common/CommentsSheet";
 import BottomSheet from "../../Components/Customs/BottomSheet";
 
@@ -35,6 +35,7 @@ const Explore = ({ route, navigation, ...props }) => {
   const [nextPage, setNextPage] = useState(1)
   const [offline, setOffline] = useState(false)
   const [selectedCity, setSelectedCity] = useState("");
+  const [selectedCityId, setSelectedCityId] = useState("");
   const [selectedSites, setSelectedSites] = useState([])
 
   useEffect(() => {
@@ -88,10 +89,10 @@ const Explore = ({ route, navigation, ...props }) => {
       });
   }
 
-  const getCities = (selectedCity) => {
+  const getCities = (selectedCity, selectedCityId) => {
     props.setLoader(true)
     let data = {
-      apitype: 'list',
+      apitype: "list",
       // parent_id: 1,
       category: "city"
     };
@@ -101,6 +102,7 @@ const Explore = ({ route, navigation, ...props }) => {
           saveToStorage(STRING.STORAGE.CITIES_RESPONSE, JSON.stringify(res))
         setCities(res.data.data.data);
         setSelectedCity(selectedCity || res.data.data.data[0].name)
+        setSelectedCityId(selectedCityId || res.data.data.data[0].id)
         setSelectedSites(selectedCity ? cities.find((item) => item.name === selectedCity).sites : res.data.data.data[0].sites)
         // setSelectedSites(res.data.data.data[0].sites)
         props.setLoader(false);
@@ -116,12 +118,13 @@ const Explore = ({ route, navigation, ...props }) => {
   }
 
   const seeMore = () => {
-    navigateTo(navigation, STRING.SCREEN.CITY_LIST, { cities })
+    navigateTo(navigation, STRING.SCREEN.CITY_LIST, { parent_id: selectedCityId })
   }
 
   const handleCityPress = (city) => {
     setSelectedCity(city.name);
-    getCities(city.name)
+    setSelectedCityId(city.id);
+    getCities(city.name, city.id)
   };
 
   const openCommentsSheet = () => {
@@ -164,9 +167,25 @@ const Explore = ({ route, navigation, ...props }) => {
             />
           ))}
         </ScrollView>
-        <View style={{paddingBottom: 10}}>
+      </View>
+      {cities[0] &&
+        <>
+          <View>
+            <View style={styles.toggleView}>
+              <View style={styles.overlay} />
+              <ImageBackground
+                source={{ uri: "https://c4.wallpaperflare.com/wallpaper/766/970/409/cities-city-building-cityscape-wallpaper-preview.jpg" }}
+                style={styles.exploreHeaderImage} imageStyle={styles.cityImageStyle}
+                resizeMode="cover"
+              />
+              <View style={styles.details}>
+                <GlobalText text={STRING.TO_EXPLORE} style={styles.whiteText} />
+              </View>
+            </View>
+          </View>
+          <View style={{ paddingBottom: 10 }}>
             <TextButton
-              title={STRING.BUTTON.SEE_CITIES}
+              title={STRING.BUTTON.SEE_MORE}
               containerStyle={styles.seeCitiesContainer}
               seeMoreStyle={styles.seeCitiesContainer}
               buttonStyle={styles.seeCitiesButtonStyle}
@@ -175,21 +194,7 @@ const Explore = ({ route, navigation, ...props }) => {
               onPress={() => seeMore()}
             />
           </View>
-      </View>
-      {cities[0] &&
-        <View>
-          <View style={styles.toggleView}>
-            <View style={styles.overlay} />
-            <ImageBackground
-              source={{ uri: "https://c4.wallpaperflare.com/wallpaper/766/970/409/cities-city-building-cityscape-wallpaper-preview.jpg" }}
-              style={styles.exploreHeaderImage} imageStyle={styles.cityImageStyle}
-              resizeMode="cover"
-            />
-            <View style={styles.details}>
-              <GlobalText text={STRING.TO_EXPLORE} style={styles.whiteText} />
-            </View>
-          </View>
-        </View>
+        </>
       }
       <View style={{ minHeight: DIMENSIONS.screenHeight }}>
         {
@@ -202,7 +207,7 @@ const Explore = ({ route, navigation, ...props }) => {
               ))}
             </ScrollView>
             :
-            <View style={{marginTop: 20}}>
+            <View style={{ marginTop: 20 }}>
               <GlobalText text={STRING.ADDED} style={styles.boldText} />
             </View>
         }

@@ -5,13 +5,13 @@ const { StyleSheet } = require("react-native");
 
 const styles = StyleSheet.create({
     flexRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between'
+        flexDirection: "row",
+        justifyContent: "space-between"
     },
     placeContainer: {
-        alignSelf: 'center',
+        alignSelf: "center",
         flex: 1,
-        flexDirection: 'row',
+        flexDirection: "row",
         width: DIMENSIONS.bannerWidth,
         maxHeight: DIMENSIONS.halfWidth - 20,
         minHeight: DIMENSIONS.halfWidth - 20,
@@ -27,15 +27,15 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     likeView: {
-        position: 'absolute',
+        position: "absolute",
         backgroundColor: COLOR.white,
         height: 30,
         width: 30,
         borderRadius: DIMENSIONS.borderRadius,
         right: 5,
         top: 5,
-        justifyContent: 'center',
-        alignItems: 'center'
+        justifyContent: "center",
+        alignItems: "center"
     },
     placeImageStyle: {
         borderTopLeftRadius: DIMENSIONS.borderRadius,
@@ -44,17 +44,17 @@ const styles = StyleSheet.create({
     placeContentView: {
         flex: 3,
         padding: 10,
-        flexDirection: 'column',
-        justifyContent: 'space-between'
+        flexDirection: "column",
+        justifyContent: "space-between"
     },
     placeContentTop: {
         flex: 1,
-        justifyContent: 'space-between',
+        justifyContent: "space-between",
         paddingBottom: 10
     },
     placeName: {
         fontSize: DIMENSIONS.headerTextSize,
-        fontWeight: 'bold',
+        fontWeight: "bold",
         color: COLOR.black
     },
     placeTag: {
@@ -62,12 +62,12 @@ const styles = StyleSheet.create({
         fontWeight: 600
     },
     starStyle: {
-        // width: '50%'
+        // width: "50%"
         color: COLOR.yellow
     },
     placeMetaView: {
         paddingTop: 10,
-        flexDirection: 'row',
+        flexDirection: "row",
         borderTopWidth: 1,
         borderColor: COLOR.grey,
         borderStyle: "dashed"
@@ -85,9 +85,9 @@ const styles = StyleSheet.create({
         color: COLOR.lightBlack,
     },
     catCardContainer: {
-        justifyContent: 'space-evenly',
+        justifyContent: "space-evenly",
         margin: 10,
-        flexDirection: 'row'
+        flexDirection: "row"
     },
     catCardIcon: {
         width: DIMENSIONS.bannerWidth / 4,
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
         minHeight: DIMENSIONS.bannerHeight,
         maxHeight: DIMENSIONS.bannerHeight,
         width: DIMENSIONS.bannerWidth,
-        alignSelf: 'center',
+        alignSelf: "center",
         borderWidth: 1,
         borderColor: COLOR.grey,
         marginVertical: 10
@@ -116,15 +116,15 @@ const styles = StyleSheet.create({
         height: DIMENSIONS.bannerHeight / 2 + 32,
         width: DIMENSIONS.bannerWidth,
         backgroundColor: COLOR.white,
-        alignSelf: 'center',
+        alignSelf: "center",
         elevation: 10,
         zIndex: 10,
         borderRadius: DIMENSIONS.borderRadiusXS,
-        justifyContent: 'space-between',
+        justifyContent: "space-between",
         marginVertical: 10
     },
     routeHeadCardTitle: {
-        fontWeight: 'bold',
+        fontWeight: "bold",
         color: COLOR.themeComicBlue,
         lineHeight: 25,
         fontSize: DIMENSIONS.subtitleTextSize,
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     routeHeadCardBottom: {
         borderBottomLeftRadius: DIMENSIONS.borderRadiusXS,
         borderBottomRightRadius: DIMENSIONS.borderRadiusXS,
-        alignItems: 'center',
+        alignItems: "center",
         paddingVertical: 4
     },
     busImage: {
@@ -142,8 +142,8 @@ const styles = StyleSheet.create({
     },
     routeHeadCardImage: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        justifyContent: "center",
+        alignItems: "center"
     },
 
 
@@ -156,7 +156,17 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: COLOR.white,
         borderRadius: DIMENSIONS.borderRadius,
-        justifyContent: 'space-between'
+        justifyContent: "space-between"
+    },
+    subCatCard: {
+        width: DIMENSIONS.iconCard,
+        height: DIMENSIONS.iconCard,
+        elevation: 10,
+        margin: 10,
+        padding: 10,
+        backgroundColor: COLOR.white,
+        borderRadius: DIMENSIONS.borderRadius,
+        justifyContent: "center"
     },
     placeCard: {
         width: DIMENSIONS.bannerWidth,
@@ -166,7 +176,7 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: COLOR.white,
         borderRadius: DIMENSIONS.borderRadius,
-        justifyContent: 'space-between'
+        justifyContent: "space-between"
     },
     cityOverlay: {
         ...StyleSheet.absoluteFillObject,
@@ -181,8 +191,8 @@ const styles = StyleSheet.create({
         right: 5,
         top: 0,
         marginBottom: 10,
-        justifyContent: 'center',
-        alignItems: 'center'
+        justifyContent: "center",
+        alignItems: "center"
     },
     cityStarView: {
         backgroundColor: COLOR.white,
@@ -191,8 +201,8 @@ const styles = StyleSheet.create({
         left: 10,
         top: 10,
         borderRadius: DIMENSIONS.borderRadius,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
     },
     placeStarView: {
         backgroundColor: COLOR.white,
@@ -201,18 +211,18 @@ const styles = StyleSheet.create({
         left: 10,
         top: -10,
         borderRadius: DIMENSIONS.borderRadius,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
     },
     cityImage: {
         width: DIMENSIONS.bannerWidth,
         height: DIMENSIONS.bannerWidth + 20,
-        position: 'absolute'
+        position: "absolute"
     },
     placeImage: {
         width: DIMENSIONS.bannerWidth,
         height: DIMENSIONS.bannerHeight + 100,
-        position: 'absolute'
+        position: "absolute"
     },
     cityImageStyle: {
         borderRadius: DIMENSIONS.borderRadius,
@@ -223,7 +233,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLOR.white,
         borderRadius: DIMENSIONS.borderRadius,
         padding: 15,
-        alignSelf: 'center',
+        alignSelf: "center",
         justifyContent: "space-between"
     },
     placeDetailsOverlay: {
@@ -232,15 +242,15 @@ const styles = StyleSheet.create({
         backgroundColor: COLOR.white,
         borderRadius: DIMENSIONS.borderRadius,
         padding: 15,
-        alignSelf: 'center',
-        justifyContent: "space-between"
+        alignSelf: "center",
+        justifyContent: "space-evenly"
     },
     cityName: {
         fontSize: DIMENSIONS.headerTextSize,
-        fontWeight: 'bold'
+        fontWeight: "bold"
     },
-    cityDesc: {
-
+    boldText: {
+        fontWeight: "bold"
     }
 })
 

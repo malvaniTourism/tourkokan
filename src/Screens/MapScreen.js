@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
-// import MapView from 'react-native-maps';
+// import MapView from "react-native-maps";
 import Loader from "../Components/Customs/Loader";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { checkLogin, goBackHandler } from "../Services/CommonMethods";
-import ImageViewer from 'react-native-image-zoom-viewer';
-import ImageZoomViewer from '../Components/Customs/ImageZoomViewer';
+import ImageViewer from "react-native-image-zoom-viewer";
+import ImageZoomViewer from "../Components/Customs/ImageZoomViewer";
 import TopComponent from "../Components/Common/TopComponent";
 //import ImageViewer which will help us to zoom Image
-import { Dimensions } from 'react-native';
-import MapView, { Marker, Polygon } from 'react-native-maps';
+import { Dimensions } from "react-native";
+import MapView, { Marker, Polygon } from "react-native-maps";
 import Geolocation from "react-native-geolocation-service";
 import STRING from "../Services/Constants/STRINGS";
 import COLOR from "../Services/Constants/COLORS";
 
-const screenWidth = Dimensions.get('window').width;
+const screenWidth = Dimensions.get("window").width;
 const districtCoordinates = [
   // Replace these coordinates with the ones defining your district boundary
   { latitude: 40.7128, longitude: -74.0060 },
@@ -58,7 +58,7 @@ const MapScreen = ({ navigation }) => {
   // const images = [
   //   {
   //     url:
-  //       'https://1.bp.blogspot.com/-zptGfC-a3qI/UXVesv5E2-I/AAAAAAAABBE/HjTocA5xnWE/s1600/Map.jpg',
+  //       "https://1.bp.blogspot.com/-zptGfC-a3qI/UXVesv5E2-I/AAAAAAAABBE/HjTocA5xnWE/s1600/Map.jpg",
   //     width: screenWidth,
   //     height: imageHeight,
   //   }
@@ -106,7 +106,7 @@ const MapScreen = ({ navigation }) => {
 
 // const styles = StyleSheet.create({
 //   container: {
-//     backgroundColor: '#F5FCFF',
+//     backgroundColor: "#F5FCFF",
 //     flex: 1,
 //   },
 // });
@@ -127,7 +127,7 @@ export default MapScreen;
 
 // import React, { Component } from "react";
 // import { View } from "react-native";
-// import MapmyIndiaGL from 'mapmyindia-map-react-native-beta';
+// import MapmyIndiaGL from "mapmyindia-map-react-native-beta";
 
 // MapmyIndiaGL.setMapSDKKey("b0919dc4a2edba9cb6814cf85ea53bca");//place your mapsdkKey
 // MapmyIndiaGL.setRestAPIKey("b0919dc4a2edba9cb6814cf85ea53bca");//your restApiKey
@@ -151,7 +151,7 @@ export default MapScreen;
 
 // // const styles = StyleSheet.create({
 // //   container: {
-// //     backgroundColor: '#F5FCFF',
+// //     backgroundColor: "#F5FCFF",
 // //     flex: 1,
 // //   },
 // // });

@@ -20,16 +20,16 @@ const styles = StyleSheet.create({
   },
   locationView: {
     margin: 10,
-    flexDirection: 'row',
-    alignItems: 'center'
+    flexDirection: "row",
+    alignItems: "center"
   },
   fontBold: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: DIMENSIONS.headerTextSize,
     marginRight: 5,
   },
   whiteBold: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: DIMENSIONS.headerTextSize,
     marginRight: 5,
     color: COLOR.white
@@ -38,15 +38,15 @@ const styles = StyleSheet.create({
     zIndex: 1,
     height: 200,
     top: 70,
-    position: 'absolute',
+    position: "absolute",
     width: DIMENSIONS.screenWidth,
   },
   currLocView: {
     zIndex: 0,
     padding: 10,
-    position: 'relative',
-    flexDirection: 'row',
-    alignItems: 'center'
+    position: "relative",
+    flexDirection: "row",
+    alignItems: "center"
   },
   recentsView: {
     marginTop: 10,
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
   recentsListView: {
     marginTop: 10,
-    flexDirection: 'row'
+    flexDirection: "row"
   },
   fieldsView: {
     borderWidth: .5,
@@ -103,14 +103,14 @@ const styles = StyleSheet.create({
     paddingLeft: 40,
   },
   routesSwapIcon: {
-    position: 'absolute',
-    top: '30%',
-    left: '44%'
+    position: "absolute",
+    top: "30%",
+    left: "44%"
   },
   routesRefreshIcon: {
-    position: 'absolute',
+    position: "absolute",
     top: 56,
-    left: '44%'
+    left: "44%"
   },
   searchButtonContainerStyle: {
     marginTop: 10,
@@ -147,14 +147,14 @@ const styles = StyleSheet.create({
     color: COLOR.white
   },
   swapIcon: {
-    position: 'absolute',
-    top: '38%',
-    left: '80%'
+    position: "absolute",
+    top: "38%",
+    left: "80%"
   },
   refreshIcon: {
-    position: 'absolute',
+    position: "absolute",
     top: 120,
-    left: '45%'
+    left: "45%"
   },
   errorText: {
     color: COLOR.red,
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     marginBottom: 30
   },
   tabPanel: {
-    alignSelf: 'center',
+    alignSelf: "center",
     width: DIMENSIONS.bannerWidth,
     marginTop: 2
   },
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     width: DIMENSIONS.bannerWidth
   },
   overlayMessage: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: DIMENSIONS.headerTextSize
   },
   popupView: {
@@ -203,6 +203,15 @@ const styles = StyleSheet.create({
   },
   dropCloseIcon: {
     alignSelf: "flex-end"
+  },
+  commentsHeader: {
+    borderBottomWidth: 1,
+    borderBottomColor: COLOR.grey,
+    paddingBottom: 15
+  },
+  noComments: {
+    justifyContent: "center",
+    height: "83%"
   }
 });
 

@@ -37,8 +37,8 @@ const SearchPlace = ({ navigation, route, ...props }) => {
     setSearchValue(v);
     let data = {
       search: v,
-      apitype: 'dropdown',
-      type: 'bus'
+      apitype: "dropdown",
+      type: "bus"
     };
     comnPost(`v2/sites`, data)
       .then((res) => {
@@ -59,8 +59,8 @@ const SearchPlace = ({ navigation, route, ...props }) => {
     setSearchValue(v);
     let data = {
       search: v,
-      apitype: 'dropdown',
-      type: 'bus'
+      apitype: "dropdown",
+      type: "bus"
     };
     comnPost(`v2/sites?page=${page}`, data)
       .then((res) => {

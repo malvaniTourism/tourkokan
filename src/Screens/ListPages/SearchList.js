@@ -16,7 +16,7 @@ import GlobalText from "../../Components/Customs/Text";
 import RouteHeadCard from "../../Components/Cards/RouteHeadCard";
 import styles from "../Styles";
 import STRING from "../../Services/Constants/STRINGS";
-import NetInfo from '@react-native-community/netinfo';
+import NetInfo from "@react-native-community/netinfo";
 import CheckNet from "../../Components/Common/CheckNet";
 import SearchPanel from "../../Components/Common/SearchPanel";
 
@@ -53,10 +53,6 @@ const SearchList = ({ navigation, route, ...props }) => {
     }
   }, []);
 
-  const getRoutes = (item) => {
-    navigateTo(navigation, STRING.SCREEN.ROUTES_LIST, { item });
-  };
-
   const getRoutesList = (item) => {
     navigateTo(navigation, STRING.SCREEN.ROUTES_LIST, { item });
   };
@@ -65,8 +61,8 @@ const SearchList = ({ navigation, route, ...props }) => {
     if (nextUrl && nextPage >= 1) {
       props.setLoader(true);
       const data = {
-        source_place_id: route.params?.source.id,
-        destination_place_id: route.params?.destination.id,
+        source_place_id: route.params?.source?.id,
+        destination_place_id: route.params?.destination?.id,
       };
       comnPost(`v2/routes?page=${nextPage}`, data)
         .then((res) => {

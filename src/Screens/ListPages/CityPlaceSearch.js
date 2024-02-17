@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, View, Text, SafeAreaView, TouchableOpacity } from "react-native";
-import { connect } from 'react-redux'
+import { connect } from "react-redux"
 import Header from "../../Components/Common/Header";
 import SearchBar from "../../Components/Customs/Search";
 import styles from "./Styles";
@@ -13,8 +13,8 @@ import { setLoader } from "../../Reducers/CommonActions";
 import STRING from "../../Services/Constants/STRINGS";
 
 const CityPlaceSearch = ({ navigation, route, ...props }) => {
-    const [searchValue, setSearchValue] = useState('');
-    const [tableName, setTableName] = useState('places')
+    const [searchValue, setSearchValue] = useState("");
+    const [tableName, setTableName] = useState("places")
     const [placesList, setPlacesList] = useState([]);
     const [isCity, setIsCity] = useState(false);
     const [isLoading, setIsLoading] = useState(true)

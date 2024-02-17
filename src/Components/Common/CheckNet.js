@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { View, Text } from 'react-native'
-import NetInfo from '@react-native-community/netinfo';
-import ComingSoon from './ComingSoon';
-import STRING from '../../Services/Constants/STRINGS';
+import React, { useEffect, useState } from "react"
+import { View, Text } from "react-native"
+import NetInfo from "@react-native-community/netinfo";
+import ComingSoon from "./ComingSoon";
+import STRING from "../../Services/Constants/STRINGS";
 
 const CheckNet = ({ isOff }) => {
     const [isOffline, setIsConnected] = useState(isOff);

@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { View, Text } from 'react-native';
-import ComingSoon from '../Components/Common/ComingSoon';
-import { navigateTo } from '../Services/CommonMethods';
-import STRING from '../Services/Constants/STRINGS';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { View, Text } from "react-native";
+import ComingSoon from "../Components/Common/ComingSoon";
+import { navigateTo } from "../Services/CommonMethods";
+import STRING from "../Services/Constants/STRINGS";
 
 const Weather = ({ navigation }) => {
   const [weatherData, setWeatherData] = useState(null);
   const [isVisible, setIsVisible] = useState(true)
 
   useEffect(() => {
-    // Replace 'YOUR_API_KEY' with your Weatherstack API key
-    // const apiKey = 'b5de8ae893fb73d2148875970c556fa3';
+    // Replace "YOUR_API_KEY" with your Weatherstack API key
+    // const apiKey = "b5de8ae893fb73d2148875970c556fa3";
     // const apiUrl = `http://api.weatherstack.com/current?access_key=${apiKey}&query=Dombiwali,Thane,Maharastra`;
 
     // axios.get(apiUrl)
@@ -19,7 +19,7 @@ const Weather = ({ navigation }) => {
     //     setWeatherData(response.data);
     //   })
     //   .catch(error => {
-    //     console.error('Error fetching weather data:', error);
+    //     console.error("Error fetching weather data:", error);
     //   });
     setTimeout(() => {
       setIsVisible(false)

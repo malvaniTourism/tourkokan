@@ -1,10 +1,10 @@
-import React from 'react'
-import { FlatList, View } from 'react-native'
+import React from "react"
+import { FlatList, View } from "react-native"
 import { ListItem } from "@rneui/themed";
-import styles from './Styles';
+import styles from "./Styles";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import COLOR from '../../Services/Constants/COLORS';
-import DIMENSIONS from '../../Services/Constants/DIMENSIONS';
+import COLOR from "../../Services/Constants/COLORS";
+import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 
 const SearchDropdown = ({ placesList, goToNext, setPlace, closeDropdown }) => {
 
