@@ -195,7 +195,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
                         <GlobalText text={city.longitude} />
                         <GlobalText text={`social: ${JSON.stringify(city.social_media)}`} />
                         <GlobalText text={`contact: ${JSON.stringify(city.contact_details)}`} />
-                        <GlobalText text={`comments: ${JSON.stringify(city.comments)}`} />
+                        <GlobalText text={`comments: ${JSON.stringify(city.comment)}`} />
                         <GlobalText text={`photos: ${JSON.stringify(city.photos)}`} />
 
                         <View style={styles.sectionView}>
@@ -213,6 +213,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
                 refRBSheet={refRBSheet}
                 height={DIMENSIONS.screenHeight - DIMENSIONS.headerSpace}
                 Component={<CommentsSheet
+                    data={city.comment}
                     openCommentsSheet={() => openCommentsSheet()}
                     closeCommentsSheet={() => closeCommentsSheet()}
                 />}

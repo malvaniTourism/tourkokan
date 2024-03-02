@@ -15,14 +15,14 @@ import STRING from "../../Services/Constants/STRINGS";
 
 const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
     const [isVisible, setIsVisible] = useState(false)
-    const [isFav, setIsFav] = useState(data.is_favorite)
-    const [rating, setRating] = useState(data.rating_avg_rate)
+    const [isFav, setIsFav] = useState(data?.is_favorite)
+    const [rating, setRating] = useState(data?.rating_avg_rate)
     const [cardType, setCardType] = useState(data.category?.code)
 
     const onHeartClick = async () => {
         let placeData = {
             user_id: await AsyncStorage.getItem(STRING.STORAGE.USER_ID),
-            favouritable_type: STRING.TABLE.SITES,
+            favouritable_type: STRING.TABLE.SITE,
             favouritable_id: data.id
         }
         setIsFav(!isFav)
