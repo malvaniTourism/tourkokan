@@ -19,6 +19,7 @@ import NetInfo from "@react-native-community/netinfo";
 import CheckNet from "../../Components/Common/CheckNet";
 import CommentsSheet from "../../Components/Common/CommentsSheet";
 import BottomSheet from "../../Components/Customs/BottomSheet";
+import GlobalText from "../../Components/Customs/Text";
 
 const CityList = ({ navigation, route, ...props }) => {
   const refRBSheet = useRef();
@@ -107,16 +108,22 @@ const CityList = ({ navigation, route, ...props }) => {
           />
         }
       />
-      <View style={{ flex: 1, alignItems: "center" }}>
-        <Loader />
+      <Loader />
+      {cities[0] ?
         <View style={{ flex: 1, alignItems: "center" }}>
-          <View>
-            {cities.map((city) => (
-              <CityCard data={city} navigation={navigation} reload={() => getCities()} onClick={() => getCityDetails(city.id)} addComment={() => openCommentsSheet()} />
-            ))}
+          <View style={{ flex: 1, alignItems: "center" }}>
+            <View>
+              {cities.map((city) => (
+                <CityCard data={city} navigation={navigation} reload={() => getCities()} onClick={() => getCityDetails(city.id)} addComment={() => openCommentsSheet()} />
+              ))}
+            </View>
           </View>
         </View>
-      </View>
+        :
+        <View>
+          <GlobalText text={STRING.NO_DATA} />
+        </View>
+      }
       <BottomSheet
         refRBSheet={refRBSheet}
         height={DIMENSIONS.screenHeight - DIMENSIONS.headerSpace}

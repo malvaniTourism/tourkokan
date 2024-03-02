@@ -16,7 +16,7 @@ import STRING from "../../Services/Constants/STRINGS";
 const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
     const [isVisible, setIsVisible] = useState(false)
     const [isFav, setIsFav] = useState(data.is_favorite)
-    const [rating, setRating] = useState(data.rating)
+    const [rating, setRating] = useState(data.rating_avg_rate)
     const [cardType, setCardType] = useState(data.category?.code)
 
     const onHeartClick = async () => {
@@ -26,7 +26,7 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
             favouritable_id: data.id
         }
         setIsFav(!isFav)
-        comnPost("v2/favourite", placeData)
+        comnPost("v2/addDeleteFavourite", placeData)
             .then(res => {
                 reload()
             })
@@ -54,8 +54,19 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
         }
     };
 
-    const onStarRatingPress = (rate) => {
-        setRating(rate)
+    const onStarRatingPress = async (rate) => {
+        const placeData = {
+            user_id: await AsyncStorage.getItem(STRING.STORAGE.USER_ID),
+            rateable_type: STRING.TABLE.SITE,
+            rateable_id: data.id,
+            rate
+        }
+        comnPost('v2/addUpdateRating', placeData)
+            .then(res => {
+                reload()
+            })
+            .catch(err => {
+            })
     }
 
     return (
@@ -79,6 +90,9 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
                     <Octicons name="comment" color={COLOR.black} size={DIMENSIONS.iconSize} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.cityLikeView} onPress={() => onShareClick()}>
+                    {rating > 0 &&
+                        <GlobalText text={rating.slice(0, 3)} style={styles.avgRating} />
+                    }
                     <Octicons name="star" color={COLOR.black} size={DIMENSIONS.iconSize} />
                 </TouchableOpacity>
             </View>

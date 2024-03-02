@@ -112,7 +112,8 @@ const STRING = {
     PLACE: "Place",
     CITIES: "cities",
     PLACES: "places",
-    SITES: "Sites"
+    SITES: "Sites",
+    SITE: "Site",
   },
   CITY: {
     DEVGAD: "Devgad",
@@ -192,7 +193,8 @@ const STRING = {
   LOADER_TEXT: "Picking Up Your Data...",
   ADDED: "Places will be added soon...",
   NO_COMMENTS: "No comments yet",
-  START_CONVO: "Start Conversation"
+  START_CONVO: "Start Conversation",
+  NO_DATA: "No data available at this instance."
 };
 
 export default STRING;

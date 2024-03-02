@@ -52,11 +52,28 @@ const HomeScreen = ({ navigation, route, ...props }) => {
     const [offline, setOffline] = useState(false)
     const [isFetching, setIsFetching] = useState(true)
     const [bannerImages, setBannerImages] = useState([
-        "https://c4.wallpaperflare.com/wallpaper/766/970/409/cities-city-building-cityscape-wallpaper-preview.jpg",
-        "https://c4.wallpaperflare.com/wallpaper/631/683/713/nature-bridge-sky-city-wallpaper-preview.jpg",
-        "https://c4.wallpaperflare.com/wallpaper/977/138/381/tbilisi-georgia-wallpaper-preview.jpg",
-        "https://4kwallpapers.com/images/walls/thumbs_3t/912.jpg",
+        {
+            "id": 1,
+            "name": "Angnewadi Yatra 2024",
+            "image": "https://c4.wallpaperflare.com/wallpaper/766/970/409/cities-city-building-cityscape-wallpaper-preview.jpg",
+        },
+        {
+            "id": 1,
+            "name": "Angnewadi Yatra 2024",
+            "image": "https://c4.wallpaperflare.com/wallpaper/631/683/713/nature-bridge-sky-city-wallpaper-preview.jpg",
+        },
+        {
+            "id": 1,
+            "name": "Angnewadi Yatra 2024",
+            "image": "https://c4.wallpaperflare.com/wallpaper/977/138/381/tbilisi-georgia-wallpaper-preview.jpg",
+        },
+        {
+            "id": 1,
+            "name": "Angnewadi Yatra 2024",
+            "image": "https://4kwallpapers.com/images/walls/thumbs_3t/912.jpg",
+        },
     ]);
+    const [bannerObject, setBannerObject] = useState([])
     const [currentCity, setCurrentCity] = useState(STRING.CITY.DEVGAD)
 
     useEffect(() => {
@@ -123,7 +140,8 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                 if (res && res.data.data)
                     saveToStorage(STRING.STORAGE.LANDING_RESPONSE, JSON.stringify(res))
                 setCities(res.data.data.cities);
-                setRoutes(res.data.data.routes)
+                setRoutes(res.data.data.routes);
+                setBannerObject(res.data.data.banners);
                 setIsFetching(false)
                 setIsLoading(false)
                 props.setLoader(false);
@@ -202,7 +220,11 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                     <></>
                     :
                     <View style={{ flex: 1, alignItems: "center" }}>
-                        <Banner bannerImages={bannerImages} />
+                        {bannerObject[0] ?
+                            <Banner bannerImages={bannerObject} />
+                            :
+                            <Banner bannerImages={bannerImages} />
+                        }
                         {/* {CityName.map((field, index) => {
                             return (
                                 <SearchBar
@@ -213,8 +235,8 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                 />
                             );
                         })} */}
-                        <View style={{marginTop: -59}}>
-                        <SearchPanel route={route} navigation={navigation} from={STRING.SCREEN.HOME} />
+                        <View style={{ marginTop: -59 }}>
+                            <SearchPanel route={route} navigation={navigation} from={STRING.SCREEN.HOME} />
                         </View>
                         <View style={styles.sectionView}>
                             <GlobalText text={STRING.SCREEN.ROUTES} style={styles.sectionTitle} />

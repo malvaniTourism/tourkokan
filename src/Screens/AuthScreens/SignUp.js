@@ -41,10 +41,8 @@ const SignUp = ({ navigation, ...props }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [locationError, setLocationError] = useState(false);
   const [isLocationEnabled, setIsLocationEnabled] = useState(false);
-  const [latitude, setLatitude] = useState("")
-  const [longitude, setLongitude] = useState("")
-  const [currentLatitude, setCurrentLatitude] = useState(null);
-  const [currentLongitude, setCurrentLongitude] = useState(null);
+  const [latitude, setCurrentLatitude] = useState(null);
+  const [longitude, setCurrentLongitude] = useState(null);
   const [locationStatus, setLocationStatus] = useState("");
   const [watchID, setWatchID] = useState("");
 
@@ -164,7 +162,9 @@ const SignUp = ({ navigation, ...props }) => {
       password: password,
       password_confirmation: cpassword,
       role_id: role.id,
-      profile_picture: uploadImage
+      profile_picture: uploadImage,
+      latitude,
+      longitude
     };
     comnPost("auth/register", data)
       .then((res) => {

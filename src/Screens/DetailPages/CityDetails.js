@@ -51,6 +51,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
                 if (res.data.success) {
                     setCity(res.data.data);
                     setIsFav(res.data.data.is_favorite)
+                    setRating(res.data.data.rating_avg_rate)
                     props.setLoader(false);
                 } else {
                     setError(res.data.message);
@@ -71,7 +72,22 @@ const CityDetails = ({ navigation, route, ...props }) => {
             favouritable_id: city.id
         }
         setIsFav(!isFav)
-        comnPost("v2/favourite", placeData)
+        comnPost("v2/addDeleteFavourite", placeData)
+            .then(res => {
+                getDetails()
+            })
+            .catch(err => {
+            })
+    }
+
+    const onStarRatingPress = async (rate) => {
+        const placeData = {
+            user_id: await AsyncStorage.getItem(STRING.STORAGE.USER_ID),
+            rateable_type: STRING.TABLE.SITE,
+            rateable_id: city.id,
+            rate
+        }
+        comnPost('v2/addUpdateRating', placeData)
             .then(res => {
                 getDetails()
             })
@@ -137,12 +153,19 @@ const CityDetails = ({ navigation, route, ...props }) => {
             {city &&
                 <View>
                     <View style={styles.placeImageView}>
-                        <ImageBackground source={{ uri: Path.FTP_PATH + city.image }} style={styles.placeImage} />
+                        {city.image ?
+                            <ImageBackground source={{ uri: Path.FTP_PATH + city.image }} style={styles.placeImage} />
+                            :
+                            <ImageBackground source={require("../../Assets/Images/nature.jpeg")} style={styles.placeImage} imageStyle={styles.cityImageStyle} resizeMode="cover" />
+                        }
                         <View style={{ alignItems: "flex-end", top: 50, right: 7 }}>
                             <TouchableOpacity style={styles.cityLikeView} onPress={() => openCommentsSheet()}>
                                 <Octicons name="comment" color={COLOR.black} size={DIMENSIONS.iconSize} />
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.cityLikeView} onPress={() => onShareClick()}>
+                            <TouchableOpacity style={styles.cityLikeView}>
+                                {rating > 0 &&
+                                    <GlobalText text={rating.slice(0, 3)} style={styles.avgRating} />
+                                }
                                 <Octicons name="star" color={COLOR.black} size={DIMENSIONS.iconSize} />
                             </TouchableOpacity>
                         </View>

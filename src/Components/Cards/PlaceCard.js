@@ -20,10 +20,6 @@ const PlaceCard = ({ data, reload, navigation }) => {
     const [rating, setRating] = useState(3.5)
     const [isVisible, setIsVisible] = useState(false)
 
-    const onStarRatingPress = (rate) => {
-        setRating(rate)
-    }
-
     const onHeartClick = async () => {
         let cityData = {
             user_id: await AsyncStorage.getItem(STRING.STORAGE.USER_ID),
@@ -31,12 +27,28 @@ const PlaceCard = ({ data, reload, navigation }) => {
             favouritable_id: data.id
         }
         setIsFav(!isFav)
-        comnPost("v2/favourite", cityData)
+        comnPost("v2/addDeleteFavourite", cityData)
             .then(res => {
                 reload()
             })
             .catch(err => {
             })
+    }
+
+    const onStarRatingPress = async (rate) => {
+        setRating(rate)
+        const placeData = {
+            user_id: await AsyncStorage.getItem(STRING.STORAGE.USER_ID),
+            rateable_type: STRING.TABLE.SITE,
+            rateable_id: data.id,
+            rate
+        }
+        comnPost('v2/addUpdateRating', placeData)
+        .then(res => {
+            reload()
+        })
+        .catch(err => {
+        })
     }
 
     const onLikeClick = () => {

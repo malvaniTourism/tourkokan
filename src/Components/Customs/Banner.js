@@ -3,6 +3,7 @@ import { View, Text, Animated, ImageBackground, Image } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import styles from "./Styles";
+import Path from "../../Services/Api/BaseUrl";
 
 class AnimationStyle extends Component {
   state = {
@@ -56,7 +57,7 @@ const Banner = ({ style, bannerImages }) => {
         // onSnapToItem={(index) => console.log("current index:", index)}
         renderItem={({ index }) => (
           <AnimationStyle
-            source={{ uri: `${bannerImages[index]}` }}
+            source={{ uri: `${Path.FTP_PATH}${bannerImages[index].image}` }}
             style={styles.bannerImage}
           ></AnimationStyle>
         )}

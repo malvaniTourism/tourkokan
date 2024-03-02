@@ -194,6 +194,16 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
+    avgRating: {
+        backgroundColor: COLOR.themeComicBlue,
+        borderRadius: DIMENSIONS.borderRadiusLarge,
+        zIndex: 10,
+        position: "absolute",
+        top: -4,
+        left: 19,
+        padding: 2,
+        color: COLOR.white
+    },
     cityStarView: {
         backgroundColor: COLOR.white,
         height: 35,
