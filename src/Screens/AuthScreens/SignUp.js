@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { View, Text, TouchableOpacity, BackHandler, Image, ScrollView, ImageBackground, Animated, PermissionsAndroid } from "react-native";
-import { SignUpFields } from "../../Services/Constants/FIELDS";
+import { OTP, SignUpFields } from "../../Services/Constants/FIELDS";
 import TextField from "../../Components/Customs/TextField";
 import Header from "../../Components/Common/Header";
 import TextButton from "../../Components/Customs/Buttons/TextButton";
@@ -8,7 +8,7 @@ import styles from "./Styles";
 import { comnGet, comnPost } from "../../Services/Api/CommonServices";
 import Loader from "../../Components/Customs/Loader";
 import { connect } from "react-redux";
-import { setLoader } from "../../Reducers/CommonActions";
+import { setLoader, saveAccess_token } from "../../Reducers/CommonActions";
 import DropDown from "../../Components/Customs/DropDown";
 import { navigateTo } from "../../Services/CommonMethods";
 import { launchImageLibrary } from "react-native-image-picker"
@@ -22,6 +22,7 @@ import IonIcons from "react-native-vector-icons/Ionicons";
 import STRING from "../../Services/Constants/STRINGS";
 import * as Animatable from 'react-native-animatable';
 import Geolocation from "@react-native-community/geolocation";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SignUp = ({ navigation, ...props }) => {
   const opacity = useRef(new Animated.Value(0)).current;
@@ -32,12 +33,14 @@ const SignUp = ({ navigation, ...props }) => {
   const [cpassword, setCpassword] = useState("");
   const [role, setRole] = useState("");
   const [roles, setRoles] = useState([]);
+  const [otp, setOtp] = useState([]);
   const [errMsg, setErrorMsg] = useState("");
   const [imageSource, setImageSource] = useState(null);
   const [uploadImage, setUploadImage] = useState(null);
   const [isSuccess, setIsSuccess] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [isAlert, setIsAlert] = useState(false);
+  const [isVerify, setIsVerify] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [locationError, setLocationError] = useState(false);
   const [isLocationEnabled, setIsLocationEnabled] = useState(false);
@@ -45,6 +48,7 @@ const SignUp = ({ navigation, ...props }) => {
   const [longitude, setCurrentLongitude] = useState(null);
   const [locationStatus, setLocationStatus] = useState("");
   const [watchID, setWatchID] = useState("");
+  const [sec, setSec] = useState(30);
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN));
@@ -170,9 +174,12 @@ const SignUp = ({ navigation, ...props }) => {
       .then((res) => {
         if (res.data.success) {
           props.setLoader(false);
-          setAlertMessage(STRING.ALERT.REGI_SUCCESS);
-          setIsAlert(true);
-          setIsSuccess(true)
+          setAlertMessage(STRING.ALERT.OTP_SENT);
+          setIsVerify(true);
+          setIsSuccess(false);
+          setTimeout(() => {
+            timer();
+          }, 1000);
         } else {
           props.setLoader(false);
           setAlertMessage(res.data.message.email ? res.data.message.email : res.data.message.mobile ? res.data.message.mobile : res.data.message.profile_picture);
@@ -188,13 +195,63 @@ const SignUp = ({ navigation, ...props }) => {
       });
   };
 
+  const verifyOtp = () => {
+    props.setLoader(true);
+    const data = {
+      email,
+      otp
+    };
+    comnPost("auth/verifyOtp", data)
+      .then((res) => {
+        if (res.data.success) {
+          props.setLoader(false);
+          AsyncStorage.setItem(STRING.STORAGE.ACCESS_TOKEN, res.data.data.access_token);
+          AsyncStorage.setItem(STRING.STORAGE.USER_ID, res.data.data.user.id);
+          props.saveAccess_token(res.data.data.access_token);
+          setIsVerify(false);
+          // setAlertMessage(STRING.ALERT.REGI_SUCCESS);
+          // setIsAlert(true);
+          // setIsSuccess(true)
+          AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, JSON.stringify(true))
+          navigateTo(navigation, STRING.SCREEN.HOME);
+        } else {
+          props.setLoader(false);
+          setAlertMessage(res.data.message.email ? res.data.message.email : res.data.message.mobile ? res.data.message.mobile : res.data.message);
+          setIsSuccess(false)
+          setIsAlert(true);
+        }
+      })
+      .catch((err) => {
+        props.setLoader(false);
+        setIsAlert(true);
+        setIsSuccess(false)
+        setAlertMessage(STRING.ALERT.WENT_WRONG);
+      });
+  };
+
+  const resend = () => {
+    props.setLoader(true);
+    const data = {
+      email,
+    };
+    comnPost("auth/sendOtp", data)
+      .then((res) => {
+        props.setLoader(false);
+        setSec(30);
+      })
+      .catch((err) => {
+        props.setLoader(false);
+      });
+  };
+
   const signInScreen = () => {
     navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN);
   };
 
   const closePopup = () => {
     if (isSuccess) {
-      navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN);
+      AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, JSON.stringify(true))
+      navigateTo(navigation, STRING.SCREEN.HOME);
     }
     setIsAlert(false)
   }
@@ -257,6 +314,12 @@ const SignUp = ({ navigation, ...props }) => {
       { enableHighAccuracy: false, maximumAge: 1000 }
     );
     setWatchID(WatchID)
+  };
+
+  const timer = () => {
+    if (sec) {
+      setSec(sec - 1);
+    }
   };
 
   return (
@@ -387,6 +450,45 @@ const SignUp = ({ navigation, ...props }) => {
             </View>
           </View>
         </ScrollView>
+        <Popup
+          message={alertMessage}
+          visible={isVerify}
+          Component={
+            <View>
+              {OTP.map((field, index) => {
+                return (
+                  <TextField
+                    name={field.name}
+                    label={field.name}
+                    placeholder={field.placeholder}
+                    fieldType={field.type}
+                    length={field.length}
+                    required={field.required}
+                    disabled={field.disabled}
+                    value={otp}
+                    setChild={(v) => setOtp(v)}
+                    style={styles.otpContainerStyle}
+                    inputContainerStyle={styles.inputContainerStyle}
+                    isSecure={field.isSecure}
+                  />
+                );
+              })}
+              <View style={{ marginVertical: 10 }}>
+                {sec >= 1 ? (
+                  <GlobalText text={`${STRING.RESEND_WITHIN}${sec > 9 ? sec : "0" + sec})`} style={styles.whiteText} />
+                ) : (
+                  <View>
+                    <GlobalText style={styles.whiteText} text={STRING.DIDNT_RECEIVE} />
+                    <TouchableOpacity onPress={() => resend()}>
+                      <GlobalText text={STRING.RESEND} style={styles.whiteText} />
+                    </TouchableOpacity>
+                  </View>
+                )}
+              </View>
+            </View>
+          }
+          onPress={verifyOtp}
+        />
         <Popup
           message={alertMessage}
           visible={isAlert}

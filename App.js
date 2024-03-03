@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -12,12 +12,19 @@ import COLOR from './src/Services/Constants/COLORS';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import GlobalText from './src/Components/Customs/Text';
 import DIMENSIONS from './src/Services/Constants/DIMENSIONS';
+import STRING from './src/Services/Constants/STRINGS';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [showApp, setShowApp] = useState(false);
+  const [isFirstTime, setIsFirstTime] = useState(false)
   LogBox.ignoreAllLogs();
+
+  // useEffect(async () => {
+  //   setIsFirstTime(await AsyncStorage.getItem(STRING.STORAGE.IS_FIRST_TIME))
+  // }, [])
 
   const slides = [
     {
@@ -53,8 +60,6 @@ export default function App() {
     );
   }
   const onDone = () => {
-    // User finished the introduction. Show real app through
-    // navigation or simply by controlling state
     setShowApp(true);
   }
 

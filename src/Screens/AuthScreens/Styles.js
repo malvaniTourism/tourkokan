@@ -12,7 +12,15 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     marginTop: 30
   },
-  buttonContainer: {},
+  buttonContainer: {
+    
+  },
+  choiceButtonContainer: {
+    width: DIMENSIONS.screenWidth / 2 - 40
+  },
+  choiceButtonStyle: {
+    width: DIMENSIONS.screenWidth / 2 - 40
+  },
   buttonStyle: {
     paddingVertical: 13
   },
@@ -27,6 +35,13 @@ const styles = StyleSheet.create({
     borderColor: COLOR.white,
     borderRadius: DIMENSIONS.borderRadius,
     color: COLOR.white
+  },
+  otpContainerStyle: {
+    borderWidth: 1,
+    padding: 10,
+    borderColor: COLOR.white,
+    borderRadius: DIMENSIONS.borderRadius,
+    color: COLOR.black
   },
   eyeIcon: {
     position: "absolute",
@@ -69,6 +84,16 @@ const styles = StyleSheet.create({
     width: DIMENSIONS.screenWidth,
     position: "absolute"
   },
+  changeOption: {
+    fontWeight: "bold",
+    fontSize: DIMENSIONS.headerTextSize,
+    padding: 10,
+    paddingBottom: 10,
+    color: COLOR.themeComicBlue,
+    backgroundColor: COLOR.white,
+    borderRadius: DIMENSIONS.borderRadius,
+    marginTop: 10
+  },
   loginText: {
     fontWeight: "bold",
     fontSize: DIMENSIONS.headerTextSize,
@@ -110,6 +135,11 @@ const styles = StyleSheet.create({
   },
   whiteText: {
     color: COLOR.white
+  },
+  selectText: {
+    color: COLOR.white,
+    fontWeight: "bold",
+    top: 10
   }
 });
 

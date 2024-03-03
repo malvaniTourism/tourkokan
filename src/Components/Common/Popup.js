@@ -6,7 +6,7 @@ import styles from "./Styles";
 import TextButton from "../Customs/Buttons/TextButton";
 import STRING from "../../Services/Constants/STRINGS";
 
-const Popup = ({ message, visible, toggleOverlay, onPress }) => {
+const Popup = ({ message, visible, toggleOverlay, onPress, Component }) => {
     // const [isOpen, setIsOpen] = useState(visible)
     let isOpen = visible
 
@@ -19,6 +19,7 @@ const Popup = ({ message, visible, toggleOverlay, onPress }) => {
         <Overlay style={styles.overlay} isVisible={isOpen} onBackdropPress={toggleOverlay}>
             <View style={styles.popupView}>
                 <GlobalText style={styles.overlayMessage} text={message} />
+                {Component}
             </View>
                 <TextButton
                     title={STRING.BUTTON.OK}

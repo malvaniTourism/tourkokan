@@ -43,6 +43,36 @@ export const SignInFields = [
   },
 ];
 
+export const Email = [
+  {
+    name: STRING.LABEL.EMAIL,
+    placeholder: STRING.LABEL.EMAIL,
+    type: STRING.TYPE.TEXT,
+    length: DIMENSIONS.fieldLength,
+    required: true,
+    disabled: true,
+  }
+];
+
+export const EmailOtpFields = [
+  {
+    name: STRING.LABEL.EMAIL,
+    placeholder: STRING.LABEL.EMAIL,
+    type: STRING.TYPE.TEXT,
+    length: DIMENSIONS.fieldLength,
+    required: true,
+    disabled: false,
+  },
+  {
+    name: STRING.LABEL.OTP,
+    placeholder: STRING.PLACEHOLDER.ENTER_OTP,
+    type: STRING.TYPE.NUM,
+    length: DIMENSIONS.fieldLength,
+    required: true,
+    disabled: false,
+  }
+];
+
 export const SignUpFields = [
   {
     name: STRING.LABEL.NAME,

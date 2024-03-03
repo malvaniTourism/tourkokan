@@ -111,7 +111,7 @@ const SignIn = ({ navigation, ...props }) => {
 
       <Loader />
       <View style={styles.loginContentsBox}>
-        <GlobalText text={"Log-in"} style={styles.loginText} />
+        <GlobalText text={STRING.LOG_IN} style={styles.loginText} />
         {MobileNo.map((field, index) => {
           return (
             <TextField

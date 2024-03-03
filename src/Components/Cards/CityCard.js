@@ -17,6 +17,7 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
     const [isVisible, setIsVisible] = useState(false)
     const [isFav, setIsFav] = useState(data?.is_favorite)
     const [rating, setRating] = useState(data?.rating_avg_rate)
+    const [rate, setRate] = useState(data?.rate?.rate)
     const [cardType, setCardType] = useState(data.category?.code)
 
     const onHeartClick = async () => {
@@ -101,7 +102,7 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
                 <StarRating
                     disabled={false}
                     maxStars={5}
-                    rating={rating}
+                    rating={rate}
                     selectedStar={(rating) => onStarRatingPress(rating)}
                     starSize={14}
                     starStyle={styles.starStyle}

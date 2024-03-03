@@ -19,7 +19,9 @@ const STRING = {
     VERIFY: "Verify",
     CLICK_TO_UPDATE: "Click to Update",
     LOGOUT: "Logout  ",
-    SEE_CITIES: "See all Cities"
+    SEE_CITIES: "See all Cities",
+    OTP: "OTP",
+    PASSWORD: "Password"
   },
   SCREEN: {
     ROOT: "Root",
@@ -101,6 +103,7 @@ const STRING = {
   ALERT: {
     FAILED: "Failed",
     WENT_WRONG: "Something went wrong...",
+    OTP_SENT: "OTP is sent on your email, verify otp to register!",
     REGI_SUCCESS: "Registration Successful, now login to continue...",
     SOURCE_DESTINATION_REQUIRED: "Source & Destination are required for a Search",
     ADDING_SOON: "We are adding new places inside this category soon..!",
@@ -194,7 +197,10 @@ const STRING = {
   ADDED: "Places will be added soon...",
   NO_COMMENTS: "No comments yet",
   START_CONVO: "Start Conversation",
-  NO_DATA: "No data available at this instance."
+  NO_DATA: "No data available at this instance.",
+  SELECT_OPTION: "Select Login Option",
+  LOG_IN: "Log-in",
+  CHANGE: "Click to Change Option"
 };
 
 export default STRING;

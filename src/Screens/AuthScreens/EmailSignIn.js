@@ -18,17 +18,23 @@ import { navigateTo } from "../../Services/CommonMethods";
 import GlobalText from "../../Components/Customs/Text";
 import SQLite from "react-native-sqlite-storage"
 import Popup from "../../Components/Common/Popup";
-import Feather from "react-native-vector-icons/Feather";
 import STRING from "../../Services/Constants/STRINGS";
 import AppLogo from "../../Assets/Images/tourKokan.png";
+import EmailPassword from "./LoginComponents/EmailPassword";
+import LoginChoice from "./LoginComponents/LoginChoice";
+import EmailOtp from "./LoginComponents/EmailOtp";
 
 const EmailSignIn = ({ navigation, ...props }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [otp, setOtp] = useState("");
   const [isAlert, setIsAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+  const [isOtp, setIsOtp] = useState(false);
+  const [isPassword, setIsPassword] = useState(false);
+  const [isOtpSent, setIsOtpSent] = useState(false)
 
   useEffect(() => {
     // openDB()
@@ -97,6 +103,7 @@ const EmailSignIn = ({ navigation, ...props }) => {
         break;
       case 1:
         setPassword(val);
+        setOtp(val)
         break;
     }
   };
@@ -110,6 +117,15 @@ const EmailSignIn = ({ navigation, ...props }) => {
     }
   };
 
+  const getOtpValue = (i) => {
+    switch (i) {
+      case 0:
+        return email;
+      case 1:
+        return otp;
+    }
+  };
+
   const Login = () => {
     props.setLoader(true);
     const data = {
@@ -120,13 +136,15 @@ const EmailSignIn = ({ navigation, ...props }) => {
     comnPost("auth/login", data)
       .then((res) => {
         if (res.data.success) {
-          setIsAlert(true);
-          setAlertMessage(res.data.message);
+          // setIsAlert(true);
+          // setAlertMessage(res.data.message);
           AsyncStorage.setItem(STRING.STORAGE.ACCESS_TOKEN, res.data.data.access_token);
           AsyncStorage.setItem(STRING.STORAGE.USER_ID, res.data.data.user.id);
           props.saveAccess_token(res.data.data.access_token);
           props.setLoader(false);
-          setIsSuccess(true)
+          // setIsSuccess(true)
+          AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, JSON.stringify(true))
+          navigateTo(navigation, STRING.SCREEN.HOME);
         } else {
           setIsAlert(true);
           setAlertMessage(res.data.message.email ? res.data.message.email : res.data.message);
@@ -138,6 +156,55 @@ const EmailSignIn = ({ navigation, ...props }) => {
         setIsAlert(true);
         setIsSuccess(false)
         setAlertMessage(STRING.ALERT.WENT_WRONG);
+        props.setLoader(false);
+      });
+  };
+
+  const verifyOtp = () => {
+    props.setLoader(true);
+    const data = {
+      email,
+      otp,
+    };
+    comnPost("auth/verifyOtp", data)
+      .then((res) => {
+        if (res.data.success) {
+          // setIsAlert(true);
+          // setAlertMessage(res.data.message);
+          AsyncStorage.setItem(STRING.STORAGE.ACCESS_TOKEN, res.data.data.access_token);
+          AsyncStorage.setItem(STRING.STORAGE.USER_ID, res.data.data.user.id);
+          props.saveAccess_token(res.data.data.access_token);
+          props.setLoader(false);
+          // setIsSuccess(true)
+          AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, JSON.stringify(true))
+          navigateTo(navigation, STRING.SCREEN.HOME);
+        } else {
+          setIsAlert(true);
+          setAlertMessage(res.data.message.email ? res.data.message.email : res.data.message);
+          props.setLoader(false);
+          setIsSuccess(false)
+        }
+      })
+      .catch((err) => {
+        setIsAlert(true);
+        setIsSuccess(false)
+        setAlertMessage(STRING.ALERT.WENT_WRONG);
+        props.setLoader(false);
+      });
+  };
+
+  const resend = () => {
+    setIsOtpSent(true)
+    props.setLoader(true);
+    const data = {
+      email,
+    };
+    comnPost("auth/sendOtp", data)
+      .then((res) => {
+        props.setLoader(false);
+        setSec(30);
+      })
+      .catch((err) => {
         props.setLoader(false);
       });
   };
@@ -154,6 +221,11 @@ const EmailSignIn = ({ navigation, ...props }) => {
     navigateTo(navigation, STRING.SCREEN.SIGN_UP);
   };
 
+  const changeChoice = () => {
+    setIsOtp(false);
+    setIsPassword(false);
+  }
+
   return (
     <View style={{ alignItems: "center", flex: 1 }}>
       <ImageBackground style={styles.loginImage} source={require("../../Assets/Images/kokan1.jpeg")} />
@@ -169,48 +241,14 @@ const EmailSignIn = ({ navigation, ...props }) => {
 
       <Loader />
       <View style={styles.loginContentsBox}>
-        <GlobalText text={"Log-in"} style={styles.loginText} />
-        {SignInFields.map((field, index) => {
-          return (
-            <TextField
-              name={field.name}
-              label={field.name}
-              placeholder={field.placeholder}
-              fieldType={field.type}
-              length={field.length}
-              required={field.required}
-              disabled={field.disabled}
-              value={getValue(index)}
-              setChild={(v, i) => setValue(v, i, index)}
-              style={styles.containerStyle}
-              inputContainerStyle={styles.inputContainerStyle}
-              isSecure={field.isSecure}
-              rightIcon={
-                field.type == `${STRING.TYPE.PASSWORD}` &&
-                <Feather
-                  name={field.isSecure ? "eye" : "eye-off"}
-                  size={24}
-                  color={COLOR.themeComicBlue}
-                  onPress={() => {
-                    field.isSecure = !showPassword
-                    setShowPassword(!showPassword)
-                  }}
-                  style={styles.eyeIcon}
-                />
-              }
-            />
-          );
-        })}
-        <TextButton
-          title={STRING.BUTTON.LOGIN}
-          seeMoreStyle={styles.buttonView}
-          containerStyle={styles.buttonContainer}
-          buttonStyle={styles.buttonStyle}
-          titleStyle={styles.buttonTitle}
-          disabled={false}
-          raised={true}
-          onPress={() => Login()}
-        />
+        {isPassword ?
+          <EmailPassword setValue={setValue} getValue={getValue} Login={Login} changeChoice={changeChoice} />
+          :
+          isOtp ?
+            <EmailOtp setValue={setValue} getValue={getOtpValue} Login={verifyOtp} resend={resend} isOtpSent={isOtpSent} changeChoice={changeChoice} />
+            :
+            <LoginChoice selectOtp={() => setIsOtp(true)} selectPassword={() => setIsPassword(true)} />
+        }
         <View style={styles.haveAcc}>
           <GlobalText style={styles.whiteText} text={STRING.DONT_HAVE_ACC} />
           <TouchableOpacity onPress={() => signUpScreen()}>
