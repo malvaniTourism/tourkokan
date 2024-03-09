@@ -71,6 +71,7 @@ const STRING = {
     ACCESS_TOKEN: "access_token",
     ADDRESS: "address",
     USER_ID: "userId",
+    USER_EMAIL: "userEmail",
     USER_NAME: "userName",
     IS_FIRST_TIME: "isFirstTime",
     API_TOKEN: "apiToken",

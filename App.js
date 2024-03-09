@@ -23,9 +23,10 @@ export default function App() {
   const [showApp, setShowApp] = useState(false);
   const [isFirstTime, setIsFirstTime] = useState(false)
 
-  // useEffect(async () => {
-  //   setIsFirstTime(await AsyncStorage.getItem(STRING.STORAGE.IS_FIRST_TIME))
-  // }, [])
+  useEffect(async () => {
+    setIsFirstTime(await AsyncStorage.getItem(STRING.STORAGE.IS_FIRST_TIME))
+    console.log('---------', isFirstTime);
+  }, [])
 
   const slides = [
     {
@@ -64,9 +65,11 @@ export default function App() {
     setShowApp(true);
   }
 
-  if (showApp) {
-      return (
-    <Provider store={store}>
+  if (!showApp && !isFirstTime) {
+      return <AppIntroSlider renderItem={renderItem} data={slides} onDone={onDone}/>;
+  } else {
+    return (
+      <Provider store={store}>
       <SafeAreaProvider>
         {/* <StatusBar
         backgroundColor={COLOR.yellow}
@@ -74,9 +77,7 @@ export default function App() {
         <StackNavigator />
       </SafeAreaProvider>
     </Provider>
-      )
-  } else {
-    return <AppIntroSlider renderItem={renderItem} data={slides} onDone={onDone}/>;
+    )
   }
 }
 

@@ -152,7 +152,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                 // setPlaces(res.data.data.places);
 
                 if (isFirstTime == "true") {
-                    refRBSheet.current.open()
+                    // refRBSheet.current.open()
                     AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, JSON.stringify(false))
                 }
             })
@@ -170,6 +170,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                 props.setLoader(false);
                 AsyncStorage.setItem(STRING.STORAGE.USER_NAME, res.data.data.name)
                 AsyncStorage.setItem(STRING.STORAGE.USER_ID, JSON.stringify(res.data.data.id))
+                AsyncStorage.setItem(STRING.STORAGE.USER_EMAIL, JSON.stringify(res.data.data.email))
             })
             .catch((error) => {
                 setError(error.message);

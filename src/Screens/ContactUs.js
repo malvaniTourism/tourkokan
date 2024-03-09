@@ -27,7 +27,8 @@ const ContactUs = ({ navigation, route, ...props }) => {
   const [alertMessage, setAlertMessage] = useState("");
   const [isAlert, setIsAlert] = useState(false)
 
-  useEffect(() => {
+  useEffect(async () => {
+    setEmail(await AsyncStorage.getItem(STRING.STORAGE.USER_EMAIL))
     const backHandler = goBackHandler(navigation)
     checkLogin(navigation)
     return () => {
@@ -118,7 +119,7 @@ const ContactUs = ({ navigation, route, ...props }) => {
               fieldType={field.type}
               length={field.length}
               required={field.required}
-              disabled={field.disabled}
+              disabled={index == 0}
               value={getValue(index)}
               setChild={(v, i) => setValue(v, i, index)}
               style={styles.containerStyle}
