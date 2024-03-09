@@ -8,6 +8,7 @@ const COLOR = {
   themeComicBlueULight: "rgba(0, 174, 239, .2)",
   blackOpacity: "rgba(0, 0, 0, 0.5)",
   blackOpacityDark: "rgba(0, 0, 0, 0.8)",
+  redOpacity: "rgba(255, 0, 0, 0.1)",
   verified: "#3086e3",
   busYellow: "#ffce40",
 

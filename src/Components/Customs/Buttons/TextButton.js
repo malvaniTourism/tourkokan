@@ -18,7 +18,7 @@ const TextButton = ({
   seeMoreStyle
 }) => {
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.buttonView, seeMoreStyle]}>
+    <TouchableOpacity onPress={isDisabled ? null : onPress} style={[styles.buttonView, seeMoreStyle]}>
       {startIcon}
       <Button
         title={title}
@@ -28,7 +28,7 @@ const TextButton = ({
         disabled={isDisabled}
         raised={raised}
         type={STRING.BUTTON.SUBMIT}
-        onPress={onPress}
+        onPress={isDisabled ? null : onPress}
       />
       {endIcon}
     </TouchableOpacity>

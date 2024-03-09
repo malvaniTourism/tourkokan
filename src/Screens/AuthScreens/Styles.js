@@ -32,9 +32,7 @@ const styles = StyleSheet.create({
   containerStyle: {
     borderWidth: 1,
     padding: 10,
-    borderColor: COLOR.white,
     borderRadius: DIMENSIONS.borderRadius,
-    color: COLOR.white
   },
   otpContainerStyle: {
     borderWidth: 1,
@@ -51,12 +49,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingVertical: 6,
     paddingHorizontal: 12,
-    borderColor: COLOR.grey,
+    borderColor: COLOR.black,
     borderRadius: DIMENSIONS.borderRadius,
-    color: COLOR.white
   },
   selectedTextStyle: {
-    color: COLOR.white
+    color: COLOR.black
   },
   imageContainerStyle: {
     borderWidth: 1,
@@ -67,6 +64,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 20,
+  },
+  errorImageContainerStyle: {
+    borderWidth: 1,
+    borderColor: COLOR.red,
+    borderRadius: DIMENSIONS.borderRadiusLarge,
+    width: DIMENSIONS.iconXXXL,
+    height: DIMENSIONS.iconXXXL,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 20,
+    backgroundColor: COLOR.redOpacity
   },
   imageSourceView: {
     width: DIMENSIONS.iconXXL,
@@ -99,15 +107,21 @@ const styles = StyleSheet.create({
     fontSize: DIMENSIONS.headerTextSize,
     padding: 30,
     paddingBottom: 10,
-    color: COLOR.white
+  },
+  loginSubText: {
+    fontWeight: "400",
+    fontSize: DIMENSIONS.subtitleTextSize,
+    padding: 20,
+    paddingBottom: 10,
+    marginVertical: 50,
+    textAlign: "left"
   },
   appName: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: COLOR.white,
     width: DIMENSIONS.appLogo + 40,
-    maxHeight: DIMENSIONS.appLogo + 40,
+    height: DIMENSIONS.appLogo + 40,
     borderRadius: DIMENSIONS.borderRadiusXL,
     marginTop: 50,
     resizeMode: "contain",
@@ -127,7 +141,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   loginContentsBox: {
-    backgroundColor: COLOR.blackOpacityDark,
     borderRadius: DIMENSIONS.borderRadius,
     justifyContent: "center",
     alignItems: "center",

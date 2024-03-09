@@ -16,7 +16,7 @@ const STRING = {
     SEND_OTP: "Send OTP",
     LOGIN_WITH_EMAIL: "Login with Email",
     REGISTER: "Register",
-    VERIFY: "Verify",
+    VERIFY: "Verify & Login",
     CLICK_TO_UPDATE: "Click to Update",
     LOGOUT: "Logout  ",
     SEE_CITIES: "See all Cities",
@@ -48,6 +48,7 @@ const STRING = {
     SIGN_UP: "SignUp",
     EMAIL_SIGN_IN: "EmailSignIn",
     VERIFY_OTP: "VerifyOTP",
+    PASSWORD_LOGIN: "PasswordLogin",
 
     SEARCH: "Search",
     SEARCH_PLACE: "SearchPlace",
@@ -160,8 +161,8 @@ const STRING = {
 
   PRESS_BACK: "Press back again to exit",
   OTP_VERIFICATION: "OTP Verification",
-  WE_HAVE_SENT: "We have sent an OTP to verify your phone number.",
-  SENT_TO: "Sent to +91",
+  WE_HAVE_SENT: "We have sent an OTP to verify your email.",
+  SENT_TO: "Sent to ",
   RESEND_WITHIN: "You can resend your OTP within (00:",
   DIDNT_RECEIVE: "I didn't receive a code",
   HAVE_ACC: "Already have an Account? ",
@@ -200,7 +201,9 @@ const STRING = {
   NO_DATA: "No data available at this instance.",
   SELECT_OPTION: "Select Login Option",
   LOG_IN: "Log-in",
-  CHANGE: "Click to Change Option"
+  LOG_IN_SUB: "Enter your email and choose a login option to continue.",
+  CHANGE: "Click to Change Option",
+
 };
 
 export default STRING;

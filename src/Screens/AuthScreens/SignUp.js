@@ -158,41 +158,44 @@ const SignUp = ({ navigation, ...props }) => {
   };
 
   const Register = () => {
-    props.setLoader(true);
-    const data = {
-      name: name,
-      email: email,
-      mobile: mobile,
-      password: password,
-      password_confirmation: cpassword,
-      role_id: role.id,
-      profile_picture: uploadImage,
-      latitude,
-      longitude
-    };
-    comnPost("auth/register", data)
-      .then((res) => {
-        if (res.data.success) {
+    if (latitude == null || longitude == null) {
+      setLocationError(true)
+    } else {
+      props.setLoader(true);
+      const data = {
+        name: name,
+        email: email,
+        mobile: mobile,
+        password: password,
+        password_confirmation: cpassword,
+        role_id: role.id,
+        profile_picture: uploadImage,
+        latitude,
+        longitude
+      };
+      comnPost("auth/register", data)
+        .then((res) => {
+          if (res.data.success) {
+            props.setLoader(false);
+            setIsVerify(true);
+            setIsSuccess(false);
+            setTimeout(() => {
+              timer();
+            }, 1000);
+          } else {
+            props.setLoader(false);
+            setAlertMessage(res.data.message.email ? res.data.message.email : res.data.message.mobile ? res.data.message.mobile : res.data.message.profile_picture);
+            setIsSuccess(false)
+            setIsAlert(true);
+          }
+        })
+        .catch((err) => {
           props.setLoader(false);
-          setAlertMessage(STRING.ALERT.OTP_SENT);
-          setIsVerify(true);
-          setIsSuccess(false);
-          setTimeout(() => {
-            timer();
-          }, 1000);
-        } else {
-          props.setLoader(false);
-          setAlertMessage(res.data.message.email ? res.data.message.email : res.data.message.mobile ? res.data.message.mobile : res.data.message.profile_picture);
-          setIsSuccess(false)
           setIsAlert(true);
-        }
-      })
-      .catch((err) => {
-        props.setLoader(false);
-        setIsAlert(true);
-        setIsSuccess(false)
-        setAlertMessage(STRING.ALERT.WENT_WRONG);
-      });
+          setIsSuccess(false)
+          setAlertMessage(STRING.ALERT.WENT_WRONG);
+        });
+    }
   };
 
   const verifyOtp = () => {
@@ -216,7 +219,7 @@ const SignUp = ({ navigation, ...props }) => {
           navigateTo(navigation, STRING.SCREEN.HOME);
         } else {
           props.setLoader(false);
-          setAlertMessage(res.data.message.email ? res.data.message.email : res.data.message.mobile ? res.data.message.mobile : res.data.message);
+          setAlertMessage(res.data.message.email ? res.data.message.email : res.data.message.mobile ? res.data.message.mobile : res.data.message.otp ? res.data.message.otp : res.data.message);
           setIsSuccess(false)
           setIsAlert(true);
         }
@@ -249,9 +252,24 @@ const SignUp = ({ navigation, ...props }) => {
   };
 
   const closePopup = () => {
+    console.log('alertMessage:: ', alertMessage);
     if (isSuccess) {
       AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, JSON.stringify(true))
       navigateTo(navigation, STRING.SCREEN.HOME);
+    } else if (alertMessage[0].includes("email has already")) {
+      props.setLoader(true)
+      const data = {
+        email,
+      };
+      comnPost("auth/sendOtp", data)
+        .then((res) => {
+          props.setLoader(false);
+          setSec(30);
+        })
+        .catch((err) => {
+          props.setLoader(false);
+        });
+      navigateTo(navigation, STRING.SCREEN.VERIFY_OTP, { email });
     }
     setIsAlert(false)
   }
@@ -291,6 +309,7 @@ const SignUp = ({ navigation, ...props }) => {
         const currentLatitude = position.coords.latitude;
         setCurrentLongitude(currentLongitude);
         setCurrentLatitude(currentLatitude);
+        setLocationError(false)
       },
       (error) => {
         setLocationStatus(error.message);
@@ -307,6 +326,7 @@ const SignUp = ({ navigation, ...props }) => {
         const currentLatitude = position.coords.latitude;
         setCurrentLongitude(currentLongitude);
         setCurrentLatitude(currentLatitude);
+        setLocationError(false)
       },
       (error) => {
         setLocationStatus(error.message);
@@ -324,10 +344,10 @@ const SignUp = ({ navigation, ...props }) => {
 
   return (
     <View style={{ alignItems: "center", flex: 1 }}>
-      <ImageBackground style={styles.loginImage} source={require("../../Assets/Images/kokan1.jpeg")} />
+      {/* <ImageBackground style={styles.loginImage} source={require("../../Assets/Images/kokan1.jpeg")} /> */}
 
       <Loader />
-      <View style={[styles.loginContentsBox, { marginTop: 20 }]}>
+      <View style={{ marginTop: 20 }}>
         <ScrollView>
           {/* <Header
           name={""}
@@ -356,7 +376,7 @@ const SignUp = ({ navigation, ...props }) => {
                 }
               </TouchableOpacity>
               <TouchableOpacity
-                style={styles.imageContainerStyle}
+                style={locationError ? styles.errorImageContainerStyle : styles.imageContainerStyle}
                 onPress={myLocationPress}
               >
                 {/* <Animated.View
@@ -443,15 +463,15 @@ const SignUp = ({ navigation, ...props }) => {
             />
             <GlobalText text={errMsg} />
             <View style={styles.haveAcc}>
-              <GlobalText style={styles.whiteText} text={STRING.HAVE_ACC} />
+              <GlobalText text={STRING.HAVE_ACC} />
               <TouchableOpacity onPress={() => signInScreen()}>
-                <GlobalText style={styles.whiteText} text={STRING.SIGN_IN} />
+                <GlobalText text={STRING.SIGN_IN} />
               </TouchableOpacity>
             </View>
           </View>
         </ScrollView>
         <Popup
-          message={alertMessage}
+          message={STRING.ALERT.OTP_SENT}
           visible={isVerify}
           Component={
             <View>
@@ -478,9 +498,9 @@ const SignUp = ({ navigation, ...props }) => {
                   <GlobalText text={`${STRING.RESEND_WITHIN}${sec > 9 ? sec : "0" + sec})`} style={styles.whiteText} />
                 ) : (
                   <View>
-                    <GlobalText style={styles.whiteText} text={STRING.DIDNT_RECEIVE} />
+                    <GlobalText text={STRING.DIDNT_RECEIVE} />
                     <TouchableOpacity onPress={() => resend()}>
-                      <GlobalText text={STRING.RESEND} style={styles.whiteText} />
+                      <GlobalText text={STRING.RESEND} />
                     </TouchableOpacity>
                   </View>
                 )}
@@ -488,6 +508,7 @@ const SignUp = ({ navigation, ...props }) => {
             </View>
           }
           onPress={verifyOtp}
+          toggleOverlay={() => setIsVerify(false)}
         />
         <Popup
           message={alertMessage}

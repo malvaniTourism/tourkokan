@@ -44,14 +44,12 @@ const styles = StyleSheet.create({
         zIndex: 2
     },
     avgRating: {
-        backgroundColor: COLOR.themeComicBlue,
         borderRadius: DIMENSIONS.borderRadiusLarge,
         zIndex: 10,
         position: "absolute",
-        top: -4,
-        left: 19,
         padding: 2,
-        color: COLOR.white
+        color: COLOR.black,
+        fontWeight: "bold"
     },
     cityStarView: {
         backgroundColor: COLOR.white,

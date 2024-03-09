@@ -8,6 +8,7 @@ import TabNavigator from "./TabNavigator";
 import GlobalText from "../Components/Customs/Text";
 import STRING from "../Services/Constants/STRINGS";
 import AllRoutesSearch from "../Screens/ListPages/AllRoutesSearch";
+import PasswordLogin from "../Screens/AuthScreens/PasswordLogin";
 
 const SignIn = lazy(() => import("../Screens/AuthScreens/SignIn"));
 const SignUp = lazy(() => import("../Screens/AuthScreens/SignUp"));
@@ -84,6 +85,7 @@ const StackNavigator = () => {
             <Stack.Screen name={STRING.SCREEN.BUS_TIMINGS} component={BusTimings} />
             <Stack.Screen name={STRING.SCREEN.LOGIN} component={SignIn} />
             <Stack.Screen name={STRING.SCREEN.EMAIL_SIGN_IN} component={EmailSignIn} />
+            <Stack.Screen name={STRING.SCREEN.PASSWORD_LOGIN} component={PasswordLogin} />
             <Stack.Screen name={STRING.SCREEN.VERIFY_OTP} component={VerifyOTP} />
             <Stack.Screen name={STRING.SCREEN.SIGN_UP} component={SignUp} />
             <Stack.Screen name={STRING.SCREEN.CATEGORY_PROJECTS} component={CategoryProjects} />

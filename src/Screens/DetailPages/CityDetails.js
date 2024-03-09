@@ -166,7 +166,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
                                 {rating > 0 &&
                                     <GlobalText text={rating.slice(0, 3)} style={styles.avgRating} />
                                 }
-                                <Octicons name="star" color={COLOR.black} size={DIMENSIONS.iconSize} />
+                                <Octicons name="star" color={COLOR.yellow} size={DIMENSIONS.iconSize} />
                             </TouchableOpacity>
                         </View>
                         <View style={styles.cityStarView}>

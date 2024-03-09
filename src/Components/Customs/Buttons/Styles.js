@@ -22,6 +22,8 @@ const styles = StyleSheet.create({
   imageButtonContainer: {
     width: "auto",
     margin: DIMENSIONS.sectionGap / 2,
+    justifyContent: "center",
+    alignItems: "center"
   },
   imageButtonCircle: {
     height: DIMENSIONS.iconXXL,

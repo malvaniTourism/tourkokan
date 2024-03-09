@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { SignInFields } from '../../../Services/Constants/FIELDS';
 import { TouchableOpacity, View } from 'react-native';
 import TextField from '../../../Components/Customs/TextField';
@@ -10,6 +10,7 @@ import COLOR from '../../../Services/Constants/COLORS';
 import GlobalText from '../../../Components/Customs/Text';
 
 const EmailPassword = ({ setValue, getValue, Login, changeChoice }) => {
+    const [showPassword, setShowPassword] = useState(false);
 
     return (
         <View style={{ justifyContent: "center", alignItems: "center" }}>

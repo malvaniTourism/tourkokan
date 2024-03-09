@@ -182,16 +182,19 @@ const styles = StyleSheet.create({
   },
   overlay: {
     height: DIMENSIONS.bannerHeight,
-    width: DIMENSIONS.bannerWidth
+    width: DIMENSIONS.bannerWidth,
+    justifyContent: "center",
+    alignItems: "center"
   },
   overlayMessage: {
     fontWeight: "bold",
-    fontSize: DIMENSIONS.headerTextSize
+    fontSize: DIMENSIONS.headerTextSize,
+    marginVertical: 20
   },
   popupView: {
     alignItems: "center",
     justifyContent: "center",
-    height: DIMENSIONS.bannerHeight / 2
+    height: "auto"
   },
   searchDropView: {
     zIndex: 10,

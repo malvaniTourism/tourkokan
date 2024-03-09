@@ -29,7 +29,7 @@ import AppLogo from "../../Assets/Images/tourKokan.png";
 
 const VerifyOTP = ({ navigation, route, ...props }) => {
   const [otp, setOtp] = useState(1234);
-  const [mobile, setMobile] = useState(route.params.mobile);
+  const [email, setEmail] = useState(route.params?.email);
   const [sec, setSec] = useState(30);
   const [isAlert, setIsAlert] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
@@ -55,47 +55,43 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
   const verifyOtp = () => {
     props.setLoader(true);
     const data = {
-      mobile,
+      email,
       otp,
     };
     comnPost("auth/verifyOtp", data)
       .then((res) => {
         if (res.data.success) {
-          setIsAlert(true);
-          setAlertMessage(res.data.message);
           AsyncStorage.setItem(STRING.STORAGE.ACCESS_TOKEN, res.data.data.access_token);
           AsyncStorage.setItem(STRING.STORAGE.USER_ID, res.data.data.user.id);
           props.saveAccess_token(res.data.data.access_token);
           props.setLoader(false);
-          isSuccess(true)
+          AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, JSON.stringify(true))
+          navigateTo(navigation, STRING.SCREEN.HOME);
         } else {
           setIsAlert(true);
-          setAlertMessage(res.data.message);
+          setAlertMessage(res.data.message.otp ? res.data.message.otp : res.data.message);
           props.setLoader(false);
-          isSuccess(false)
+          setIsSuccess(false)
         }
       })
       .catch((err) => {
+        console.log('err::: ', err);
         setIsAlert(true);
         setIsSuccess(false)
         setAlertMessage(STRING.ALERT.WENT_WRONG);
         props.setLoader(false);
-        isSuccess(false)
+        setIsSuccess(false)
       });
   };
 
   const closePopup = () => {
-    if (isSuccess) {
-      AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, JSON.stringify(true))
-      navigateTo(navigation, STRING.SCREEN.HOME);
-    }
     setIsAlert(false)
   }
 
   const resend = () => {
     props.setLoader(true);
     const data = {
-      mobile,
+      email,
     };
     comnPost("auth/sendOtp", data)
       .then((res) => {
@@ -137,7 +133,7 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
 
   return (
     <View style={{ alignItems: "center", flex: 1 }}>
-      <ImageBackground style={styles.loginImage} source={require("../../Assets/Images/kokan1.jpeg")} />
+      {/* <ImageBackground style={styles.loginImage} source={require("../../Assets/Images/kokan1.jpeg")} /> */}
       {/* <Header name={STRING.HEADER.VERIFY_OTP} style={{ marginBottom: 50 }}
         startIcon={<></>}
       /> */}
@@ -147,17 +143,11 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
 
       <Loader />
       <View style={styles.loginContentsBox}>
-        <FontIcons
-          name="user-circle"
-          color={COLOR.white}
-          size={DIMENSIONS.userIconSize}
-          style={styles.appLogo}
-        />
         <View>
           <View style={{ marginLeft: "10%" }}>
-            <GlobalText text={STRING.OTP_VERIFICATION} style={styles.whiteText} />
-            <GlobalText text={STRING.WE_HAVE_SENT} style={styles.whiteText} />
-            <GlobalText text={`${STRING.SENT_TO} ${route.params.mobile}`} style={styles.whiteText} />
+            <GlobalText text={STRING.OTP_VERIFICATION} style={styles.loginText} />
+            <GlobalText text={STRING.WE_HAVE_SENT} />
+            <GlobalText text={`${STRING.SENT_TO} ${route.params?.email}`} />
           </View>
           <OtpInputs
             style={{ flexDirection: "row" }}
@@ -199,12 +189,12 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
         />
         <View style={{marginVertical: 10}}>
           {sec >= 1 ? (
-            <GlobalText text={`${STRING.RESEND_WITHIN}${sec > 9 ? sec : "0" + sec})`} style={styles.whiteText} />
+            <GlobalText text={`${STRING.RESEND_WITHIN}${sec > 9 ? sec : "0" + sec})`} />
           ) : (
             <View>
-              <GlobalText style={styles.whiteText} text={STRING.DIDNT_RECEIVE} />
+              <GlobalText text={STRING.DIDNT_RECEIVE} />
               <TouchableOpacity onPress={() => resend()}>
-                <GlobalText text={STRING.RESEND} style={styles.whiteText} />
+                <GlobalText text={STRING.RESEND} />
               </TouchableOpacity>
             </View>
           )}

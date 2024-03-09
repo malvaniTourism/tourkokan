@@ -225,11 +225,6 @@ const ProfileView = ({ navigation, route, ...props }) => {
             color={COLOR.white}
           />
         }
-        endIcon={
-          <TouchableOpacity onPress={handleLogout}>
-            <GlobalText text={STRING.BUTTON.LOGOUT} style={{ color: COLOR.white }} />
-          </TouchableOpacity>
-        }
       />
       <Loader />
 
@@ -303,6 +298,17 @@ const ProfileView = ({ navigation, route, ...props }) => {
           titleStyle={styles.planButtonTitleStyle}
           raised={true}
           onPress={() => setShowLocModal(true)}
+        />
+      </View>
+      <View style={{ flexDirection: "row", justifyContent: "space-evenly", marginTop: 30 }}>
+        <TextButton
+          title={STRING.BUTTON.LOGOUT}
+          seeMoreStyle={styles.logoutStyle}
+          containerStyle={styles.editButtonContainer}
+          buttonStyle={styles.editButtonStyle}
+          titleStyle={styles.planButtonTitleStyle}
+          raised={true}
+          onPress={() => handleLogout()}
         />
       </View>
 

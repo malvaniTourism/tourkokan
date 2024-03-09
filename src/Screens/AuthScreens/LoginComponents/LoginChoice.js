@@ -13,42 +13,7 @@ import GlobalText from '../../../Components/Customs/Text';
 const LoginChoice = ({ selectOtp, selectPassword }) => {
 
     return (
-        <View style={{ justifyContent: "center", alignItems: "center", padding: 10 }}>
-            <GlobalText text={STRING.LOG_IN} style={styles.loginText} />
-            <GlobalText text={STRING.SELECT_OPTION} style={styles.selectText} />
-            <View style={{ flexDirection: "row", justifyContent: "space-between", width: DIMENSIONS.bannerWidth }}>
-            <TextButton
-                title={STRING.BUTTON.OTP}
-                seeMoreStyle={styles.buttonView}
-                containerStyle={styles.choiceButtonContainer}
-                buttonStyle={styles.choiceButtonStyle}
-                titleStyle={styles.buttonTitle}
-                disabled={false}
-                raised={true}
-                onPress={() => selectOtp()}
-            />
-            <TextButton
-                title={STRING.BUTTON.PASSWORD}
-                seeMoreStyle={styles.buttonView}
-                containerStyle={styles.choiceButtonContainer}
-                buttonStyle={styles.choiceButtonStyle}
-                titleStyle={styles.buttonTitle}
-                disabled={false}
-                raised={true}
-                onPress={() => selectPassword()}
-            />
-            </View>
-            <TextButton
-                title={STRING.BUTTON.LOGIN}
-                seeMoreStyle={styles.buttonView}
-                containerStyle={styles.buttonContainer}
-                buttonStyle={styles.buttonStyle}
-                titleStyle={styles.buttonTitle}
-                isDisabled={true}
-                raised={true}
-                onPress={() => Login()}
-            />
-        </View>
+        <></>
     )
 }
 

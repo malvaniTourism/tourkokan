@@ -15,12 +15,13 @@ import DIMENSIONS from './src/Services/Constants/DIMENSIONS';
 import STRING from './src/Services/Constants/STRINGS';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+LogBox.ignoreAllLogs();
+LogBox.ignoreLogs(['Warning: ...', 'Possible Unhandled Promise Rejection']);
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [showApp, setShowApp] = useState(false);
   const [isFirstTime, setIsFirstTime] = useState(false)
-  LogBox.ignoreAllLogs();
 
   // useEffect(async () => {
   //   setIsFirstTime(await AsyncStorage.getItem(STRING.STORAGE.IS_FIRST_TIME))

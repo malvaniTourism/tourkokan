@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { View, Text, ImageBackground, TouchableOpacity, Share } from "react-native"
 import styles from "./Styles"
 import Path from "../../Services/Api/BaseUrl";
@@ -19,6 +19,10 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
     const [rating, setRating] = useState(data?.rating_avg_rate)
     const [rate, setRate] = useState(data?.rate?.rate)
     const [cardType, setCardType] = useState(data.category?.code)
+
+    useEffect(() => {
+        setRating(data?.rating_avg_rate);
+    }, [rate])
 
     const onHeartClick = async () => {
         let placeData = {
@@ -56,6 +60,7 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
     };
 
     const onStarRatingPress = async (rate) => {
+        setRate(rate)
         const placeData = {
             user_id: await AsyncStorage.getItem(STRING.STORAGE.USER_ID),
             rateable_type: STRING.TABLE.SITE,
@@ -90,11 +95,11 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
                 <TouchableOpacity style={styles.cityLikeView} onPress={() => addComment()}>
                     <Octicons name="comment" color={COLOR.black} size={DIMENSIONS.iconSize} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.cityLikeView} onPress={() => onShareClick()}>
+                <TouchableOpacity style={styles.cityLikeView}>
                     {rating > 0 &&
                         <GlobalText text={rating.slice(0, 3)} style={styles.avgRating} />
                     }
-                    <Octicons name="star" color={COLOR.black} size={DIMENSIONS.iconSize} />
+                    <Octicons name="star" color={COLOR.yellow} size={DIMENSIONS.iconSize} />
                 </TouchableOpacity>
             </View>
 
@@ -104,9 +109,8 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
                     maxStars={5}
                     rating={rate}
                     selectedStar={(rating) => onStarRatingPress(rating)}
-                    starSize={14}
+                    starSize={17}
                     starStyle={styles.starStyle}
-                    halfStarEnabled
                 />
             </View>
 

@@ -75,6 +75,7 @@ const Explore = ({ route, navigation, ...props }) => {
   }, []);
 
   const getPlaces = (ifNext) => {
+    props.setLoader(true)
     comnPost(`v2/places?page=${ifNext ? nextPage : nextPage - 1}`, props.access_token)
       .then((res) => {
         if (res && res.data.data)
@@ -203,7 +204,7 @@ const Explore = ({ route, navigation, ...props }) => {
               style={{ marginBottom: 450 }}
             >
               {selectedSites.map((place) => (
-                <CityCard data={place} navigation={navigation} reload={() => getPlaces()} onClick={() => getCityDetails(place.id)} addComment={() => openCommentsSheet()} />
+                <CityCard data={place} navigation={navigation} reload={() => getCities()} onClick={() => getCityDetails(place.id)} addComment={() => openCommentsSheet()} />
               ))}
             </ScrollView>
             :

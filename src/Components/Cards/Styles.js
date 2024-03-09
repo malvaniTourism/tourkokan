@@ -195,14 +195,11 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     avgRating: {
-        backgroundColor: COLOR.themeComicBlue,
         borderRadius: DIMENSIONS.borderRadiusLarge,
         zIndex: 10,
         position: "absolute",
-        top: -4,
-        left: 19,
         padding: 2,
-        color: COLOR.white
+        fontWeight: "bold"
     },
     cityStarView: {
         backgroundColor: COLOR.white,
