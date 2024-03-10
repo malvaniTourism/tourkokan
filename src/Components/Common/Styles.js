@@ -215,6 +215,55 @@ const styles = StyleSheet.create({
   noComments: {
     justifyContent: "center",
     height: "83%"
+  },
+  commentUser: {
+    height: DIMENSIONS.userIconSize,
+    width: DIMENSIONS.userIconSize,
+    borderRadius: DIMENSIONS.borderRadiusLarge,
+    borderWidth: 4,
+    borderColor: COLOR.grey,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  commentUserIcon: {
+    height: DIMENSIONS.userIconSize,
+    width: DIMENSIONS.userIconSize,
+    borderRadius: DIMENSIONS.borderRadiusLarge,
+    resizeMode: "cover"
+  },
+  commentUserName: {
+    textAlign: "left",
+    fontWeight: "bold",
+    fontSize: DIMENSIONS.textSizeSmall
+  },
+  userComment: {
+    textAlign: "left",
+  },
+  deleteComment: {
+    marginLeft: 20,
+    fontWeight: "bold",
+    color: COLOR.greyDark
+  },
+  commentInputBox: {
+    position: "absolute",
+    marginTop: DIMENSIONS.screenHeight - (DIMENSIONS.headerSpace * 2 - 20),
+    zIndex: 10,
+    backgroundColor: COLOR.white,
+    paddingBottom: 50
+  },
+  commentTextContainerStyle: {
+    width: DIMENSIONS.screenWidth,
+    marginBottom: -32
+  },
+  commentInputContainerStyle: {
+    borderWidth: .5,
+    borderRadius: DIMENSIONS.borderRadius,
+    borderColor: COLOR.grey,
+    width: DIMENSIONS.screenWidth - 10
+  },
+  sendIcon: {
+      position: "absolute",
+      left: -40
   }
 });
 

@@ -213,7 +213,11 @@ const CityDetails = ({ navigation, route, ...props }) => {
                 refRBSheet={refRBSheet}
                 height={DIMENSIONS.screenHeight - DIMENSIONS.headerSpace}
                 Component={<CommentsSheet
-                    data={city.comment}
+                    key={city.comment?.length}
+                    commentable_type={STRING.TABLE.SITE}
+                    commentable_id={city.id}
+                    reload={() => getDetails()}
+                    setLoader={(v) => props.setLoader(v)}
                     openCommentsSheet={() => openCommentsSheet()}
                     closeCommentsSheet={() => closeCommentsSheet()}
                 />}
