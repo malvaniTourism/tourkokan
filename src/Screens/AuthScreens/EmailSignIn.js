@@ -106,8 +106,8 @@ const EmailSignIn = ({ navigation, route, ...props }) => {
         setOtp(val)
         break;
     }
-    if (val == "" || val == null) setIsButtonDisabled(true)
-    else setIsButtonDisabled(false)
+    if ((val !== "" || val !== null) && isVal) setIsButtonDisabled(false)
+    else setIsButtonDisabled(true)
   };
 
   const getValue = (i) => {

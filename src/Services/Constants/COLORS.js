@@ -1,4 +1,9 @@
 const COLOR = {
+  logoBlue: "#154170",
+  logoDarkBlue: "#103a59",
+  logoLightBlue: "#0b7ebc",
+  logoYellow: "#fab152",
+
   themeLightGreen: "#9BC90D",
   themeDarkGreen: "#79A70A",
   themeNaviBlue: "#000080",

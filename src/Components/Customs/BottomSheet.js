@@ -19,7 +19,7 @@ const BottomSheet = ({ refRBSheet, height, Component, openLocationSheet, closeLo
                         backgroundColor: "transparent"
                     },
                     draggableIcon: {
-                        backgroundColor: COLOR.themeComicBlue
+                        backgroundColor: COLOR.logoBlue
                     }
                 }}
             >

@@ -40,7 +40,7 @@ const TextField = (props) => {
             setErrorText(props.errMsg);
             setIsValid(true);
             setValue(txtVal);
-            props.setChild(txtVal, false);
+            props.setChild(txtVal, true);
             break;
           }
         }

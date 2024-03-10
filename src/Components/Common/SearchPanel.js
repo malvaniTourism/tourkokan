@@ -198,7 +198,7 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
         <MaterialIcons
           style={styles.swapIcon}
           name="swap-vert-circle"
-          color={isValid ? COLOR.themeComicBlue : COLOR.grey}
+          color={isValid ? COLOR.logoBlue : COLOR.grey}
           size={DIMENSIONS.iconLarge}
           onPress={isValid ? swap : null}
         />
@@ -206,7 +206,7 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
       <Ionicons
         style={styles.refreshIcon}
         name="refresh-circle"
-        color={source.name ? COLOR.themeComicBlue : COLOR.grey}
+        color={source.name ? COLOR.logoBlue : COLOR.grey}
         size={DIMENSIONS.iconLarge}
         onPress={source.name ? refresh : null}
       />

@@ -210,9 +210,15 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         navigateTo(navigation, STRING.SCREEN.CITY_DETAILS, { id })
     }
 
+    const openProfile = () => {
+        setIsLoading(true)
+        navigateTo(navigation, STRING.SCREEN.PROFILE_VIEW);
+        setIsLoading(false)
+    }
+
     return (
         <ScrollView stickyHeaderIndices={[0]}>
-            <TopComponent currentCity={currentCity} navigation={navigation} openLocationSheet={() => openLocationSheet()} />
+            <TopComponent currentCity={currentCity} navigation={navigation} openLocationSheet={() => openLocationSheet()} gotoProfile={() => openProfile()} />
             <CheckNet isOff={offline} />
             <MyAnimatedLoader isVisible={isLoading} />
             {
@@ -257,7 +263,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                     <Feather
                                         name="chevrons-right"
                                         size={24}
-                                        color={COLOR.themeComicBlue}
+                                        color={COLOR.logoBlue}
                                     />
                                 }
                             />
@@ -289,7 +295,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                     <Feather
                                         name="chevrons-right"
                                         size={24}
-                                        color={COLOR.themeComicBlue}
+                                        color={COLOR.logoBlue}
                                     />
                                 }
                             />

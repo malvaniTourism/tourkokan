@@ -12,19 +12,19 @@ import { navigateTo } from "../../Services/CommonMethods";
 import GlobalText from "../Customs/Text";
 import STRING from "../../Services/Constants/STRINGS";
 
-const TopComponent = ({ navigation, openLocationSheet, currentCity }) => {
+const TopComponent = ({ navigation, openLocationSheet, currentCity, gotoProfile }) => {
 
   const openDrawer = () => {
     navigation.openDrawer();
   };
 
   const openProfile = () => {
-    navigateTo(navigation, STRING.SCREEN.PROFILE_VIEW);
+    gotoProfile()
   };
 
   return (
     <View style={styles.topComponent}>
-      <StatusBar backgroundColor={COLOR.themeComicBlue} />
+      <StatusBar backgroundColor={COLOR.logoBlue} />
       <View style={styles.topMenu}>
         <View style={styles.locationView}>
           <Ionicons

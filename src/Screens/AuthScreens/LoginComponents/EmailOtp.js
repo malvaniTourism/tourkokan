@@ -58,7 +58,7 @@ const EmailOtp = ({ setValue, getValue, Login, changeChoice, isOtpSent, resend }
                             <Feather
                                 name={field.isSecure ? "eye" : "eye-off"}
                                 size={24}
-                                color={COLOR.themeComicBlue}
+                                color={COLOR.logoBlue}
                                 onPress={() => {
                                     field.isSecure = !showPassword
                                     setShowPassword(!showPassword)

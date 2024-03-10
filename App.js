@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import store from './Store';
-import { Image, LogBox, StyleSheet, View } from 'react-native';
+import { Image, LogBox, StyleSheet, View, ActivityIndicator } from 'react-native';
 import StackNavigator from './src/Navigators/StackNavigator';
 import COLOR from './src/Services/Constants/COLORS';
 import AppIntroSlider from 'react-native-app-intro-slider';
@@ -20,13 +20,21 @@ LogBox.ignoreLogs(['Warning: ...', 'Possible Unhandled Promise Rejection']);
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [showApp, setShowApp] = useState(false);
-  const [isFirstTime, setIsFirstTime] = useState(false)
+  const [isFirstTime, setIsFirstTime] = useState(null); // Set initial state to null
+  const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(async () => {
-    setIsFirstTime(await AsyncStorage.getItem(STRING.STORAGE.IS_FIRST_TIME))
-    console.log('---------', isFirstTime);
-  }, [])
+    try {
+      const isFirstTimeValue = await AsyncStorage.getItem(STRING.STORAGE.IS_FIRST_TIME);
+      console.log('isFirstTimeValue:', isFirstTimeValue);
+      setIsFirstTime(isFirstTimeValue);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching isFirstTime value:', error);
+      setLoading(false);
+    }
+  }, []);
+  
 
   const slides = [
     {
@@ -60,25 +68,35 @@ export default function App() {
         <GlobalText style={styles.text} text={item.text} />
       </View>
     );
-  }
+  };
+
   const onDone = () => {
-    setShowApp(true);
+    AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, 'false');
+    setIsFirstTime('false');
+  };
+
+  if (loading) {
+    // Display a loading screen while fetching data
+    return (
+      <View style={styles.loadingContainer}>
+        {/* Customize this loading view according to your app's design */}
+        <ActivityIndicator size="large" color={COLOR.logoBlue} />
+      </View>
+    );
   }
 
-  if (!showApp && !isFirstTime) {
-      return <AppIntroSlider renderItem={renderItem} data={slides} onDone={onDone}/>;
-  } else {
+  if (isFirstTime === 'false') {
     return (
       <Provider store={store}>
-      <SafeAreaProvider>
-        {/* <StatusBar
-        backgroundColor={COLOR.yellow}
-      /> */}
-        <StackNavigator />
-      </SafeAreaProvider>
-    </Provider>
-    )
+        <SafeAreaProvider>
+          {/* <StatusBar backgroundColor={COLOR.yellow} /> */}
+          <StackNavigator />
+        </SafeAreaProvider>
+      </Provider>
+    );
   }
+
+  return <AppIntroSlider renderItem={renderItem} data={slides} onDone={onDone} />;
 }
 
 const styles = StyleSheet.create({
@@ -89,13 +107,12 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: DIMENSIONS.xlText,
-    color: COLOR.themeComicBlue,
+    color: COLOR.logoBlue,
     fontWeight: "bold",
     alignSelf: "center",
     position: "absolute",
     zIndex: 10,
     top: 40,
-    // backgroundColor: COLOR.white
   },
   image: {
     height: DIMENSIONS.screenHeight / 2,
@@ -107,5 +124,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     top: -200,
     fontSize: DIMENSIONS.subtitleTextSize
-  }
-})
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLOR.themeComicBlueULight,
+  },
+});

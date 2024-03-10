@@ -327,7 +327,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
               <Ionicons
                 name="home"
                 size={24}
-                color={COLOR.themeComicBlue}
+                color={COLOR.logoBlue}
               />
             }
           />
@@ -343,7 +343,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
               <Ionicons
                 name="location"
                 size={24}
-                color={COLOR.themeComicBlue}
+                color={COLOR.logoBlue}
               />
             }
           />

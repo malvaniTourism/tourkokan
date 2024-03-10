@@ -47,7 +47,7 @@ export const Email = [
   {
     name: STRING.LABEL.EMAIL,
     placeholder: STRING.LABEL.EMAIL,
-    type: STRING.TYPE.TEXT,
+    type: STRING.TYPE.EMAIL,
     length: DIMENSIONS.fieldLength,
     required: true,
     disabled: true,

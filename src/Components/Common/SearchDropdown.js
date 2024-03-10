@@ -23,7 +23,7 @@ const SearchDropdown = ({ placesList, goToNext, setPlace, closeDropdown }) => {
             <Ionicons
                 style={styles.dropCloseIcon}
                 name="close-circle"
-                color={COLOR.themeComicBlue}
+                color={COLOR.logoBlue}
                 size={DIMENSIONS.iconLarge}
                 onPress={closeDropdown}
             />

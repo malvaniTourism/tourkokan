@@ -14,10 +14,10 @@ const styles = StyleSheet.create({
   },
   buttonStyle: {
     width: DIMENSIONS.bannerWidth,
-    backgroundColor: COLOR.themeComicBlue,
+    backgroundColor: COLOR.logoBlue,
   },
   titleStyle: {
-    color: COLOR.white,
+    color: COLOR.logoYellow,
   },
   imageButtonContainer: {
     width: "auto",
@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   selectedCircle: {
-    borderColor: COLOR.themeComicBlue,
-    shadowColor: COLOR.themeComicBlue,
+    borderColor: COLOR.logoBlue,
+    shadowColor: COLOR.logoBlue,
   shadowOffset: { width: 4, height: 4 },
   shadowOpacity: 1,
   shadowRadius: 2,

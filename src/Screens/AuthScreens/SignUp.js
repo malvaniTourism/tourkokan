@@ -49,6 +49,13 @@ const SignUp = ({ navigation, ...props }) => {
   const [locationStatus, setLocationStatus] = useState("");
   const [watchID, setWatchID] = useState("");
   const [sec, setSec] = useState(30);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [nameErr, setNameErr] = useState(false)
+  const [emailErr, setEmailErr] = useState(false)
+  const [mobileErr, setMobileErr] = useState(false)
+  const [passErr, setPassErr] = useState(false)
+  const [cPassErr, setCPassErr] = useState(false)
+  const [notValid, setNotValid] = useState(false)
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN));
@@ -103,18 +110,28 @@ const SignUp = ({ navigation, ...props }) => {
     switch (index) {
       case 0:
         setName(val);
+        if (isVal) setNameErr(false)
+        else setNameErr(true)
         break;
       case 1:
         setEmail(val);
+        if (isVal) setEmailErr(false)
+        else setEmailErr(true)
         break;
       case 2:
         setMobile(val);
+        if (isVal) setMobileErr(false)
+        else setMobileErr(true)
         break;
       case 3:
         setPassword(val);
+        if (isVal) setPassErr(false)
+        else setPassErr(true)
         break;
       case 4:
         setCpassword(val);
+        if (isVal) setCPassErr(false)
+        else setCPassErr(true)
         break;
       default:
         setRole(val);
@@ -156,6 +173,21 @@ const SignUp = ({ navigation, ...props }) => {
       }
     );
   };
+
+  const checkValidation = () => {
+    if (
+      (name == "" || nameErr) ||
+      (email == "" || emailErr) ||
+      (mobile == "" || mobileErr) ||
+      (password == "" || passErr) ||
+      (cpassword == "" || cPassErr)
+    ) {
+      setNotValid(true)
+    } else {
+      setNotValid(false)
+      Register()
+    }
+  }
 
   const Register = () => {
     if (latitude == null || longitude == null) {
@@ -369,7 +401,7 @@ const SignUp = ({ navigation, ...props }) => {
                   :
                   <FontIcons
                     name="user-circle"
-                    color={COLOR.themeComicBlue}
+                    color={COLOR.logoBlue}
                     size={DIMENSIONS.iconLarge}
                     style={styles.userIcon}
                   />
@@ -398,7 +430,7 @@ const SignUp = ({ navigation, ...props }) => {
                   :
                   <IonIcons
                     name="location"
-                    color={COLOR.themeComicBlue}
+                    color={COLOR.logoBlue}
                     size={DIMENSIONS.iconLarge}
                     style={styles.userIcon}
                   />
@@ -435,12 +467,13 @@ const SignUp = ({ navigation, ...props }) => {
                   style={styles.containerStyle}
                   inputContainerStyle={styles.inputContainerStyle}
                   isSecure={field.isSecure}
+                  isError={emailErr}
                   rightIcon={
                     field.type == `${STRING.TYPE.PASSWORD}` &&
                     <Feather
                       name={field.isSecure ? "eye" : "eye-off"}
                       size={24}
-                      color={COLOR.themeComicBlue}
+                      color={COLOR.logoBlue}
                       onPress={() => {
                         field.isSecure = !showPassword
                         setShowPassword(!showPassword)
@@ -451,15 +484,18 @@ const SignUp = ({ navigation, ...props }) => {
                 />
               );
             })}
+            {notValid &&
+              <GlobalText text={STRING.PLEASE_FILL} style={{ color: "red", marginBottom: -10 }} />
+            }
             <TextButton
               title={STRING.BUTTON.REGISTER}
               seeMoreStyle={styles.buttonView}
               containerStyle={styles.buttonContainer}
               buttonStyle={styles.buttonStyle}
               titleStyle={styles.buttonTitle}
-              disabled={false}
+              isDisabled={false}
               raised={true}
-              onPress={() => Register()}
+              onPress={() => checkValidation()}
             />
             <GlobalText text={errMsg} />
             <View style={styles.haveAcc}>

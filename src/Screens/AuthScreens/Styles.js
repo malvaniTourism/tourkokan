@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     fontSize: DIMENSIONS.headerTextSize,
     padding: 10,
     paddingBottom: 10,
-    color: COLOR.themeComicBlue,
+    color: COLOR.logoBlue,
     backgroundColor: COLOR.white,
     borderRadius: DIMENSIONS.borderRadius,
     marginTop: 10

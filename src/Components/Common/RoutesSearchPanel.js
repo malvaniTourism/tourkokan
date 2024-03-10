@@ -202,7 +202,7 @@ const RoutesSearchPanel = ({ navigation, from, onSwap, setSourceId, setDestinati
         <MaterialIcons
           style={styles.routesSwapIcon}
           name="swap-horizontal-circle"
-          color={isValid ? COLOR.themeComicBlue : COLOR.grey}
+          color={isValid ? COLOR.logoBlue : COLOR.grey}
           size={DIMENSIONS.iconLarge}
           onPress={isValid ? swap : null}
         />
@@ -210,7 +210,7 @@ const RoutesSearchPanel = ({ navigation, from, onSwap, setSourceId, setDestinati
       <Ionicons
         style={styles.routesRefreshIcon}
         name="refresh-circle"
-        color={source.name ? COLOR.themeComicBlue : COLOR.grey}
+        color={source.name ? COLOR.logoBlue : COLOR.grey}
         size={DIMENSIONS.iconLarge}
         onPress={source.name ? refresh : null}
       />

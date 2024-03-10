@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     },
     routeHeadCardTitle: {
         fontWeight: "bold",
-        color: COLOR.themeComicBlue,
+        color: COLOR.logoBlue,
         lineHeight: 25,
         fontSize: DIMENSIONS.subtitleTextSize,
         textAlign: "left"

@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
         width: "auto"
     },
     contactButtonStyle: {
-        backgroundColor: COLOR.themeComicBlue,
+        backgroundColor: COLOR.logoBlue,
         width: "auto",
         paddingVertical: 13
     },
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
         marginBottom: 20
     },
     titleStyle: {
-        color: COLOR.themeComicBlue
+        color: COLOR.logoBlue
     },
     showMore: {
         width: "auto",
@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
         height: DIMENSIONS.detailsImage,
         borderRadius: DIMENSIONS.borderRadiusLarge,
         borderWidth: .5,
-        borderColor: COLOR.themeComicBlue
+        borderColor: COLOR.logoBlue
     },
     bioContainer: {
         padding: 15,
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
         justifyContent: "flex-end",
     },
     citiesButtonTitleStyle: {
-        color: COLOR.themeComicBlue,
+        color: COLOR.logoBlue,
         textAlign: "right"
     },
     containerHome: {
@@ -378,7 +378,7 @@ const styles = StyleSheet.create({
         marginVertical: 30
     },
     profileButtonStyle: {
-        backgroundColor: COLOR.themeComicBlue,
+        backgroundColor: COLOR.logoBlue,
         width: "auto",
         paddingVertical: 13
     },

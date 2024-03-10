@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   topMenu: {
-    backgroundColor: COLOR.themeComicBlue,
+    backgroundColor: COLOR.logoBlue,
     width: DIMENSIONS.windowWidth,
     flexDirection: "row",
     justifyContent: "space-between",
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   },
   fieldsView: {
     borderWidth: .5,
-    borderColor: COLOR.themeComicBlue,
+    borderColor: COLOR.logoBlue,
     borderRadius: DIMENSIONS.borderRadius,
     paddingBottom: 10,
     backgroundColor: COLOR.white
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   },
   routesFieldsView: {
     borderWidth: .5,
-    borderColor: COLOR.themeComicBlue,
+    borderColor: COLOR.logoBlue,
     borderRadius: DIMENSIONS.borderRadius,
     paddingBottom: 10,
     backgroundColor: COLOR.white,
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   },
   searchButtonStyle: {
     height: 50,
-    backgroundColor: COLOR.themeComicBlue,
+    backgroundColor: COLOR.logoBlue,
     borderRadius: DIMENSIONS.borderRadiusSmall,
   },
   searchButtonDisable: {
@@ -127,14 +127,14 @@ const styles = StyleSheet.create({
     borderRadius: DIMENSIONS.borderRadiusSmall,
   },
   buttonTitleStyle: {
-    color: COLOR.white,
+    color: COLOR.logoYellow,
     fontWeight: "bold",
   },
   headerMain: {
     // flex: 1,
     height: DIMENSIONS.headerHeight,
     width: DIMENSIONS.screenWidth,
-    backgroundColor: COLOR.themeComicBlue,
+    backgroundColor: COLOR.logoBlue,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     top: -70,
     borderWidth: 2,
     borderRadius: DIMENSIONS.borderRadiusSmall,
-    borderColor: COLOR.themeComicBlue,
+    borderColor: COLOR.logoBlue,
     backgroundColor: COLOR.cardBackground
   },
   dropCloseIcon: {

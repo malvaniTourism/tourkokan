@@ -204,7 +204,7 @@ const STRING = {
   LOG_IN: "Log-in",
   LOG_IN_SUB: "Enter your email and choose a login option to continue.",
   CHANGE: "Click to Change Option",
-
+  PLEASE_FILL: "Please fill all the details to Register"
 };
 
 export default STRING;
