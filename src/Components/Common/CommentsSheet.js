@@ -125,22 +125,23 @@ const CommentsSheet = ({ openCommentsSheet, closeCommentsSheet, reload, key, com
     }
 
     return (
-        <View>
+        <View style={{ zIndex: 100, position: "relative" }}>
             <Loader />
             <View>
                 <View style={styles.commentsHeader}>
                     <GlobalText text={STRING.HEADER.COMMENTS} style={styles.fontBold} />
                 </View>
             </View>
-            <View>
+            <View style={{ minHeight: DIMENSIONS.screenHeight - DIMENSIONS.bannerHeight, maxHeight: DIMENSIONS.screenHeight - DIMENSIONS.bannerHeight, overflowY: "scroll", zIndex: 100 }}>
                 <ScrollView>
                     {comments ? (
                         <FlatList
                             data={comments}
                             keyExtractor={(item) => item.id.toString()}
                             renderItem={renderComments}
-                            style={{ flexGrow: 1 }}
                             showsVerticalScrollIndicator
+                            scrollEnabled
+                            scrollToOverflowEnabled
                         />
                     ) : (
                         <View style={[styles.noComments, { flex: 1 }]}>

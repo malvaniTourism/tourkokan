@@ -23,9 +23,7 @@ const BottomSheet = ({ refRBSheet, height, Component, openLocationSheet, closeLo
                     }
                 }}
             >
-                <View>
-                    {Component}
-                </View>
+                {Component}
             </RBSheet>
         </View>
     )

@@ -51,15 +51,15 @@ export default function App() {
       key: 2,
       title: 'Title 2',
       text: 'Other cool stuff',
-      image: require('./src/Assets/Images/sunset.jpeg'),
-      backgroundColor: '#febe29',
+      image: require('./src/Assets/Images/Intro/2.png'),
+      backgroundColor: '#fff',
     },
     {
       key: 3,
       title: 'Title 3',
       text: 'I\'m already out of descriptions\n\nLorem ipsum bla bla bla',
-      image: require('./src/Assets/Images/cycle.jpeg'),
-      backgroundColor: '#22bcb5',
+      image: require('./src/Assets/Images/Intro/3.png'),
+      backgroundColor: '#fff',
     }
   ];
 
