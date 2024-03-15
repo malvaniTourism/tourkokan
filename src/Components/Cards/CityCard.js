@@ -17,6 +17,7 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
     const [isVisible, setIsVisible] = useState(false)
     const [isFav, setIsFav] = useState(data?.is_favorite)
     const [rating, setRating] = useState(data?.rating_avg_rate)
+    const [commentCount, setCommentCount] = useState(data?.comment_count)
     const [rate, setRate] = useState(data?.rate?.rate)
     const [cardType, setCardType] = useState(data.category?.code)
 
@@ -92,8 +93,9 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
                             <Octicons name="heart" color={COLOR.black} size={DIMENSIONS.iconSize} />
                     }
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.cityLikeView} onPress={() => addComment()}>
-                    <Octicons name="comment" color={COLOR.black} size={DIMENSIONS.iconSize} />
+                <TouchableOpacity style={styles.cityLikeView}>
+                    <GlobalText text={commentCount} style={styles.avgRating} />
+                    <Octicons name="comment" color={COLOR.themeComicBlue} size={DIMENSIONS.iconSize} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.cityLikeView}>
                     {rating > 0 &&

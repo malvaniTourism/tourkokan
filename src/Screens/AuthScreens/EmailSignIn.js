@@ -173,20 +173,41 @@ const EmailSignIn = ({ navigation, route, ...props }) => {
     navigateTo(navigation, STRING.SCREEN.SIGN_UP);
   };
 
-  const selectOtp = () => {
+  const continueClick = () => {
     props.setLoader(true)
     const data = {
       email,
     };
-    comnPost("auth/sendOtp", data)
+    comnPost("v2/auth/isVerifiedEmail", data)
       .then((res) => {
-        props.setLoader(false);
-        setSec(30);
+        if (res.data?.success) {
+          if (res.data?.data?.isVerified) {
+            props.setLoader(false);
+          } else {
+            comnPost("auth/sendOtp", data)
+              .then((res) => {
+                props.setLoader(false);
+                setSec(30);
+              })
+              .catch((err) => {
+                props.setLoader(false);
+              });
+            props.setLoader(false);
+          }
+          navigateTo(navigation, STRING.SCREEN.VERIFY_OTP, { email, isVerified: res.data?.data?.isVerified })
+        } else {
+          setIsAlert(true);
+          setIsSuccess(false)
+          setAlertMessage(res.data?.message);
+          props.setLoader(false);
+        }
       })
       .catch((err) => {
+        setIsAlert(true);
+        setIsSuccess(false)
+        setAlertMessage(STRING.ALERT.WENT_WRONG);
         props.setLoader(false);
       });
-    navigateTo(navigation, STRING.SCREEN.VERIFY_OTP, { email })
   }
 
   const selectPassword = () => {
@@ -228,26 +249,16 @@ const EmailSignIn = ({ navigation, route, ...props }) => {
             />
           );
         })}
-        <View style={{ flexDirection: "row", justifyContent: "space-evenly", width: DIMENSIONS.bannerWidth, alignSelf: "center" }}>
+        <View style={{ alignItems: "center" }}>
           <TextButton
-            title={STRING.BUTTON.OTP}
+            title={STRING.BUTTON.CONTINUE}
             seeMoreStyle={styles.buttonView}
             containerStyle={styles.choiceButtonContainer}
             buttonStyle={styles.choiceButtonStyle}
             titleStyle={styles.buttonTitle}
             isDisabled={isButtonDisabled}
             raised={true}
-            onPress={() => selectOtp()}
-          />
-          <TextButton
-            title={STRING.BUTTON.PASSWORD}
-            seeMoreStyle={styles.buttonView}
-            containerStyle={styles.choiceButtonContainer}
-            buttonStyle={styles.choiceButtonStyle}
-            titleStyle={styles.buttonTitle}
-            isDisabled={isButtonDisabled}
-            raised={true}
-            onPress={() => selectPassword()}
+            onPress={() => continueClick()}
           />
         </View>
       </View>

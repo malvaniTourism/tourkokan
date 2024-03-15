@@ -446,7 +446,40 @@ const styles = StyleSheet.create({
         zIndex: 20,
         alignSelf: "center",
         marginTop: 20
-    }
+    },
+    slide: {
+        height: DIMENSIONS.screenHeight,
+        alignItems: "flex-start",
+        justifyContent: "flex-start"
+    },
+    title: {
+        fontSize: DIMENSIONS.xlText,
+        color: COLOR.logoBlue,
+        fontWeight: "bold",
+        alignSelf: "center",
+        position: "absolute",
+        zIndex: 10,
+    },
+    image: {
+        height: DIMENSIONS.screenHeight,
+        width: DIMENSIONS.screenWidth,
+        resizeMode: "contain",
+        flex: 1,
+        top: -60
+    },
+    text: {
+        color: COLOR.black,
+        alignSelf: "center",
+        fontWeight: "bold",
+        top: -200,
+        fontSize: DIMENSIONS.subtitleTextSize
+    },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: COLOR.themeComicBlueULight,
+    },
 });
 
 export default styles;

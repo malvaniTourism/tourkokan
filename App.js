@@ -14,6 +14,9 @@ import GlobalText from './src/Components/Customs/Text';
 import DIMENSIONS from './src/Services/Constants/DIMENSIONS';
 import STRING from './src/Services/Constants/STRINGS';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import TextButton from './src/Components/Customs/Buttons/TextButton';
+import Feather from "react-native-vector-icons/Feather";
+import styles from './src/Screens/Styles';
 
 LogBox.ignoreAllLogs();
 LogBox.ignoreLogs(['Warning: ...', 'Possible Unhandled Promise Rejection']);
@@ -34,15 +37,15 @@ export default function App() {
       setLoading(false);
     }
   }, []);
-  
+
 
   const slides = [
     {
       key: 1,
       title: 'Title 1',
       text: 'Description.\nSay something cool',
-      image: require('./src/Assets/Images/redbus.jpeg'),
-      backgroundColor: '#59b2ab',
+      image: require('./src/Assets/Images/Intro/1.png'),
+      backgroundColor: '#fff',
     },
     {
       key: 2,
@@ -63,9 +66,9 @@ export default function App() {
   const renderItem = ({ item }) => {
     return (
       <View style={[styles.slide, { backgroundColor: item.backgroundColor }]}>
-        <GlobalText style={styles.title} text={item.title} />
+        {/* <GlobalText style={styles.title} text={item.title} /> */}
         <Image source={item.image} style={styles.image} />
-        <GlobalText style={styles.text} text={item.text} />
+        {/* <GlobalText style={styles.text} text={item.text} /> */}
       </View>
     );
   };
@@ -73,6 +76,25 @@ export default function App() {
   const onDone = () => {
     AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, 'false');
     setIsFirstTime('false');
+  };
+
+  const _renderNextButton = () => {
+    return (
+      <TextButton
+        title={STRING.BUTTON.NEXT}
+        containerStyle={styles.showMore}
+        seeMoreStyle={styles.seeMoreStyle}
+        buttonStyle={styles.buttonStyle}
+        titleStyle={styles.titleStyle}
+        endIcon={
+          <Feather
+            name="chevrons-right"
+            size={24}
+            color={COLOR.logoBlue}
+          />
+        }
+      />
+    );
   };
 
   if (loading) {
@@ -96,39 +118,12 @@ export default function App() {
     );
   }
 
-  return <AppIntroSlider renderItem={renderItem} data={slides} onDone={onDone} />;
+  return <AppIntroSlider
+    nextButtonTextColor={'#000'}
+    renderItem={renderItem}
+    data={slides}
+    onDone={onDone}
+    // renderNextButton={_renderNextButton}
+    activeDotColor={COLOR.logoBlue}
+  />
 }
-
-const styles = StyleSheet.create({
-  slide: {
-    height: DIMENSIONS.screenHeight - 60,
-    justifyContent: "space-between",
-    backgroundColor: COLOR.themeComicBlueULight,
-  },
-  title: {
-    fontSize: DIMENSIONS.xlText,
-    color: COLOR.logoBlue,
-    fontWeight: "bold",
-    alignSelf: "center",
-    position: "absolute",
-    zIndex: 10,
-    top: 40,
-  },
-  image: {
-    height: DIMENSIONS.screenHeight / 2,
-    width: DIMENSIONS.screenWidth
-  },
-  text: {
-    color: COLOR.black,
-    alignSelf: "center",
-    fontWeight: "bold",
-    top: -200,
-    fontSize: DIMENSIONS.subtitleTextSize
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: COLOR.themeComicBlueULight,
-  },
-});

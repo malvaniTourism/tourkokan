@@ -58,7 +58,7 @@ export const EmailOtpFields = [
   {
     name: STRING.LABEL.EMAIL,
     placeholder: STRING.LABEL.EMAIL,
-    type: STRING.TYPE.TEXT,
+    type: STRING.TYPE.EMAIL,
     length: DIMENSIONS.fieldLength,
     required: true,
     disabled: false,
@@ -70,6 +70,18 @@ export const EmailOtpFields = [
     length: DIMENSIONS.fieldLength,
     required: true,
     disabled: false,
+  }
+];
+
+export const Password = [
+  {
+    name: STRING.LABEL.PASSWORD,
+    placeholder: STRING.LABEL.PASSWORD,
+    type: STRING.TYPE.PASSWORD,
+    length: DIMENSIONS.fieldLength,
+    required: true,
+    disabled: false,
+    isSecure: true
   }
 ];
 
@@ -95,27 +107,9 @@ export const SignUpFields = [
     placeholder: STRING.LABEL.MOBILE,
     type: STRING.TYPE.PHONE,
     length: DIMENSIONS.mobileLength,
-    required: true,
+    required: false,
     disabled: false,
-  },
-  {
-    name: STRING.LABEL.PASSWORD,
-    placeholder: STRING.LABEL.PASSWORD,
-    type: STRING.TYPE.PASSWORD,
-    isSecure: true,
-    length: DIMENSIONS.fieldLength,
-    required: true,
-    disabled: false,
-  },
-  {
-    name: STRING.LABEL.CONFIRM_PASSWORD,
-    placeholder: STRING.LABEL.CONFIRM_PASSWORD,
-    type: STRING.TYPE.PASSWORD,
-    isSecure: true,
-    length: DIMENSIONS.fieldLength,
-    required: true,
-    disabled: false,
-  },
+  }
 ];
 
 export const ProfileFields = [
@@ -142,6 +136,15 @@ export const ProfileFields = [
     length: DIMENSIONS.fieldLength,
     required: true,
     disabled: false,
+  },
+  {
+    name: STRING.LABEL.PASSWORD,
+    placeholder: STRING.LABEL.SET_PASSWORD,
+    type: STRING.TYPE.PASSWORD,
+    length: DIMENSIONS.fieldLength,
+    required: true,
+    disabled: false,
+    isSecure: true
   }
 ];
 

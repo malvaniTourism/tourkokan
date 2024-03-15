@@ -21,11 +21,9 @@ import CheckNet from "../../Components/Common/CheckNet";
 import ImageButton from "../../Components/Customs/Buttons/ImageButton";
 import TextButton from "../../Components/Customs/Buttons/TextButton";
 // import InstaStory from "react-native-insta-story";
-import CommentsSheet from "../../Components/Common/CommentsSheet";
 import BottomSheet from "../../Components/Customs/BottomSheet";
 
 const Explore = ({ route, navigation, ...props }) => {
-  const refRBSheet = useRef();
 
   const [places, setPlaces] = useState([]);
   const [cities, setCities] = useState([]);
@@ -128,14 +126,6 @@ const Explore = ({ route, navigation, ...props }) => {
     getCities(city.name, city.id)
   };
 
-  const openCommentsSheet = () => {
-    refRBSheet.current.open()
-  }
-
-  const closeCommentsSheet = () => {
-    refRBSheet.current.close()
-  }
-
   const getCityDetails = (id) => {
     navigateTo(navigation, STRING.SCREEN.CITY_DETAILS, { id })
   }
@@ -204,7 +194,7 @@ const Explore = ({ route, navigation, ...props }) => {
               style={{ marginBottom: 450 }}
             >
               {selectedSites.map((place) => (
-                <CityCard data={place} navigation={navigation} reload={() => getCities()} onClick={() => getCityDetails(place.id)} addComment={() => openCommentsSheet()} />
+                <CityCard data={place} navigation={navigation} reload={() => getCities()} onClick={() => getCityDetails(place.id)} />
               ))}
             </ScrollView>
             :
@@ -213,16 +203,6 @@ const Explore = ({ route, navigation, ...props }) => {
             </View>
         }
       </View>
-      <BottomSheet
-        refRBSheet={refRBSheet}
-        height={DIMENSIONS.screenHeight - DIMENSIONS.headerSpace}
-        Component={<CommentsSheet
-          openCommentsSheet={() => openCommentsSheet()}
-          closeCommentsSheet={() => closeCommentsSheet()}
-        />}
-        openCommentsSheet={() => openCommentsSheet()}
-        closeCommentsSheet={() => closeCommentsSheet()}
-      />
     </View>
   );
 };

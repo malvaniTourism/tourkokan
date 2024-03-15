@@ -20,15 +20,15 @@ import GlobalText from "../Customs/Text";
 import STRING from "../../Services/Constants/STRINGS";
 import SearchDropdown from "./SearchDropdown";
 
-const RoutesSearchPanel = ({ navigation, from, onSwap, setSourceId, setDestinationId, searchRoutes, ...props }) => {
+const RoutesSearchPanel = ({ mySource, myDestination, navigation, from, onSwap, setSourceId, setDestinationId, searchRoutes, ...props }) => {
   const [isValid, setIsValid] = useState(false)
   const [errorText, setErrorText] = useState("")
   const [placesList, setPlacesList] = useState([]);
   const [nextPage, setNextPage] = useState(1);
   const [searchValue, setSearchValue] = useState("");
   const [fieldType, setFieldType] = useState("");
-  const [source, setSource] = useState({});
-  const [destination, setDestination] = useState({});
+  const [source, setSource] = useState(mySource);
+  const [destination, setDestination] = useState(myDestination);
 
   useEffect(() => {
     // setSource(props.source.name || "");
@@ -181,7 +181,7 @@ const RoutesSearchPanel = ({ navigation, from, onSwap, setSourceId, setDestinati
               fieldType={field.type}
               length={field.length}
               required={field.required}
-              disabled={index == 1 && (source.name == "" || source.name == null)}
+              disabled={index == 1 && (source?.name == "" || source?.name == null)}
               value={getValue(index)}
               setChild={(val, i) => setValue(val, i, index, field.name)}
               style={styles.routesSearchPanelField}
@@ -210,9 +210,9 @@ const RoutesSearchPanel = ({ navigation, from, onSwap, setSourceId, setDestinati
       <Ionicons
         style={styles.routesRefreshIcon}
         name="refresh-circle"
-        color={source.name ? COLOR.logoBlue : COLOR.grey}
+        color={source?.name ? COLOR.logoBlue : COLOR.grey}
         size={DIMENSIONS.iconLarge}
-        onPress={source.name ? refresh : null}
+        onPress={source?.name ? refresh : null}
       />
 
       <View style={{ minHeight: 20 }}>

@@ -53,7 +53,7 @@ const CommentsSheet = ({ openCommentsSheet, closeCommentsSheet, reload, key, com
         }
         comnPost("v2/comment", newData)
             .then(res => {
-                reload()
+                getComments()
                 props.setLoader(false);
             })
             .catch(err => {
@@ -68,7 +68,7 @@ const CommentsSheet = ({ openCommentsSheet, closeCommentsSheet, reload, key, com
         }
         comnPost("v2/deleteComment", data)
             .then(res => {
-                reload()
+                getComments()
                 props.setLoader(false);
             })
             .catch(err => {
@@ -127,56 +127,60 @@ const CommentsSheet = ({ openCommentsSheet, closeCommentsSheet, reload, key, com
     return (
         <View>
             <Loader />
-            <View style={{ minHeight: DIMENSIONS.screenHeight - 220 }}>
+            <View>
                 <View style={styles.commentsHeader}>
                     <GlobalText text={STRING.HEADER.COMMENTS} style={styles.fontBold} />
                 </View>
-                {comments ? (
-                    <FlatList
-                        data={comments}
-                        keyExtractor={(item) => item.id.toString()}
-                        renderItem={renderComments}
-                        style={{ flexGrow: 1 }}
-                        showsVerticalScrollIndicator
-                    />
-                ) : (
-                    <View style={[styles.noComments, { flex: 1 }]}>
-                        <GlobalText text={STRING.NO_COMMENTS} style={styles.fontBold} />
-                        <GlobalText text={STRING.START_CONVO} />
-                    </View>
-                )}
             </View>
-            <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                style={styles.commentInputBox}
-            >
-                {Comment.map((field, index) => (
-                    <TextField
-                        key={index}
-                        name={field.name}
-                        label={field.name}
-                        placeholder={field.placeholder}
-                        fieldType={field.type}
-                        length={field.length}
-                        required={field.required}
-                        disabled={index === 1 && (source.name === "" || source.name === null)}
-                        value={newComment}
-                        setChild={(val) => setComment(val)}
-                        style={styles.routesSearchPanelField}
-                        containerStyle={styles.commentTextContainerStyle}
-                        inputContainerStyle={styles.commentInputContainerStyle}
-                        rightIcon={
-                            <FontAwesome
-                                style={styles.sendIcon}
-                                name="send"
-                                color={isActive ? COLOR.logoBlue : COLOR.grey}
-                                size={DIMENSIONS.iconBig}
-                                onPress={isActive ? addComment : null}
-                            />
-                        }
-                    />
-                ))}
-            </KeyboardAvoidingView>
+            <View>
+                <ScrollView>
+                    {comments ? (
+                        <FlatList
+                            data={comments}
+                            keyExtractor={(item) => item.id.toString()}
+                            renderItem={renderComments}
+                            style={{ flexGrow: 1 }}
+                            showsVerticalScrollIndicator
+                        />
+                    ) : (
+                        <View style={[styles.noComments, { flex: 1 }]}>
+                            <GlobalText text={STRING.NO_COMMENTS} style={styles.fontBold} />
+                            <GlobalText text={STRING.START_CONVO} />
+                        </View>
+                    )}
+                </ScrollView>
+                <KeyboardAvoidingView
+                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                    style={styles.commentInputBox}
+                >
+                    {Comment.map((field, index) => (
+                        <TextField
+                            key={index}
+                            name={field.name}
+                            label={field.name}
+                            placeholder={field.placeholder}
+                            fieldType={field.type}
+                            length={field.length}
+                            required={field.required}
+                            disabled={index === 1 && (source.name === "" || source.name === null)}
+                            value={newComment}
+                            setChild={(val) => setComment(val)}
+                            style={styles.routesSearchPanelField}
+                            containerStyle={styles.commentTextContainerStyle}
+                            inputContainerStyle={styles.commentInputContainerStyle}
+                            rightIcon={
+                                <FontAwesome
+                                    style={styles.sendIcon}
+                                    name="send"
+                                    color={isActive ? COLOR.logoBlue : COLOR.grey}
+                                    size={DIMENSIONS.iconBig}
+                                    onPress={isActive ? addComment : null}
+                                />
+                            }
+                        />
+                    ))}
+                </KeyboardAvoidingView>
+            </View>
         </View>
     )
 }

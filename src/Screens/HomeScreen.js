@@ -31,11 +31,9 @@ import STRING from "../Services/Constants/STRINGS";
 import CheckNet from "../Components/Common/CheckNet";
 import NetInfo from "@react-native-community/netinfo";
 import MyAnimatedLoader from "../Components/Customs/AnimatedLoader";
-import CommentsSheet from "../Components/Common/CommentsSheet";
 
 const HomeScreen = ({ navigation, route, ...props }) => {
     const refRBSheet = useRef();
-    const refRBCommentsSheet = useRef();
 
     const [searchValue, setSearchValue] = useState("");
     const [categories, setCategories] = useState([]);
@@ -137,6 +135,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         let isFirstTime = await AsyncStorage.getItem(STRING.STORAGE.IS_FIRST_TIME)
         comnPost("v2/landingpage")
             .then((res) => {
+                console.log('res:: ', res);
                 if (res && res.data.data)
                     saveToStorage(STRING.STORAGE.LANDING_RESPONSE, JSON.stringify(res))
                 setCities(res.data.data.cities);
@@ -198,14 +197,6 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         refRBSheet.current.close()
     }
 
-    const openCommentsSheet = () => {
-        refRBCommentsSheet.current.open()
-    }
-
-    const closeCommentsSheet = () => {
-        refRBCommentsSheet.current.close()
-    }
-
     const getCityDetails = (id) => {
         navigateTo(navigation, STRING.SCREEN.CITY_DETAILS, { id })
     }
@@ -254,7 +245,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                             </View>
                             <TextButton
                                 title={STRING.BUTTON.SEE_MORE}
-                                onPress={() => showMore(STRING.SCREEN.SEARCH_LIST)}
+                                onPress={() => showMore(STRING.SCREEN.ALL_ROUTES_SEARCH)}
                                 containerStyle={styles.showMore}
                                 seeMoreStyle={styles.seeMoreStyle}
                                 buttonStyle={styles.buttonStyle}
@@ -280,7 +271,6 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                         }}
                                         navigation={navigation}
                                         onClick={() => getCityDetails(city.id)}
-                                        addComment={() => openCommentsSheet()}
                                     />
                                 ))}
                             </View>
@@ -312,16 +302,6 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                 />}
                 openLocationSheet={() => openLocationSheet()}
                 closeLocationSheet={() => closeLocationSheet()}
-            />
-            <BottomSheet
-                refRBSheet={refRBCommentsSheet}
-                height={DIMENSIONS.screenHeight - DIMENSIONS.headerSpace}
-                Component={<CommentsSheet
-                    openCommentsSheet={() => openCommentsSheet()}
-                    closeCommentsSheet={() => closeCommentsSheet()}
-                />}
-                openCommentsSheet={() => openCommentsSheet()}
-                closeCommentsSheet={() => closeCommentsSheet()}
             />
         </ScrollView>
     );

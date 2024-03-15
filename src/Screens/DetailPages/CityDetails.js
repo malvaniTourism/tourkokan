@@ -201,7 +201,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
                         <View style={styles.sectionView}>
                             <ScrollView showsHorizontalScrollIndicator={false}>
                                 {city.sites && city.sites.map((place, index) => (
-                                    <CityCard data={place} navigation={navigation} reload={() => getDetails()} onClick={() => getDetails(place.id)} addComment={() => openCommentsSheet()} />
+                                    <CityCard data={place} navigation={navigation} reload={() => getDetails()} onClick={() => getDetails(place.id)} />
                                 ))}
                             </ScrollView>
                         </View>

@@ -26,8 +26,8 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
   const [offline, setOffline] = useState(false);
   const [nextPage, setNextPage] = useState(1);
   const [nextUrl, setNextUrl] = useState(1)
-  const [source, setSource] = useState(route?.params?.source?.id);
-  const [destination, setDestination] = useState(route?.params?.destination?.id)
+  const [source, setSource] = useState(route?.params?.source);
+  const [destination, setDestination] = useState(route?.params?.destination)
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
@@ -64,8 +64,8 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
     if (nextPage >= 1) {
       props.setLoader(true);
       const data = {
-        source_place_id: a || source,
-        destination_place_id: b || destination,
+        source_place_id: a || source?.id,
+        destination_place_id: b || destination?.id,
       };
       comnPost(`v2/routes?page=${isNext ? nextPage : 1}`, data)
         .then((res) => {
@@ -129,7 +129,7 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
       />
       <Loader />
       <View style={styles.routesSearchPanelView}>
-        <RoutesSearchPanel source={source} destination={destination} setSourceId={(v) => setSource(v)} setDestinationId={(v) => setDestination(v)} route={route} navigation={navigation} from={STRING.SCREEN.ALL_ROUTES_SEARCH} searchRoutes={() => searchRoute()} onSwap={(a, b) => searchRoute(a, b)} />
+        <RoutesSearchPanel mySource={source} myDestination={destination} setSourceId={(v) => setSource(v)} setDestinationId={(v) => setDestination(v)} route={route} navigation={navigation} from={STRING.SCREEN.ALL_ROUTES_SEARCH} searchRoutes={() => searchRoute()} onSwap={(a, b) => searchRoute(a, b)} />
       </View>
       <SafeAreaView style={{ paddingBottom: 150, position: "relative", marginTop: 150 }}>
         {list.length > 0 ? (

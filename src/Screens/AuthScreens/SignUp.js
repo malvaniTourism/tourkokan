@@ -177,10 +177,7 @@ const SignUp = ({ navigation, ...props }) => {
   const checkValidation = () => {
     if (
       (name == "" || nameErr) ||
-      (email == "" || emailErr) ||
-      (mobile == "" || mobileErr) ||
-      (password == "" || passErr) ||
-      (cpassword == "" || cPassErr)
+      (email == "" || emailErr)
     ) {
       setNotValid(true)
     } else {
@@ -388,7 +385,7 @@ const SignUp = ({ navigation, ...props }) => {
         /> */}
           <GlobalText text={STRING.SIGN_UP} style={styles.loginText} />
           <View style={{ alignItems: "center" }}>
-            <View style={{ flexDirection: "row", justifyContent: "space-evenly", width: "100%" }}>
+            {/* <View style={{ flexDirection: "row", justifyContent: "space-evenly", width: "100%" }}>
               <TouchableOpacity
                 style={styles.imageContainerStyle}
                 onPress={handleImageUpload}
@@ -411,15 +408,6 @@ const SignUp = ({ navigation, ...props }) => {
                 style={locationError ? styles.errorImageContainerStyle : styles.imageContainerStyle}
                 onPress={myLocationPress}
               >
-                {/* <Animated.View
-                  style={{
-                    width: DIMENSIONS.iconLarge,
-                    height: DIMENSIONS.iconLarge,
-                    borderRadius: 150,
-                    backgroundColor: '#bfbfbf',
-                    opacity: opacity,
-                  }}
-                > */}
                 {locationError ?
                   <IonIcons
                     name="location"
@@ -435,11 +423,10 @@ const SignUp = ({ navigation, ...props }) => {
                     style={styles.userIcon}
                   />
                 }
-                {/* </Animated.View> */}
               </TouchableOpacity>
-            </View>
+            </View> */}
 
-            <DropDown
+            {/* <DropDown
               setChild={(v, i) => setValue(v, i)}
               name={STRING.ROLE}
               label={STRING.ROLE}
@@ -451,7 +438,7 @@ const SignUp = ({ navigation, ...props }) => {
               List={roles}
               parentDetails={{ label: "role" }}
               selectedTextStyle={styles.selectedTextStyle}
-            />
+            /> */}
             {SignUpFields.map((field, index) => {
               return (
                 <TextField

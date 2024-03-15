@@ -13,13 +13,15 @@ const styles = StyleSheet.create({
     marginTop: 30
   },
   buttonContainer: {
-    
+
   },
   choiceButtonContainer: {
-    width: DIMENSIONS.screenWidth / 2 - 40
+    width: DIMENSIONS.screenWidth / 2,
+    borderRadius: DIMENSIONS.borderRadius,
   },
   choiceButtonStyle: {
-    width: DIMENSIONS.screenWidth / 2 - 40
+    width: DIMENSIONS.screenWidth / 2,
+    borderRadius: DIMENSIONS.borderRadius,
   },
   buttonStyle: {
     paddingVertical: 13
@@ -153,6 +155,24 @@ const styles = StyleSheet.create({
     color: COLOR.white,
     fontWeight: "bold",
     top: 10
+  },
+  resendContainer: {
+    height: 60,
+    paddingTop: 15
+  },
+  verifyOtpView: {
+    alignItems: "center",
+    flex: 1,
+    marginBottom: 30
+  },
+  choiceText: {
+    marginVertical: 20,
+    color: COLOR.logoBlue,
+    fontWeight: "600"
+  },
+  sendOTPText: {
+    color: COLOR.logoBlue,
+    fontWeight: "600"
   }
 });
 

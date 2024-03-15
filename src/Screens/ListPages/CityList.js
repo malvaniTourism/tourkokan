@@ -17,7 +17,6 @@ import CityCard from "../../Components/Cards/CityCard";
 import STRING from "../../Services/Constants/STRINGS";
 import NetInfo from "@react-native-community/netinfo";
 import CheckNet from "../../Components/Common/CheckNet";
-import CommentsSheet from "../../Components/Common/CommentsSheet";
 import BottomSheet from "../../Components/Customs/BottomSheet";
 import GlobalText from "../../Components/Customs/Text";
 
@@ -87,14 +86,6 @@ const CityList = ({ navigation, route, ...props }) => {
     navigateTo(navigation, STRING.SCREEN.CITY_DETAILS, { id })
   }
 
-  const openCommentsSheet = () => {
-    refRBSheet.current.open()
-  }
-
-  const closeCommentsSheet = () => {
-    refRBSheet.current.close()
-  }
-
   return (
     <ScrollView stickyHeaderIndices={[0]}>
       <CheckNet isOff={offline} />
@@ -114,7 +105,7 @@ const CityList = ({ navigation, route, ...props }) => {
           <View style={{ flex: 1, alignItems: "center" }}>
             <View>
               {cities.map((city) => (
-                <CityCard data={city} navigation={navigation} reload={() => getCities()} onClick={() => getCityDetails(city.id)} addComment={() => openCommentsSheet()} />
+                <CityCard data={city} navigation={navigation} reload={() => getCities()} onClick={() => getCityDetails(city.id)} />
               ))}
             </View>
           </View>
@@ -124,16 +115,6 @@ const CityList = ({ navigation, route, ...props }) => {
           <GlobalText text={STRING.NO_DATA} />
         </View>
       }
-      <BottomSheet
-        refRBSheet={refRBSheet}
-        height={DIMENSIONS.screenHeight - DIMENSIONS.headerSpace}
-        Component={<CommentsSheet
-          openCommentsSheet={() => openCommentsSheet()}
-          closeCommentsSheet={() => closeCommentsSheet()}
-        />}
-        openCommentsSheet={() => openCommentsSheet()}
-        closeCommentsSheet={() => closeCommentsSheet()}
-      />
     </ScrollView>
   );
 };

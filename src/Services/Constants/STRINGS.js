@@ -21,7 +21,11 @@ const STRING = {
     LOGOUT: "Logout  ",
     SEE_CITIES: "See all Cities",
     OTP: "OTP",
-    PASSWORD: "Password"
+    PASSWORD: "Password",
+    CONTINUE: "Continue",
+    LOGINOTP: "Login with OTP",
+    LOGINPASS: "Login with Password",
+    NEXT: "Next"
   },
   SCREEN: {
     ROOT: "Root",
@@ -147,6 +151,7 @@ const STRING = {
     DESTINATION: "Destination",
     MOBILE: "Mobile",
     PASSWORD: "Password",
+    SET_PASSWORD: "Set Password",
     EMAIL: "Email",
     NAME: "Name",
     OTP: "OTP",
@@ -171,6 +176,7 @@ const STRING = {
   SIGN_IN: " Sign-in",
   SIGN_UP: " Sign-up",
   RESEND: "Resend",
+  SEND_OTP: "Send OTP",
   COMING_SOON: "Coming Soon...",
   NON_RESERVATION: "Non Reservation",
   STOPS: "Stops",
