@@ -55,12 +55,12 @@ const SignUp = ({ navigation, ...props }) => {
   const [mobileErr, setMobileErr] = useState(false)
   const [passErr, setPassErr] = useState(false)
   const [cPassErr, setCPassErr] = useState(false)
-  const [notValid, setNotValid] = useState(false)
+  const [notValid, setNotValid] = useState(false);
+  const [fetchingText, setFetchingText] = useState("")
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN));
-    props.setLoader(true);
-    getRoles()
+    // getRoles()
     return () => {
       backHandler.remove();
     }
@@ -114,7 +114,7 @@ const SignUp = ({ navigation, ...props }) => {
         else setNameErr(true)
         break;
       case 1:
-        setEmail(val);
+        setEmail(val.trim());
         if (isVal) setEmailErr(false)
         else setEmailErr(true)
         break;
@@ -124,12 +124,12 @@ const SignUp = ({ navigation, ...props }) => {
         else setMobileErr(true)
         break;
       case 3:
-        setPassword(val);
+        setPassword(val.trim());
         if (isVal) setPassErr(false)
         else setPassErr(true)
         break;
       case 4:
-        setCpassword(val);
+        setCpassword(val.trim());
         if (isVal) setCPassErr(false)
         else setCPassErr(true)
         break;
@@ -182,27 +182,27 @@ const SignUp = ({ navigation, ...props }) => {
       setNotValid(true)
     } else {
       setNotValid(false)
-      Register()
+      if (latitude == null || longitude == null) {
+        setLocationError(true)
+        myLocationPress()
+      } else Register()
     }
   }
 
   const Register = () => {
-    if (latitude == null || longitude == null) {
-      setLocationError(true)
-    } else {
       props.setLoader(true);
       const data = {
         name: name,
         email: email,
         mobile: mobile,
-        password: password,
-        password_confirmation: cpassword,
-        role_id: role.id,
+        // password: password,
+        // password_confirmation: cpassword,
+        // role_id: role.id,
         profile_picture: uploadImage,
         latitude,
         longitude
       };
-      comnPost("auth/register", data)
+      comnPost("v2/auth/register", data)
         .then((res) => {
           if (res.data.success) {
             props.setLoader(false);
@@ -224,7 +224,6 @@ const SignUp = ({ navigation, ...props }) => {
           setIsSuccess(false)
           setAlertMessage(STRING.ALERT.WENT_WRONG);
         });
-    }
   };
 
   const verifyOtp = () => {
@@ -330,6 +329,8 @@ const SignUp = ({ navigation, ...props }) => {
   }
 
   const getOneTimeLocation = () => {
+    props.setLoader(true);
+    setFetchingText(STRING.ALERT.FETCHING_TEXT);
     setLocationStatus(STRING.GETTING_LOCATION);
     Geolocation.getCurrentPosition(
       (position) => {
@@ -339,9 +340,13 @@ const SignUp = ({ navigation, ...props }) => {
         setCurrentLongitude(currentLongitude);
         setCurrentLatitude(currentLatitude);
         setLocationError(false)
+        props.setLoader(false)
+        setFetchingText("")
+        Register()
       },
       (error) => {
         setLocationStatus(error.message);
+        props.setLoader(false)
       },
       { enableHighAccuracy: false, timeout: 30000, maximumAge: 1000 }
     );
@@ -355,10 +360,12 @@ const SignUp = ({ navigation, ...props }) => {
         const currentLatitude = position.coords.latitude;
         setCurrentLongitude(currentLongitude);
         setCurrentLatitude(currentLatitude);
-        setLocationError(false)
+        setLocationError(false);
+        props.setLoader(false);
       },
       (error) => {
         setLocationStatus(error.message);
+        props.setLoader(false)
       },
       { enableHighAccuracy: false, maximumAge: 1000 }
     );
@@ -375,7 +382,7 @@ const SignUp = ({ navigation, ...props }) => {
     <View style={{ alignItems: "center", flex: 1 }}>
       {/* <ImageBackground style={styles.loginImage} source={require("../../Assets/Images/kokan1.jpeg")} /> */}
 
-      <Loader />
+      <Loader text={fetchingText} />
       <View style={{ marginTop: 20 }}>
         <ScrollView>
           {/* <Header
@@ -385,7 +392,7 @@ const SignUp = ({ navigation, ...props }) => {
         /> */}
           <GlobalText text={STRING.SIGN_UP} style={styles.loginText} />
           <View style={{ alignItems: "center" }}>
-            {/* <View style={{ flexDirection: "row", justifyContent: "space-evenly", width: "100%" }}>
+            <View style={{ flexDirection: "row", justifyContent: "space-evenly", width: "100%" }}>
               <TouchableOpacity
                 style={styles.imageContainerStyle}
                 onPress={handleImageUpload}
@@ -396,15 +403,18 @@ const SignUp = ({ navigation, ...props }) => {
                     style={styles.imageSourceView}
                   />
                   :
-                  <FontIcons
+                  <View style={styles.addProfileView}>
+                    <FontIcons
                     name="user-circle"
                     color={COLOR.logoBlue}
                     size={DIMENSIONS.iconLarge}
-                    style={styles.userIcon}
+                    style={{marginBottom: 10}}
                   />
+                  <GlobalText text={STRING.BUTTON.ADD_PHOTO} />
+                  </View>
                 }
               </TouchableOpacity>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={locationError ? styles.errorImageContainerStyle : styles.imageContainerStyle}
                 onPress={myLocationPress}
               >
@@ -423,8 +433,8 @@ const SignUp = ({ navigation, ...props }) => {
                     style={styles.userIcon}
                   />
                 }
-              </TouchableOpacity>
-            </View> */}
+              </TouchableOpacity> */}
+            </View>
 
             {/* <DropDown
               setChild={(v, i) => setValue(v, i)}

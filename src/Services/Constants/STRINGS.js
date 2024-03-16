@@ -25,7 +25,8 @@ const STRING = {
     CONTINUE: "Continue",
     LOGINOTP: "Login with OTP",
     LOGINPASS: "Login with Password",
-    NEXT: "Next"
+    NEXT: "Next",
+    ADD_PHOTO: "Add Profile Photo"
   },
   SCREEN: {
     ROOT: "Root",
@@ -115,6 +116,7 @@ const STRING = {
     ADDING_SOON: "We are adding new places inside this category soon..!",
     LOADING: "Loading...",
     ERROR_CURRENT_LOCATION: "Error getting current location: ",
+    FETCHING_TEXT: "We are getting your location please wait",
   },
   TABLE: {
     CITY: "City",

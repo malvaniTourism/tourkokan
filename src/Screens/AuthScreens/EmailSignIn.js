@@ -99,7 +99,7 @@ const EmailSignIn = ({ navigation, route, ...props }) => {
   const setValue = (val, isVal, index) => {
     switch (index) {
       case 0:
-        setEmail(val);
+        setEmail(val.trim());
         break;
       case 1:
         setPassword(val);

@@ -60,11 +60,12 @@ const styles = StyleSheet.create({
   imageContainerStyle: {
     borderWidth: 1,
     borderColor: COLOR.grey,
-    borderRadius: DIMENSIONS.borderRadiusLarge,
-    width: DIMENSIONS.iconXXXL,
-    height: DIMENSIONS.iconXXXL,
+    borderRadius: DIMENSIONS.borderRadius,
+    width: DIMENSIONS.iconCardBig,
+    height: DIMENSIONS.iconCard,
     alignItems: "center",
     justifyContent: "center",
+    paddingVertical: 10,
     marginBottom: 20,
   },
   errorImageContainerStyle: {
@@ -173,6 +174,11 @@ const styles = StyleSheet.create({
   sendOTPText: {
     color: COLOR.logoBlue,
     fontWeight: "600"
+  },
+  addProfileView: {
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center"
   }
 });
 

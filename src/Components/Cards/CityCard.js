@@ -17,7 +17,7 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
     const [isVisible, setIsVisible] = useState(false)
     const [isFav, setIsFav] = useState(data?.is_favorite)
     const [rating, setRating] = useState(data?.rating_avg_rate)
-    const [commentCount, setCommentCount] = useState(data?.comment_count)
+    const [commentCount, setCommentCount] = useState(data?.comment_count || 0)
     const [rate, setRate] = useState(data?.rate?.rate)
     const [cardType, setCardType] = useState(data.category?.code)
 

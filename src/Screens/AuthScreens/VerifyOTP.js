@@ -43,10 +43,9 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
   const [isOtpSent, setIsOtpSent] = useState(false)
 
   useEffect(() => {
-    if (isVerified) {
-      setIsNeedOtp(false)
-      setChoiceText(STRING.BUTTON.LOGINOTP)
-    } else setIsOtpSent(true)
+    if (!isVerified) {
+      setIsOtpSent(true)
+    }
     const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN));
     // setInterval(() => timer(), 1000);
     startListeningForOtp();
@@ -58,9 +57,14 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
   }, []);
 
   useEffect(() => {
-    setTimeout(() => {
-      timer();
-    }, 1000);
+    let timerInterval;
+    if (sec > 0) {
+      timerInterval = setInterval(() => {
+        setSec(prevSec => prevSec - 1);
+      }, 1000);
+    }
+
+    return () => clearInterval(timerInterval);
   }, [sec]);
 
   const loginClick = () => {
@@ -81,11 +85,8 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
       myUrl = "v2/auth/login"
     }
 
-    console.log('data:: ', data);
-
     comnPost(myUrl, data)
       .then((res) => {
-        console.log("res.data:: ", res);
         if (res.data.success) {
           AsyncStorage.setItem(STRING.STORAGE.ACCESS_TOKEN, res.data.data.access_token);
           AsyncStorage.setItem(STRING.STORAGE.USER_ID, res.data.data.user.id);
@@ -123,7 +124,7 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
       .then((res) => {
         props.setLoader(false);
         setSec(30);
-        setIsOtpSent(true)
+        setIsOtpSent(true);
       })
       .catch((err) => {
         props.setLoader(false);
@@ -131,8 +132,10 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
   };
 
   const timer = () => {
-    if (sec) {
-      setSec(sec - 1);
+    if (sec > 0) {
+      setTimeout(() => {
+        setSec(sec - 1);
+      }, 1000);
     }
   };
 
@@ -162,6 +165,7 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
     setIsNeedOtp(!isNeedOtp);
     if (!isNeedOtp) {
       setChoiceText(STRING.BUTTON.LOGINPASS)
+      resend()
     } else {
       setChoiceText(STRING.BUTTON.LOGINOTP)
     }
