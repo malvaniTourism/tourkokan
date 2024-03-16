@@ -20,6 +20,8 @@ import NetInfo from "@react-native-community/netinfo";
 import CheckNet from "../../Components/Common/CheckNet";
 import SearchPanel from "../../Components/Common/SearchPanel";
 import RoutesSearchPanel from "../../Components/Common/RoutesSearchPanel";
+import RoutesSearchPanelSkeleton from "../../Components/Common/RoutesSearchPanelSkeleton";
+import RouteHeadCardSkeleton from "../../Components/Cards/RouteHeadCardSkeleton";
 
 const AllRoutesSearch = ({ navigation, route, ...props }) => {
   const [list, setList] = useState([]);
@@ -27,7 +29,8 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
   const [nextPage, setNextPage] = useState(1);
   const [nextUrl, setNextUrl] = useState(1)
   const [source, setSource] = useState(route?.params?.source);
-  const [destination, setDestination] = useState(route?.params?.destination)
+  const [destination, setDestination] = useState(route?.params?.destination);
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
@@ -45,7 +48,7 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
           } else if (resp) {
             setOffline(true)
           }
-          props.setLoader(false);
+          setIsLoading(false)
         })
       // removeFromStorage(STRING.STORAGE.LANDING_RESPONSE)
     });
@@ -62,7 +65,7 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
 
   const searchRoute = (a, b, isNext) => {
     if (nextPage >= 1) {
-      props.setLoader(true);
+      setIsLoading(true);
       const data = {
         source_place_id: a || source?.id,
         destination_place_id: b || destination?.id,
@@ -79,13 +82,13 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
               :
               setList([...res.data.data.data])
             setNextPage(myNextUrl[myNextUrl.length - 1])
-            props.setLoader(false);
+            setIsLoading(false);
           } else {
-            props.setLoader(false);
+            setIsLoading(false);
           }
         })
         .catch((err) => {
-          props.setLoader(false);
+          setIsLoading(false);
         });
     }
   };
@@ -127,24 +130,39 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
           />
         }
       />
-      <Loader />
+      {/* <Loader /> */}
       <View style={styles.routesSearchPanelView}>
-        <RoutesSearchPanel mySource={source} myDestination={destination} setSourceId={(v) => setSource(v)} setDestinationId={(v) => setDestination(v)} route={route} navigation={navigation} from={STRING.SCREEN.ALL_ROUTES_SEARCH} searchRoutes={() => searchRoute()} onSwap={(a, b) => searchRoute(a, b)} />
+        {
+          isLoading ?
+            <RoutesSearchPanelSkeleton />
+            :
+            <RoutesSearchPanel mySource={source} myDestination={destination} setSourceId={(v) => setSource(v)} setDestinationId={(v) => setDestination(v)} route={route} navigation={navigation} from={STRING.SCREEN.ALL_ROUTES_SEARCH} searchRoutes={() => searchRoute()} onSwap={(a, b) => searchRoute(a, b)} />
+        }
       </View>
       <SafeAreaView style={{ paddingBottom: 150, position: "relative", marginTop: 150 }}>
-        {list.length > 0 ? (
-          <FlatList
-            keyExtractor={(item) => item.id}
-            data={list}
-            onEndReached={() => searchRoute("", "", true)}
-            onEndReachedThreshold={0.5}
-            renderItem={({ item }) => (
-              <RouteHeadCard data={item} cardClick={() => getRoutesList(item)} style={styles.routeHeadCard} />
+        {
+          isLoading ?
+            <>
+              <RouteHeadCardSkeleton />
+              <RouteHeadCardSkeleton />
+              <RouteHeadCardSkeleton />
+              <RouteHeadCardSkeleton />
+              <RouteHeadCardSkeleton />
+            </>
+            :
+            list.length > 0 ? (
+              <FlatList
+                keyExtractor={(item) => item.id}
+                data={list}
+                onEndReached={() => searchRoute("", "", true)}
+                onEndReachedThreshold={0.5}
+                renderItem={({ item }) => (
+                  <RouteHeadCard data={item} cardClick={() => getRoutesList(item)} style={styles.routeHeadCard} />
+                )}
+              />
+            ) : (
+              <GlobalText text={STRING.NO_ROUTES} />
             )}
-          />
-        ) : (
-          <GlobalText text={STRING.NO_ROUTES} />
-        )}
       </SafeAreaView>
     </View>
   );

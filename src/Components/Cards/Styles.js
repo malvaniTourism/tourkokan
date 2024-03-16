@@ -112,6 +112,16 @@ const styles = StyleSheet.create({
     projectImageStyle: {
         opacity: 0.7
     },
+    routeHeadCardSkeleton: {
+        height: DIMENSIONS.bannerHeight / 2 + 32,
+        width: DIMENSIONS.bannerWidth,
+        alignSelf: "center",
+        elevation: 10,
+        zIndex: 10,
+        borderRadius: DIMENSIONS.borderRadiusXS,
+        justifyContent: "space-between",
+        marginVertical: 10
+    },
     routeHeadCard: {
         height: DIMENSIONS.bannerHeight / 2 + 32,
         width: DIMENSIONS.bannerWidth,
@@ -146,8 +156,20 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
 
-
-
+    cityCardSkeleton: {
+        width: DIMENSIONS.bannerWidth,
+        height: DIMENSIONS.bannerWidth + 20,
+        borderRadius: DIMENSIONS.borderRadius,
+        elevation: 10,
+        margin: 10,
+    },
+    placeCardSkeleton: {
+        width: DIMENSIONS.bannerWidth,
+        height: DIMENSIONS.bannerHeight + 100,
+        borderRadius: DIMENSIONS.borderRadius,
+        elevation: 10,
+        margin: 10,
+    },
     cityCard: {
         width: DIMENSIONS.bannerWidth,
         height: DIMENSIONS.bannerWidth + 20,

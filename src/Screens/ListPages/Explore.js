@@ -22,6 +22,10 @@ import ImageButton from "../../Components/Customs/Buttons/ImageButton";
 import TextButton from "../../Components/Customs/Buttons/TextButton";
 // import InstaStory from "react-native-insta-story";
 import BottomSheet from "../../Components/Customs/BottomSheet";
+import ImageButtonSkeleton from "../../Components/Customs/Buttons/ImageButtonSkeleton";
+import Feather from "react-native-vector-icons/Feather";
+import { Skeleton } from "@rneui/themed";
+import CityCardSkeleton from "../../Components/Cards/CityCardSkeleton";
 
 const Explore = ({ route, navigation, ...props }) => {
 
@@ -34,12 +38,13 @@ const Explore = ({ route, navigation, ...props }) => {
   const [offline, setOffline] = useState(false)
   const [selectedCity, setSelectedCity] = useState("");
   const [selectedCityId, setSelectedCityId] = useState("");
-  const [selectedSites, setSelectedSites] = useState([])
+  const [selectedSites, setSelectedSites] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
     checkLogin(navigation)
-    props.setLoader(true);
+    setIsLoading(true);
 
     const unsubscribe = NetInfo.addEventListener(state => {
       setOffline(false)
@@ -73,23 +78,23 @@ const Explore = ({ route, navigation, ...props }) => {
   }, []);
 
   const getPlaces = (ifNext) => {
-    props.setLoader(true)
+    setIsLoading(true)
     comnPost(`v2/places?page=${ifNext ? nextPage : nextPage - 1}`, props.access_token)
       .then((res) => {
         if (res && res.data.data)
           saveToStorage(STRING.STORAGE.PLACES_RESPONSE, JSON.stringify(res))
         setPlaces([...places, ...res.data.data.data]);
-        props.setLoader(false);
+        setIsLoading(false);
         let nextUrl = res.data.data.next_page_url
         setNextPage(nextUrl[nextUrl.length - 1])
       })
       .catch((error) => {
-        props.setLoader(false);
+        setIsLoading(false);
       });
   }
 
   const getCities = (selectedCity, selectedCityId) => {
-    props.setLoader(true)
+    setIsLoading(true)
     let data = {
       apitype: "list",
       // parent_id: 1,
@@ -104,15 +109,15 @@ const Explore = ({ route, navigation, ...props }) => {
         setSelectedCityId(selectedCityId || res.data.data.data[0].id)
         setSelectedSites(selectedCity ? cities.find((item) => item.name === selectedCity).sites : res.data.data.data[0].sites)
         // setSelectedSites(res.data.data.data[0].sites)
-        props.setLoader(false);
+        setIsLoading(false);
       })
       .catch((error) => {
-        props.setLoader(false);
+        setIsLoading(false);
       });
   }
 
   const goToNext = () => {
-    // props.setLoader(true)
+    // setIsLoading(true)
     getPlaces(true)
   }
 
@@ -132,7 +137,6 @@ const Explore = ({ route, navigation, ...props }) => {
 
   return (
     <View style={{ flex: 1, justifyContent: "flex-start" }}>
-      <Loader />
       <CheckNet isOff={offline} />
       <Header name={""}
         startIcon={
@@ -146,22 +150,34 @@ const Explore = ({ route, navigation, ...props }) => {
       />
       <View style={styles.horizontalCityScroll}>
         <ScrollView horizontal style={styles.citiesButtonScroll}>
-          {cities.map((city) => (
-            <ImageButton
-              key={city.id}
-              onPress={() => handleCityPress(city)}
-              isSelected={selectedCity === city.name}
-              image={city.image}
-              text={
-                <GlobalText text={city.name} style={styles.cityButtonText} />
-              }
-            />
-          ))}
+          {
+            isLoading ?
+              <>
+                <ImageButtonSkeleton />
+                <ImageButtonSkeleton />
+                <ImageButtonSkeleton />
+                <ImageButtonSkeleton />
+                <ImageButtonSkeleton />
+              </>
+              :
+              cities.map((city) => (
+                <ImageButton
+                  key={city.id}
+                  onPress={() => handleCityPress(city)}
+                  isSelected={selectedCity === city.name}
+                  image={city.image}
+                  text={
+                    <GlobalText text={city.name} style={styles.cityButtonText} />
+                  }
+                />
+              ))}
         </ScrollView>
       </View>
-      {cities[0] &&
-        <>
-          <View>
+      <View>
+        {
+          isLoading ?
+            <Skeleton animation="pulse" variant="text" style={styles.toggleView} />
+            :
             <View style={styles.toggleView}>
               <View style={styles.overlay} />
               <ImageBackground
@@ -173,34 +189,52 @@ const Explore = ({ route, navigation, ...props }) => {
                 <GlobalText text={STRING.TO_EXPLORE} style={styles.whiteText} />
               </View>
             </View>
-          </View>
-          <View style={{ paddingBottom: 10 }}>
+        }
+      </View>
+      <View style={{ paddingBottom: 10 }}>
+        {
+          isLoading ?
+            <Skeleton animation="pulse" variant="text" style={styles.buttonSkeleton} />
+            :
             <TextButton
               title={STRING.BUTTON.SEE_MORE}
-              containerStyle={styles.seeCitiesContainer}
-              seeMoreStyle={styles.seeCitiesContainer}
-              buttonStyle={styles.seeCitiesButtonStyle}
-              titleStyle={styles.citiesButtonTitleStyle}
+              containerStyle={styles.showMore}
+              seeMoreStyle={styles.seeMoreStyle}
+              buttonStyle={styles.buttonStyle}
+              titleStyle={styles.titleStyle}
               raised={false}
               onPress={() => seeMore()}
+              endIcon={
+                <Feather
+                  name="chevrons-right"
+                  size={24}
+                  color={COLOR.logoBlue}
+                />
+              }
             />
-          </View>
-        </>
-      }
-      <View style={{ minHeight: DIMENSIONS.screenHeight }}>
+        }
+      </View>
+      <View style={{ minHeight: DIMENSIONS.screenHeight, alignItems: "center" }}>
         {
-          selectedSites[0] ?
-            <ScrollView
-              style={{ marginBottom: 450 }}
-            >
-              {selectedSites.map((place) => (
-                <CityCard data={place} navigation={navigation} reload={() => getCities()} onClick={() => getCityDetails(place.id)} />
-              ))}
-            </ScrollView>
+          isLoading ?
+            <>
+              <CityCardSkeleton type={STRING.HEADER.PLACE} />
+              <CityCardSkeleton type={STRING.HEADER.PLACE} />
+              <CityCardSkeleton type={STRING.HEADER.PLACE} />
+            </>
             :
-            <View style={{ marginTop: 20 }}>
-              <GlobalText text={STRING.ADDED} style={styles.boldText} />
-            </View>
+            selectedSites[0] ?
+              <ScrollView
+                style={{ marginBottom: 450 }}
+              >
+                {selectedSites.map((place) => (
+                  <CityCard data={place} navigation={navigation} reload={() => getCities()} onClick={() => getCityDetails(place.id)} />
+                ))}
+              </ScrollView>
+              :
+              <View style={{ marginTop: 20 }}>
+                <GlobalText text={STRING.ADDED} style={styles.boldText} />
+              </View>
         }
       </View>
     </View>

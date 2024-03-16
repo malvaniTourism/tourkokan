@@ -112,6 +112,14 @@ const styles = StyleSheet.create({
     titleStyle: {
         color: COLOR.logoBlue
     },
+    buttonSkeleton: {
+        width: DIMENSIONS.bannerWidth / 2,
+        height: 50,
+        marginVertical: 10,
+        borderRadius: DIMENSIONS.borderRadiusXS,
+        alignSelf: "flex-end",
+        marginRight: 20
+    },
     showMore: {
         width: "auto",
         alignItems: "center"

@@ -20,6 +20,7 @@ import NetInfo from "@react-native-community/netinfo";
 import CheckNet from "../../Components/Common/CheckNet";
 import ImageButton from "../../Components/Customs/Buttons/ImageButton";
 import SubCatCard from "../../Components/Cards/SubCatCard";
+import ImageButtonSkeleton from "../../Components/Customs/Buttons/ImageButtonSkeleton";
 
 const Categories = ({ route, navigation, ...props }) => {
     const refRBSheet = useRef();
@@ -32,12 +33,13 @@ const Categories = ({ route, navigation, ...props }) => {
     const [nextPage, setNextPage] = useState(1)
     const [offline, setOffline] = useState(false)
     const [selectedCategory, setSelectedCategory] = useState("");
-    const [selectedSubCategory, setSelectedSubCategory] = useState([])
+    const [selectedSubCategory, setSelectedSubCategory] = useState([]);
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         const backHandler = goBackHandler(navigation)
         checkLogin(navigation)
-        props.setLoader(true);
+        setIsLoading(true);
 
         const unsubscribe = NetInfo.addEventListener(state => {
             setOffline(false)
@@ -60,7 +62,7 @@ const Categories = ({ route, navigation, ...props }) => {
     }, []);
 
     const getCategories = (selectedCategory) => {
-        props.setLoader(true)
+        setIsLoading(true)
         let data = {
             parent_list: "1",
             // parent_id: 1,
@@ -74,10 +76,10 @@ const Categories = ({ route, navigation, ...props }) => {
                 setSelectedCategory(selectedCategory || res.data.data.data[0].name)
                 setSelectedSubCategory(selectedCategory ? categories.find((item) => item.name === selectedCategory).sub_categories : res.data.data.data[0].sub_categories)
                 // setSelectedSubCategory(res.data.data.data[0].sub_categories)
-                props.setLoader(false);
+                setIsLoading(false);
             })
             .catch((error) => {
-                props.setLoader(false);
+                setIsLoading(false);
             });
     }
 
@@ -112,18 +114,28 @@ const Categories = ({ route, navigation, ...props }) => {
             />
             <View style={styles.horizontalCategoriesScroll}>
                 <ScrollView horizontal style={styles.categoriesButtonScroll}>
-                    {categories.map((category) => (
-                        <ImageButton
-                            key={category.id}
-                            icon={"bus"}
-                            onPress={() => handleCategoryPress(category)}
-                            isSelected={selectedCategory === category.name}
-                            image={category.image}
-                            text={
-                                <GlobalText text={category.name} style={styles.categoryButtonText} />
-                            }
-                        />
-                    ))}
+                    {
+                        isLoading ?
+                            <>
+                                <ImageButtonSkeleton />
+                                <ImageButtonSkeleton />
+                                <ImageButtonSkeleton />
+                                <ImageButtonSkeleton />
+                                <ImageButtonSkeleton />
+                            </>
+                            :
+                            categories.map((category) => (
+                                <ImageButton
+                                    key={category.id}
+                                    icon={"bus"}
+                                    onPress={() => handleCategoryPress(category)}
+                                    isSelected={selectedCategory === category.name}
+                                    image={category.image}
+                                    text={
+                                        <GlobalText text={category.name} style={styles.categoryButtonText} />
+                                    }
+                                />
+                            ))}
                 </ScrollView>
             </View>
 

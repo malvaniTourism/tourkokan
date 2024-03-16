@@ -19,25 +19,27 @@ import NetInfo from "@react-native-community/netinfo";
 import CheckNet from "../../Components/Common/CheckNet";
 import BottomSheet from "../../Components/Customs/BottomSheet";
 import GlobalText from "../../Components/Customs/Text";
+import CityCardSkeleton from "../../Components/Cards/CityCardSkeleton";
 
 const CityList = ({ navigation, route, ...props }) => {
   const refRBSheet = useRef();
   const [cities, setCities] = useState([]); // State to store cities
   const [error, setError] = useState(null); // State to store error message
   const [isLandingDataFetched, setIsLandingDataFetched] = useState(false);
-  const [offline, setOffline] = useState(false)
+  const [offline, setOffline] = useState(false);
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
     checkLogin(navigation)
-    props.setLoader(true);
+    setIsLoading(true);
 
     if (props.access_token) {
       if (!isLandingDataFetched && props.access_token) {
         // getCities()
         setIsLandingDataFetched(true); // Mark the data as fetched
       }
-      props.setLoader(false);
+      setIsLoading(false);
     }
 
     const unsubscribe = NetInfo.addEventListener(state => {
@@ -51,7 +53,7 @@ const CityList = ({ navigation, route, ...props }) => {
           } else if (resp) {
             setOffline(true)
           }
-          props.setLoader(false);
+          setIsLoading(false);
         })
       // removeFromStorage(STRING.STORAGE.LANDING_RESPONSE)
     });
@@ -63,7 +65,7 @@ const CityList = ({ navigation, route, ...props }) => {
   }, []);
 
   const getCities = () => {
-    props.setLoader(true);
+    setIsLoading(true);
     let data = {
       apitype: "list",
       parent_id: route?.params?.parent_id,
@@ -74,10 +76,10 @@ const CityList = ({ navigation, route, ...props }) => {
         if (res && res.data.data)
           saveToStorage(STRING.STORAGE.CITIES_RESPONSE, JSON.stringify(res))
         setCities(res.data.data.data); // Update cities state with response data
-        props.setLoader(false);
+        setIsLoading(false);
       })
       .catch((error) => {
-        props.setLoader(false);
+        setIsLoading(false);
         setError(error.message); // Update error state with error message
       });
   }
@@ -99,21 +101,24 @@ const CityList = ({ navigation, route, ...props }) => {
           />
         }
       />
-      <Loader />
-      {cities[0] ?
-        <View style={{ flex: 1, alignItems: "center" }}>
-          <View style={{ flex: 1, alignItems: "center" }}>
-            <View>
+      {
+        isLoading ?
+          <View style={{ alignItems: "center" }}>
+            <CityCardSkeleton type={STRING.TABLE.PLACE} />
+            <CityCardSkeleton type={STRING.TABLE.PLACE} />
+            <CityCardSkeleton type={STRING.TABLE.PLACE} />
+          </View>
+          :
+          cities[0] ?
+            <View style={{ flex: 1, alignItems: "center" }}>
               {cities.map((city) => (
                 <CityCard data={city} navigation={navigation} reload={() => getCities()} onClick={() => getCityDetails(city.id)} />
               ))}
             </View>
-          </View>
-        </View>
-        :
-        <View>
-          <GlobalText text={STRING.NO_DATA} />
-        </View>
+            :
+            <View>
+              <GlobalText text={STRING.NO_DATA} />
+            </View>
       }
     </ScrollView>
   );

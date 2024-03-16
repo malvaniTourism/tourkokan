@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from "react";
 import { View, Text, ScrollView, LogBox, Image, BackHandler, SafeAreaView, FlatList } from "react-native";
-import { ListItem } from "@rneui/themed";
 import SearchPanel from "../Components/Common/SearchPanel";
 import TopComponent from "../Components/Common/TopComponent";
 import Banner from "../Components/Customs/Banner";
@@ -31,6 +30,11 @@ import STRING from "../Services/Constants/STRINGS";
 import CheckNet from "../Components/Common/CheckNet";
 import NetInfo from "@react-native-community/netinfo";
 import MyAnimatedLoader from "../Components/Customs/AnimatedLoader";
+import RouteHeadCardSkeleton from "../Components/Cards/RouteHeadCardSkeleton";
+import CityCardSkeleton from "../Components/Cards/CityCardSkeleton";
+import { Skeleton } from "@rneui/themed";
+import SearchPanelSkeleton from "../Components/Common/SearchPanelSkeleton";
+import TopComponentSkeleton from "../Components/Common/TopComponentSkeleton";
 
 const HomeScreen = ({ navigation, route, ...props }) => {
     const refRBSheet = useRef();
@@ -135,7 +139,6 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         let isFirstTime = await AsyncStorage.getItem(STRING.STORAGE.IS_FIRST_TIME)
         comnPost("v2/landingpage")
             .then((res) => {
-                console.log('res:: ', res);
                 if (res && res.data.data)
                     saveToStorage(STRING.STORAGE.LANDING_RESPONSE, JSON.stringify(res))
                 setCities(res.data.data.cities);
@@ -209,21 +212,26 @@ const HomeScreen = ({ navigation, route, ...props }) => {
 
     return (
         <ScrollView stickyHeaderIndices={[0]}>
-            <TopComponent currentCity={currentCity} navigation={navigation} openLocationSheet={() => openLocationSheet()} gotoProfile={() => openProfile()} />
-            <CheckNet isOff={offline} />
-            <MyAnimatedLoader isVisible={isLoading} />
             {
+                isLoading ?
+                    <TopComponentSkeleton />
+                    :
+                    <TopComponent currentCity={currentCity} navigation={navigation} openLocationSheet={() => openLocationSheet()} gotoProfile={() => openProfile()} />
+            }
+            <CheckNet isOff={offline} />
+            {/* <MyAnimatedLoader isVisible={isLoading} /> */}
+            {/* {
                 isLoading ?
                     // <Loader />
                     <></>
+                    : */}
+            <View style={{ flex: 1, alignItems: "center" }}>
+                {bannerObject[0] ?
+                    <Banner bannerImages={bannerObject} />
                     :
-                    <View style={{ flex: 1, alignItems: "center" }}>
-                        {bannerObject[0] ?
-                            <Banner bannerImages={bannerObject} />
-                            :
-                            <Banner bannerImages={bannerImages} />
-                        }
-                        {/* {CityName.map((field, index) => {
+                    <Banner bannerImages={bannerImages} />
+                }
+                {/* {CityName.map((field, index) => {
                             return (
                                 <SearchBar
                                     style={styles.homeSearchBar}
@@ -233,16 +241,35 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                 />
                             );
                         })} */}
-                        <View style={{ marginTop: -59 }}>
+                <View style={{ marginTop: -59 }}>
+                    {
+                        isLoading ?
+                            <SearchPanelSkeleton />
+                            :
                             <SearchPanel route={route} navigation={navigation} from={STRING.SCREEN.HOME} />
-                        </View>
-                        <View style={styles.sectionView}>
-                            <GlobalText text={STRING.SCREEN.ROUTES} style={styles.sectionTitle} />
-                            <View style={styles.cardsWrap}>
-                                {routes.map((route, index) => (
+                    }
+                </View>
+                <View style={styles.sectionView}>
+                    <GlobalText text={STRING.SCREEN.ROUTES} style={styles.sectionTitle} />
+                    <View style={styles.cardsWrap}>
+                        {
+                            isLoading ?
+                                <>
+                                    <RouteHeadCardSkeleton />
+                                    <RouteHeadCardSkeleton />
+                                    <RouteHeadCardSkeleton />
+                                </>
+                                :
+                                routes.map((route, index) => (
                                     route && <RouteHeadCard data={route} bus={"Hirkani"} cardClick={() => getRoutesList(route)} />
-                                ))}
-                            </View>
+                                ))
+
+                        }
+                    </View>
+                    {
+                        isLoading ?
+                            <Skeleton animation="pulse" variant="text" style={styles.buttonSkeleton} />
+                            :
                             <TextButton
                                 title={STRING.BUTTON.SEE_MORE}
                                 onPress={() => showMore(STRING.SCREEN.ALL_ROUTES_SEARCH)}
@@ -258,12 +285,21 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                     />
                                 }
                             />
-                        </View>
+                    }
+                </View>
 
-                        <View style={styles.sectionView}>
-                            <GlobalText text={STRING.SCREEN.CITIES} style={styles.sectionTitle} />
-                            <View >
-                                {cities.map((city, index) => (
+                <View style={styles.sectionView}>
+                    <GlobalText text={STRING.SCREEN.CITIES} style={styles.sectionTitle} />
+                    <View>
+                        {
+                            isLoading ?
+                                <>
+                                    <CityCardSkeleton />
+                                    <CityCardSkeleton />
+                                    <CityCardSkeleton />
+                                </>
+                                :
+                                cities.map((city, index) => (
                                     <CityCard
                                         data={city}
                                         reload={() => {
@@ -272,8 +308,13 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                         navigation={navigation}
                                         onClick={() => getCityDetails(city.id)}
                                     />
-                                ))}
-                            </View>
+                                ))
+                        }
+                    </View>
+                    {
+                        isLoading ?
+                            <Skeleton animation="pulse" variant="text" style={styles.buttonSkeleton} />
+                            :
                             <TextButton
                                 title={STRING.BUTTON.SEE_MORE}
                                 onPress={() => showMore(STRING.SCREEN.CITY_LIST, "city")}
@@ -289,9 +330,9 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                     />
                                 }
                             />
-                        </View>
-                    </View>
-            }
+                    }
+                </View>
+            </View>
             <BottomSheet
                 refRBSheet={refRBSheet}
                 height={300}

@@ -3,6 +3,10 @@ import COLOR from "../../Services/Constants/COLORS.js";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS.js";
 
 const styles = StyleSheet.create({
+  topComponentSkeleton: {
+    width: DIMENSIONS.windowWidth,
+    height: DIMENSIONS.headerHeight
+  },
   topComponent: {
     width: DIMENSIONS.windowWidth,
     borderBottomLeftRadius: DIMENSIONS.borderRadiusSmall,
@@ -57,6 +61,17 @@ const styles = StyleSheet.create({
   recentsListView: {
     marginTop: 10,
     flexDirection: "row"
+  },
+  fieldsViewSkeleton: {
+    height: DIMENSIONS.bannerHeight,
+    width: DIMENSIONS.bannerWidth,
+    borderRadius: DIMENSIONS.borderRadius,
+  },
+  smallFieldsViewSkeleton: {
+    height: DIMENSIONS.bannerHeight / 2,
+    width: DIMENSIONS.bannerWidth,
+    borderRadius: DIMENSIONS.borderRadius,
+    marginTop: 20
   },
   fieldsView: {
     borderWidth: .5,
@@ -115,6 +130,12 @@ const styles = StyleSheet.create({
   searchButtonContainerStyle: {
     marginTop: 10,
     borderRadius: DIMENSIONS.borderRadiusSmall,
+  },
+  searchButtonSkeleton: {
+    height: 50,
+    width: DIMENSIONS.bannerWidth,
+    borderRadius: DIMENSIONS.borderRadiusSmall,
+    marginTop: 10
   },
   searchButtonStyle: {
     height: 50,

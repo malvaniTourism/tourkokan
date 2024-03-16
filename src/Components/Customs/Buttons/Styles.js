@@ -19,6 +19,12 @@ const styles = StyleSheet.create({
   titleStyle: {
     color: COLOR.logoYellow,
   },
+  imageButtonSkeleton: {
+    height: DIMENSIONS.iconXXL,
+    width: DIMENSIONS.iconXXL,
+    borderRadius: DIMENSIONS.borderRadiusLarge,
+    margin: DIMENSIONS.sectionGap / 2,
+  },
   imageButtonContainer: {
     width: "auto",
     margin: DIMENSIONS.sectionGap / 2,
