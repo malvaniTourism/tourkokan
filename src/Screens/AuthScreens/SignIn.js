@@ -57,7 +57,7 @@ const SignIn = ({ navigation, ...props }) => {
     const data = {
       mobile,
     };
-    comnPost("auth/sendOtp", data)
+    comnPost("v2/auth/sendOtp", data)
       .then((res) => {
         if (res.data.success) {
           setIsAlert(true);

@@ -145,6 +145,15 @@ export const ProfileFields = [
     required: true,
     disabled: false,
     isSecure: true
+  },
+  {
+    name: STRING.LABEL.CONFIRM_PASSWORD,
+    placeholder: STRING.LABEL.CONFIRM_PASSWORD,
+    type: STRING.TYPE.PASSWORD,
+    length: DIMENSIONS.fieldLength,
+    required: true,
+    disabled: false,
+    isSecure: true
   }
 ];
 

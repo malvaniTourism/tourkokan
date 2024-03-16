@@ -174,6 +174,7 @@ const STRING = {
   RESEND_WITHIN: "You can resend your OTP within (00:",
   DIDNT_RECEIVE: "I didn't receive a code",
   HAVE_ACC: "Already have an Account? ",
+  TAKEN: "already been taken",
   DONT_HAVE_ACC: "Don't have an Account? ",
   SIGN_IN: " Sign-in",
   SIGN_UP: " Sign-up",

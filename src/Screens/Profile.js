@@ -32,6 +32,8 @@ const Profile = ({ navigation, ...props }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
+  const [password, setPassword] = useState("");
+  const [cPassword, setCPassword] = useState("");
   const [profile_picture, setPicture] = useState("")
   const [alertMessage, setAlertMessage] = useState("");
   const [isAlert, setIsAlert] = useState(false);
@@ -100,6 +102,12 @@ const Profile = ({ navigation, ...props }) => {
       case 2:
         setEmail(val);
         break;
+      case 3:
+        setPassword(val);
+        break;
+      case 4:
+        setCPassword(val);
+        break;
     }
   };
 
@@ -111,6 +119,10 @@ const Profile = ({ navigation, ...props }) => {
         return mobile;
       case 2:
         return email;
+      case 3:
+        return password;
+      case 4:
+        return cPassword;
     }
   };
 
@@ -136,7 +148,9 @@ const Profile = ({ navigation, ...props }) => {
     props.setLoader(true);
     let data = {
       email,
-      profile_picture: uploadImage
+      profile_picture: uploadImage,
+      password,
+      password_confirmation: cPassword
     }
 
     comnPost("v2/updateProfile", data)

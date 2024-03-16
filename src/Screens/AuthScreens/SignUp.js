@@ -40,7 +40,6 @@ const SignUp = ({ navigation, ...props }) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [isAlert, setIsAlert] = useState(false);
-  const [isVerify, setIsVerify] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [locationError, setLocationError] = useState(false);
   const [isLocationEnabled, setIsLocationEnabled] = useState(false);
@@ -199,18 +198,17 @@ const SignUp = ({ navigation, ...props }) => {
         // password_confirmation: cpassword,
         // role_id: role.id,
         profile_picture: uploadImage,
-        latitude,
-        longitude
+        latitude: latitude.toString(),
+        longitude: longitude.toString()
       };
+      console.log('data::: ', data);
       comnPost("v2/auth/register", data)
         .then((res) => {
           if (res.data.success) {
             props.setLoader(false);
-            setIsVerify(true);
-            setIsSuccess(false);
-            setTimeout(() => {
-              timer();
-            }, 1000);
+            setIsSuccess(true);
+            setIsAlert(true);
+            setAlertMessage(res.data.message)
           } else {
             props.setLoader(false);
             setAlertMessage(res.data.message.email ? res.data.message.email : res.data.message.mobile ? res.data.message.mobile : res.data.message.profile_picture);
@@ -226,77 +224,12 @@ const SignUp = ({ navigation, ...props }) => {
         });
   };
 
-  const verifyOtp = () => {
-    props.setLoader(true);
-    const data = {
-      email,
-      otp
-    };
-    comnPost("auth/verifyOtp", data)
-      .then((res) => {
-        if (res.data.success) {
-          props.setLoader(false);
-          AsyncStorage.setItem(STRING.STORAGE.ACCESS_TOKEN, res.data.data.access_token);
-          AsyncStorage.setItem(STRING.STORAGE.USER_ID, res.data.data.user.id);
-          props.saveAccess_token(res.data.data.access_token);
-          setIsVerify(false);
-          // setAlertMessage(STRING.ALERT.REGI_SUCCESS);
-          // setIsAlert(true);
-          // setIsSuccess(true)
-          AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, JSON.stringify(true))
-          navigateTo(navigation, STRING.SCREEN.HOME);
-        } else {
-          props.setLoader(false);
-          setAlertMessage(res.data.message.email ? res.data.message.email : res.data.message.mobile ? res.data.message.mobile : res.data.message.otp ? res.data.message.otp : res.data.message);
-          setIsSuccess(false)
-          setIsAlert(true);
-        }
-      })
-      .catch((err) => {
-        props.setLoader(false);
-        setIsAlert(true);
-        setIsSuccess(false)
-        setAlertMessage(STRING.ALERT.WENT_WRONG);
-      });
-  };
-
-  const resend = () => {
-    props.setLoader(true);
-    const data = {
-      email,
-    };
-    comnPost("auth/sendOtp", data)
-      .then((res) => {
-        props.setLoader(false);
-        setSec(30);
-      })
-      .catch((err) => {
-        props.setLoader(false);
-      });
-  };
-
   const signInScreen = () => {
     navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN);
   };
 
   const closePopup = () => {
-    console.log('alertMessage:: ', alertMessage);
-    if (isSuccess) {
-      AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, JSON.stringify(true))
-      navigateTo(navigation, STRING.SCREEN.HOME);
-    } else if (alertMessage[0].includes("email has already")) {
-      props.setLoader(true)
-      const data = {
-        email,
-      };
-      comnPost("auth/sendOtp", data)
-        .then((res) => {
-          props.setLoader(false);
-          setSec(30);
-        })
-        .catch((err) => {
-          props.setLoader(false);
-        });
+    if (isSuccess || alertMessage.includes(STRING.TAKEN)) {
       navigateTo(navigation, STRING.SCREEN.VERIFY_OTP, { email });
     }
     setIsAlert(false)
@@ -342,7 +275,6 @@ const SignUp = ({ navigation, ...props }) => {
         setLocationError(false)
         props.setLoader(false)
         setFetchingText("")
-        Register()
       },
       (error) => {
         setLocationStatus(error.message);
@@ -503,46 +435,6 @@ const SignUp = ({ navigation, ...props }) => {
             </View>
           </View>
         </ScrollView>
-        <Popup
-          message={STRING.ALERT.OTP_SENT}
-          visible={isVerify}
-          Component={
-            <View>
-              {OTP.map((field, index) => {
-                return (
-                  <TextField
-                    name={field.name}
-                    label={field.name}
-                    placeholder={field.placeholder}
-                    fieldType={field.type}
-                    length={field.length}
-                    required={field.required}
-                    disabled={field.disabled}
-                    value={otp}
-                    setChild={(v) => setOtp(v)}
-                    style={styles.otpContainerStyle}
-                    inputContainerStyle={styles.inputContainerStyle}
-                    isSecure={field.isSecure}
-                  />
-                );
-              })}
-              <View style={{ marginVertical: 10 }}>
-                {sec >= 1 ? (
-                  <GlobalText text={`${STRING.RESEND_WITHIN}${sec > 9 ? sec : "0" + sec})`} style={styles.whiteText} />
-                ) : (
-                  <View>
-                    <GlobalText text={STRING.DIDNT_RECEIVE} />
-                    <TouchableOpacity onPress={() => resend()}>
-                      <GlobalText text={STRING.RESEND} />
-                    </TouchableOpacity>
-                  </View>
-                )}
-              </View>
-            </View>
-          }
-          onPress={verifyOtp}
-          toggleOverlay={() => setIsVerify(false)}
-        />
         <Popup
           message={alertMessage}
           visible={isAlert}

@@ -134,7 +134,7 @@ const EmailSignIn = ({ navigation, route, ...props }) => {
       email,
       otp,
     };
-    comnPost("auth/verifyOtp", data)
+    comnPost("v2/auth/verifyOtp", data)
       .then((res) => {
         if (res.data.success) {
           // setIsAlert(true);
@@ -184,7 +184,7 @@ const EmailSignIn = ({ navigation, route, ...props }) => {
           if (res.data?.data?.isVerified) {
             props.setLoader(false);
           } else {
-            comnPost("auth/sendOtp", data)
+            comnPost("v2/auth/sendOtp", data)
               .then((res) => {
                 props.setLoader(false);
                 setSec(30);

@@ -43,6 +43,7 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
   const [isOtpSent, setIsOtpSent] = useState(false)
 
   useEffect(() => {
+    resend()
     if (!isVerified) {
       setIsOtpSent(true)
     }
@@ -84,9 +85,10 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
       };
       myUrl = "v2/auth/login"
     }
-
+console.log('data::: ', data);
     comnPost(myUrl, data)
       .then((res) => {
+        console.log('res::: ', res);
         if (res.data.success) {
           AsyncStorage.setItem(STRING.STORAGE.ACCESS_TOKEN, res.data.data.access_token);
           AsyncStorage.setItem(STRING.STORAGE.USER_ID, res.data.data.user.id);
@@ -96,7 +98,7 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
           navigateTo(navigation, STRING.SCREEN.HOME);
         } else {
           setIsAlert(true);
-          setAlertMessage(res.data.message.otp ? res.data.message.otp : res.data.message);
+          setAlertMessage(res.data.message?.otp ? res.data.message?.otp : res.data.message);
           props.setLoader(false);
           setIsSuccess(false)
         }
@@ -120,7 +122,8 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
       email,
     };
     setOtp(null)
-    comnPost("auth/sendOtp", data)
+    console.log('data--- ', data);
+    comnPost("v2/auth/sendOtp", data)
       .then((res) => {
         props.setLoader(false);
         setSec(30);

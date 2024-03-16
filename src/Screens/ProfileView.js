@@ -174,6 +174,8 @@ const ProfileView = ({ navigation, route, ...props }) => {
         if (res && res.data.data)
           saveToStorage(STRING.STORAGE.PROFILE_RESPONSE, JSON.stringify(res))
         setProfile(res.data.data); // Update places state with response data
+        // setCurrentLatitude(parseInt(res.data.data?.addresses[0]?.latitude))
+        // setCurrentLongitude(parseInt(res.data.data?.addresses[0]?.longitude))
         props.setLoader(false);
       })
       .catch((error) => {
@@ -263,7 +265,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
             : null
           }
         </View>
-        {/* <GlobalText text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed etullamcorper nisi."} style={styles.bioText}></GlobalText> */}
+        <GlobalText text={JSON.stringify(profile)} style={styles.bioText}></GlobalText>
       </View>
       {/* <View style={styles.statsContainer}>
         <View style={styles.statContainer}>
