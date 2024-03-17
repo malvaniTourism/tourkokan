@@ -39,19 +39,12 @@ import NetInfo from "@react-native-community/netinfo";
 import CheckNet from "../Components/Common/CheckNet";
 
 const ProfileView = ({ navigation, route, ...props }) => {
-  const [currentLatitude, setCurrentLatitude] = useState(37.4220936);
-  const [currentLongitude, setCurrentLongitude] = useState(-122.083922);
+  const [currentLatitude, setCurrentLatitude] = useState();
+  const [currentLongitude, setCurrentLongitude] = useState();
   const [locationStatus, setLocationStatus] = useState("");
   const [watchID, setWatchID] = useState("");
   const [showLocModal, setShowLocModal] = useState(false);
-  const [initialRegion, setInitialRegion] = useState(
-    {
-      latitude: currentLatitude,
-      longitude: currentLongitude,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421
-    }
-  )
+  const [initialRegion, setInitialRegion] = useState({})
   const [profile, setProfile] = useState([]);
   const [error, setError] = useState(null);
   const [offline, setOffline] = useState(false)
@@ -160,22 +153,28 @@ const ProfileView = ({ navigation, route, ...props }) => {
 
   const setInitialLocation = (lat, long) => {
     let myInitialRegion = {
-      latitude: lat || 37.4220936,
-      longitude: long || -122.083922,
+      latitude: parseFloat(lat) || 47.4220936,
+      longitude: parseFloat(long) || -122.083922,
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
     };
+    console.log(myInitialRegion);
     setInitialRegion(myInitialRegion)
   }
 
+  const setLocationMap = (lat, long) => {
+    setInitialLocation(lat, long)
+    setCurrentLatitude(parseFloat(lat));
+    setCurrentLongitude(parseFloat(long))
+  }
+
   const getUserProfile = () => {
-    comnPost("v2/user-profile", props.access_token)
+    comnPost("v2/user-profile", props.access_token, navigation)
       .then((res) => {
         if (res && res.data.data)
           saveToStorage(STRING.STORAGE.PROFILE_RESPONSE, JSON.stringify(res))
         setProfile(res.data.data); // Update places state with response data
-        // setCurrentLatitude(parseInt(res.data.data?.addresses[0]?.latitude))
-        // setCurrentLongitude(parseInt(res.data.data?.addresses[0]?.longitude))
+        setLocationMap(res.data.data.addresses[0].latitude, res.data.data.addresses[0].longitude)
         props.setLoader(false);
       })
       .catch((error) => {
@@ -231,7 +230,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
       <Loader />
 
       <View style={styles.headerContainer}>
-        {currentLatitude &&
+        {initialRegion.latitude &&
           <View style={styles.profileMapView}>
             <MapView style={styles.map} initialRegion={initialRegion}>
               <Marker

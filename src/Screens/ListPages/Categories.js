@@ -68,7 +68,7 @@ const Categories = ({ route, navigation, ...props }) => {
             // parent_id: 1,
             per_page: "2"
         };
-        comnPost("v2/listcategories", data)
+        comnPost("v2/listcategories", data, navigation)
             .then((res) => {
                 if (res && res.data.data)
                     saveToStorage(STRING.STORAGE.CATEGORIES_RESPONSE, JSON.stringify(res))

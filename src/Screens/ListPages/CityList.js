@@ -71,7 +71,7 @@ const CityList = ({ navigation, route, ...props }) => {
       parent_id: route?.params?.parent_id,
       category: route?.params?.subCat || "other"
     };
-    comnPost("v2/sites", data)
+    comnPost("v2/sites", data, navigation)
       .then((res) => {
         if (res && res.data.data)
           saveToStorage(STRING.STORAGE.CITIES_RESPONSE, JSON.stringify(res))

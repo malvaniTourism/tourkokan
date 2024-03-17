@@ -4,8 +4,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import STRING from "../Constants/STRINGS";
 import NetInfo from "@react-native-community/netinfo";
 import ComingSoon from "../../Components/Common/ComingSoon";
+import { navigateTo } from "../CommonMethods";
 
-export const comnGet = async (url, apiToken) => {
+export const comnGet = async (url, apiToken, navigation) => {
   let myUrl = Path.API_PATH + url;
   const config = {
     headers: { Authorization: `Bearer ${apiToken}` },
@@ -14,10 +15,16 @@ export const comnGet = async (url, apiToken) => {
   return axios
     .get(myUrl, config)
     .then((res) => res)
-    .catch((err) => err);
+    .catch((err) => {
+      if (err.response.status == 401) {
+        AsyncStorage.clear()
+        navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN)
+      }
+      return err
+    });
 };
 
-export const comnPost = async (url, data) => {
+export const comnPost = async (url, data, navigation) => {
   const myUrl = Path.API_PATH + url;
   const token = await AsyncStorage.getItem(STRING.STORAGE.ACCESS_TOKEN);
   const config = {
@@ -30,10 +37,16 @@ export const comnPost = async (url, data) => {
   return axios
     .post(myUrl, data, config)
     .then((res) => res)
-    .catch((err) => err);
+    .catch((err) => {
+      if (err.response.status == 401) {
+        AsyncStorage.clear()
+        navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN)
+      }
+      return err
+    });
 };
 
-export const comnPut = async (url, data) => {
+export const comnPut = async (url, data, navigation) => {
   const myUrl = Path.API_PATH + url;
   const config = {
     headers: { Authorization: `Bearer ${localStorage.getItem(STRING.STORAGE.API_TOKEN)}` },
@@ -42,10 +55,16 @@ export const comnPut = async (url, data) => {
   return axios
     .put(myUrl, data, config)
     .then((res) => res)
-    .catch((err) => err);
+    .catch((err) => {
+      if (err.response.status == 401) {
+        AsyncStorage.clear()
+        navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN)
+      }
+      return err
+    });
 };
 
-export const ComnDel = async (url, data) => {
+export const ComnDel = async (url, data, navigation) => {
   const myUrl = Path.API_PATH + url;
   const config = {
     headers: { Authorization: `Bearer ${localStorage.getItem(STRING.STORAGE.API_TOKEN)}` },
@@ -54,7 +73,13 @@ export const ComnDel = async (url, data) => {
   return axios
     .delete(myUrl, data, config)
     .then((res) => res)
-    .catch((err) => err);
+    .catch((err) => {
+      if (err.response.status == 401) {
+        AsyncStorage.clear()
+        navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN)
+      }
+      return err
+    });
 };
 
 export const login = async () => {
