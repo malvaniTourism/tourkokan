@@ -25,6 +25,7 @@ import Popup from "../Components/Common/Popup";
 import STRING from "../Services/Constants/STRINGS";
 import NetInfo from "@react-native-community/netinfo";
 import CheckNet from "../Components/Common/CheckNet";
+import Feather from "react-native-vector-icons/Feather";
 
 const Profile = ({ navigation, ...props }) => {
   const [profile, setProfile] = useState([]);
@@ -40,7 +41,8 @@ const Profile = ({ navigation, ...props }) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [imageSource, setImageSource] = useState(null);
   const [uploadImage, setUploadImage] = useState(null);
-  const [offline, setOffline] = useState(false)
+  const [offline, setOffline] = useState(false);
+  const [showPassword, setShowPassword] = useState(false)
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
@@ -148,6 +150,7 @@ const Profile = ({ navigation, ...props }) => {
     props.setLoader(true);
     let data = {
       email,
+      mobile,
       profile_picture: uploadImage,
       password,
       password_confirmation: cPassword
@@ -229,6 +232,19 @@ const Profile = ({ navigation, ...props }) => {
                   style={styles.containerStyle}
                   inputContainerStyle={styles.profileContainerStyle}
                   isSecure={field.isSecure}
+                  rightIcon={
+                    field.type == `${STRING.TYPE.PASSWORD}` &&
+                    <Feather
+                      name={field.isSecure ? "eye" : "eye-off"}
+                      size={24}
+                      color={COLOR.logoBlue}
+                      onPress={() => {
+                        field.isSecure = !showPassword
+                        setShowPassword(!showPassword)
+                      }}
+                      style={styles.eyeIcon}
+                    />
+                  }
                 />
               );
             })}

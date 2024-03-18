@@ -181,20 +181,8 @@ const EmailSignIn = ({ navigation, route, ...props }) => {
     comnPost("v2/auth/isVerifiedEmail", data)
       .then((res) => {
         if (res.data?.success) {
-          if (res.data?.data?.isVerified) {
-            props.setLoader(false);
-          } else {
-            comnPost("v2/auth/sendOtp", data)
-              .then((res) => {
-                props.setLoader(false);
-                setSec(30);
-              })
-              .catch((err) => {
-                props.setLoader(false);
-              });
-            props.setLoader(false);
-          }
-          navigateTo(navigation, STRING.SCREEN.VERIFY_OTP, { email, isVerified: res.data?.data?.isVerified })
+          props.setLoader(false);
+          navigateTo(navigation, STRING.SCREEN.VERIFY_OTP, { email, isVerified: res.data?.data?.isVerified ? true : false })
         } else {
           setIsAlert(true);
           setIsSuccess(false)

@@ -30,6 +30,7 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
   const [nextUrl, setNextUrl] = useState(1)
   const [source, setSource] = useState(route?.params?.source);
   const [destination, setDestination] = useState(route?.params?.destination);
+  const [isFirstTime, setIsFirstTime] = useState(true);
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -49,6 +50,7 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
             setOffline(true)
           }
           setIsLoading(false)
+          props.setLoader(false)
         })
       // removeFromStorage(STRING.STORAGE.LANDING_RESPONSE)
     });
@@ -64,12 +66,15 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
   };
 
   const searchRoute = (a, b, isNext) => {
+    console.log('a-- - ', a);
     if (nextPage >= 1) {
       setIsLoading(true);
+      props.setLoader(true)
       const data = {
         source_place_id: a || source?.id,
         destination_place_id: b || destination?.id,
       };
+      console.log('data: ', data);
       comnPost(`v2/routes?page=${isNext ? nextPage : 1}`, data, navigation)
         .then((res) => {
           if (res.data.success) {
@@ -83,12 +88,18 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
               setList([...res.data.data.data])
             setNextPage(myNextUrl[myNextUrl.length - 1])
             setIsLoading(false);
+            setIsFirstTime(false);
+            props.setLoader(false)
           } else {
             setIsLoading(false);
+            setIsFirstTime(false);
+            props.setLoader(false)
           }
         })
         .catch((err) => {
           setIsLoading(false);
+          setIsFirstTime(false);
+          props.setLoader(false)
         });
     }
   };
@@ -118,6 +129,7 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
   return (
     <View>
       <CheckNet isOff={offline} />
+      <Loader />
       <Header
         name={STRING.HEADER.ROUTES}
         goBack={() => backPage(navigation)}
@@ -133,15 +145,15 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
       {/* <Loader /> */}
       <View style={styles.routesSearchPanelView}>
         {
-          isLoading ?
+          isFirstTime && isLoading ?
             <RoutesSearchPanelSkeleton />
             :
-            <RoutesSearchPanel mySource={source} myDestination={destination} setSourceId={(v) => setSource(v)} setDestinationId={(v) => setDestination(v)} route={route} navigation={navigation} from={STRING.SCREEN.ALL_ROUTES_SEARCH} searchRoutes={() => searchRoute()} onSwap={(a, b) => searchRoute(a, b)} />
+            <RoutesSearchPanel mySource={source} myDestination={destination} setSourceId={(v) => setSource(v)} setDestinationId={(v) => setDestination(v)} route={route} navigation={navigation} from={STRING.SCREEN.ALL_ROUTES_SEARCH} searchRoutes={(a, b) => searchRoute(a, b)} onSwap={(a, b) => searchRoute(a, b)} />
         }
       </View>
       <SafeAreaView style={{ paddingBottom: 150, position: "relative", marginTop: 150 }}>
         {
-          isLoading ?
+          isFirstTime && isLoading ?
             <>
               <RouteHeadCardSkeleton />
               <RouteHeadCardSkeleton />

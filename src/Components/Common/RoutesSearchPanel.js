@@ -69,7 +69,7 @@ const RoutesSearchPanel = ({ mySource, myDestination, navigation, from, onSwap, 
     // setSource("")
     // setDestination("")
     if (isValid) {
-      searchRoutes()
+      searchRoutes(source.id, destination.id)
     } else setErrorText(STRING.ALERT.SOURCE_DESTINATION_REQUIRED)
   };
 
@@ -138,6 +138,7 @@ const RoutesSearchPanel = ({ mySource, myDestination, navigation, from, onSwap, 
   };
 
   const setPlace = (place) => {
+    console.log('place: ', place);
     if (fieldType == STRING.LABEL.SOURCE) {
       setSource(place);
       setSourceId(place.id)

@@ -488,6 +488,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: COLOR.themeComicBlueULight,
     },
+    eyeIcon: {
+        position: "absolute",
+        left: -40
+    },
 });
 
 export default styles;

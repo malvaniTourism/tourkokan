@@ -263,7 +263,8 @@ const styles = StyleSheet.create({
         borderRadius: DIMENSIONS.borderRadius,
         padding: 15,
         alignSelf: "center",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        marginBottom: 10
     },
     placeDetailsOverlay: {
         width: DIMENSIONS.bannerWidth - 40,
@@ -272,7 +273,8 @@ const styles = StyleSheet.create({
         borderRadius: DIMENSIONS.borderRadius,
         padding: 15,
         alignSelf: "center",
-        justifyContent: "space-evenly"
+        justifyContent: "space-evenly",
+        marginBottom: 10
     },
     cityName: {
         fontSize: DIMENSIONS.headerTextSize,

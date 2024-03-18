@@ -41,7 +41,6 @@ const SignUp = ({ navigation, ...props }) => {
   const [alertMessage, setAlertMessage] = useState("");
   const [isAlert, setIsAlert] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [locationError, setLocationError] = useState(false);
   const [isLocationEnabled, setIsLocationEnabled] = useState(false);
   const [latitude, setCurrentLatitude] = useState(null);
   const [longitude, setCurrentLongitude] = useState(null);
@@ -181,14 +180,11 @@ const SignUp = ({ navigation, ...props }) => {
       setNotValid(true)
     } else {
       setNotValid(false)
-      if (latitude == null || longitude == null) {
-        setLocationError(true)
         myLocationPress()
-      } else Register()
     }
   }
 
-  const Register = () => {
+  const Register = (lat, long) => {
       props.setLoader(true);
       const data = {
         name: name,
@@ -198,8 +194,8 @@ const SignUp = ({ navigation, ...props }) => {
         // password_confirmation: cpassword,
         // role_id: role.id,
         profile_picture: uploadImage,
-        latitude: latitude.toString(),
-        longitude: longitude.toString()
+        latitude: lat.toString(),
+        longitude: long.toString()
       };
       console.log('data::: ', data);
       comnPost("v2/auth/register", data)
@@ -229,7 +225,7 @@ const SignUp = ({ navigation, ...props }) => {
   };
 
   const closePopup = () => {
-    if (isSuccess || alertMessage.includes(STRING.TAKEN)) {
+    if (alertMessage[0].includes(STRING.TAKEN) || isSuccess) {
       navigateTo(navigation, STRING.SCREEN.VERIFY_OTP, { email });
     }
     setIsAlert(false)
@@ -268,11 +264,11 @@ const SignUp = ({ navigation, ...props }) => {
     Geolocation.getCurrentPosition(
       (position) => {
         setLocationStatus(STRING.YOU_ARE_HERE);
-        const currentLongitude = position.coords.longitude;
         const currentLatitude = position.coords.latitude;
-        setCurrentLongitude(currentLongitude);
+        const currentLongitude = position.coords.longitude;
         setCurrentLatitude(currentLatitude);
-        setLocationError(false)
+        setCurrentLongitude(currentLongitude);
+        Register(currentLatitude, currentLongitude)
         props.setLoader(false)
         setFetchingText("")
       },
@@ -288,11 +284,10 @@ const SignUp = ({ navigation, ...props }) => {
     let WatchID = Geolocation.watchPosition(
       (position) => {
         setLocationStatus(STRING.YOU_ARE_HERE);
-        const currentLongitude = position.coords.longitude;
         const currentLatitude = position.coords.latitude;
-        setCurrentLongitude(currentLongitude);
+        const currentLongitude = position.coords.longitude;
         setCurrentLatitude(currentLatitude);
-        setLocationError(false);
+        setCurrentLongitude(currentLongitude);
         props.setLoader(false);
       },
       (error) => {

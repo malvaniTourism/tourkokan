@@ -127,7 +127,7 @@ export const ProfileFields = [
     type: STRING.TYPE.PHONE,
     length: DIMENSIONS.mobileLength,
     required: true,
-    disabled: true,
+    disabled: false,
   },
   {
     name: STRING.LABEL.EMAIL,

@@ -301,7 +301,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
           onPress={() => setShowLocModal(true)}
         />
       </View>
-      <View style={{ flexDirection: "row", justifyContent: "space-evenly", marginTop: 30 }}>
+      <View style={{ flexDirection: "row", justifyContent: "space-evenly", marginVertical: 30 }}>
         <TextButton
           title={STRING.BUTTON.LOGOUT}
           seeMoreStyle={styles.logoutStyle}
