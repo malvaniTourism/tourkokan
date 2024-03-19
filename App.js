@@ -18,6 +18,7 @@ import TextButton from './src/Components/Customs/Buttons/TextButton';
 import Feather from "react-native-vector-icons/Feather";
 import styles from './src/Screens/Styles';
 import analytics from '@react-native-firebase/analytics';
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 LogBox.ignoreAllLogs();
 LogBox.ignoreLogs(['Warning: ...', 'Possible Unhandled Promise Rejection']);
@@ -46,21 +47,21 @@ export default function App() {
       key: 1,
       title: 'Title 1',
       text: 'Description.\nSay something cool',
-      image: require('./src/Assets/Images/Intro/1.png'),
+      image: require('./src/Assets/Images/Intro/Page-1.png'),
       backgroundColor: '#fff',
     },
     {
       key: 2,
       title: 'Title 2',
       text: 'Other cool stuff',
-      image: require('./src/Assets/Images/Intro/2.png'),
+      image: require('./src/Assets/Images/Intro/Page-2.png'),
       backgroundColor: '#fff',
     },
     {
       key: 3,
       title: 'Title 3',
       text: 'I\'m already out of descriptions\n\nLorem ipsum bla bla bla',
-      image: require('./src/Assets/Images/Intro/3.png'),
+      image: require('./src/Assets/Images/Intro/Page-3.png'),
       backgroundColor: '#fff',
     }
   ];
@@ -69,6 +70,7 @@ export default function App() {
     return (
       <View style={[styles.slide, { backgroundColor: item.backgroundColor }]}>
         {/* <GlobalText style={styles.title} text={item.title} /> */}
+        <Image source={require('./src/Assets/Images/Logos/black.png')} style={styles.introLogo} />
         <Image source={item.image} style={styles.image} />
         {/* <GlobalText style={styles.text} text={item.text} /> */}
       </View>
@@ -80,22 +82,27 @@ export default function App() {
     setIsFirstTime('false');
   };
 
-  const _renderNextButton = () => {
+  const renderNextButton = () => {
     return (
-      <TextButton
-        title={STRING.BUTTON.NEXT}
-        containerStyle={styles.showMore}
-        seeMoreStyle={styles.seeMoreStyle}
-        buttonStyle={styles.buttonStyle}
-        titleStyle={styles.titleStyle}
-        endIcon={
-          <Feather
-            name="chevrons-right"
-            size={24}
-            color={COLOR.logoBlue}
-          />
-        }
-      />
+      <View style={styles.buttonCircle}>
+        <Ionicons
+          name="arrow-forward"
+          color={COLOR.white}
+          size={30}
+        />
+      </View>
+    );
+  };
+
+  const renderDoneButton = () => {
+    return (
+      <View style={styles.buttonCircle}>
+        <Ionicons
+          name="checkmark"
+          color={COLOR.white}
+          size={30}
+        />
+      </View>
     );
   };
 
@@ -127,5 +134,7 @@ export default function App() {
     onDone={onDone}
     // renderNextButton={_renderNextButton}
     activeDotColor={COLOR.logoBlue}
+    renderDoneButton={renderDoneButton}
+    renderNextButton={renderNextButton}
   />
 }

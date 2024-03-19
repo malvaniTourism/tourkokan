@@ -458,7 +458,8 @@ const styles = StyleSheet.create({
     slide: {
         height: DIMENSIONS.screenHeight,
         alignItems: "flex-start",
-        justifyContent: "flex-start"
+        justifyContent: "flex-start",
+        flex: 1
     },
     title: {
         fontSize: DIMENSIONS.xlText,
@@ -468,11 +469,23 @@ const styles = StyleSheet.create({
         position: "absolute",
         zIndex: 10,
     },
+    introLogo: {
+        height: DIMENSIONS.iconLarge,
+        width: DIMENSIONS.iconCard,
+        // height: DIMENSIONS.iconXL,
+        // width: DIMENSIONS.iconXL,
+        resizeMode: "contain",
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        alignSelf: "center",
+        top: -15
+    },
     image: {
         height: DIMENSIONS.screenHeight,
         width: DIMENSIONS.screenWidth,
         resizeMode: "contain",
-        flex: 1,
+        flex: 4,
         top: -60
     },
     text: {
@@ -491,6 +504,14 @@ const styles = StyleSheet.create({
     eyeIcon: {
         position: "absolute",
         left: -40
+    },
+    buttonCircle: {
+        width: 40,
+        height: 40,
+        backgroundColor: COLOR.logoBlue,
+        borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
 
