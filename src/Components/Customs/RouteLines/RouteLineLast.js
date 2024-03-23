@@ -10,7 +10,7 @@ const RouteLineLast = () => {
     <View>
       <MaterialIcons
         name="location-pin"
-        color={COLOR.logoBlue}
+        color={COLOR.themeBlue}
         size={DIMENSIONS.iconBig}
         style={styles.icon}
       />

@@ -243,7 +243,7 @@ console.log('data::: ', data);
                       <Feather
                         name={field.isSecure ? "eye" : "eye-off"}
                         size={24}
-                        color={COLOR.logoBlue}
+                        color={COLOR.themeBlue}
                         onPress={() => {
                           field.isSecure = !showPassword
                           setShowPassword(!showPassword)

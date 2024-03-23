@@ -46,7 +46,7 @@ const RoutesList = ({ navigation, route }) => {
           <ListItem.Title>
             <View style={(isFirst || isLast) ? styles.listItem : styles.listItemMid}>
               <View>
-                <GlobalText text={item.site.name} style={{ color: (isFirst || isLast) ? COLOR.logoBlue : COLOR.black }} />
+                <GlobalText text={item.site.name} style={{ color: (isFirst || isLast) ? COLOR.themeBlue : COLOR.black }} />
               </View>
               <View>
                 {/* <GlobalText text={STRING.ETA + item.dept_time.slice(0, -3)} /> */}

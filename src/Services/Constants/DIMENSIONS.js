@@ -12,6 +12,7 @@ const DIMENSIONS = {
     windowWidth: ww,
 
     halfWidth: sw / 2,
+    halfHeight: sh / 2,
 
     bannerWidth: sw - 40,
     bannerHeight: (sw - 40) / 2,

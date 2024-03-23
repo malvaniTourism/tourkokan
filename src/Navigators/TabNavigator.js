@@ -25,7 +25,7 @@ const TabNavigator = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false, presentation: "modal",
-        activeTintColor: COLOR.logoBlue, // Set the active tab color
+        activeTintColor: COLOR.themeBlue, // Set the active tab color
         inactiveTintColor: COLOR.black, // Set the inactive tab color
         labelStyle: { paddingBottom: 4 }, // Add padding to the tab labels
       }}

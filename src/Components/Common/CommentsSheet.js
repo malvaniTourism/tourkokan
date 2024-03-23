@@ -41,19 +41,22 @@ const CommentsSheet = ({ openCommentsSheet, closeCommentsSheet, reload, key, com
     }
 
     const addComment = () => {
-        if (newComment.trim() !== '') {
-            setComments([...comments, { id: comments.length + 1, text: newComment }]);
-            setNewComment('');
-        }
+        // if (newComment.trim() !== '') {
+        //     setComments([...comments, { id: comments.length + 1, text: newComment }]);
+        //     setNewComment('');
+        // }
         props.setLoader(true);
         const newData = {
             comment: newComment,
             commentable_type: STRING.TABLE.SITE,
             commentable_id
         }
+        console.log('newData:: ', newData);
         comnPost("v2/comment", newData)
             .then(res => {
+                console.log('res: ', res.data);
                 getComments()
+                setNewComment("")
                 props.setLoader(false);
             })
             .catch(err => {
@@ -125,31 +128,27 @@ const CommentsSheet = ({ openCommentsSheet, closeCommentsSheet, reload, key, com
     }
 
     return (
-        <View style={{ zIndex: 100, position: "relative" }}>
+        <KeyboardAvoidingView style={{ zIndex: 100, position: "relative" }}>
             <Loader />
             <View>
                 <View style={styles.commentsHeader}>
                     <GlobalText text={STRING.HEADER.COMMENTS} style={styles.fontBold} />
                 </View>
             </View>
-            <View style={{ minHeight: DIMENSIONS.screenHeight - DIMENSIONS.bannerHeight, maxHeight: DIMENSIONS.screenHeight - DIMENSIONS.bannerHeight, overflowY: "scroll", zIndex: 100 }}>
-                <ScrollView>
-                    {comments ? (
-                        <FlatList
-                            data={comments}
-                            keyExtractor={(item) => item.id.toString()}
-                            renderItem={renderComments}
-                            showsVerticalScrollIndicator
-                            scrollEnabled
-                            scrollToOverflowEnabled
-                        />
-                    ) : (
-                        <View style={[styles.noComments, { flex: 1 }]}>
-                            <GlobalText text={STRING.NO_COMMENTS} style={styles.fontBold} />
-                            <GlobalText text={STRING.START_CONVO} />
-                        </View>
-                    )}
-                </ScrollView>
+            <View style={{ overflowY: "scroll", zIndex: 100 }}>
+                {comments ? (
+                    <FlatList
+                        nestedScrollEnabled={true}
+                        data={comments}
+                        keyExtractor={(item) => item.id.toString()}
+                        renderItem={renderComments}
+                    />
+                ) : (
+                    <View style={[styles.noComments, { flex: 1 }]}>
+                        <GlobalText text={STRING.NO_COMMENTS} style={styles.fontBold} />
+                        <GlobalText text={STRING.START_CONVO} />
+                    </View>
+                )}
                 <KeyboardAvoidingView
                     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                     style={styles.commentInputBox}
@@ -163,7 +162,7 @@ const CommentsSheet = ({ openCommentsSheet, closeCommentsSheet, reload, key, com
                             fieldType={field.type}
                             length={field.length}
                             required={field.required}
-                            disabled={index === 1 && (source.name === "" || source.name === null)}
+                            disabled={index === 1 && (source?.name === "" || source?.name === null)}
                             value={newComment}
                             setChild={(val) => setComment(val)}
                             style={styles.routesSearchPanelField}
@@ -173,7 +172,7 @@ const CommentsSheet = ({ openCommentsSheet, closeCommentsSheet, reload, key, com
                                 <FontAwesome
                                     style={styles.sendIcon}
                                     name="send"
-                                    color={isActive ? COLOR.logoBlue : COLOR.grey}
+                                    color={isActive ? COLOR.themeBlue : COLOR.grey}
                                     size={DIMENSIONS.iconBig}
                                     onPress={isActive ? addComment : null}
                                 />
@@ -182,7 +181,7 @@ const CommentsSheet = ({ openCommentsSheet, closeCommentsSheet, reload, key, com
                     ))}
                 </KeyboardAvoidingView>
             </View>
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 

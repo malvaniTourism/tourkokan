@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   topMenu: {
-    backgroundColor: COLOR.logoBlue,
+    backgroundColor: COLOR.themeBlue,
     width: DIMENSIONS.windowWidth,
     flexDirection: "row",
     justifyContent: "space-between",
@@ -74,34 +74,21 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   fieldsView: {
-    borderWidth: .5,
-    borderColor: COLOR.logoBlue,
-    borderRadius: DIMENSIONS.borderRadius,
-    paddingBottom: 10,
-    backgroundColor: COLOR.white
   },
   textContainerStyle: {
     width: DIMENSIONS.bannerWidth,
     marginBottom: -32
   },
   inputContainerStyle: {
-    borderWidth: .5,
-    borderRadius: DIMENSIONS.borderRadius,
-    borderColor: COLOR.grey,
-    width: DIMENSIONS.bannerWidth - 25
+    borderRadius: DIMENSIONS.borderRadiusSmall,
+    backgroundColor: COLOR.lightGrey,
+    width: DIMENSIONS.bannerWidth,
+    borderColor: COLOR.lightGrey
   },
   searchPanelField: {
     borderWidth: 0,
-    paddingLeft: 40,
   },
   routesFieldsView: {
-    borderWidth: .5,
-    borderColor: COLOR.logoBlue,
-    borderRadius: DIMENSIONS.borderRadius,
-    paddingBottom: 10,
-    backgroundColor: COLOR.white,
-    alignItems: "flex-start",
-    flexDirection: "row"
   },
   routesTextContainerStyle: {
     width: DIMENSIONS.bannerWidth / 2,
@@ -117,45 +104,39 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     paddingLeft: 40,
   },
-  routesSwapIcon: {
-    position: "absolute",
-    top: "30%",
-    left: "44%"
-  },
-  routesRefreshIcon: {
-    position: "absolute",
-    top: 56,
-    left: "44%"
-  },
   searchButtonContainerStyle: {
     marginTop: 10,
-    borderRadius: DIMENSIONS.borderRadiusSmall,
+    borderRadius: DIMENSIONS.borderRadiusXS,
+    alignItems: "flex-end",
+    elevation: 0
   },
   searchButtonSkeleton: {
     height: 50,
-    width: DIMENSIONS.bannerWidth,
-    borderRadius: DIMENSIONS.borderRadiusSmall,
-    marginTop: 10
+    width: DIMENSIONS.bannerWidth / 2,
+    borderRadius: DIMENSIONS.borderRadiusXS,
+    marginTop: 10,
+    alignSelf: "flex-end"
   },
   searchButtonStyle: {
     height: 50,
-    backgroundColor: COLOR.logoBlue,
-    borderRadius: DIMENSIONS.borderRadiusSmall,
+    width: DIMENSIONS.bannerWidth / 3,
+    backgroundColor: COLOR.themeBlue,
+    borderRadius: DIMENSIONS.borderRadiusXS,
   },
   searchButtonDisable: {
     height: 50,
     backgroundColor: COLOR.grey,
-    borderRadius: DIMENSIONS.borderRadiusSmall,
+    borderRadius: DIMENSIONS.borderRadiusXS,
   },
   buttonTitleStyle: {
-    color: COLOR.logoYellow,
+    color: COLOR.white,
     fontWeight: "bold",
   },
   headerMain: {
     // flex: 1,
     height: DIMENSIONS.headerHeight,
     width: DIMENSIONS.screenWidth,
-    backgroundColor: COLOR.logoBlue,
+    backgroundColor: COLOR.themeBlue,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -167,15 +148,34 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: COLOR.white
   },
+  inputBusIcon: {
+    position: "absolute",
+    top: 16,
+    left: 3
+  },
+  pannelIcons: {
+    position: "absolute",
+    justifyContent: "flex-end",
+    flexDirection: "row",
+    width: "90%"
+  },
   swapIcon: {
     position: "absolute",
-    top: "38%",
-    left: "80%"
+    top: 88,
+    right: 40
   },
   refreshIcon: {
     position: "absolute",
-    top: 120,
-    left: "45%"
+    top: 88,
+  },
+  routesSwapIcon: {
+    position: "absolute",
+    top: 50,
+    right: 40
+  },
+  routesRefreshIcon: {
+    position: "absolute",
+    top: 50,
   },
   errorText: {
     color: COLOR.red,
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
     top: -70,
     borderWidth: 2,
     borderRadius: DIMENSIONS.borderRadiusSmall,
-    borderColor: COLOR.logoBlue,
+    borderColor: COLOR.themeBlue,
     backgroundColor: COLOR.cardBackground
   },
   dropCloseIcon: {
@@ -266,11 +266,10 @@ const styles = StyleSheet.create({
     color: COLOR.greyDark
   },
   commentInputBox: {
-    position: "absolute",
-    marginTop: DIMENSIONS.screenHeight - (DIMENSIONS.headerSpace * 2 - 20),
+    // position: "absolute",
     zIndex: 10,
     backgroundColor: COLOR.white,
-    paddingBottom: 50
+    paddingBottom: 10
   },
   commentTextContainerStyle: {
     width: DIMENSIONS.screenWidth,
@@ -283,8 +282,18 @@ const styles = StyleSheet.create({
     width: DIMENSIONS.screenWidth - 10
   },
   sendIcon: {
-      position: "absolute",
-      left: -40
+    position: "absolute",
+    left: -40
+  },
+  profilePhoto: {
+    height: DIMENSIONS.iconXXL,
+    width: DIMENSIONS.iconXXL,
+    resizeMode: "contain"
+  },
+  instructionText: {
+    textAlign: "justify",
+    fontSize: 16,
+    color: COLOR.black
   }
 });
 

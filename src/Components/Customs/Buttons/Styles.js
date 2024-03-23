@@ -6,6 +6,8 @@ const styles = StyleSheet.create({
   buttonView: {
     overflow: "hidden",
     borderRadius: DIMENSIONS.borderRadiusXS,
+    elevation: 0,
+    backgroundColor: "transparent"
   },
   containerStyle: {
     width: DIMENSIONS.bannerWidth,
@@ -14,7 +16,7 @@ const styles = StyleSheet.create({
   },
   buttonStyle: {
     width: DIMENSIONS.bannerWidth,
-    backgroundColor: COLOR.logoBlue,
+    backgroundColor: COLOR.themeBlue,
   },
   titleStyle: {
     color: COLOR.logoYellow,
@@ -41,8 +43,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   selectedCircle: {
-    borderColor: COLOR.logoBlue,
-    shadowColor: COLOR.logoBlue,
+    borderColor: COLOR.themeBlue,
+    shadowColor: COLOR.themeBlue,
   shadowOffset: { width: 4, height: 4 },
   shadowOpacity: 1,
   shadowRadius: 2,

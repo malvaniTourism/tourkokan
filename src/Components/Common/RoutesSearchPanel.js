@@ -31,7 +31,7 @@ const RoutesSearchPanel = ({ mySource, myDestination, navigation, from, onSwap, 
   const [destination, setDestination] = useState(myDestination);
 
   useEffect(() => {
-    // setSource(props.source.name || "");
+    // setSource(props.source?.name || "");
     // setDestination(props.destination.name || "");
     // checkIsValid()
     checkIsValid()
@@ -163,14 +163,14 @@ const RoutesSearchPanel = ({ mySource, myDestination, navigation, from, onSwap, 
   const closeDropdown = () => {
     setPlacesList([])
     if (fieldType == STRING.LABEL.SOURCE) {
-      setSource({name: ""})
+      setSource({ name: "" })
     } else {
-      setDestination({name: ""})
+      setDestination({ name: "" })
     }
   }
 
   return (
-    <View style={{ marginVertical: 20 }}>
+    <View style={{ marginBottom: 20 }}>
       <View style={styles.routesFieldsView}>
         {SrcDest.map((field, index) => {
           return (
@@ -185,36 +185,29 @@ const RoutesSearchPanel = ({ mySource, myDestination, navigation, from, onSwap, 
               disabled={index == 1 && (source?.name == "" || source?.name == null)}
               value={getValue(index)}
               setChild={(val, i) => setValue(val, i, index, field.name)}
-              style={styles.routesSearchPanelField}
-              containerStyle={styles.routesTextContainerStyle}
-              inputContainerStyle={styles.routesInputContainerStyle}
-              leftIcon={
-                <Ionicons
-                  style={styles.swapIcon}
-                  name="bus"
-                  color={COLOR.grey}
-                  size={DIMENSIONS.iconBig}
-                  onPress={isValid ? swap : null}
-                />
-              }
+              style={styles.searchPanelField}
+              containerStyle={styles.textContainerStyle}
+              inputContainerStyle={styles.inputContainerStyle}
             />
           );
         })}
-        <MaterialIcons
-          style={styles.routesSwapIcon}
-          name="swap-horizontal-circle"
-          color={isValid ? COLOR.logoBlue : COLOR.grey}
-          size={DIMENSIONS.iconLarge}
-          onPress={isValid ? swap : null}
-        />
+        <View style={styles.pannelIcons}>
+          <MaterialIcons
+            style={styles.routesSwapIcon}
+            name="swap-vert-circle"
+            color={isValid ? COLOR.black : COLOR.grey}
+            size={DIMENSIONS.iconLarge}
+            onPress={isValid ? swap : null}
+          />
+          <Ionicons
+            style={styles.routesRefreshIcon}
+            name="refresh-circle"
+            color={source?.name ? COLOR.black : COLOR.grey}
+            size={DIMENSIONS.iconLarge}
+            onPress={source?.name ? refresh : null}
+          />
+        </View>
       </View>
-      <Ionicons
-        style={styles.routesRefreshIcon}
-        name="refresh-circle"
-        color={source?.name ? COLOR.logoBlue : COLOR.grey}
-        size={DIMENSIONS.iconLarge}
-        onPress={source?.name ? refresh : null}
-      />
 
       <View style={{ minHeight: 20 }}>
         {!isValid &&
@@ -229,10 +222,10 @@ const RoutesSearchPanel = ({ mySource, myDestination, navigation, from, onSwap, 
         containerStyle={styles.searchButtonContainerStyle}
         buttonStyle={styles.searchButtonStyle}
         titleStyle={styles.buttonTitleStyle}
-        raised={true}
+        raised={false}
         onPress={gotoRoutes}
       />
-      <View style={{position: "relative"}}>
+      <View style={{ position: "relative" }}>
         {placesList[0] &&
           <SearchDropdown placesList={placesList} goToNext={goToNext} setPlace={setPlace} closeDropdown={() => closeDropdown()} />
         }

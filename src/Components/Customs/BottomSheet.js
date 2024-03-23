@@ -11,7 +11,7 @@ const BottomSheet = ({ refRBSheet, height, Component, openLocationSheet, closeLo
             <RBSheet
                 ref={refRBSheet}
                 closeOnDragDown={true}
-                closeOnPressMask={false}
+                closeOnPressMask={true}
                 height={height}
                 openDuration={250}
                 customStyles={{
@@ -19,7 +19,7 @@ const BottomSheet = ({ refRBSheet, height, Component, openLocationSheet, closeLo
                         backgroundColor: "transparent"
                     },
                     draggableIcon: {
-                        backgroundColor: COLOR.logoBlue
+                        backgroundColor: COLOR.themeBlue
                     }
                 }}
             >

@@ -12,7 +12,7 @@ import { navigateTo } from "../../Services/CommonMethods";
 import GlobalText from "../Customs/Text";
 import STRING from "../../Services/Constants/STRINGS";
 
-const TopComponent = ({ navigation, openLocationSheet, currentCity, gotoProfile }) => {
+const TopComponent = ({ navigation, openLocationSheet, currentCity, gotoProfile, profilePhoto }) => {
 
   const openDrawer = () => {
     navigation.openDrawer();
@@ -24,7 +24,7 @@ const TopComponent = ({ navigation, openLocationSheet, currentCity, gotoProfile 
 
   return (
     <View style={styles.topComponent}>
-      <StatusBar backgroundColor={COLOR.logoBlue} />
+      <StatusBar backgroundColor={COLOR.themeBlue} />
       <View style={styles.topMenu}>
         <View style={styles.locationView}>
           <Ionicons

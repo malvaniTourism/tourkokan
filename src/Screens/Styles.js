@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
         width: "auto"
     },
     contactButtonStyle: {
-        backgroundColor: COLOR.logoBlue,
+        backgroundColor: COLOR.themeBlue,
         width: "auto",
         paddingVertical: 13
     },
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
         marginBottom: 20
     },
     titleStyle: {
-        color: COLOR.logoBlue
+        color: COLOR.themeBlue
     },
     buttonSkeleton: {
         width: DIMENSIONS.bannerWidth / 2,
@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
         height: DIMENSIONS.detailsImage,
         borderRadius: DIMENSIONS.borderRadiusLarge,
         borderWidth: .5,
-        borderColor: COLOR.logoBlue
+        borderColor: COLOR.themeBlue
     },
     bioContainer: {
         padding: 15,
@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
         justifyContent: "flex-end",
     },
     citiesButtonTitleStyle: {
-        color: COLOR.logoBlue,
+        color: COLOR.themeBlue,
         textAlign: "right"
     },
     containerHome: {
@@ -386,13 +386,13 @@ const styles = StyleSheet.create({
         marginVertical: 30
     },
     profileButtonStyle: {
-        backgroundColor: COLOR.logoBlue,
+        backgroundColor: COLOR.themeBlue,
         width: "auto",
         paddingVertical: 13
     },
     horizontalCityScroll: {
         minHeight: DIMENSIONS.iconXXL,
-        marginTop: -40,
+        marginTop: -10,
         marginBottom: 10
     },
     citiesButtonScroll: {
@@ -450,10 +450,8 @@ const styles = StyleSheet.create({
     },
     routesSearchPanelView: {
         alignItems: "center",
-        position: "absolute",
         zIndex: 20,
         alignSelf: "center",
-        marginTop: 20
     },
     slide: {
         height: DIMENSIONS.screenHeight,
@@ -463,7 +461,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: DIMENSIONS.xlText,
-        color: COLOR.logoBlue,
+        color: COLOR.themeBlue,
         fontWeight: "bold",
         alignSelf: "center",
         position: "absolute",
@@ -508,7 +506,7 @@ const styles = StyleSheet.create({
     buttonCircle: {
         width: 40,
         height: 40,
-        backgroundColor: COLOR.logoBlue,
+        backgroundColor: COLOR.themeBlue,
         borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',

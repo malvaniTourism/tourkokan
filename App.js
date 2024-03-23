@@ -111,7 +111,7 @@ export default function App() {
     return (
       <View style={styles.loadingContainer}>
         {/* Customize this loading view according to your app's design */}
-        <ActivityIndicator size="large" color={COLOR.logoBlue} />
+        <ActivityIndicator size="large" color={COLOR.themeBlue} />
       </View>
     );
   }
@@ -133,7 +133,7 @@ export default function App() {
     data={slides}
     onDone={onDone}
     // renderNextButton={_renderNextButton}
-    activeDotColor={COLOR.logoBlue}
+    activeDotColor={COLOR.themeBlue}
     renderDoneButton={renderDoneButton}
     renderNextButton={renderNextButton}
   />

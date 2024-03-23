@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     fontSize: DIMENSIONS.headerTextSize,
     padding: 10,
     paddingBottom: 10,
-    color: COLOR.logoBlue,
+    color: COLOR.themeBlue,
     backgroundColor: COLOR.white,
     borderRadius: DIMENSIONS.borderRadius,
     marginTop: 10
@@ -168,11 +168,11 @@ const styles = StyleSheet.create({
   },
   choiceText: {
     marginVertical: 20,
-    color: COLOR.logoBlue,
+    color: COLOR.themeBlue,
     fontWeight: "600"
   },
   sendOTPText: {
-    color: COLOR.logoBlue,
+    color: COLOR.themeBlue,
     fontWeight: "600"
   },
   addProfileView: {

@@ -31,7 +31,7 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
   const [destination, setDestination] = useState({});
 
   useEffect(() => {
-    // setSource(props.source.name || "");
+    // setSource(props.source?.name || "");
     // setDestination(props.destination.name || "");
     // checkIsValid()
     checkIsValid()
@@ -167,6 +167,7 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
   return (
     <View style={{ marginVertical: 20 }}>
       <View style={styles.fieldsView}>
+        <GlobalText text={STRING.UNCOVER} style={styles.instructionText} />
         {SrcDest.map((field, index) => {
           return (
             <TextField
@@ -177,39 +178,41 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
               fieldType={field.type}
               length={field.length}
               required={field.required}
-              disabled={index == 1 && (source.name == "" || source.name == null)}
+              disabled={index == 1 && (source?.name == "" || source?.name == null)}
               value={getValue(index)}
               setChild={(val, i) => setValue(val, i, index, field.name)}
               style={styles.searchPanelField}
               containerStyle={styles.textContainerStyle}
               inputContainerStyle={styles.inputContainerStyle}
-              leftIcon={
-                <Ionicons
-                  style={styles.swapIcon}
-                  name="bus"
-                  color={COLOR.grey}
-                  size={DIMENSIONS.iconBig}
-                  onPress={isValid ? swap : null}
-                />
-              }
+              // leftIcon={
+              //   <Ionicons
+              //     style={styles.inputBusIcon}
+              //     name="bus"
+              //     color={COLOR.grey}
+              //     size={DIMENSIONS.iconBig}
+              //     onPress={isValid ? swap : null}
+              //   />
+              // }
             />
           );
         })}
-        <MaterialIcons
-          style={styles.swapIcon}
-          name="swap-vert-circle"
-          color={isValid ? COLOR.logoBlue : COLOR.grey}
-          size={DIMENSIONS.iconLarge}
-          onPress={isValid ? swap : null}
-        />
+        <View style={styles.pannelIcons}>
+          <MaterialIcons
+            style={styles.swapIcon}
+            name="swap-vert-circle"
+            color={isValid ? COLOR.black : COLOR.grey}
+            size={DIMENSIONS.iconLarge}
+            onPress={isValid ? swap : null}
+          />
+          <Ionicons
+            style={styles.refreshIcon}
+            name="refresh-circle"
+            color={source?.name ? COLOR.black : COLOR.grey}
+            size={DIMENSIONS.iconLarge}
+            onPress={source?.name ? refresh : null}
+          />
+        </View>
       </View>
-      <Ionicons
-        style={styles.refreshIcon}
-        name="refresh-circle"
-        color={source.name ? COLOR.logoBlue : COLOR.grey}
-        size={DIMENSIONS.iconLarge}
-        onPress={source.name ? refresh : null}
-      />
 
       <View style={{ minHeight: 20 }}>
         {!isValid &&
@@ -219,15 +222,15 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
           />
         }
       </View>
-        <TextButton
-          title={STRING.BUTTON.SEARCH}
-          containerStyle={styles.searchButtonContainerStyle}
-          buttonStyle={styles.searchButtonStyle}
-          titleStyle={styles.buttonTitleStyle}
-          raised={true}
-          onPress={gotoRoutes}
-        />
-        <View style={{ position: "relative", marginTop: -32 }}>
+      <TextButton
+        title={STRING.BUTTON.SEARCH}
+        containerStyle={styles.searchButtonContainerStyle}
+        buttonStyle={styles.searchButtonStyle}
+        titleStyle={styles.buttonTitleStyle}
+        raised={false}
+        onPress={gotoRoutes}
+      />
+      <View style={{ position: "relative", marginTop: -32 }}>
         {placesList[0] &&
           <SearchDropdown placesList={placesList} goToNext={goToNext} setPlace={setPlace} closeDropdown={() => closeDropdown()} />
         }

@@ -11,7 +11,7 @@ const RouteLineFirst = () => {
       <View style={styles.routeLineFirst}></View>
       <MaterialIcons
         name="my-location"
-        color={COLOR.logoBlue}
+        color={COLOR.themeBlue}
         size={DIMENSIONS.iconBig}
         style={styles.icon}
       />

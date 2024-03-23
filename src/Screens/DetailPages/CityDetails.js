@@ -30,6 +30,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
     const [cityId, setCityId] = useState(route.params.id);
     const [isFav, setIsFav] = useState(false);
     const [rating, setRating] = useState(0)
+    const [commentCount, setCommentCount] = useState(0)
 
     useEffect(() => {
         const backHandler = goBackHandler(navigation)
@@ -52,6 +53,8 @@ const CityDetails = ({ navigation, route, ...props }) => {
                     setCity(res.data.data);
                     setIsFav(res.data.data.is_favorite)
                     setRating(res.data.data.rating_avg_rate)
+                    console.log(res.data.data);
+                    setCommentCount(res.data.data.comment_count)
                     props.setLoader(false);
                 } else {
                     setError(res.data.message);
@@ -159,7 +162,8 @@ const CityDetails = ({ navigation, route, ...props }) => {
                             <ImageBackground source={require("../../Assets/Images/nature.jpeg")} style={styles.placeImage} imageStyle={styles.cityImageStyle} resizeMode="cover" />
                         }
                         <View style={{ alignItems: "flex-end", top: 50, right: 7 }}>
-                            <TouchableOpacity style={styles.cityLikeView} onPress={() => openCommentsSheet()}>
+                            <TouchableOpacity style={styles.cityLikeView}>
+                                <GlobalText text={commentCount} style={styles.avgRating} />
                                 <Octicons name="comment" color={COLOR.black} size={DIMENSIONS.iconSize} />
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.cityLikeView}>
@@ -211,7 +215,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
             }
             <BottomSheet
                 refRBSheet={refRBSheet}
-                height={DIMENSIONS.screenHeight - DIMENSIONS.headerSpace}
+                height={DIMENSIONS.halfHeight + 50}
                 Component={<CommentsSheet
                     key={city.comment?.length}
                     commentable_type={STRING.TABLE.SITE}

@@ -52,10 +52,13 @@ const StackNavigator = () => {
   return (
     <Suspense fallback={<GlobalText text={STRING.ALERT.LOADING} />}>
       <NavigationContainer linking={linking}>
-        <Stack.Navigator>
+        <Stack.Navigator
+        screenOptions={{
+          cardStyle: { backgroundColor: '#fff' }
+        }}>
           {isLoggedIn ? (
             // Screens for logged in users
-            <Stack.Group screenOptions={{ headerShown: false }}>
+            <Stack.Group screenOptions={{ headerShown: false, cardStyle: { backgroundColor: '#fff' }}}>
               <Stack.Screen
                 name={STRING.SCREEN.ROOT}
                 component={DrawerNavigator}
@@ -65,14 +68,14 @@ const StackNavigator = () => {
             </Stack.Group>
           ) : (
             // Auth screens
-            <Stack.Group screenOptions={{ headerShown: false }}>
+            <Stack.Group screenOptions={{ headerShown: false, cardStyle: { backgroundColor: '#fff' }}}>
               <Stack.Screen name={STRING.SCREEN.EMAIL_SIGN_IN} component={EmailSignIn} />
               {/* <Stack.Screen name="SignUp" component={SignUp} /> */}
             </Stack.Group>
           )}
           {/* Common modal screens */}
           <Stack.Group
-            screenOptions={{ headerShown: false, presentation: "modal" }}
+            screenOptions={{ headerShown: false, presentation: "modal", cardStyle: { backgroundColor: '#fff' } }}
           >
             <Stack.Screen
               name="Home"

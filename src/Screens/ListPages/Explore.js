@@ -209,7 +209,7 @@ const Explore = ({ route, navigation, ...props }) => {
                 <Feather
                   name="chevrons-right"
                   size={24}
-                  color={COLOR.logoBlue}
+                  color={COLOR.themeBlue}
                 />
               }
             />

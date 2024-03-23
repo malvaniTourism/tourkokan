@@ -333,7 +333,7 @@ const SignUp = ({ navigation, ...props }) => {
                   <View style={styles.addProfileView}>
                     <FontIcons
                     name="user-circle"
-                    color={COLOR.logoBlue}
+                    color={COLOR.themeBlue}
                     size={DIMENSIONS.iconLarge}
                     style={{marginBottom: 10}}
                   />
@@ -355,7 +355,7 @@ const SignUp = ({ navigation, ...props }) => {
                   :
                   <IonIcons
                     name="location"
-                    color={COLOR.logoBlue}
+                    color={COLOR.themeBlue}
                     size={DIMENSIONS.iconLarge}
                     style={styles.userIcon}
                   />
@@ -397,7 +397,7 @@ const SignUp = ({ navigation, ...props }) => {
                     <Feather
                       name={field.isSecure ? "eye" : "eye-off"}
                       size={24}
-                      color={COLOR.logoBlue}
+                      color={COLOR.themeBlue}
                       onPress={() => {
                         field.isSecure = !showPassword
                         setShowPassword(!showPassword)

@@ -76,7 +76,8 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         },
     ]);
     const [bannerObject, setBannerObject] = useState([])
-    const [currentCity, setCurrentCity] = useState(STRING.CITY.DEVGAD)
+    const [currentCity, setCurrentCity] = useState(STRING.CITY.DEVGAD);
+    const [profilePhoto, setProfilePhoto] = useState('')
 
     useEffect(() => {
         const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => exitApp());
@@ -92,6 +93,25 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         SplashScreen.hide();
         const unsubscribe = NetInfo.addEventListener(state => {
             setOffline(false)
+
+            dataSync(STRING.STORAGE.PROFILE_RESPONSE, getUserProfile())
+                .then(resp => {
+                    let res = JSON.parse(resp)
+                    if (res.data && res.data.data) {
+                        setIsFetching(false)
+                        setIsLoading(false)
+                        // setCategories(res.data.data.categories);
+                        // setProjects(res.data.data.projects);
+                        // setStops(res.data.data.stops);
+                        // setPlace_category(res.data.data.place_category);
+                        // setPlaces(res.data.data.places);
+                    } else if (resp) {
+                        setOffline(true)
+                        setIsFetching(false)
+                        setIsLoading(false)
+                    }
+                    props.setLoader(false);
+                })
 
             dataSync(STRING.STORAGE.LANDING_RESPONSE, callLandingPageAPI())
                 .then(resp => {
@@ -170,6 +190,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         comnPost("v2/user-profile", props.access_token, navigation)
             .then((res) => {
                 props.setLoader(false);
+                setProfilePhoto(res.data.data.profile_picture);
                 AsyncStorage.setItem(STRING.STORAGE.USER_NAME, res.data.data.name)
                 AsyncStorage.setItem(STRING.STORAGE.USER_ID, JSON.stringify(res.data.data.id))
                 AsyncStorage.setItem(STRING.STORAGE.USER_EMAIL, JSON.stringify(res.data.data.email))
@@ -211,12 +232,12 @@ const HomeScreen = ({ navigation, route, ...props }) => {
     }
 
     return (
-        <ScrollView stickyHeaderIndices={[0]}>
+        <ScrollView stickyHeaderIndices={[0]} style={{backgroundColor: COLOR.white}}>
             {
                 isLoading ?
                     <TopComponentSkeleton />
                     :
-                    <TopComponent currentCity={currentCity} navigation={navigation} openLocationSheet={() => openLocationSheet()} gotoProfile={() => openProfile()} />
+                    <TopComponent currentCity={currentCity} navigation={navigation} openLocationSheet={() => openLocationSheet()} gotoProfile={() => openProfile()} profilePhoto={profilePhoto} />
             }
             <CheckNet isOff={offline} />
             {/* <MyAnimatedLoader isVisible={isLoading} /> */}
@@ -241,7 +262,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                 />
                             );
                         })} */}
-                <View style={{ marginTop: -59 }}>
+                <View>
                     {
                         isLoading ?
                             <SearchPanelSkeleton />
@@ -281,7 +302,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                     <Feather
                                         name="chevrons-right"
                                         size={24}
-                                        color={COLOR.logoBlue}
+                                        color={COLOR.themeBlue}
                                     />
                                 }
                             />
@@ -326,7 +347,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                     <Feather
                                         name="chevrons-right"
                                         size={24}
-                                        color={COLOR.logoBlue}
+                                        color={COLOR.themeBlue}
                                     />
                                 }
                             />
