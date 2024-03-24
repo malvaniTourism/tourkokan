@@ -35,6 +35,8 @@ import CityCardSkeleton from "../Components/Cards/CityCardSkeleton";
 import { Skeleton } from "@rneui/themed";
 import SearchPanelSkeleton from "../Components/Common/SearchPanelSkeleton";
 import TopComponentSkeleton from "../Components/Common/TopComponentSkeleton";
+import CityCardSmall from "../Components/Cards/CityCardSmall";
+import CityCardSmallSkeleton from "../Components/Cards/CityCardSmallSkeleton";
 
 const HomeScreen = ({ navigation, route, ...props }) => {
     const refRBSheet = useRef();
@@ -262,7 +264,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                 />
                             );
                         })} */}
-                <View>
+                <View style={{ marginTop: 25 }}>
                     {
                         isLoading ?
                             <SearchPanelSkeleton />
@@ -311,17 +313,17 @@ const HomeScreen = ({ navigation, route, ...props }) => {
 
                 <View style={styles.sectionView}>
                     <GlobalText text={STRING.SCREEN.CITIES} style={styles.sectionTitle} />
-                    <View>
+                    <ScrollView horizontal>
                         {
                             isLoading ?
                                 <>
-                                    <CityCardSkeleton />
-                                    <CityCardSkeleton />
-                                    <CityCardSkeleton />
+                                    <CityCardSmallSkeleton />
+                                    <CityCardSmallSkeleton />
+                                    <CityCardSmallSkeleton />
                                 </>
                                 :
                                 cities.map((city, index) => (
-                                    <CityCard
+                                    <CityCardSmall 
                                         data={city}
                                         reload={() => {
                                             callLandingPageAPI()
@@ -331,7 +333,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                     />
                                 ))
                         }
-                    </View>
+                    </ScrollView>
                     {
                         isLoading ?
                             <Skeleton animation="pulse" variant="text" style={styles.buttonSkeleton} />

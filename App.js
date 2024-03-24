@@ -32,7 +32,6 @@ export default function App() {
   useEffect(async () => {
     try {
       const isFirstTimeValue = await AsyncStorage.getItem(STRING.STORAGE.IS_FIRST_TIME);
-      console.log('isFirstTimeValue:', isFirstTimeValue);
       setIsFirstTime(isFirstTimeValue);
       setLoading(false);
     } catch (error) {

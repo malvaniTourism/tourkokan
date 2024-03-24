@@ -100,7 +100,6 @@ const PasswordLogin = ({ navigation, route, ...props }) => {
                     navigateTo(navigation, STRING.SCREEN.HOME);
                 } else {
                     setIsAlert(true);
-                    console.log(res.data.message);
                     setAlertMessage(res.data.message.email ? res.data.message.email : res.data.message.password ? res.data.message.password : res.data.message);
                     props.setLoader(false);
                     setIsSuccess(false)

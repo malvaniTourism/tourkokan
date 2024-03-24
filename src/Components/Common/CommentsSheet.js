@@ -51,10 +51,8 @@ const CommentsSheet = ({ openCommentsSheet, closeCommentsSheet, reload, key, com
             commentable_type: STRING.TABLE.SITE,
             commentable_id
         }
-        console.log('newData:: ', newData);
         comnPost("v2/comment", newData)
             .then(res => {
-                console.log('res: ', res.data);
                 getComments()
                 setNewComment("")
                 props.setLoader(false);

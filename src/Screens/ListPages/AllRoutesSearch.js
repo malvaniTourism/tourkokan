@@ -66,7 +66,6 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
   };
 
   const searchRoute = (a, b, isNext) => {
-    console.log('a-- - ', a);
     if (nextPage >= 1) {
       setIsLoading(true);
       props.setLoader(true)
@@ -74,7 +73,7 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
         source_place_id: a || source?.id,
         destination_place_id: b || destination?.id,
       };
-      console.log('data: ', data);
+      console.log('data:: ', data);
       comnPost(`v2/routes?page=${isNext ? nextPage : 1}`, data, navigation)
         .then((res) => {
           if (res.data.success) {
@@ -127,7 +126,7 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
   };
 
   return (
-    <View style={{backgroundColor: COLOR.white}}>
+    <View style={{ backgroundColor: COLOR.white }}>
       <CheckNet isOff={offline} />
       <Loader />
       <Header
@@ -136,7 +135,7 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
         startIcon={
           <Ionicons
             name="chevron-back-outline"
-            color={COLOR.white}
+            color={COLOR.black}
             size={DIMENSIONS.userIconSize}
             onPress={() => backPage(navigation)}
           />
@@ -166,7 +165,7 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
               <FlatList
                 keyExtractor={(item) => item.id}
                 data={list}
-                onEndReached={() => searchRoute("", "", true)}
+                onEndReached={() => searchRoute(source, destination, true)}
                 onEndReachedThreshold={0.5}
                 renderItem={({ item }) => (
                   <RouteHeadCard data={item} cardClick={() => getRoutesList(item)} style={styles.routeHeadCard} />

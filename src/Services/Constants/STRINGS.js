@@ -183,6 +183,7 @@ const STRING = {
   COMING_SOON: "Coming Soon...",
   NON_RESERVATION: "Non Reservation",
   STOPS: "Stops",
+  KM: "km",
   LOCATION_ACCESS_REQUIRED: "Location Access Required",
   NEEDS_TO_ACCESS: "This App needs to Access your location",
   PERMISSION_DENIED: "Permission Denied",

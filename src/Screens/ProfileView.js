@@ -223,7 +223,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
             name="chevron-back-outline"
             size={24}
             onPress={() => backPage(navigation)}
-            color={COLOR.white}
+            color={COLOR.black}
           />
         }
       />

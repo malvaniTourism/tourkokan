@@ -197,7 +197,6 @@ const SignUp = ({ navigation, ...props }) => {
         latitude: lat.toString(),
         longitude: long.toString()
       };
-      console.log('data::: ', data);
       comnPost("v2/auth/register", data)
         .then((res) => {
           if (res.data.success) {

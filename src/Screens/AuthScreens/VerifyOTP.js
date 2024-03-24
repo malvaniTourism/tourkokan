@@ -85,10 +85,9 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
       };
       myUrl = "v2/auth/login"
     }
-console.log('data::: ', data);
+
     comnPost(myUrl, data)
       .then((res) => {
-        console.log('res::: ', res);
         if (res.data.success) {
           AsyncStorage.setItem(STRING.STORAGE.ACCESS_TOKEN, res.data.data.access_token);
           AsyncStorage.setItem(STRING.STORAGE.USER_ID, res.data.data.user.id);
@@ -122,7 +121,6 @@ console.log('data::: ', data);
       email,
     };
     setOtp(null)
-    console.log('data--- ', data);
     comnPost("v2/auth/sendOtp", data)
       .then((res) => {
         props.setLoader(false);

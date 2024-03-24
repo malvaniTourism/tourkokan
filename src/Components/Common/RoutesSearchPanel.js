@@ -138,7 +138,6 @@ const RoutesSearchPanel = ({ mySource, myDestination, navigation, from, onSwap, 
   };
 
   const setPlace = (place) => {
-    console.log('place: ', place);
     if (fieldType == STRING.LABEL.SOURCE) {
       setSource(place);
       setSourceId(place.id)

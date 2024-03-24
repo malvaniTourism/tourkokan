@@ -53,7 +53,6 @@ const CityDetails = ({ navigation, route, ...props }) => {
                     setCity(res.data.data);
                     setIsFav(res.data.data.is_favorite)
                     setRating(res.data.data.rating_avg_rate)
-                    console.log(res.data.data);
                     setCommentCount(res.data.data.comment_count)
                     props.setLoader(false);
                 } else {

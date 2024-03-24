@@ -139,11 +139,12 @@ const Explore = ({ route, navigation, ...props }) => {
   return (
     <View style={{ flex: 1, justifyContent: "flex-start" }}>
       <CheckNet isOff={offline} />
-      <Header name={""}
+      <Header
+        name={STRING.SCREEN.CITIES}
         startIcon={
           <Ionicons
             name="chevron-back-outline"
-            color={COLOR.white}
+            color={COLOR.black}
             size={DIMENSIONS.userIconSize}
             onPress={() => backPage(navigation)}
           />

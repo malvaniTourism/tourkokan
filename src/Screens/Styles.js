@@ -75,7 +75,8 @@ const styles = StyleSheet.create({
     sectionTitle: {
         fontWeight: "bold",
         fontSize: DIMENSIONS.headerTextSize,
-        color: COLOR.cancelButton
+        color: COLOR.cancelButton,
+        marginBottom: 20
     },
     cardsWrap: {
         flexDirection: "row",
@@ -511,6 +512,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    catIconStyle: {
+        height: DIMENSIONS.iconXXL - 20,
+        width: DIMENSIONS.iconXXL - 20,
+        borderRadius: DIMENSIONS.borderRadiusLarge,
+        resizeMode: "cover"
+    }
 });
 
 export default styles;

@@ -6,7 +6,8 @@ const { StyleSheet } = require("react-native");
 const styles = StyleSheet.create({
     flexRow: {
         flexDirection: "row",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        alignItems: "center"
     },
     placeContainer: {
         alignSelf: "center",
@@ -124,6 +125,7 @@ const styles = StyleSheet.create({
     },
     routeHeadCard: {
         height: DIMENSIONS.bannerHeight / 2 + 32,
+        // height: "auto",
         width: DIMENSIONS.bannerWidth,
         backgroundColor: COLOR.white,
         alignSelf: "center",
@@ -135,7 +137,6 @@ const styles = StyleSheet.create({
     },
     routeHeadCardTitle: {
         fontWeight: "bold",
-        color: COLOR.themeBlue,
         lineHeight: 25,
         fontSize: DIMENSIONS.subtitleTextSize,
         textAlign: "left"
@@ -155,7 +156,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
-
     cityCardSkeleton: {
         width: DIMENSIONS.bannerWidth,
         height: DIMENSIONS.bannerWidth + 20,
@@ -282,6 +282,83 @@ const styles = StyleSheet.create({
     },
     boldText: {
         fontWeight: "bold"
+    },
+    cityCardSmall: {
+        width: DIMENSIONS.bannerWidth / 2,
+        height: DIMENSIONS.bannerHeight + 90,
+        elevation: 10,
+        margin: 10,
+        padding: 10,
+        backgroundColor: COLOR.white,
+        borderRadius: DIMENSIONS.borderRadius,
+        justifyContent: "space-between"
+    },
+    citySmallImage: {
+        width: DIMENSIONS.bannerWidth / 2,
+        height: DIMENSIONS.bannerHeight + 90,
+        position: "absolute"
+    },
+    citySmallDetailsOverlay: {
+        width: DIMENSIONS.bannerWidth / 2 - 10,
+        height: "auto",
+        backgroundColor: COLOR.white,
+        borderRadius: DIMENSIONS.borderRadiusSmall,
+        padding: 10,
+        alignSelf: "center",
+        justifyContent: "space-between",
+        marginBottom: 5,
+        textAlign: "left"
+    },
+    citySmallLikeView: {
+        backgroundColor: COLOR.white,
+        height: 30,
+        width: 30,
+        borderRadius: DIMENSIONS.borderRadius,
+        right: 5,
+        top: 0,
+        marginBottom: 10,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    cityStarView: {
+        backgroundColor: COLOR.white,
+        height: 35,
+        width: 100,
+        left: 10,
+        top: 10,
+        borderRadius: DIMENSIONS.borderRadius,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    citySmallName: {
+        fontSize: DIMENSIONS.textSize,
+        fontWeight: "bold",
+        textAlign: "left"
+    },
+    citySmallTagLine: {
+        fontSize: DIMENSIONS.textSizeSmall,
+        textAlign: "left"
+    },
+    citySmallStarView: {
+        backgroundColor: COLOR.white,
+        height: 30,
+        width: 80,
+        left: 10,
+        top: 10,
+        borderRadius: DIMENSIONS.borderRadius,
+        justifyContent: "center",
+        alignItems: "center",
+        alignSelf: "flex-end"
+    },
+    cityCardSmallSkeleton: {
+        width: DIMENSIONS.bannerWidth / 2,
+        height: DIMENSIONS.bannerHeight + 90,
+        borderRadius: DIMENSIONS.borderRadius,
+        elevation: 10,
+        margin: 10,
+    },
+    routeCardIcons: {
+        marginRight: 3
     }
 })
 

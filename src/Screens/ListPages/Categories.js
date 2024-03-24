@@ -21,6 +21,7 @@ import CheckNet from "../../Components/Common/CheckNet";
 import ImageButton from "../../Components/Customs/Buttons/ImageButton";
 import SubCatCard from "../../Components/Cards/SubCatCard";
 import ImageButtonSkeleton from "../../Components/Customs/Buttons/ImageButtonSkeleton";
+import Path from "../../Services/Api/BaseUrl";
 
 const Categories = ({ route, navigation, ...props }) => {
     const refRBSheet = useRef();
@@ -102,11 +103,12 @@ const Categories = ({ route, navigation, ...props }) => {
         <View style={{ flex: 1, justifyContent: "flex-start" }}>
             <Loader />
             <CheckNet isOff={offline} />
-            <Header name={""}
+            <Header
+                name={STRING.SCREEN.CATEGORIES}
                 startIcon={
                     <Ionicons
                         name="chevron-back-outline"
-                        color={COLOR.white}
+                        color={COLOR.black}
                         size={DIMENSIONS.userIconSize}
                         onPress={() => backPage(navigation)}
                     />
@@ -130,7 +132,8 @@ const Categories = ({ route, navigation, ...props }) => {
                                     icon={"bus"}
                                     onPress={() => handleCategoryPress(category)}
                                     isSelected={selectedCategory === category.name}
-                                    image={category.image}
+                                    image={category.icon}
+                                    buttonIcon={styles.catIconStyle}
                                     text={
                                         <GlobalText text={category.name} style={styles.categoryButtonText} />
                                     }

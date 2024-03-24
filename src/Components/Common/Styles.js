@@ -9,17 +9,16 @@ const styles = StyleSheet.create({
   },
   topComponent: {
     width: DIMENSIONS.windowWidth,
-    borderBottomLeftRadius: DIMENSIONS.borderRadiusSmall,
-    borderBottomRightRadius: DIMENSIONS.borderRadiusSmall,
   },
   userIcon: {
     margin: 10,
   },
   topMenu: {
-    backgroundColor: COLOR.themeBlue,
+    backgroundColor: COLOR.white,
     width: DIMENSIONS.windowWidth,
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     zIndex: 10,
   },
   locationView: {
@@ -136,7 +135,7 @@ const styles = StyleSheet.create({
     // flex: 1,
     height: DIMENSIONS.headerHeight,
     width: DIMENSIONS.screenWidth,
-    backgroundColor: COLOR.themeBlue,
+    backgroundColor: COLOR.white,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -146,7 +145,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: DIMENSIONS.headerTextSize,
     textAlign: "center",
-    color: COLOR.white
+    color: COLOR.black
   },
   inputBusIcon: {
     position: "absolute",
@@ -293,8 +292,35 @@ const styles = StyleSheet.create({
   instructionText: {
     textAlign: "justify",
     fontSize: 16,
-    color: COLOR.black
-  }
+    color: COLOR.black,
+    flexWrap: "wrap"
+  },
+  locationPill: {
+    backgroundColor: COLOR.lightGrey,
+    borderRadius: DIMENSIONS.borderRadiusSmall,
+    flexDirection: "row",
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: DIMENSIONS.halfWidth - 70
+  },
+  profileIconView: {
+    width: DIMENSIONS.iconX,
+    height: DIMENSIONS.iconX,
+    borderRadius: DIMENSIONS.borderRadiusXXS,
+    borderWidth: 3,
+    borderColor: COLOR.lightGrey,
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 10
+  },
+  profileIcon: {
+    width: DIMENSIONS.iconLarge,
+    height: DIMENSIONS.iconLarge,
+    resizeMode: "cover",
+    borderRadius: DIMENSIONS.borderRadiusXXS,
+  },
 });
 
 export default styles;
