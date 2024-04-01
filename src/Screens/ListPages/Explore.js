@@ -8,7 +8,7 @@ import { checkTokenExpired, comnGet, comnPost, dataSync, saveToStorage } from ".
 import { connect } from "react-redux";
 import { setLoader } from "../../Reducers/CommonActions";
 import Loader from "../../Components/Customs/Loader";
-import styles from "../Styles";
+import styles from "./Styles";
 import Header from "../../Components/Common/Header";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { backPage, checkLogin, goBackHandler, navigateTo } from "../../Services/CommonMethods";

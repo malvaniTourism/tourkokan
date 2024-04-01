@@ -233,6 +233,7 @@ export const ContactUsFields = [
     length: DIMENSIONS.fieldLength,
     required: true,
     disabled: false,
+    multiline: true
   },
 ]
 

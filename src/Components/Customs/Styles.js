@@ -11,7 +11,8 @@ const styles = StyleSheet.create({
   },
   textField: {
     width: DIMENSIONS.bannerWidth,
-    paddingLeft: 20
+    paddingLeft: 20,
+    textAlignVertical: "top"
   },
   textFieldContainer: {
     borderWidth: 0,

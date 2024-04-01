@@ -92,7 +92,7 @@ const ContactUs = ({ navigation, route, ...props }) => {
   }
 
   return (
-    <View>
+    <View style={{ backgroundColor: COLOR.white }}>
       <Header
         name={STRING.HEADER.CONTACT_US}
         goBack={() => backPage(navigation)}
@@ -109,7 +109,7 @@ const ContactUs = ({ navigation, route, ...props }) => {
         }
       />
       <Loader />
-      <SafeAreaView style={{ alignItems: "center" }}>
+      <SafeAreaView style={{ alignItems: "center", height: DIMENSIONS.screenHeight, backgroundColor: COLOR.white }}>
         {ContactUsFields.map((field, index) => {
           return (
             <TextField
@@ -124,6 +124,7 @@ const ContactUs = ({ navigation, route, ...props }) => {
               setChild={(v, i) => setValue(v, i, index)}
               style={styles.containerStyle}
               inputContainerStyle={styles.inputContainerStyle}
+              multiline={field.multiline}
             />
           );
         })}

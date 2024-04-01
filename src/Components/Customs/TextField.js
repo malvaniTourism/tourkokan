@@ -190,6 +190,8 @@ const TextField = (props) => {
       leftIconContainerStyle={styles.leftIconContainerStyle}
       maxLength={props.length}
       rightIcon={props.rightIcon}
+      multiline={props.multiline}
+      numberOfLines={props.multiline && 5}
     />
   );
 };

@@ -37,36 +37,9 @@ const styles = StyleSheet.create({
         width: DIMENSIONS.bannerWidth - 30,
         shadowColor: COLOR.headingColor2
     },
-    toggleView: {
-        height: DIMENSIONS.bannerHeight - 50,
-        marginBottom: 10
-    },
     overlay: {
         ...StyleSheet.absoluteFillObject,
         backgroundColor: COLOR.black,
-    },
-    exploreHeaderImage: {
-        flex: 1,
-        opacity: 0.7,
-    },
-    details: {
-        height: DIMENSIONS.bannerHeight - 50,
-        width: DIMENSIONS.bannerWidth,
-        position: "absolute",
-        alignSelf: "center",
-        justifyContent: "center",
-        textAlign: "center"
-    },
-    lineVert: {
-        borderWidth: 1,
-        borderColor: COLOR.white,
-        marginHorizontal: 20
-    },
-    whiteText: {
-        color: COLOR.white,
-        textAlign: "center",
-        fontWeight: "bold",
-        fontSize: DIMENSIONS.headerTextSize
     },
     placesList: {
         flexDirection: "row",
@@ -391,14 +364,6 @@ const styles = StyleSheet.create({
         width: "auto",
         paddingVertical: 13
     },
-    horizontalCityScroll: {
-        minHeight: DIMENSIONS.iconXXL,
-        marginTop: -10,
-        marginBottom: 10
-    },
-    citiesButtonScroll: {
-        flexDirection: "row",
-    },
     horizontalCategoriesScroll: {
         minHeight: DIMENSIONS.iconXXL,
         marginTop: -10,
@@ -445,9 +410,6 @@ const styles = StyleSheet.create({
     subCatCardsContainer: {
         flex: 3,
         overflow: "scroll"
-    },
-    cityButtonText: {
-        fontSize: DIMENSIONS.textSizeSmall
     },
     routesSearchPanelView: {
         alignItems: "center",
@@ -517,6 +479,9 @@ const styles = StyleSheet.create({
         width: DIMENSIONS.iconXXL - 20,
         borderRadius: DIMENSIONS.borderRadiusLarge,
         resizeMode: "cover"
+    },
+    buttonTitle: {
+        color: COLOR.white
     }
 });
 
