@@ -30,7 +30,7 @@ const COLOR = {
 
   lightGrey: "#F2F2F2",
   grey: "#bbb",
-  grayDark: "#888",
+  greyDark: "#888",
   greySolid: "#666",
 
   lightGreen: "#26AE60",

@@ -13,6 +13,8 @@ import STRING from "../../Services/Constants/STRINGS";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Path from "../../Services/Api/BaseUrl";
 
+StatusBar.setBarStyle('dark-content');
+
 const TopComponent = ({ navigation, openLocationSheet, currentCity, gotoProfile, profilePhoto }) => {
 
   const openDrawer = () => {

@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     color: COLOR.white
   },
   placeholderStyle: {
-    color: COLOR.grayDark
+    color: COLOR.greyDark
   },
   itemTextStyle: {
     color: COLOR.black

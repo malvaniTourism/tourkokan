@@ -29,37 +29,28 @@ const styles = StyleSheet.create({
     },
     placeImageView: {
         height: DIMENSIONS.screenHeight / 100 * 40,
-        justifyContent: "space-between"
     },
     cityLikeView: {
-        backgroundColor: COLOR.white,
+        backgroundColor: COLOR.grey,
         height: 35,
         width: 35,
         borderRadius: DIMENSIONS.borderRadius,
-        right: 5,
-        top: 10,
-        marginBottom: 10,
         justifyContent: "center",
         alignItems: "center",
-        zIndex: 2
     },
     avgRating: {
         borderRadius: DIMENSIONS.borderRadiusLarge,
-        zIndex: 10,
-        position: "absolute",
-        padding: 2,
-        color: COLOR.black,
+        marginHorizontal: 5,
+        color: COLOR.greyDark,
         fontWeight: "bold"
     },
     cityStarView: {
         backgroundColor: COLOR.white,
         height: 35,
-        width: 100,
-        left: 10,
-        top: -10,
         borderRadius: DIMENSIONS.borderRadius,
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignItems: "center",
+        flexDirection: "row"
     },
     backIcon: {
         backgroundColor: COLOR.white,
@@ -69,7 +60,13 @@ const styles = StyleSheet.create({
     detailTitle: {
         fontSize: DIMENSIONS.headerTextSize,
         fontWeight: "bold",
-        color: COLOR.headingColor2
+        textAlign: "left"
+    },
+    detailSubTitle: {
+        fontSize: DIMENSIONS.textSize,
+        fontWeight: "bold",
+        textAlign: "left",
+        color: COLOR.greyDark
     },
     sectionView: {
         marginVertical: DIMENSIONS.sectionGap,
@@ -80,6 +77,59 @@ const styles = StyleSheet.create({
         color: COLOR.yellow,
         bottom: 0,
         justifyContent: "flex-end",
+    },
+    locationPinText: {
+        fontWeight: "bold",
+        textAlign: "left",
+        color: COLOR.grey
+    },
+    flexRow: {
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    detailsTitleView: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginVertical: DIMENSIONS.sectionGap,
+    },
+    cityDescription: {
+        marginBottom: DIMENSIONS.sectionGap
+    },
+    showMore: {
+        width: "auto",
+        alignItems: "center"
+    },
+    seeMoreStyle: {
+        width: DIMENSIONS.screenWidth / 4,
+        alignItems: "center",
+        flexDirection: "row",
+        justifyContent: "flex-end",
+        marginTop: 10,
+        elevation: 10
+    },
+    buttonStyle: {
+        backgroundColor: COLOR.transparent,
+        width: "auto"
+    },
+    titleStyle: {
+        color: COLOR.themeBlue,
+        fontWeight: "200",
+        fontSize: DIMENSIONS.textSize
+    },
+    viewMapButtonStyle: {
+        backgroundColor: COLOR.themeBlue,
+        width: "auto"
+    },
+    viewMapTitle: {
+        color: COLOR.white,
+        fontWeight: "200",
+        fontSize: DIMENSIONS.textSize
+    },
+    sectionTitle: {
+        fontWeight: "bold",
+        fontSize: DIMENSIONS.headerTextSize,
+        color: COLOR.cancelButton,
+        marginBottom: 20
     },
 })
 

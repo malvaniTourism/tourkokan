@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, ScrollView, Text, ImageBackground, Image, TouchableOpacity, Share } from "react-native";
+import { View, ScrollView, Text, ImageBackground, Image, TouchableOpacity, Share, Linking } from "react-native";
 import SmallCard from "../../Components/Customs/SmallCard";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import COLOR from "../../Services/Constants/COLORS";
@@ -22,6 +22,9 @@ import Octicons from "react-native-vector-icons/Octicons";
 import CommentsSheet from "../../Components/Common/CommentsSheet";
 import BottomSheet from "../../Components/Customs/BottomSheet";
 import StarRating from "react-native-star-rating";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import ReadMore from 'react-native-read-more-text';
+import TextButton from "../../Components/Customs/Buttons/TextButton";
 
 const CityDetails = ({ navigation, route, ...props }) => {
     const refRBSheet = useRef();
@@ -125,8 +128,66 @@ const CityDetails = ({ navigation, route, ...props }) => {
         }
     };
 
+    const renderTruncatedFooter = (handlePress) => {
+        return (
+            <TextButton
+                title={STRING.BUTTON.READ_MORE}
+                onPress={handlePress}
+                containerStyle={styles.showMore}
+                seeMoreStyle={styles.seeMoreStyle}
+                buttonStyle={styles.buttonStyle}
+                titleStyle={styles.titleStyle}
+                endIcon={
+                    <Ionicons
+                        name="chevron-down"
+                        color={COLOR.themeBlue}
+                        size={DIMENSIONS.iconMedium}
+                    />
+                }
+            />
+        );
+    }
+
+    const renderRevealedFooter = (handlePress) => {
+        return (
+            <TextButton
+                title={STRING.BUTTON.READ_LESS}
+                onPress={handlePress}
+                containerStyle={styles.showMore}
+                seeMoreStyle={styles.seeMoreStyle}
+                buttonStyle={styles.buttonStyle}
+                titleStyle={styles.titleStyle}
+                endIcon={
+                    <Ionicons
+                        name="chevron-up"
+                        color={COLOR.themeBlue}
+                        size={DIMENSIONS.iconMedium}
+                    />
+                }
+            />
+        );
+    }
+
+    const handleTextReady = () => {
+        // ...
+    }
+
+    const openGoogleMaps = (latitude, longitude) => {
+        const url = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
+
+        Linking.canOpenURL(url)
+            .then(supported => {
+                if (!supported) {
+                    console.log("Can't handle url: " + url);
+                } else {
+                    return Linking.openURL(url);
+                }
+            })
+            .catch(err => console.error('An error occurred', err));
+    };
+
     return (
-        <ScrollView>
+        <ScrollView style={{ backgroundColor: "#fff" }}>
             <Loader />
             <Header
                 name={""}
@@ -139,16 +200,6 @@ const CityDetails = ({ navigation, route, ...props }) => {
                         style={styles.backIcon}
                     />
                 }
-                endIcon={
-                    <TouchableOpacity style={styles.cityLikeView} onPress={() => onHeartClick()}>
-                        {
-                            isFav ?
-                                <Octicons name="heart-fill" color={COLOR.red} size={DIMENSIONS.iconSize} />
-                                :
-                                <Octicons name="heart" color={COLOR.black} size={DIMENSIONS.iconSize} />
-                        }
-                    </TouchableOpacity>
-                }
                 style={styles.cityHeader}
             />
 
@@ -160,48 +211,71 @@ const CityDetails = ({ navigation, route, ...props }) => {
                             :
                             <ImageBackground source={require("../../Assets/Images/nature.jpeg")} style={styles.placeImage} imageStyle={styles.cityImageStyle} resizeMode="cover" />
                         }
-                        <View style={{ alignItems: "flex-end", top: 50, right: 7 }}>
-                            <TouchableOpacity style={styles.cityLikeView}>
-                                <GlobalText text={commentCount} style={styles.avgRating} />
-                                <Octicons name="comment" color={COLOR.black} size={DIMENSIONS.iconSize} />
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.cityLikeView}>
-                                {rating > 0 &&
-                                    <GlobalText text={rating.slice(0, 3)} style={styles.avgRating} />
+                    </View>
+                    <View style={{ padding: 10 }}>
+                        <View style={styles.flexRow}>
+                            <MaterialIcons
+                                name="location-pin"
+                                color={COLOR.themeBlue}
+                                size={DIMENSIONS.iconSize}
+                            />
+                            <GlobalText text={STRING.LOCATION} style={styles.locationPinText} />
+                        </View>
+
+                        <View style={styles.detailsTitleView}>
+                            <View>
+                                <GlobalText text={city.name} style={styles.detailTitle} />
+                                <GlobalText text={city.tag_line} style={styles.detailSubTitle} />
+                                <View style={styles.cityStarView}>
+                                    <StarRating
+                                        disabled={false}
+                                        maxStars={5}
+                                        rating={rating}
+                                        selectedStar={(rating) => onStarRatingPress(rating)}
+                                        starSize={14}
+                                        starStyle={styles.starStyle}
+                                        halfStarEnabled
+                                        emptyStarColor={COLOR.grey}
+                                    />
+                                    {rating > 0 &&
+                                        <GlobalText text={rating.slice(0, 3)} style={styles.avgRating} />
+                                    }
+                                    <GlobalText text={`( ${commentCount} Reviews )`} />
+                                </View>
+                            </View>
+                            <TouchableOpacity style={styles.cityLikeView} onPress={() => onHeartClick()}>
+                                {
+                                    isFav ?
+                                        <Octicons name="heart-fill" color={COLOR.red} size={DIMENSIONS.iconSize} />
+                                        :
+                                        <Octicons name="heart" color={COLOR.black} size={DIMENSIONS.iconSize} />
                                 }
-                                <Octicons name="star" color={COLOR.yellow} size={DIMENSIONS.iconSize} />
                             </TouchableOpacity>
                         </View>
-                        <View style={styles.cityStarView}>
-                            <StarRating
-                                disabled={false}
-                                maxStars={5}
-                                rating={rating}
-                                selectedStar={(rating) => onStarRatingPress(rating)}
-                                starSize={14}
-                                starStyle={styles.starStyle}
-                                halfStarEnabled
+
+                        <View style={styles.cityDescription}>
+                            <ReadMore
+                                numberOfLines={5}
+                                renderTruncatedFooter={renderTruncatedFooter}
+                                renderRevealedFooter={renderRevealedFooter}
+                                onReady={handleTextReady}>
+                                <GlobalText text={city.description} />
+                            </ReadMore>
+                        </View>
+
+                        <View style={{ justifyContent: "flex-end", flexDirection: "row" }}>
+                            <TextButton
+                                title={STRING.BUTTON.VIEW_MAP}
+                                onPress={() => openGoogleMaps(city.latitude, city.longitude)}
+                                containerStyle={styles.showMore}
+                                seeMoreStyle={styles.seeMoreStyle}
+                                buttonStyle={styles.viewMapButtonStyle}
+                                titleStyle={styles.viewMapTitle}
                             />
                         </View>
-                    </View>
-                    <View style={{ flex: 1, padding: 10 }}>
-                        <View style={styles.cityImageView}>
-                            <GlobalText text={city.name} style={styles.detailTitle} />
-                            <GlobalText text={city.tag_line} style={styles.detailTitle} />
-                        </View>
-                        <GlobalText text={city.description} style={{ textAlign: "left" }} />
-                        <GlobalText text={`projects: ${city.projects_count}`} />
-                        <GlobalText text={`places: ${city.places_count}`} />
-                        <GlobalText text={`uploads: ${city.photos_count}`} />
-                        <GlobalText text={`comments: ${city.comments_count}`} />
-                        <GlobalText text={city.latitude} />
-                        <GlobalText text={city.longitude} />
-                        <GlobalText text={`social: ${JSON.stringify(city.social_media)}`} />
-                        <GlobalText text={`contact: ${JSON.stringify(city.contact_details)}`} />
-                        <GlobalText text={`comments: ${JSON.stringify(city.comment)}`} />
-                        <GlobalText text={`photos: ${JSON.stringify(city.photos)}`} />
 
                         <View style={styles.sectionView}>
+                            <GlobalText text={STRING.SCREEN.PLACES} style={styles.sectionTitle} />
                             <ScrollView showsHorizontalScrollIndicator={false}>
                                 {city.sites && city.sites.map((place, index) => (
                                     <CityCard data={place} navigation={navigation} reload={() => getDetails()} onClick={() => getDetails(place.id)} />

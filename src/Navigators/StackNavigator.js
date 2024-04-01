@@ -77,11 +77,7 @@ const StackNavigator = () => {
           <Stack.Group
             screenOptions={{ headerShown: false, presentation: "modal", cardStyle: { backgroundColor: '#fff' } }}
           >
-            <Stack.Screen
-              name="Home"
-              component={TabNavigator}
-              options={{ headerShown: false }}
-            />
+            <Stack.Screen name={STRING.SCREEN.HOME} component={DrawerNavigator} options={{ headerShown: false }} />
             <Stack.Screen name={STRING.SCREEN.SEARCH_LIST} component={SearchList} />
             <Stack.Screen name={STRING.SCREEN.ALL_ROUTES_SEARCH} component={AllRoutesSearch} />
             <Stack.Screen name={STRING.SCREEN.ROUTES_LIST} component={RoutesList} />

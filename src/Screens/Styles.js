@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     },
     pricingOptionFeature: {
         fontSize: 14,
-        color: COLOR.grayDark,
+        color: COLOR.greyDark,
     },
     pricingOptionButton: {
         fontSize: 14,
@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
     },
     statLabel: {
         fontSize: DIMENSIONS.subtitleTextSize,
-        color: COLOR.grayDark,
+        color: COLOR.greyDark,
     },
     editButtonContainer: {
         alignSelf: "center",

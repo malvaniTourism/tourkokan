@@ -6,6 +6,8 @@ const STRING = {
     SEARCH: "Search",
     SUBMIT: "Submit",
     SEE_MORE: "See More",
+    READ_MORE: "Read More",
+    READ_LESS: "Read Less",
     CHOOSE_PLAN: "Choose Plan",
     UPDATE: "Update",
     EDIT_PROFILE: "Edit Profile",
@@ -26,7 +28,8 @@ const STRING = {
     LOGINOTP: "Login with OTP",
     LOGINPASS: "Login with Password",
     NEXT: "Next",
-    ADD_PHOTO: "Add Profile Photo"
+    ADD_PHOTO: "Add Profile Photo",
+    VIEW_MAP: "View on Map",
   },
   SCREEN: {
     ROOT: "Root",
@@ -215,7 +218,8 @@ const STRING = {
   LOG_IN_SUB: "Enter your email and choose a login option to continue.",
   CHANGE: "Click to Change Option",
   PLEASE_FILL: "Please fill all the details to Register",
-  UNCOVER: "Enter your start and end points to uncover the best routes."
+  UNCOVER: "Enter your start and end points to uncover the best routes.",
+  LOCATION: "Location",
 };
 
 export default STRING;
