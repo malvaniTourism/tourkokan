@@ -25,6 +25,8 @@ import StarRating from "react-native-star-rating";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import ReadMore from 'react-native-read-more-text';
 import TextButton from "../../Components/Customs/Buttons/TextButton";
+import CityCardSkeleton from "../../Components/Cards/CityCardSkeleton";
+import { Skeleton } from "@rneui/themed";
 
 const CityDetails = ({ navigation, route, ...props }) => {
     const refRBSheet = useRef();
@@ -33,12 +35,13 @@ const CityDetails = ({ navigation, route, ...props }) => {
     const [cityId, setCityId] = useState(route.params.id);
     const [isFav, setIsFav] = useState(false);
     const [rating, setRating] = useState(0)
-    const [commentCount, setCommentCount] = useState(0)
+    const [commentCount, setCommentCount] = useState(0);
+    const [isLoading, setLoader] = useState(true)
 
     useEffect(() => {
         const backHandler = goBackHandler(navigation)
         checkLogin(navigation)
-        props.setLoader(true);
+        setLoader(true);
         getDetails()
         return () => {
             backHandler.remove()
@@ -46,7 +49,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
     }, [cityId]);
 
     const getDetails = (place) => {
-        props.setLoader(true);
+        setLoader(true);
         let data = {
             id: place || cityId
         }
@@ -57,20 +60,20 @@ const CityDetails = ({ navigation, route, ...props }) => {
                     setIsFav(res.data.data.is_favorite)
                     setRating(res.data.data.rating_avg_rate)
                     setCommentCount(res.data.data.comment_count)
-                    props.setLoader(false);
+                    setLoader(false);
                 } else {
                     setError(res.data.message);
-                    props.setLoader(false);
+                    setLoader(false);
                 }
             })
             .catch((error) => {
                 setError(error.message); // Update error state with error message
-                props.setLoader(false);
+                setLoader(false);
             });
     }
 
     const onHeartClick = async () => {
-        props.setLoader(true)
+        setLoader(true)
         let placeData = {
             user_id: await AsyncStorage.getItem(STRING.STORAGE.USER_ID),
             favouritable_type: STRING.TABLE.SITES,
@@ -134,7 +137,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
                 title={STRING.BUTTON.READ_MORE}
                 onPress={handlePress}
                 containerStyle={styles.showMore}
-                seeMoreStyle={styles.seeMoreStyle}
+                seeMoreStyle={styles.readMoreStyle}
                 buttonStyle={styles.buttonStyle}
                 titleStyle={styles.titleStyle}
                 endIcon={
@@ -154,7 +157,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
                 title={STRING.BUTTON.READ_LESS}
                 onPress={handlePress}
                 containerStyle={styles.showMore}
-                seeMoreStyle={styles.seeMoreStyle}
+                seeMoreStyle={styles.readMoreStyle}
                 buttonStyle={styles.buttonStyle}
                 titleStyle={styles.titleStyle}
                 endIcon={
@@ -206,42 +209,62 @@ const CityDetails = ({ navigation, route, ...props }) => {
             {city &&
                 <View>
                     <View style={styles.placeImageView}>
-                        {city.image ?
-                            <ImageBackground source={{ uri: Path.FTP_PATH + city.image }} style={styles.placeImage} />
-                            :
-                            <ImageBackground source={require("../../Assets/Images/nature.jpeg")} style={styles.placeImage} imageStyle={styles.cityImageStyle} resizeMode="cover" />
+                        {
+                            isLoading ?
+                                <Skeleton animation="pulse" variant="text" style={styles.placeImage} />
+                                :
+                                city.image ?
+                                    <ImageBackground source={{ uri: Path.FTP_PATH + city.image }} style={styles.placeImage} />
+                                    :
+                                    <ImageBackground source={require("../../Assets/Images/nature.jpeg")} style={styles.placeImage} imageStyle={styles.cityImageStyle} resizeMode="cover" />
                         }
                     </View>
                     <View style={{ padding: 10 }}>
-                        <View style={styles.flexRow}>
-                            <MaterialIcons
-                                name="location-pin"
-                                color={COLOR.themeBlue}
-                                size={DIMENSIONS.iconSize}
-                            />
-                            <GlobalText text={STRING.LOCATION} style={styles.locationPinText} />
-                        </View>
+                        {
+                            isLoading ?
+                                <Skeleton animation="pulse" variant="text" style={{ width: 60, height: 20 }} />
+                                :
+                                <View style={styles.flexRow}>
+                                    <MaterialIcons
+                                        name="location-pin"
+                                        color={COLOR.themeBlue}
+                                        size={DIMENSIONS.iconSize}
+                                    />
+                                    <GlobalText text={STRING.LOCATION} style={styles.locationPinText} />
+                                </View>
+                        }
 
                         <View style={styles.detailsTitleView}>
                             <View>
-                                <GlobalText text={city.name} style={styles.detailTitle} />
-                                <GlobalText text={city.tag_line} style={styles.detailSubTitle} />
-                                <View style={styles.cityStarView}>
-                                    <StarRating
-                                        disabled={false}
-                                        maxStars={5}
-                                        rating={rating}
-                                        selectedStar={(rating) => onStarRatingPress(rating)}
-                                        starSize={14}
-                                        starStyle={styles.starStyle}
-                                        halfStarEnabled
-                                        emptyStarColor={COLOR.grey}
-                                    />
-                                    {rating > 0 &&
-                                        <GlobalText text={rating.slice(0, 3)} style={styles.avgRating} />
-                                    }
-                                    <GlobalText text={`( ${commentCount} Reviews )`} />
-                                </View>
+                                {
+                                    isLoading ?
+                                        <>
+                                            <Skeleton animation="pulse" variant="text" style={{ width: 80, height: 20 }} />
+                                            <Skeleton animation="pulse" variant="text" style={{ marginTop: 5, width: 150 }} />
+                                            <Skeleton animation="pulse" variant="text" style={{ marginTop: 12, width: 100 }} />
+                                        </>
+                                        :
+                                        <>
+                                            <GlobalText text={city.name} style={styles.detailTitle} />
+                                            <GlobalText text={city.tag_line} style={styles.detailSubTitle} />
+                                            <View style={styles.cityStarView}>
+                                                <StarRating
+                                                    disabled={false}
+                                                    maxStars={5}
+                                                    rating={rating}
+                                                    selectedStar={(rating) => onStarRatingPress(rating)}
+                                                    starSize={14}
+                                                    starStyle={styles.starStyle}
+                                                    halfStarEnabled
+                                                    emptyStarColor={COLOR.grey}
+                                                />
+                                                {rating > 0 &&
+                                                    <GlobalText text={rating.slice(0, 3)} style={styles.avgRating} />
+                                                }
+                                                <GlobalText text={`( ${commentCount} Reviews )`} />
+                                            </View>
+                                        </>
+                                }
                             </View>
                             <TouchableOpacity style={styles.cityLikeView} onPress={() => onHeartClick()}>
                                 {
@@ -253,33 +276,56 @@ const CityDetails = ({ navigation, route, ...props }) => {
                             </TouchableOpacity>
                         </View>
 
-                        <View style={styles.cityDescription}>
-                            <ReadMore
-                                numberOfLines={5}
-                                renderTruncatedFooter={renderTruncatedFooter}
-                                renderRevealedFooter={renderRevealedFooter}
-                                onReady={handleTextReady}>
-                                <GlobalText text={city.description} />
-                            </ReadMore>
-                        </View>
+                        {
+                            isLoading ?
+                                <>
+                                    <Skeleton animation="pulse" variant="text" style={{ width: 300 }} />
+                                    <Skeleton animation="pulse" variant="text" style={{ marginTop: 5, width: 320 }} />
+                                    <Skeleton animation="pulse" variant="text" style={{ marginTop: 5, width: 200 }} />
+                                    <Skeleton animation="pulse" variant="text" style={{ marginTop: 5, width: 300 }} />
+                                    <Skeleton animation="pulse" variant="text" style={{ marginTop: 5, width: 250 }} />
+                                </>
+                                :
+                                <ReadMore
+                                    numberOfLines={5}
+                                    renderTruncatedFooter={renderTruncatedFooter}
+                                    renderRevealedFooter={renderRevealedFooter}
+                                    onReady={handleTextReady}>
+                                    <GlobalText text={city.description} />
+                                </ReadMore>
+                        }
 
                         <View style={{ justifyContent: "flex-end", flexDirection: "row" }}>
-                            <TextButton
-                                title={STRING.BUTTON.VIEW_MAP}
-                                onPress={() => openGoogleMaps(city.latitude, city.longitude)}
-                                containerStyle={styles.showMore}
-                                seeMoreStyle={styles.seeMoreStyle}
-                                buttonStyle={styles.viewMapButtonStyle}
-                                titleStyle={styles.viewMapTitle}
-                            />
+                            {
+                                isLoading ?
+                                    <Skeleton animation="pulse" variant="text" style={styles.buttonSkeleton} />
+                                    :
+                                    <TextButton
+                                        title={STRING.BUTTON.VIEW_MAP}
+                                        onPress={() => openGoogleMaps(city.latitude, city.longitude)}
+                                        containerStyle={styles.showMore}
+                                        seeMoreStyle={styles.seeMoreStyle}
+                                        buttonStyle={styles.viewMapButtonStyle}
+                                        titleStyle={styles.viewMapTitle}
+                                    />
+                            }
                         </View>
 
                         <View style={styles.sectionView}>
                             <GlobalText text={STRING.SCREEN.PLACES} style={styles.sectionTitle} />
                             <ScrollView showsHorizontalScrollIndicator={false}>
-                                {city.sites && city.sites.map((place, index) => (
-                                    <CityCard data={place} navigation={navigation} reload={() => getDetails()} onClick={() => getDetails(place.id)} />
-                                ))}
+                                {
+                                    isLoading ?
+                                        <>
+                                            <CityCardSkeleton />
+                                            <CityCardSkeleton />
+                                            <CityCardSkeleton />
+                                        </>
+                                        :
+                                        city.sites && city.sites.map((place, index) => (
+                                            <CityCard data={place} navigation={navigation} reload={() => console.log('getDetails()')} onClick={() => console.log('getDetails()')} />
+                                        ))
+                                }
                             </ScrollView>
                         </View>
 
@@ -294,7 +340,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
                     commentable_type={STRING.TABLE.SITE}
                     commentable_id={city.id}
                     reload={() => getDetails()}
-                    setLoader={(v) => props.setLoader(v)}
+                    setLoader={(v) => setLoader(v)}
                     openCommentsSheet={() => openCommentsSheet()}
                     closeCommentsSheet={() => closeCommentsSheet()}
                 />}

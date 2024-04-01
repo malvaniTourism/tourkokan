@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   fieldsView: {
+    width: DIMENSIONS.bannerWidth
   },
   textContainerStyle: {
     width: DIMENSIONS.bannerWidth,

@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         textAlign: "left"
     },
     detailSubTitle: {
-        fontSize: DIMENSIONS.textSize,
+        fontSize: DIMENSIONS.textSizeSmall,
         fontWeight: "bold",
         textAlign: "left",
         color: COLOR.greyDark
@@ -95,17 +95,31 @@ const styles = StyleSheet.create({
     cityDescription: {
         marginBottom: DIMENSIONS.sectionGap
     },
+    buttonSkeleton: {
+        width: DIMENSIONS.bannerWidth / 3,
+        height: 40,
+        borderRadius: DIMENSIONS.borderRadiusXS,
+        alignSelf: "flex-end",
+        marginRight: 5,
+        marginTop: 15
+    },
     showMore: {
         width: "auto",
         alignItems: "center"
     },
     seeMoreStyle: {
-        width: DIMENSIONS.screenWidth / 4,
+        width: DIMENSIONS.screenWidth / 2,
         alignItems: "center",
         flexDirection: "row",
         justifyContent: "flex-end",
         marginTop: 10,
-        elevation: 10
+    },
+    readMoreStyle: {
+        width: DIMENSIONS.screenWidth / 2,
+        alignItems: "center",
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        marginTop: 10,
     },
     buttonStyle: {
         backgroundColor: COLOR.transparent,

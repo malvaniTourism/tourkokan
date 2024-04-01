@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: COLOR.white,
         borderRadius: DIMENSIONS.borderRadius,
-        justifyContent: "space-between"
+        justifyContent: "space-evenly"
     },
     subCatCard: {
         width: DIMENSIONS.iconCard,
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: COLOR.white,
         borderRadius: DIMENSIONS.borderRadius,
-        justifyContent: "space-between"
+        justifyContent: "space-evenly"
     },
     cityOverlay: {
         ...StyleSheet.absoluteFillObject,
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
         height: 35,
         width: 100,
         left: 10,
-        top: -10,
+        top: -20,
         borderRadius: DIMENSIONS.borderRadius,
         justifyContent: "center",
         alignItems: "center",
@@ -258,23 +258,24 @@ const styles = StyleSheet.create({
     },
     cityDetailsOverlay: {
         width: DIMENSIONS.bannerWidth - 40,
-        height: DIMENSIONS.bannerHeight - 40,
+        height: "auto",
         backgroundColor: COLOR.white,
         borderRadius: DIMENSIONS.borderRadius,
         padding: 15,
         alignSelf: "center",
         justifyContent: "space-between",
-        marginBottom: 10
+        marginBottom: 5,
+        textAlign: "left"
     },
     placeDetailsOverlay: {
         width: DIMENSIONS.bannerWidth - 40,
-        height: DIMENSIONS.bannerHeight / 2,
+        height: "auto",
         backgroundColor: COLOR.white,
         borderRadius: DIMENSIONS.borderRadius,
         padding: 15,
         alignSelf: "center",
-        justifyContent: "space-evenly",
-        marginBottom: 10
+        justifyContent: "space-between",
+        marginBottom: 5,
     },
     cityName: {
         fontSize: DIMENSIONS.headerTextSize,
