@@ -48,8 +48,7 @@ const styles = StyleSheet.create({
     sectionTitle: {
         fontWeight: "bold",
         fontSize: DIMENSIONS.headerTextSize,
-        color: COLOR.cancelButton,
-        marginBottom: 20
+        color: COLOR.black,
     },
     cardsWrap: {
         flexDirection: "row",
@@ -84,7 +83,8 @@ const styles = StyleSheet.create({
         marginBottom: 20
     },
     titleStyle: {
-        color: COLOR.themeBlue
+        color: COLOR.themeBlue,
+        fontWeight: "100"
     },
     buttonSkeleton: {
         width: DIMENSIONS.bannerWidth / 2,
@@ -92,18 +92,17 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         borderRadius: DIMENSIONS.borderRadiusXS,
         alignSelf: "flex-end",
-        marginRight: 20
+        marginLeft: DIMENSIONS.bannerWidth / 2,
     },
     showMore: {
         width: "auto",
         alignItems: "center"
     },
     seeMoreStyle: {
-        width: DIMENSIONS.bannerWidth,
+        width: DIMENSIONS.bannerWidth / 2,
         alignItems: "center",
         flexDirection: "row",
         justifyContent: "flex-end",
-        marginTop: 10
     },
     locBtnStyle: {
         width: DIMENSIONS.bannerWidth,
@@ -143,6 +142,12 @@ const styles = StyleSheet.create({
     flexRow: {
         flexDirection: "row",
         justifyContent: "space-between"
+    },
+    flexAround: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        width: DIMENSIONS.bannerWidth
     },
     prjImgContainer: {
         marginBottom: 20,

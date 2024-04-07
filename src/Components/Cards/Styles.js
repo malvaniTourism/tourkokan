@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     cityCardSmall: {
-        width: DIMENSIONS.bannerWidth / 2,
+        width: DIMENSIONS.bannerWidth / 2 - 20,
         height: DIMENSIONS.bannerHeight + 90,
         elevation: 10,
         margin: 10,
@@ -295,12 +295,12 @@ const styles = StyleSheet.create({
         justifyContent: "space-between"
     },
     citySmallImage: {
-        width: DIMENSIONS.bannerWidth / 2,
+        width: DIMENSIONS.bannerWidth / 2 - 20,
         height: DIMENSIONS.bannerHeight + 90,
         position: "absolute"
     },
     citySmallDetailsOverlay: {
-        width: DIMENSIONS.bannerWidth / 2 - 10,
+        width: DIMENSIONS.bannerWidth / 2 - 30,
         height: "auto",
         backgroundColor: COLOR.white,
         borderRadius: DIMENSIONS.borderRadiusSmall,

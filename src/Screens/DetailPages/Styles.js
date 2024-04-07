@@ -46,7 +46,6 @@ const styles = StyleSheet.create({
     },
     cityStarView: {
         backgroundColor: COLOR.white,
-        height: 35,
         borderRadius: DIMENSIONS.borderRadius,
         justifyContent: "flex-start",
         alignItems: "center",
@@ -87,10 +86,15 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center"
     },
+    flexBetween: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between"
+    },
     detailsTitleView: {
         flexDirection: "row",
         justifyContent: "space-between",
-        marginVertical: DIMENSIONS.sectionGap,
+        marginBottom: DIMENSIONS.sectionGap,
     },
     cityDescription: {
         marginBottom: DIMENSIONS.sectionGap

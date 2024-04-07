@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ImageBackground, StatusBar, View, Text, TouchableOpacity, Image } from "react-native";
+import { ImageBackground, StatusBar, View, Text, TouchableOpacity, Image, FlatList } from "react-native";
 import styles from "./Styles";
 import FontIcons from "react-native-vector-icons/FontAwesome5";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -12,10 +12,12 @@ import GlobalText from "../Customs/Text";
 import STRING from "../../Services/Constants/STRINGS";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Path from "../../Services/Api/BaseUrl";
+import SearchDropdown from "./SearchDropdown";
 
 StatusBar.setBarStyle('dark-content');
 
-const TopComponent = ({ navigation, openLocationSheet, currentCity, gotoProfile, profilePhoto }) => {
+const TopComponent = ({ navigation, openLocationSheet, currentCity, gotoProfile, profilePhoto, cities, setCurrentCity }) => {
+  const [showCities, setShowCities] = useState(false)
 
   const openDrawer = () => {
     navigation.openDrawer();
@@ -24,6 +26,15 @@ const TopComponent = ({ navigation, openLocationSheet, currentCity, gotoProfile,
   const openProfile = () => {
     gotoProfile()
   };
+
+  const toggleCityDropdown = () => {
+    setShowCities(!showCities);
+  }
+
+  const setCity = (v) => {
+    toggleCityDropdown();
+    setCurrentCity(v)
+  }
 
   return (
     <View style={styles.topComponent}>
@@ -37,14 +48,14 @@ const TopComponent = ({ navigation, openLocationSheet, currentCity, gotoProfile,
             style={{ marginRight: 20 }}
             onPress={() => openDrawer()}
           />
-          <TouchableOpacity onPress={() => openLocationSheet()} style={styles.locationPill}>
+          <TouchableOpacity onPress={() => toggleCityDropdown()} style={styles.locationPill}>
             <MaterialIcons
               name="location-pin"
               color={COLOR.themeBlue}
               size={DIMENSIONS.iconMedium}
               style={styles.routeCardIcons}
             />
-            <GlobalText text={currentCity} style={{ fontWeight: "500" }} />
+            <GlobalText text={currentCity} style={{ fontWeight: "500", textAlign: "left" }} />
             <Ionicons
               name="chevron-down"
               color={COLOR.themeBlue}
@@ -56,6 +67,13 @@ const TopComponent = ({ navigation, openLocationSheet, currentCity, gotoProfile,
           <Image source={{ uri: Path.FTP_PATH + profilePhoto }} style={styles.profileIcon} />
         </TouchableOpacity>
       </View>
+
+      {
+        showCities &&
+        <View>
+          <SearchDropdown placesList={cities} style={styles.citiesDropdown} setPlace={(v) => setCity(v.name)} closeDropdown={() => toggleCityDropdown()} />
+        </View>
+      }
     </View>
   );
 };

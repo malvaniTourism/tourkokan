@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderRadius: DIMENSIONS.borderRadiusXS,
     alignItems: "flex-end",
-    elevation: 0
+    elevation: 0,
   },
   searchButtonSkeleton: {
     height: 50,
@@ -304,7 +304,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     alignItems: "center",
     justifyContent: "space-between",
-    width: DIMENSIONS.halfWidth - 70
+    width: DIMENSIONS.halfWidth - 40
   },
   profileIconView: {
     width: DIMENSIONS.iconX,
@@ -322,6 +322,17 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     borderRadius: DIMENSIONS.borderRadiusXXS,
   },
+  citiesDropdown: {
+    zIndex: 10,
+    top: .5,
+    left: 20,
+    borderWidth: 2,
+    borderRadius: DIMENSIONS.borderRadiusSmall,
+    borderColor: COLOR.themeBlue,
+    backgroundColor: COLOR.cardBackground,
+    position: "absolute",
+    width: DIMENSIONS.halfWidth
+  }
 });
 
 export default styles;

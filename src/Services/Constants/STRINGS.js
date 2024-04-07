@@ -6,6 +6,7 @@ const STRING = {
     SEARCH: "Search",
     SUBMIT: "Submit",
     SEE_MORE: "See More",
+    SEE_ALL: "See All",
     READ_MORE: "Read More",
     READ_LESS: "Read Less",
     CHOOSE_PLAN: "Choose Plan",

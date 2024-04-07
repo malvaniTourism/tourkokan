@@ -222,15 +222,31 @@ const CityDetails = ({ navigation, route, ...props }) => {
                     <View style={{ padding: 10 }}>
                         {
                             isLoading ?
-                                <Skeleton animation="pulse" variant="text" style={{ width: 60, height: 20 }} />
+                                <>
+                                    <Skeleton animation="pulse" variant="text" style={{ width: 130, height: 20 }} />
+                                    <Skeleton animation="pulse" variant="text" style={{ marginTop: 5, width: 190 }} />
+                                </>
                                 :
-                                <View style={styles.flexRow}>
-                                    <MaterialIcons
-                                        name="location-pin"
-                                        color={COLOR.themeBlue}
-                                        size={DIMENSIONS.iconSize}
-                                    />
-                                    <GlobalText text={STRING.LOCATION} style={styles.locationPinText} />
+                                <View>
+                                    <View style={styles.flexBetween}>
+                                        <View style={styles.flexRow}>
+                                            <MaterialIcons
+                                                name="location-pin"
+                                                color={COLOR.themeBlue}
+                                                size={DIMENSIONS.iconSize}
+                                            />
+                                            <GlobalText text={city.name} style={styles.detailTitle} />
+                                        </View>
+                                        <TouchableOpacity style={styles.cityLikeView} onPress={() => onHeartClick()}>
+                                            {
+                                                isFav ?
+                                                    <Octicons name="heart-fill" color={COLOR.red} size={DIMENSIONS.iconSize} />
+                                                    :
+                                                    <Octicons name="heart" color={COLOR.black} size={DIMENSIONS.iconSize} />
+                                            }
+                                        </TouchableOpacity>
+                                    </View>
+                                    <GlobalText text={city.tag_line} style={styles.detailSubTitle} />
                                 </View>
                         }
 
@@ -239,14 +255,10 @@ const CityDetails = ({ navigation, route, ...props }) => {
                                 {
                                     isLoading ?
                                         <>
-                                            <Skeleton animation="pulse" variant="text" style={{ width: 80, height: 20 }} />
-                                            <Skeleton animation="pulse" variant="text" style={{ marginTop: 5, width: 150 }} />
                                             <Skeleton animation="pulse" variant="text" style={{ marginTop: 12, width: 100 }} />
                                         </>
                                         :
                                         <>
-                                            <GlobalText text={city.name} style={styles.detailTitle} />
-                                            <GlobalText text={city.tag_line} style={styles.detailSubTitle} />
                                             <View style={styles.cityStarView}>
                                                 <StarRating
                                                     disabled={false}
@@ -266,14 +278,6 @@ const CityDetails = ({ navigation, route, ...props }) => {
                                         </>
                                 }
                             </View>
-                            <TouchableOpacity style={styles.cityLikeView} onPress={() => onHeartClick()}>
-                                {
-                                    isFav ?
-                                        <Octicons name="heart-fill" color={COLOR.red} size={DIMENSIONS.iconSize} />
-                                        :
-                                        <Octicons name="heart" color={COLOR.black} size={DIMENSIONS.iconSize} />
-                                }
-                            </TouchableOpacity>
                         </View>
 
                         {

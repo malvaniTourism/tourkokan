@@ -234,12 +234,12 @@ const HomeScreen = ({ navigation, route, ...props }) => {
     }
 
     return (
-        <ScrollView stickyHeaderIndices={[0]} style={{backgroundColor: COLOR.white}}>
+        <ScrollView stickyHeaderIndices={[0]} style={{ backgroundColor: COLOR.white }}>
             {
                 isLoading ?
                     <TopComponentSkeleton />
                     :
-                    <TopComponent currentCity={currentCity} navigation={navigation} openLocationSheet={() => openLocationSheet()} gotoProfile={() => openProfile()} profilePhoto={profilePhoto} />
+                    <TopComponent cities={cities} currentCity={currentCity} setCurrentCity={(v) => setCurrentCity(v)} navigation={navigation} openLocationSheet={() => openLocationSheet()} gotoProfile={() => openProfile()} profilePhoto={profilePhoto} />
             }
             <CheckNet isOff={offline} />
             {/* <MyAnimatedLoader isVisible={isLoading} /> */}
@@ -273,7 +273,24 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                     }
                 </View>
                 <View style={styles.sectionView}>
-                    <GlobalText text={STRING.SCREEN.ROUTES} style={styles.sectionTitle} />
+                    <View>
+                        {
+                            isLoading ?
+                                <Skeleton animation="pulse" variant="text" style={styles.buttonSkeleton} />
+                                :
+                                <View style={styles.flexAround}>
+                                    <GlobalText text={STRING.SCREEN.ROUTES} style={styles.sectionTitle} />
+                                    <TextButton
+                                        title={STRING.BUTTON.SEE_ALL}
+                                        onPress={() => showMore(STRING.SCREEN.ALL_ROUTES_SEARCH)}
+                                        containerStyle={styles.showMore}
+                                        seeMoreStyle={styles.seeMoreStyle}
+                                        buttonStyle={styles.buttonStyle}
+                                        titleStyle={styles.titleStyle}
+                                    />
+                                </View>
+                        }
+                    </View>
                     <View style={styles.cardsWrap}>
                         {
                             isLoading ?
@@ -286,29 +303,8 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                 routes.map((route, index) => (
                                     route && <RouteHeadCard data={route} bus={"Hirkani"} cardClick={() => getRoutesList(route)} />
                                 ))
-
                         }
                     </View>
-                    {
-                        isLoading ?
-                            <Skeleton animation="pulse" variant="text" style={styles.buttonSkeleton} />
-                            :
-                            <TextButton
-                                title={STRING.BUTTON.SEE_MORE}
-                                onPress={() => showMore(STRING.SCREEN.ALL_ROUTES_SEARCH)}
-                                containerStyle={styles.showMore}
-                                seeMoreStyle={styles.seeMoreStyle}
-                                buttonStyle={styles.buttonStyle}
-                                titleStyle={styles.titleStyle}
-                                endIcon={
-                                    <Feather
-                                        name="chevrons-right"
-                                        size={24}
-                                        color={COLOR.themeBlue}
-                                    />
-                                }
-                            />
-                    }
                 </View>
 
                 <View style={styles.sectionView}>
@@ -323,7 +319,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                 </>
                                 :
                                 cities.map((city, index) => (
-                                    <CityCardSmall 
+                                    <CityCardSmall
                                         data={city}
                                         reload={() => {
                                             callLandingPageAPI()

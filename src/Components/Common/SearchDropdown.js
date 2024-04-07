@@ -6,7 +6,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 
-const SearchDropdown = ({ placesList, goToNext, setPlace, closeDropdown }) => {
+const SearchDropdown = ({ placesList, goToNext, setPlace, closeDropdown, style }) => {
 
     const renderItem = ({ item }) => {
         return (
@@ -19,7 +19,7 @@ const SearchDropdown = ({ placesList, goToNext, setPlace, closeDropdown }) => {
     };
 
     return (
-        <View style={styles.searchDropView}>
+        <View style={[styles.searchDropView, style]}>
             <Ionicons
                 style={styles.dropCloseIcon}
                 name="close-circle"
