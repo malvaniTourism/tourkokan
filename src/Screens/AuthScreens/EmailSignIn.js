@@ -39,7 +39,7 @@ const EmailSignIn = ({ navigation, route, ...props }) => {
   useEffect(() => {
     // openDB()
     // createUserTable();
-    const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN));
+    const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN));
     return () => {
       backHandler.remove();
       setIsAlert(false);
@@ -240,10 +240,7 @@ const EmailSignIn = ({ navigation, route, ...props }) => {
         <View style={{ alignItems: "center" }}>
           <TextButton
             title={STRING.BUTTON.CONTINUE}
-            seeMoreStyle={styles.buttonView}
-            containerStyle={styles.choiceButtonContainer}
-            buttonStyle={styles.choiceButtonStyle}
-            titleStyle={styles.buttonTitle}
+            buttonView={styles.buttonView}
             isDisabled={isButtonDisabled}
             raised={true}
             onPress={() => continueClick()}

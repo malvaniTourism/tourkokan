@@ -18,7 +18,7 @@ export const comnGet = async (url, apiToken, navigation) => {
     .catch((err) => {
       if (err.response.status == 401) {
         AsyncStorage.clear()
-        navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN)
+        navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN)
       }
       return err
     });
@@ -40,7 +40,7 @@ export const comnPost = async (url, data, navigation) => {
     .catch((err) => {
       if (err.response.status == 401) {
         AsyncStorage.clear()
-        navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN)
+        navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN)
       }
       return err
     });
@@ -58,7 +58,7 @@ export const comnPut = async (url, data, navigation) => {
     .catch((err) => {
       if (err.response.status == 401) {
         AsyncStorage.clear()
-        navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN)
+        navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN)
       }
       return err
     });
@@ -76,7 +76,7 @@ export const ComnDel = async (url, data, navigation) => {
     .catch((err) => {
       if (err.response.status == 401) {
         AsyncStorage.clear()
-        navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN)
+        navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN)
       }
       return err
     });

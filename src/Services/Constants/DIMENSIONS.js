@@ -41,6 +41,8 @@ const DIMENSIONS = {
     headerHeight: sh / 100 * 6,
     headerSpace: (sh / 100 * 6) * 2.5,
 
+    xxxlText: sw / 10,
+    xxlText: sw / 15,
     xlText: sw / 20,
     largeText: sw / 23,
     headerTextSize: sw / 25,
@@ -52,7 +54,7 @@ const DIMENSIONS = {
     sectionGap: 20,
 
     smallImage: 40,
-    detailsImage: 100,
+    detailsImage: 150,
 
     mobileLength: 10,
     fieldLength: 50

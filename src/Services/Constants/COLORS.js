@@ -1,6 +1,7 @@
 const COLOR = {
   themeBlue: "#5893D8",
 
+  loginImageBlue: "#1370b6",
   logoBlue: "#154170",
   logoDarkBlue: "#103a59",
   logoLightBlue: "#0b7ebc",

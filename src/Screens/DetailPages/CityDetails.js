@@ -27,6 +27,7 @@ import ReadMore from 'react-native-read-more-text';
 import TextButton from "../../Components/Customs/Buttons/TextButton";
 import CityCardSkeleton from "../../Components/Cards/CityCardSkeleton";
 import { Skeleton } from "@rneui/themed";
+import MapView, { Marker, Polygon } from "react-native-maps";
 
 const CityDetails = ({ navigation, route, ...props }) => {
     const refRBSheet = useRef();
@@ -36,7 +37,10 @@ const CityDetails = ({ navigation, route, ...props }) => {
     const [isFav, setIsFav] = useState(false);
     const [rating, setRating] = useState(0)
     const [commentCount, setCommentCount] = useState(0);
-    const [isLoading, setLoader] = useState(true)
+    const [isLoading, setLoader] = useState(true);
+    const [initialRegion, setInitialRegion] = useState({});
+    const [currentLatitude, setCurrentLatitude] = useState();
+    const [currentLongitude, setCurrentLongitude] = useState();
 
     useEffect(() => {
         const backHandler = goBackHandler(navigation)
@@ -60,6 +64,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
                     setIsFav(res.data.data.is_favorite)
                     setRating(res.data.data.rating_avg_rate)
                     setCommentCount(res.data.data.comment_count)
+                    setLocationMap(res.data.data.latitude, res.data.data.longitude)
                     setLoader(false);
                 } else {
                     setError(res.data.message);
@@ -70,6 +75,23 @@ const CityDetails = ({ navigation, route, ...props }) => {
                 setError(error.message); // Update error state with error message
                 setLoader(false);
             });
+    }
+
+    const setInitialLocation = (lat, long) => {
+        let myInitialRegion = {
+            latitude: parseFloat(lat) || 47.4220936,
+            longitude: parseFloat(long) || -122.083922,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+        };
+        console.log(myInitialRegion);
+        setInitialRegion(myInitialRegion)
+    }
+
+    const setLocationMap = (lat, long) => {
+        setInitialLocation(lat, long)
+        setCurrentLatitude(parseFloat(lat));
+        setCurrentLongitude(parseFloat(long))
     }
 
     const onHeartClick = async () => {
@@ -137,7 +159,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
                 title={STRING.BUTTON.READ_MORE}
                 onPress={handlePress}
                 containerStyle={styles.showMore}
-                seeMoreStyle={styles.readMoreStyle}
+                buttonView={styles.readMoreStyle}
                 buttonStyle={styles.buttonStyle}
                 titleStyle={styles.titleStyle}
                 endIcon={
@@ -157,7 +179,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
                 title={STRING.BUTTON.READ_LESS}
                 onPress={handlePress}
                 containerStyle={styles.showMore}
-                seeMoreStyle={styles.readMoreStyle}
+                buttonView={styles.readMoreStyle}
                 buttonStyle={styles.buttonStyle}
                 titleStyle={styles.titleStyle}
                 endIcon={
@@ -174,20 +196,6 @@ const CityDetails = ({ navigation, route, ...props }) => {
     const handleTextReady = () => {
         // ...
     }
-
-    const openGoogleMaps = (latitude, longitude) => {
-        const url = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
-
-        Linking.canOpenURL(url)
-            .then(supported => {
-                if (!supported) {
-                    console.log("Can't handle url: " + url);
-                } else {
-                    return Linking.openURL(url);
-                }
-            })
-            .catch(err => console.error('An error occurred', err));
-    };
 
     return (
         <ScrollView style={{ backgroundColor: "#fff" }}>
@@ -299,21 +307,15 @@ const CityDetails = ({ navigation, route, ...props }) => {
                                 </ReadMore>
                         }
 
-                        <View style={{ justifyContent: "flex-end", flexDirection: "row" }}>
-                            {
-                                isLoading ?
-                                    <Skeleton animation="pulse" variant="text" style={styles.buttonSkeleton} />
-                                    :
-                                    <TextButton
-                                        title={STRING.BUTTON.VIEW_MAP}
-                                        onPress={() => openGoogleMaps(city.latitude, city.longitude)}
-                                        containerStyle={styles.showMore}
-                                        seeMoreStyle={styles.seeMoreStyle}
-                                        buttonStyle={styles.viewMapButtonStyle}
-                                        titleStyle={styles.viewMapTitle}
+                        {/* {initialRegion.latitude &&
+                            <View style={styles.profileMapView}>
+                                <MapView style={styles.map} initialRegion={initialRegion}>
+                                    <Marker
+                                        coordinate={{ latitude: currentLatitude, longitude: currentLongitude }}
                                     />
-                            }
-                        </View>
+                                </MapView>
+                            </View>
+                        } */}
 
                         <View style={styles.sectionView}>
                             <GlobalText text={STRING.SCREEN.PLACES} style={styles.sectionTitle} />

@@ -93,7 +93,7 @@ const SignIn = ({ navigation, ...props }) => {
   };
 
   const emailLogin = () => {
-    navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN);
+    navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN);
   };
 
   return (
@@ -131,7 +131,7 @@ const SignIn = ({ navigation, ...props }) => {
         })}
         <TextButton
           title={STRING.BUTTON.SEND_OTP}
-          seeMoreStyle={styles.buttonView}
+          buttonView={styles.buttonView}
           containerStyle={styles.buttonContainer}
           buttonStyle={styles.buttonStyle}
           titleStyle={styles.buttonTitle}
@@ -144,7 +144,7 @@ const SignIn = ({ navigation, ...props }) => {
           <GlobalText text={STRING.OR} style={styles.whiteText} />
           <TextButton
             title={STRING.BUTTON.LOGIN_WITH_EMAIL}
-            seeMoreStyle={styles.buttonView}
+            buttonView={styles.buttonView}
             containerStyle={styles.buttonContainer}
             buttonStyle={styles.buttonStyle}
             titleStyle={styles.buttonTitle}

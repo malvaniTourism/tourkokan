@@ -200,9 +200,7 @@ const Explore = ({ route, navigation, ...props }) => {
             :
             <TextButton
               title={STRING.BUTTON.SEE_MORE}
-              containerStyle={styles.showMore}
-              seeMoreStyle={styles.seeMoreStyle}
-              buttonStyle={styles.buttonStyle}
+              buttonView={styles.buttonView}
               titleStyle={styles.titleStyle}
               raised={false}
               onPress={() => seeMore()}

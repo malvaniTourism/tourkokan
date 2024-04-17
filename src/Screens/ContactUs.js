@@ -19,8 +19,11 @@ import Loader from "../Components/Customs/Loader";
 import { setLoader } from "../Reducers/CommonActions";
 import { connect } from "react-redux";
 import STRING from "../Services/Constants/STRINGS";
+import { useTranslation } from 'react-i18next';
 
 const ContactUs = ({ navigation, route, ...props }) => {
+  const { t } = useTranslation();
+
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
@@ -130,7 +133,7 @@ const ContactUs = ({ navigation, route, ...props }) => {
         })}
         <TextButton
           title={STRING.BUTTON.SUBMIT}
-          seeMoreStyle={styles.buttonView}
+          buttonView={styles.buttonView}
           containerStyle={styles.contactButtonContainer}
           buttonStyle={styles.contactButtonStyle}
           titleStyle={styles.buttonTitle}

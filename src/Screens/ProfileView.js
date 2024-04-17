@@ -37,8 +37,11 @@ import Path from "../Services/Api/BaseUrl";
 import STRING from "../Services/Constants/STRINGS";
 import NetInfo from "@react-native-community/netinfo";
 import CheckNet from "../Components/Common/CheckNet";
+import { useTranslation } from 'react-i18next';
 
 const ProfileView = ({ navigation, route, ...props }) => {
+  const { t, i18n } = useTranslation();
+
   const [currentLatitude, setCurrentLatitude] = useState();
   const [currentLongitude, setCurrentLongitude] = useState();
   const [locationStatus, setLocationStatus] = useState("");
@@ -190,7 +193,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
         if (res.data.success) {
           props.setLoader(false);
           AsyncStorage.clear()
-          navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN);
+          navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN);
         }
       })
       .catch((error) => {
@@ -229,7 +232,16 @@ const ProfileView = ({ navigation, route, ...props }) => {
       />
       <Loader />
 
+      <View style={styles.profileContainer}>
+        <Image
+          style={styles.profilePhoto}
+          source={{ uri: `${profile.profile_picture ? Path.FTP_PATH + profile.profile_picture : "https://api-private.atlassian.com/users/2143ab39b9c73bcab4fe6562fff8d23d/avatar"}` }}
+        />
+        <GlobalText text={profile.email} style={styles.pricingOptionTitle} />
+      </View>
+
       <View style={styles.headerContainer}>
+        <GlobalText text={STRING.ADDRESS} />
         {initialRegion.latitude &&
           <View style={styles.profileMapView}>
             <MapView style={styles.map} initialRegion={initialRegion}>
@@ -239,52 +251,21 @@ const ProfileView = ({ navigation, route, ...props }) => {
             </MapView>
           </View>
         }
-        <View style={styles.profileContainer}>
-          <Image
-            style={styles.profilePhoto}
-            source={{ uri: `${profile.profile_picture ? Path.FTP_PATH + profile.profile_picture : "https://api-private.atlassian.com/users/2143ab39b9c73bcab4fe6562fff8d23d/avatar"}` }}
-          />
-          <GlobalText text={profile.name} style={styles.pricingOptionTitle} />
-        </View>
       </View>
-      <View style={styles.bioContainer}>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <View>
-            <GlobalText text={profile.email} style={styles.bioText} />
-            <GlobalText text={profile.mobile} style={styles.bioText} />
-          </View>
-          {!profile.isVerified ?
-            <View>
-              <MaterialIcons
-                name="verified"
-                size={24}
-                color={COLOR.verified}
-              />
-            </View>
-            : null
-          }
-        </View>
-        <GlobalText text={JSON.stringify(profile)} style={styles.bioText}></GlobalText>
+
+      <View>
+        <TouchableOpacity onPress={() => i18n.changeLanguage("en")}>
+          <Text>English</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => i18n.changeLanguage("mr")}>
+          <Text>Marathi</Text>
+        </TouchableOpacity>
       </View>
-      {/* <View style={styles.statsContainer}>
-        <View style={styles.statContainer}>
-          <GlobalText text={"1234"} style={styles.statCount} />
-          <GlobalText text={"Posts"} style={styles.statLabel} />
-        </View>
-        <View style={styles.statContainer}>
-          <GlobalText text={"5678"} style={styles.statCount} />
-          <GlobalText text={"Followers"} style={styles.statLabel} />
-        </View>
-        <View style={styles.statContainer}>
-          <GlobalText text={"9101"} style={styles.statCount} />
-          <GlobalText text={"Following"} style={styles.statLabel} />
-        </View>
-      </View> */}
 
       <View style={{ flexDirection: "row", justifyContent: "space-evenly", marginTop: 30 }}>
         <TextButton
           title={STRING.BUTTON.EDIT_PROFILE}
-          seeMoreStyle={styles.editSeeMoreStyle}
+          buttonView={styles.editSeeMoreStyle}
           containerStyle={styles.editButtonContainer}
           buttonStyle={styles.editButtonStyle}
           titleStyle={styles.planButtonTitleStyle}
@@ -293,7 +274,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
         />
         <TextButton
           title={STRING.BUTTON.UPDATE_LOCATION}
-          seeMoreStyle={styles.updateSeeMoreStyle}
+          buttonView={styles.updateSeeMoreStyle}
           containerStyle={styles.editButtonContainer}
           buttonStyle={styles.editButtonStyle}
           titleStyle={styles.planButtonTitleStyle}
@@ -304,7 +285,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
       <View style={{ flexDirection: "row", justifyContent: "space-evenly", marginVertical: 30 }}>
         <TextButton
           title={STRING.BUTTON.LOGOUT}
-          seeMoreStyle={styles.logoutStyle}
+          buttonView={styles.logoutStyle}
           containerStyle={styles.editButtonContainer}
           buttonStyle={styles.editButtonStyle}
           titleStyle={styles.planButtonTitleStyle}
@@ -319,7 +300,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
           <TextButton
             title={STRING.BUTTON.HOME_LOCATION}
             containerStyle={styles.showMore}
-            seeMoreStyle={styles.locBtnStyle}
+            buttonView={styles.locBtnStyle}
             buttonStyle={styles.buttonStyle}
             titleStyle={styles.titleStyle}
             raised={false}
@@ -335,7 +316,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
           <TextButton
             title={STRING.BUTTON.CURRENT_LOCATION}
             containerStyle={styles.showMore}
-            seeMoreStyle={styles.locBtnStyle}
+            buttonView={styles.locBtnStyle}
             buttonStyle={styles.buttonStyle}
             titleStyle={styles.titleStyle}
             raised={false}

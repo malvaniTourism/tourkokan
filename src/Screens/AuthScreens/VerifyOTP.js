@@ -47,7 +47,7 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
     if (!isVerified) {
       setIsOtpSent(true)
     }
-    const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN));
+    const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN));
     // setInterval(() => timer(), 1000);
     startListeningForOtp();
     return () => {
@@ -261,9 +261,6 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
         </View>
         <TextButton
           title={!isVerified ? STRING.BUTTON.VERIFY : STRING.BUTTON.LOGIN}
-          containerStyle={styles.buttonContainer}
-          buttonStyle={styles.buttonStyle}
-          titleStyle={styles.buttonTitle}
           disabled={false}
           raised={true}
           onPress={() => loginClick()}

@@ -84,7 +84,7 @@ const EmailOtp = ({ setValue, getValue, Login, changeChoice, isOtpSent, resend }
                     :
                     <TextButton
                         title={STRING.BUTTON.SEND_OTP}
-                        seeMoreStyle={styles.buttonView}
+                        buttonView={styles.buttonView}
                         containerStyle={styles.buttonContainer}
                         buttonStyle={styles.buttonStyle}
                         titleStyle={styles.buttonTitle}
@@ -96,7 +96,7 @@ const EmailOtp = ({ setValue, getValue, Login, changeChoice, isOtpSent, resend }
             </View>
             <TextButton
                 title={STRING.BUTTON.LOGIN}
-                seeMoreStyle={styles.buttonView}
+                buttonView={styles.buttonView}
                 containerStyle={styles.buttonContainer}
                 buttonStyle={styles.buttonStyle}
                 titleStyle={styles.buttonTitle}

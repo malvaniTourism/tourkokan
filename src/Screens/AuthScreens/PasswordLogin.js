@@ -37,7 +37,7 @@ const PasswordLogin = ({ navigation, route, ...props }) => {
     useEffect(() => {
         // openDB()
         // createUserTable();
-        const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN));
+        const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN));
         return () => {
             backHandler.remove();
             setIsAlert(false);
@@ -163,7 +163,7 @@ const PasswordLogin = ({ navigation, route, ...props }) => {
             </View>
             <TextButton
                 title={STRING.BUTTON.LOGIN}
-                seeMoreStyle={styles.buttonView}
+                buttonView={styles.buttonView}
                 containerStyle={styles.buttonContainer}
                 buttonStyle={styles.buttonStyle}
                 titleStyle={styles.buttonTitle}

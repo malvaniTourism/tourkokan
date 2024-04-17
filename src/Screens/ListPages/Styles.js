@@ -109,25 +109,19 @@ const styles = StyleSheet.create({
         alignSelf: "flex-end",
         marginRight: 20
     },
-    showMore: {
-        width: "auto",
-        alignItems: "center",
-    },
-    seeMoreStyle: {
-        width: DIMENSIONS.bannerWidth,
+    buttonView: {
         alignItems: "center",
         flexDirection: "row",
-        justifyContent: "flex-end",
-        marginTop: 10,
-        right: -20
-    },
-    buttonStyle: {
+        margin: 10,
         width: DIMENSIONS.bannerWidth / 2,
         backgroundColor: COLOR.transparent,
-        width: "auto",
+        elevation: 0,
+        alignSelf: "flex-end",
+        justifyContent: "flex-end"
     },
     titleStyle: {
-        color: COLOR.themeBlue
+        color: COLOR.themeBlue,
+        textAlign: "right"
     },
     boldText: {
         fontWeight: "bold",

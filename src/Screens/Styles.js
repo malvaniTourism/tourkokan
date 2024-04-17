@@ -3,6 +3,9 @@ import DIMENSIONS from "../Services/Constants/DIMENSIONS";
 import COLOR from "../Services/Constants/COLORS";
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: COLOR.white
+    },
     homeSearchBar: {
         // marginTop: -15,
     },
@@ -56,10 +59,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center"
     },
-    buttonStyle: {
-        backgroundColor: COLOR.transparent,
-        width: "auto"
-    },
     contactButtonStyle: {
         backgroundColor: COLOR.themeBlue,
         width: "auto",
@@ -84,7 +83,7 @@ const styles = StyleSheet.create({
     },
     titleStyle: {
         color: COLOR.themeBlue,
-        fontWeight: "100"
+        textAlign: "right"
     },
     buttonSkeleton: {
         width: DIMENSIONS.bannerWidth / 2,
@@ -94,11 +93,7 @@ const styles = StyleSheet.create({
         alignSelf: "flex-end",
         marginLeft: DIMENSIONS.bannerWidth / 2,
     },
-    showMore: {
-        width: "auto",
-        alignItems: "center"
-    },
-    seeMoreStyle: {
+    buttonView: {
         width: DIMENSIONS.bannerWidth / 2,
         alignItems: "center",
         flexDirection: "row",
@@ -197,7 +192,7 @@ const styles = StyleSheet.create({
         borderRadius: DIMENSIONS.borderRadiusXXS,
     },
     pricingOptionTitle: {
-        fontSize: DIMENSIONS.xlText,
+        fontSize: DIMENSIONS.largeText,
         fontWeight: "bold",
         marginBottom: 10,
     },
@@ -235,15 +230,13 @@ const styles = StyleSheet.create({
     },
     profileContainer: {
         alignItems: "center",
-        marginTop: -50,
-        zIndex: 10
+        zIndex: 10,
+        marginTop: -15
     },
     profilePhoto: {
         width: DIMENSIONS.detailsImage,
         height: DIMENSIONS.detailsImage,
-        borderRadius: DIMENSIONS.borderRadiusLarge,
-        borderWidth: .5,
-        borderColor: COLOR.themeBlue
+        borderRadius: DIMENSIONS.borderRadiusXL,
     },
     bioContainer: {
         padding: 15,
@@ -341,13 +334,14 @@ const styles = StyleSheet.create({
         fontSize: DIMENSIONS.headerTextSize
     },
     profileMapView: {
-        height: DIMENSIONS.screenWidth - 150,
-        width: DIMENSIONS.screenWidth,
-        marginTop: -20,
-        marginBottom: 10,
+        height: DIMENSIONS.bannerHeight / 2,
+        width: DIMENSIONS.bannerWidth,
+        marginVertical: 10,
         borderWidth: 1,
         borderColor: COLOR.grey,
         position: "relative",
+        borderRadius: DIMENSIONS.borderRadiusXS,
+        overflow: 'hidden',
     },
     map: {
         ...StyleSheet.absoluteFillObject,
@@ -361,8 +355,12 @@ const styles = StyleSheet.create({
     },
     buttonView: {
         borderRadius: DIMENSIONS.borderRadius,
-        overflow: "hidden",
-        marginVertical: 30
+        marginVertical: 10,
+        fontSize: DIMENSIONS.subtitleTextSize,
+        backgroundColor: COLOR.transparent,
+        elevation: 0,
+        width: DIMENSIONS.halfWidth,
+        justifyContent: "flex-end"
     },
     profileButtonStyle: {
         backgroundColor: COLOR.themeBlue,

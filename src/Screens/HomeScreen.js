@@ -37,9 +37,11 @@ import SearchPanelSkeleton from "../Components/Common/SearchPanelSkeleton";
 import TopComponentSkeleton from "../Components/Common/TopComponentSkeleton";
 import CityCardSmall from "../Components/Cards/CityCardSmall";
 import CityCardSmallSkeleton from "../Components/Cards/CityCardSmallSkeleton";
+import { useTranslation } from 'react-i18next';
 
 const HomeScreen = ({ navigation, route, ...props }) => {
     const refRBSheet = useRef();
+    const { t } = useTranslation();
 
     const [searchValue, setSearchValue] = useState("");
     const [categories, setCategories] = useState([]);
@@ -152,7 +154,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
             (await AsyncStorage.getItem(STRING.STORAGE.ACCESS_TOKEN)) == null ||
             (await AsyncStorage.getItem(STRING.STORAGE.ACCESS_TOKEN)) == ""
         ) {
-            navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN);
+            navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN);
         }
     };
 
@@ -281,11 +283,9 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                 <View style={styles.flexAround}>
                                     <GlobalText text={STRING.SCREEN.ROUTES} style={styles.sectionTitle} />
                                     <TextButton
-                                        title={STRING.BUTTON.SEE_ALL}
+                                        title={t("BUTTON.SEE_ALL")}
                                         onPress={() => showMore(STRING.SCREEN.ALL_ROUTES_SEARCH)}
-                                        containerStyle={styles.showMore}
-                                        seeMoreStyle={styles.seeMoreStyle}
-                                        buttonStyle={styles.buttonStyle}
+                                        buttonView={styles.buttonView}
                                         titleStyle={styles.titleStyle}
                                     />
                                 </View>
@@ -338,7 +338,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                 title={STRING.BUTTON.SEE_MORE}
                                 onPress={() => showMore(STRING.SCREEN.CITY_LIST, "city")}
                                 containerStyle={styles.showMore}
-                                seeMoreStyle={styles.seeMoreStyle}
+                                buttonView={styles.buttonView}
                                 buttonStyle={styles.buttonStyle}
                                 titleStyle={styles.titleStyle}
                                 endIcon={

@@ -224,8 +224,7 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
       </View>
       <TextButton
         title={STRING.BUTTON.SEARCH}
-        containerStyle={styles.searchButtonContainerStyle}
-        buttonStyle={styles.searchButtonStyle}
+        buttonView={styles.searchButtonStyle}
         titleStyle={styles.buttonTitleStyle}
         raised={false}
         onPress={gotoRoutes}

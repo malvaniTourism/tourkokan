@@ -7,7 +7,11 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     borderRadius: DIMENSIONS.borderRadiusXS,
     elevation: 0,
-    backgroundColor: "transparent"
+    backgroundColor: COLOR.themeBlue,
+    paddingVertical: 15,
+    width: DIMENSIONS.bannerWidth,
+    alignSelf: "center",
+    elevation: 10
   },
   containerStyle: {
     width: DIMENSIONS.bannerWidth,
@@ -19,7 +23,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.themeBlue,
   },
   titleStyle: {
-    color: COLOR.logoYellow,
+    color: COLOR.white,
   },
   imageButtonSkeleton: {
     height: DIMENSIONS.iconXXL,

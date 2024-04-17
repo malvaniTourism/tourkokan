@@ -104,12 +104,6 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     paddingLeft: 40,
   },
-  searchButtonContainerStyle: {
-    marginTop: 10,
-    borderRadius: DIMENSIONS.borderRadiusXS,
-    alignItems: "flex-end",
-    elevation: 0,
-  },
   searchButtonSkeleton: {
     height: 50,
     width: DIMENSIONS.bannerWidth / 2,
@@ -122,6 +116,7 @@ const styles = StyleSheet.create({
     width: DIMENSIONS.bannerWidth / 3,
     backgroundColor: COLOR.themeBlue,
     borderRadius: DIMENSIONS.borderRadiusXS,
+    alignSelf: "flex-end"
   },
   searchButtonDisable: {
     height: 50,

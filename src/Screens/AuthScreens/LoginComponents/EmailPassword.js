@@ -50,7 +50,7 @@ const EmailPassword = ({ setValue, getValue, Login, changeChoice }) => {
             })}
             <TextButton
                 title={STRING.BUTTON.LOGIN}
-                seeMoreStyle={styles.buttonView}
+                buttonView={styles.buttonView}
                 containerStyle={styles.buttonContainer}
                 buttonStyle={styles.buttonStyle}
                 titleStyle={styles.buttonTitle}

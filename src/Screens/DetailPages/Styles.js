@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
         width: "auto",
         alignItems: "center"
     },
-    seeMoreStyle: {
+    buttonView: {
         width: DIMENSIONS.screenWidth / 2,
         alignItems: "center",
         flexDirection: "row",

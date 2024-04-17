@@ -25,6 +25,7 @@ const ProjectList = lazy(() => import("../Screens/ListPages/ProjectList"));
 const CityPlaceSearch = lazy(() => import("../Screens/ListPages/CityPlaceSearch"));
 const StopList = lazy(() => import("../Screens/ListPages/StopList"));
 const EmailSignIn = lazy(() => import("../Screens/AuthScreens/EmailSignIn"));
+const AuthScreen = lazy(() => import("../Screens/AuthScreens/AuthScreen"));
 const VerifyOTP = lazy(() => import("../Screens/AuthScreens/VerifyOTP"));
 const PlaceDetails = lazy(() => import("../Screens/DetailPages/PlaceDetails"));
 const ProjectDetails = lazy(() => import("../Screens/DetailPages/ProjectDetails"));
@@ -82,6 +83,7 @@ const StackNavigator = () => {
             <Stack.Screen name={STRING.SCREEN.ALL_ROUTES_SEARCH} component={AllRoutesSearch} />
             <Stack.Screen name={STRING.SCREEN.ROUTES_LIST} component={RoutesList} />
             <Stack.Screen name={STRING.SCREEN.BUS_TIMINGS} component={BusTimings} />
+            <Stack.Screen name={STRING.SCREEN.AUTH_SCREEN} component={AuthScreen} />
             <Stack.Screen name={STRING.SCREEN.LOGIN} component={SignIn} />
             <Stack.Screen name={STRING.SCREEN.EMAIL_SIGN_IN} component={EmailSignIn} />
             <Stack.Screen name={STRING.SCREEN.PASSWORD_LOGIN} component={PasswordLogin} />

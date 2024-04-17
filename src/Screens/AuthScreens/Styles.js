@@ -7,13 +7,14 @@ const styles = StyleSheet.create({
     height: 70,
     marginTop: 30
   },
-  buttonView: {
-    borderRadius: DIMENSIONS.borderRadius,
+  loginButton: {
     overflow: "hidden",
     marginTop: 30
   },
-  buttonContainer: {
-
+  signUpButton: {
+    overflow: "hidden",
+    marginTop: 15,
+    backgroundColor: COLOR.white
   },
   choiceButtonContainer: {
     width: DIMENSIONS.screenWidth / 2,
@@ -23,10 +24,12 @@ const styles = StyleSheet.create({
     width: DIMENSIONS.screenWidth / 2,
     borderRadius: DIMENSIONS.borderRadius,
   },
-  buttonStyle: {
-    paddingVertical: 13
+  buttonTitle: {
+    color: COLOR.themeBlue
   },
-  buttonTitle: {},
+  buttonView: {
+    
+  },
   haveAcc: {
     flexDirection: "row",
     marginVertical: 20,
@@ -118,6 +121,39 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     marginVertical: 50,
     textAlign: "left"
+  },
+  authScreenView: {
+    justifyContent: "space-between",
+    height: DIMENSIONS.screenHeight - 150
+  },
+  loginAppName: {
+    marginTop: DIMENSIONS.headerHeight,
+  },
+  loginName: {
+    textAlign: "left",
+    marginLeft: 20,
+    fontSize: DIMENSIONS.largeText,
+    fontWeight: "bold",
+    color: COLOR.white,
+    fontStyle: "italic"
+  },
+  textLeft: {
+    textAlign: "left",
+    marginLeft: 25,
+    fontSize: DIMENSIONS.headerTextSize,
+    fontWeight: "300"
+  },
+  boldKokan: {
+    textAlign: "left",
+    fontWeight: "bold",
+    fontSize: DIMENSIONS.xxxlText,
+    marginLeft: 25
+  },
+  exploreText: {
+    textAlign: "left",
+    fontSize: DIMENSIONS.xxlText,
+    fontWeight: "300",
+    marginLeft: 25
   },
   appName: {
     justifyContent: "center",

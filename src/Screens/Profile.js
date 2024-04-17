@@ -250,7 +250,7 @@ const Profile = ({ navigation, ...props }) => {
             })}
             <TextButton
               title={STRING.BUTTON.UPDATE}
-              seeMoreStyle={styles.buttonView}
+              buttonView={styles.buttonView}
               containerStyle={styles.buttonContainer}
               buttonStyle={styles.profileButtonStyle}
               titleStyle={styles.buttonTitle}

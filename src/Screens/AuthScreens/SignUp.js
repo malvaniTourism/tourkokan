@@ -57,7 +57,7 @@ const SignUp = ({ navigation, ...props }) => {
   const [fetchingText, setFetchingText] = useState("")
 
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN));
+    const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN));
     // getRoles()
     return () => {
       backHandler.remove();
@@ -220,7 +220,7 @@ const SignUp = ({ navigation, ...props }) => {
   };
 
   const signInScreen = () => {
-    navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN);
+    navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN);
   };
 
   const closePopup = () => {
@@ -319,7 +319,8 @@ const SignUp = ({ navigation, ...props }) => {
           <GlobalText text={STRING.SIGN_UP} style={styles.loginText} />
           <View style={{ alignItems: "center" }}>
             <View style={{ flexDirection: "row", justifyContent: "space-evenly", width: "100%" }}>
-              <TouchableOpacity
+
+              {/* <TouchableOpacity
                 style={styles.imageContainerStyle}
                 onPress={handleImageUpload}
               >
@@ -339,7 +340,8 @@ const SignUp = ({ navigation, ...props }) => {
                   <GlobalText text={STRING.BUTTON.ADD_PHOTO} />
                   </View>
                 }
-              </TouchableOpacity>
+              </TouchableOpacity> */}
+
               {/* <TouchableOpacity
                 style={locationError ? styles.errorImageContainerStyle : styles.imageContainerStyle}
                 onPress={myLocationPress}
@@ -412,10 +414,7 @@ const SignUp = ({ navigation, ...props }) => {
             }
             <TextButton
               title={STRING.BUTTON.REGISTER}
-              seeMoreStyle={styles.buttonView}
-              containerStyle={styles.buttonContainer}
-              buttonStyle={styles.buttonStyle}
-              titleStyle={styles.buttonTitle}
+              buttonView={styles.buttonView}
               isDisabled={false}
               raised={true}
               onPress={() => checkValidation()}

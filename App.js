@@ -19,6 +19,7 @@ import Feather from "react-native-vector-icons/Feather";
 import styles from './src/Screens/Styles';
 import analytics from '@react-native-firebase/analytics';
 import Ionicons from "react-native-vector-icons/Ionicons";
+import "./src/localization/i18n"
 
 LogBox.ignoreAllLogs();
 LogBox.ignoreLogs(['Warning: ...', 'Possible Unhandled Promise Rejection']);

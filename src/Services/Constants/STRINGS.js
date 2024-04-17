@@ -1,5 +1,8 @@
 const STRING = {
   appName: "TourKokan",
+  EXPLORE: "Explore the Enchanting",
+  KOKAN: "KOKAN",
+  COMPANION: "Your Ultimate Travel Companion for Maharashtra's Coastal Gem.",
 
   BUTTON: {
     OK: "Ok",
@@ -16,6 +19,7 @@ const STRING = {
     HOME_LOCATION: "Home Location",
     CURRENT_LOCATION: "Current Location",
     LOGIN: "Login",
+    SIGNUP: "Sign Up",
     SEND_OTP: "Send OTP",
     LOGIN_WITH_EMAIL: "Login with Email",
     REGISTER: "Register",
@@ -53,6 +57,7 @@ const STRING = {
     PLACES: "Places",
     MAP: "Map",
 
+    AUTH_SCREEN: "AuthScreen",
     LOGIN: "Login",
     SIGN_UP: "SignUp",
     EMAIL_SIGN_IN: "EmailSignIn",
@@ -221,6 +226,7 @@ const STRING = {
   PLEASE_FILL: "Please fill all the details to Register",
   UNCOVER: "Enter your start and end points to uncover the best routes.",
   LOCATION: "Location",
+  ADDRESS: "User Address",
 };
 
 export default STRING;

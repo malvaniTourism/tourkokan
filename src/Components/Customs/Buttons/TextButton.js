@@ -3,6 +3,7 @@ import React from "react";
 import styles from "./Styles";
 import { TouchableOpacity, View } from "react-native";
 import STRING from "../../../Services/Constants/STRINGS";
+import GlobalText from "../Text";
 
 const TextButton = ({
   title,
@@ -15,21 +16,12 @@ const TextButton = ({
   onPress,
   startIcon,
   endIcon,
-  seeMoreStyle
+  buttonView
 }) => {
   return (
-    <TouchableOpacity onPress={isDisabled ? null : onPress} style={[styles.buttonView, seeMoreStyle]}>
+    <TouchableOpacity onPress={isDisabled ? null : onPress} style={[styles.buttonView, buttonView]}>
       {startIcon}
-      <Button
-        title={title}
-        containerStyle={[styles.containerStyle, containerStyle]}
-        buttonStyle={[styles.buttonStyle, buttonStyle]}
-        titleStyle={[styles.titleStyle, titleStyle]}
-        disabled={isDisabled}
-        raised={raised}
-        type={STRING.BUTTON.SUBMIT}
-        onPress={isDisabled ? null : onPress}
-      />
+      <GlobalText text={title} style={[styles.titleStyle, titleStyle]} />
       {endIcon}
     </TouchableOpacity>
   );
