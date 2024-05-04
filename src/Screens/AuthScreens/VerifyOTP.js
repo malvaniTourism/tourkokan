@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { View, Text, TouchableOpacity, BackHandler, ImageBackground, Image } from "react-native";
+import { View, Text, TouchableOpacity, BackHandler, ImageBackground, Image, KeyboardAvoidingView } from "react-native";
 import TextField from "../../Components/Customs/TextField";
 import { Email, OTP, Password, SignInFields } from "../../Services/Constants/FIELDS";
 import Header from "../../Components/Common/Header";
@@ -36,17 +36,11 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
   const [alertMessage, setAlertMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false)
   const [password, setPassword] = useState("");
-  const [isNeedOtp, setIsNeedOtp] = useState(true);
   const [choiceText, setChoiceText] = useState(STRING.BUTTON.LOGINPASS);
   const [showPassword, setShowPassword] = useState(false)
-  const [isVerified, setIsVerified] = useState(route?.params?.isVerified);
-  const [isOtpSent, setIsOtpSent] = useState(false)
 
   useEffect(() => {
     resend()
-    if (!isVerified) {
-      setIsOtpSent(true)
-    }
     const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN));
     // setInterval(() => timer(), 1000);
     startListeningForOtp();
@@ -70,23 +64,12 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
 
   const loginClick = () => {
     props.setLoader(true);
-    let data = {}
-    let myUrl = ""
-    if (isNeedOtp) {
-      data = {
-        email,
-        otp,
-      };
-      myUrl = "v2/auth/verifyOtp"
-    } else {
-      data = {
-        email,
-        password,
-      };
-      myUrl = "v2/auth/login"
-    }
+    let data = {
+      email,
+      otp,
+    };
 
-    comnPost(myUrl, data)
+    comnPost("v2/auth/verifyOtp", data)
       .then((res) => {
         if (res.data.success) {
           AsyncStorage.setItem(STRING.STORAGE.ACCESS_TOKEN, res.data.data.access_token);
@@ -162,131 +145,82 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
     }
   };
 
-  const changeChoice = () => {
-    setIsNeedOtp(!isNeedOtp);
-    if (!isNeedOtp) {
-      setChoiceText(STRING.BUTTON.LOGINPASS)
-      resend()
-    } else {
-      setChoiceText(STRING.BUTTON.LOGINOTP)
-    }
-  }
-
   return (
-    <View style={styles.verifyOtpView}>
+    <View style={{ flex: 1, backgroundColor: COLOR.white }}>
       {/* <ImageBackground style={styles.loginImage} source={require("../../Assets/Images/kokan1.jpeg")} /> */}
       {/* <Header name={STRING.HEADER.VERIFY_OTP} style={{ marginBottom: 50 }}
         startIcon={<></>}
       /> */}
-      <View style={styles.appName}>
-        <Image source={AppLogo} style={styles.appLogo} />
+
+      <View>
+        <Loader />
+        <GlobalText text={STRING.WELCOME} style={styles.welcomeText} />
+        <GlobalText text={STRING.appName} style={styles.boldKokan} />
       </View>
 
-      <Loader />
-      <View style={styles.loginContentsBox}>
+      <View style={styles.middleFlex}>
         <View>
           <View>
             <GlobalText text={STRING.LOG_IN} style={styles.loginText} />
             {/* <GlobalText text={STRING.WE_HAVE_SENT} />
             <GlobalText text={`${STRING.SENT_TO} ${route.params?.email}`} /> */}
           </View>
-          {isNeedOtp ?
-            <OtpInputs
-              style={{ flexDirection: "row" }}
-              numberOfInputs={6}
-              inputStyles={{
-                height: 50,
-                width: 40,
-                margin: 10,
-                backgroundColor: COLOR.white,
-                borderWidth: 1,
-                borderColor: COLOR.lightGreen,
-                textAlign: "center",
-                fontSize: 24,
-                color: COLOR.lightGreen,
-              }}
-              inputContainerStyles={{ marginVertical: 10 }}
-              autofillFromClipboard={true}
-              defaultValue={otp}
-              // code={this.state.fillOtp} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
-              // onChangeText={code => { this.setState({ otp: code }) }}
-              handleChange={(code) => {
-                setOtp(code);
-              }}
-            // onCodeChanged={code => { this.setState({ otp: code }) }}
-            // autoFocusOnLoad
-            // codeInputFieldStyle={styles.underlineStyleBase}
-            // codeInputHighlightStyle={styles.underlineStyleHighLighted}
-            // onCodeFilled = {(code => this.setState({otp: code}))}
-            />
-            :
-            <View style={{ marginVertical: 12 }}>
-              {Password.map((field, index) => {
-                return (
-                  <TextField
-                    name={field.name}
-                    label={field.name}
-                    placeholder={field.placeholder}
-                    fieldType={field.type}
-                    length={field.length}
-                    required={field.required}
-                    disabled={false}
-                    value={password}
-                    setChild={(v) => setPassword(v)}
-                    style={styles.containerStyle}
-                    inputContainerStyle={styles.inputContainerStyle}
-                    isSecure={field.isSecure}
-                    rightIcon={
-                      field.type == `${STRING.TYPE.PASSWORD}` &&
-                      <Feather
-                        name={field.isSecure ? "eye" : "eye-off"}
-                        size={24}
-                        color={COLOR.themeBlue}
-                        onPress={() => {
-                          field.isSecure = !showPassword
-                          setShowPassword(!showPassword)
-                        }}
-                        style={styles.eyeIcon}
-                      />
-                    }
-                  />
-                );
-              })}
-            </View>}
-          {isVerified &&
-            <TouchableOpacity onPress={() => changeChoice()}>
-              <GlobalText text={choiceText} style={styles.choiceText} />
-            </TouchableOpacity>
-          }
+          <OtpInputs
+            style={{ flexDirection: "row" }}
+            numberOfInputs={6}
+            inputStyles={{
+              height: 50,
+              width: 40,
+              margin: 10,
+              backgroundColor: COLOR.white,
+              borderWidth: 1,
+              borderColor: COLOR.themeBlue,
+              textAlign: "center",
+              fontSize: 24,
+              color: COLOR.lightGreen,
+              borderRadius: DIMENSIONS.borderRadiusXS
+            }}
+            inputContainerStyles={{ marginVertical: 10 }}
+            autofillFromClipboard={true}
+            defaultValue={otp}
+            // code={this.state.fillOtp} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
+            // onChangeText={code => { this.setState({ otp: code }) }}
+            handleChange={(code) => {
+              setOtp(code);
+            }}
+          // onCodeChanged={code => { this.setState({ otp: code }) }}
+          // autoFocusOnLoad
+          // codeInputFieldStyle={styles.underlineStyleBase}
+          // codeInputHighlightStyle={styles.underlineStyleHighLighted}
+          // onCodeFilled = {(code => this.setState({otp: code}))}
+          />
         </View>
         <TextButton
-          title={!isVerified ? STRING.BUTTON.VERIFY : STRING.BUTTON.LOGIN}
+          title={STRING.BUTTON.LOGIN}
           disabled={false}
           raised={true}
           onPress={() => loginClick()}
         />
-        <View style={styles.resendContainer}>
-          {isNeedOtp &&
-            <>
-              {sec >= 1 ? (
-                <GlobalText text={`${STRING.RESEND_WITHIN}${sec > 9 ? sec : "0" + sec})`} />
-              ) : (
-                <View>
-                  {isOtpSent && <GlobalText text={STRING.DIDNT_RECEIVE} />}
-                  <TouchableOpacity onPress={() => resend()}>
-                    <GlobalText text={isOtpSent ? STRING.RESEND : STRING.SEND_OTP} style={styles.sendOTPText} />
-                  </TouchableOpacity>
-                </View>
-              )}
-            </>
-          }
+        <View style={styles.haveAcc}>
+          {sec >= 1 ? (
+            <GlobalText text={`${STRING.RESEND_WITHIN}${sec > 9 ? sec : "0" + sec})`} />
+          ) : (
+            <View style={{flexDirection: "row"}}>
+              <GlobalText text={STRING.DIDNT_RECEIVE} />
+              <TouchableOpacity onPress={() => resend()}>
+                <GlobalText text={STRING.RESEND} style={styles.sendOTPText} />
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
-        <Popup
-          message={alertMessage}
-          visible={isAlert}
-          onPress={closePopup}
-        />
       </View>
+      <KeyboardAvoidingView behavior="height" style={{ flex: 2 }}>
+      </KeyboardAvoidingView>
+      <Popup
+        message={alertMessage}
+        visible={isAlert}
+        onPress={closePopup}
+      />
     </View>
   );
 };

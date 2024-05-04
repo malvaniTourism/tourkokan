@@ -38,7 +38,7 @@ export const comnPost = async (url, data, navigation) => {
     .post(myUrl, data, config)
     .then((res) => res)
     .catch((err) => {
-      if (err.response.status == 401) {
+      if (err.response?.status == 401) {
         AsyncStorage.clear()
         navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN)
       }

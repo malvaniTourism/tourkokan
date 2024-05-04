@@ -41,7 +41,7 @@ const DIMENSIONS = {
     headerHeight: sh / 100 * 6,
     headerSpace: (sh / 100 * 6) * 2.5,
 
-    xxxlText: sw / 10,
+    xxxlText: sw / 13,
     xxlText: sw / 15,
     xlText: sw / 20,
     largeText: sw / 23,

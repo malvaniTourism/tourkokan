@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, Text, TouchableOpacity, BackHandler, Image, ScrollView, ImageBackground, Animated, PermissionsAndroid } from "react-native";
+import { View, Text, TouchableOpacity, BackHandler, Image, ScrollView, ImageBackground, Animated, PermissionsAndroid, KeyboardAvoidingView } from "react-native";
 import { OTP, SignUpFields } from "../../Services/Constants/FIELDS";
 import TextField from "../../Components/Customs/TextField";
 import Header from "../../Components/Common/Header";
@@ -220,7 +220,7 @@ const SignUp = ({ navigation, ...props }) => {
   };
 
   const signInScreen = () => {
-    navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN);
+    navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN);
   };
 
   const closePopup = () => {
@@ -305,78 +305,20 @@ const SignUp = ({ navigation, ...props }) => {
   };
 
   return (
-    <View style={{ alignItems: "center", flex: 1 }}>
-      {/* <ImageBackground style={styles.loginImage} source={require("../../Assets/Images/kokan1.jpeg")} /> */}
+    <View style={{ flex: 1, backgroundColor: COLOR.white }}>
 
-      <Loader text={fetchingText} />
-      <View style={{ marginTop: 20 }}>
-        <ScrollView>
-          {/* <Header
-          name={""}
-          startIcon={<View></View>}
-          style={styles.loginHeader}
-        /> */}
+      <View>
+        <Loader text={fetchingText} />
+        <GlobalText text={STRING.WELCOME} style={styles.welcomeText} />
+        <GlobalText text={STRING.appName} style={styles.boldKokan} />
+      </View>
+
+      <View style={styles.middleFlex}>
           <GlobalText text={STRING.SIGN_UP} style={styles.loginText} />
           <View style={{ alignItems: "center" }}>
             <View style={{ flexDirection: "row", justifyContent: "space-evenly", width: "100%" }}>
-
-              {/* <TouchableOpacity
-                style={styles.imageContainerStyle}
-                onPress={handleImageUpload}
-              >
-                {imageSource ?
-                  <Image
-                    source={{ uri: imageSource }}
-                    style={styles.imageSourceView}
-                  />
-                  :
-                  <View style={styles.addProfileView}>
-                    <FontIcons
-                    name="user-circle"
-                    color={COLOR.themeBlue}
-                    size={DIMENSIONS.iconLarge}
-                    style={{marginBottom: 10}}
-                  />
-                  <GlobalText text={STRING.BUTTON.ADD_PHOTO} />
-                  </View>
-                }
-              </TouchableOpacity> */}
-
-              {/* <TouchableOpacity
-                style={locationError ? styles.errorImageContainerStyle : styles.imageContainerStyle}
-                onPress={myLocationPress}
-              >
-                {locationError ?
-                  <IonIcons
-                    name="location"
-                    color={COLOR.red}
-                    size={DIMENSIONS.iconLarge}
-                    style={styles.userIcon}
-                  />
-                  :
-                  <IonIcons
-                    name="location"
-                    color={COLOR.themeBlue}
-                    size={DIMENSIONS.iconLarge}
-                    style={styles.userIcon}
-                  />
-                }
-              </TouchableOpacity> */}
             </View>
 
-            {/* <DropDown
-              setChild={(v, i) => setValue(v, i)}
-              name={STRING.ROLE}
-              label={STRING.ROLE}
-              value={role}
-              disable={false}
-              style={styles.roleDropDown}
-              fieldType={STRING.TYPE.DROP_DWN}
-              helperMsg={STRING.SELECT_ROLE}
-              List={roles}
-              parentDetails={{ label: "role" }}
-              selectedTextStyle={styles.selectedTextStyle}
-            /> */}
             {SignUpFields.map((field, index) => {
               return (
                 <TextField
@@ -423,17 +365,19 @@ const SignUp = ({ navigation, ...props }) => {
             <View style={styles.haveAcc}>
               <GlobalText text={STRING.HAVE_ACC} />
               <TouchableOpacity onPress={() => signInScreen()}>
-                <GlobalText text={STRING.SIGN_IN} />
+                <GlobalText text={STRING.SIGN_IN} style={{fontWeight: "bold"}} />
               </TouchableOpacity>
             </View>
           </View>
-        </ScrollView>
-        <Popup
+      </View>
+
+      <KeyboardAvoidingView behavior="height" style={{ flex: 2 }}>
+      </KeyboardAvoidingView>
+      <Popup
           message={alertMessage}
           visible={isAlert}
           onPress={closePopup}
         />
-      </View>
     </View>
   );
 };

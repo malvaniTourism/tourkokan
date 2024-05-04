@@ -28,16 +28,24 @@ const styles = StyleSheet.create({
     color: COLOR.themeBlue
   },
   buttonView: {
-    
+    marginTop: 15
+  },
+  middleFlex: {
+    justifyContent: "flex-end",
+    padding: 10,
+    flex: 5,
+    alignItems: "center",
   },
   haveAcc: {
     flexDirection: "row",
     marginVertical: 20,
+    justifyContent: "center"
   },
   containerStyle: {
     borderWidth: 1,
     padding: 10,
-    borderRadius: DIMENSIONS.borderRadius,
+    borderRadius: DIMENSIONS.borderRadiusXS,
+    borderColor: COLOR.themeBlue
   },
   otpContainerStyle: {
     borderWidth: 1,
@@ -111,16 +119,16 @@ const styles = StyleSheet.create({
   loginText: {
     fontWeight: "bold",
     fontSize: DIMENSIONS.headerTextSize,
-    padding: 30,
-    paddingBottom: 10,
+    textAlign: "left",
+    width: DIMENSIONS.bannerWidth,
+    marginLeft: 10
   },
   loginSubText: {
-    fontWeight: "400",
+    fontWeight: "bold",
     fontSize: DIMENSIONS.subtitleTextSize,
-    padding: 20,
-    paddingBottom: 10,
-    marginVertical: 50,
-    textAlign: "left"
+    textAlign: "left",
+    width: DIMENSIONS.bannerWidth,
+    marginVertical: 10
   },
   authScreenView: {
     justifyContent: "space-between",
@@ -179,12 +187,6 @@ const styles = StyleSheet.create({
     fontSize: DIMENSIONS.xlText,
     fontWeight: "bold"
   },
-  loginContentsBox: {
-    borderRadius: DIMENSIONS.borderRadius,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 10
-  },
   whiteText: {
     color: COLOR.white
   },
@@ -193,28 +195,25 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     top: 10
   },
-  resendContainer: {
-    height: 60,
-    paddingTop: 15
-  },
-  verifyOtpView: {
-    alignItems: "center",
-    flex: 1,
-    marginBottom: 30
-  },
   choiceText: {
     marginVertical: 20,
     color: COLOR.themeBlue,
     fontWeight: "600"
   },
   sendOTPText: {
-    color: COLOR.themeBlue,
     fontWeight: "600"
   },
   addProfileView: {
     width: "100%",
     alignItems: "center",
     justifyContent: "center"
+  },
+  welcomeText: {
+    textAlign: "left",
+    fontWeight: "350",
+    fontSize: DIMENSIONS.xxlText,
+    marginLeft: 25,
+    marginTop: 50
   }
 });
 

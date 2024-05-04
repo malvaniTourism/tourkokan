@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { View, Text, TouchableOpacity, BackHandler, Image, ImageBackground } from "react-native";
+import { View, Text, TouchableOpacity, BackHandler, Image, ImageBackground, KeyboardAvoidingView } from "react-native";
 import TextField from "../../Components/Customs/TextField";
 import { Email, SignInFields } from "../../Services/Constants/FIELDS";
 import Header from "../../Components/Common/Header";
@@ -23,6 +23,7 @@ import AppLogo from "../../Assets/Images/tourKokan.png";
 import EmailPassword from "./LoginComponents/EmailPassword";
 import LoginChoice from "./LoginComponents/LoginChoice";
 import EmailOtp from "./LoginComponents/EmailOtp";
+import Feather from "react-native-vector-icons/Feather";
 
 const EmailSignIn = ({ navigation, route, ...props }) => {
   const [email, setEmail] = useState("");
@@ -35,6 +36,7 @@ const EmailSignIn = ({ navigation, route, ...props }) => {
   const [isPassword, setIsPassword] = useState(false);
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true)
+  const [showPassword, setShowPassword] = useState(false)
 
   useEffect(() => {
     // openDB()
@@ -203,7 +205,7 @@ const EmailSignIn = ({ navigation, route, ...props }) => {
   }
 
   return (
-    <View style={{ alignItems: "center" }}>
+    <View style={{ flex: 1, backgroundColor: COLOR.white }}>
       {/* <ImageBackground style={styles.loginImage} source={require("../../Assets/Images/kokan1.jpeg")} /> */}
       {/* <Header
         name={""}
@@ -211,15 +213,15 @@ const EmailSignIn = ({ navigation, route, ...props }) => {
         style={styles.loginHeader}
       /> */}
 
-      <View style={styles.appName}>
-        <Image source={AppLogo} style={styles.appLogo} />
+      <View>
+        <Loader />
+        <GlobalText text={STRING.WELCOME} style={styles.welcomeText} />
+        <GlobalText text={STRING.appName} style={styles.boldKokan} />
       </View>
 
-      <Loader />
-      <View style={{ justifyContent: "center", padding: 10 }}>
+      <View style={styles.middleFlex}>
         <GlobalText text={STRING.LOG_IN} style={styles.loginText} />
-        <GlobalText text={STRING.LOG_IN_SUB} style={styles.loginSubText} />
-        {Email.map((field, index) => {
+        {SignInFields.map((field, index) => {
           return (
             <TextField
               name={field.name}
@@ -234,26 +236,43 @@ const EmailSignIn = ({ navigation, route, ...props }) => {
               style={styles.containerStyle}
               inputContainerStyle={styles.inputContainerStyle}
               isSecure={field.isSecure}
+              rightIcon={
+                field.type == `${STRING.TYPE.PASSWORD}` &&
+                <Feather
+                    name={field.isSecure ? "eye" : "eye-off"}
+                    size={24}
+                    color={COLOR.themeBlue}
+                    onPress={() => {
+                        field.isSecure = !showPassword
+                        setShowPassword(!showPassword)
+                    }}
+                    style={styles.eyeIcon}
+                />
+            }
             />
           );
         })}
+        <TouchableOpacity onPress={() => navigateTo(navigation, STRING.SCREEN.EMAIL)}>
+          <GlobalText text={STRING.BUTTON.LOGIN_WITH_OTP} style={styles.loginSubText} />
+        </TouchableOpacity>
         <View style={{ alignItems: "center" }}>
           <TextButton
-            title={STRING.BUTTON.CONTINUE}
+            title={STRING.BUTTON.LOGIN}
             buttonView={styles.buttonView}
             isDisabled={isButtonDisabled}
             raised={true}
             onPress={() => continueClick()}
           />
         </View>
+        <View style={styles.haveAcc}>
+          <GlobalText text={STRING.DONT_HAVE_ACC} />
+          <TouchableOpacity onPress={() => signUpScreen()}>
+            <GlobalText text={STRING.SIGN_UP} style={{fontWeight: "bold"}} />
+          </TouchableOpacity>
+        </View>
       </View>
-      <View style={styles.haveAcc}>
-        <GlobalText text={STRING.DONT_HAVE_ACC} />
-        <TouchableOpacity onPress={() => signUpScreen()}>
-          <GlobalText text={STRING.SIGN_UP} />
-        </TouchableOpacity>
-      </View>
-
+      <KeyboardAvoidingView behavior="height" style={{ flex: 2 }}>
+      </KeyboardAvoidingView>
       <Popup
         message={alertMessage}
         onPress={closePopup}

@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   textFieldContainer: {
     borderWidth: 0,
     padding: 10,
-    borderColor: COLOR.grey,
+    borderColor: COLOR.themeBlue,
     marginBottom: -50,
     alignItems: "center"
   },

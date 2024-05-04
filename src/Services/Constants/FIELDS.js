@@ -43,7 +43,7 @@ export const SignInFields = [
   },
 ];
 
-export const Email = [
+export const EmailField = [
   {
     name: STRING.LABEL.EMAIL,
     placeholder: STRING.LABEL.EMAIL,
@@ -96,7 +96,7 @@ export const SignUpFields = [
   },
   {
     name: STRING.LABEL.EMAIL,
-    placeholder: STRING.LABEL.EMAIL,
+    placeholder: STRING.LABEL.EMAIL_ID,
     type: STRING.TYPE.EMAIL,
     length: DIMENSIONS.fieldLength,
     required: true,
@@ -104,7 +104,7 @@ export const SignUpFields = [
   },
   {
     name: STRING.LABEL.MOBILE,
-    placeholder: STRING.LABEL.MOBILE,
+    placeholder: STRING.LABEL.MOBILE_NO,
     type: STRING.TYPE.PHONE,
     length: DIMENSIONS.mobileLength,
     required: false,
