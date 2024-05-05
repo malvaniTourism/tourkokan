@@ -233,6 +233,12 @@ const STRING = {
   UNCOVER: "Enter your start and end points to uncover the best routes.",
   LOCATION: "Location",
   ADDRESS: "User Address",
+
+  ICON: {
+    NAME: 'user',
+    EMAIL: 'mail',
+    MOBILE_NO: 'phone-call'
+  }
 };
 
 export default STRING;

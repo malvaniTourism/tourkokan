@@ -93,6 +93,7 @@ export const SignUpFields = [
     length: DIMENSIONS.fieldLength,
     required: true,
     disabled: false,
+    leftIcon: STRING.ICON.NAME,
   },
   {
     name: STRING.LABEL.EMAIL,
@@ -101,6 +102,7 @@ export const SignUpFields = [
     length: DIMENSIONS.fieldLength,
     required: true,
     disabled: false,
+    leftIcon: STRING.ICON.EMAIL,
   },
   {
     name: STRING.LABEL.MOBILE,
@@ -109,6 +111,7 @@ export const SignUpFields = [
     length: DIMENSIONS.mobileLength,
     required: false,
     disabled: false,
+    leftIcon: STRING.ICON.MOBILE_NO,
   }
 ];
 

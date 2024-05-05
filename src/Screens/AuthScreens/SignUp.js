@@ -324,6 +324,9 @@ const SignUp = ({ navigation, ...props }) => {
                 <TextField
                   name={field.name}
                   label={field.name}
+                   leftIcon={
+                    <Feather name={field.leftIcon} size={24} style={styles.leftIcon}/>
+                  }
                   placeholder={field.placeholder}
                   fieldType={field.type}
                   length={field.length}
@@ -348,6 +351,7 @@ const SignUp = ({ navigation, ...props }) => {
                       style={styles.eyeIcon}
                     />
                   }
+                 
                 />
               );
             })}

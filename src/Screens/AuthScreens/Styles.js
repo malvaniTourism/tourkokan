@@ -58,6 +58,12 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: -40
   },
+  leftIcon: {
+    position: 'absolute', // Position the icon absolutely inside the input field
+    left: '50%', // Adjust the left position as needed
+    top: '70%', // Center vertically
+    transform: [{ translateY: -12 }],
+  },
   roleDropDown: {
     borderWidth: 1,
     paddingVertical: 6,
