@@ -70,8 +70,9 @@ const styles = StyleSheet.create({
     containerStyle: {
         borderWidth: 1,
         padding: 10,
-        borderColor: COLOR.grey,
-        borderRadius: DIMENSIONS.borderRadius
+        borderColor: COLOR.themeBlue,
+        borderRadius: DIMENSIONS.borderRadiusXS,
+        marginVertical: 7
     },
     inputContainerStyle: {
         borderColor: COLOR.transparent,
@@ -485,7 +486,20 @@ const styles = StyleSheet.create({
     },
     buttonTitle: {
         color: COLOR.white
-    }
+    },
+    searchButtonStyle: {
+        height: 50,
+        width: DIMENSIONS.bannerWidth / 3,
+        backgroundColor: COLOR.themeBlue,
+        borderRadius: DIMENSIONS.borderRadiusXS,
+        alignSelf: "flex-end",
+        marginTop: -DIMENSIONS.bannerHeight + -80,
+        marginRight: 20
+    },
+    buttonTitleStyle: {
+        color: COLOR.white,
+        fontWeight: "bold",
+    },
 });
 
 export default styles;

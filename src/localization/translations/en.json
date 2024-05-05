@@ -38,7 +38,8 @@
         "LOGINPASS": "Login with Password",
         "NEXT": "Next",
         "ADD_PHOTO": "Add Profile Photo",
-        "VIEW_MAP": "View on Map"
+        "VIEW_MAP": "View on Map",
+        "SEND": "Send"
     },
     "SCREEN": {
         "ROOT": "Root",
@@ -226,5 +227,6 @@
     "PLEASE_FILL": "Please fill all the details to Register.",
     "UNCOVER": "Enter your start and end points to uncover the best routes.",
     "LOCATION": "Location",
-    "ADDRESS": "User Address"
+    "ADDRESS": "User Address",
+    "CONNECT": "Connect with Us: We're Here to Listen"
 }

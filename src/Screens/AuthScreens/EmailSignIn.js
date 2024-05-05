@@ -175,21 +175,30 @@ const EmailSignIn = ({ navigation, route, ...props }) => {
     navigateTo(navigation, STRING.SCREEN.SIGN_UP);
   };
 
-  const continueClick = () => {
-    props.setLoader(true)
+  const login = () => {
+    props.setLoader(true);
     const data = {
       email,
+      password,
     };
-    comnPost("v2/auth/isVerifiedEmail", data)
+    // createUser()
+    comnPost("v2/auth/login", data)
       .then((res) => {
-        if (res.data?.success) {
+        if (res.data.success) {
+          // setIsAlert(true);
+          // setAlertMessage(res.data.message);
+          AsyncStorage.setItem(STRING.STORAGE.ACCESS_TOKEN, res.data.data.access_token);
+          AsyncStorage.setItem(STRING.STORAGE.USER_ID, res.data.data.user.id);
+          props.saveAccess_token(res.data.data.access_token);
           props.setLoader(false);
-          navigateTo(navigation, STRING.SCREEN.VERIFY_OTP, { email, isVerified: res.data?.data?.isVerified ? true : false })
+          // setIsSuccess(true)
+          AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, JSON.stringify(true))
+          navigateTo(navigation, STRING.SCREEN.HOME);
         } else {
           setIsAlert(true);
-          setIsSuccess(false)
-          setAlertMessage(res.data?.message);
+          setAlertMessage(res.data.message.email ? res.data.message.email : res.data.message.password ? res.data.message.password : res.data.message);
           props.setLoader(false);
+          setIsSuccess(false)
         }
       })
       .catch((err) => {
@@ -198,7 +207,7 @@ const EmailSignIn = ({ navigation, route, ...props }) => {
         setAlertMessage(STRING.ALERT.WENT_WRONG);
         props.setLoader(false);
       });
-  }
+  };
 
   const selectPassword = () => {
     navigateTo(navigation, STRING.SCREEN.PASSWORD_LOGIN, { email })
@@ -239,16 +248,16 @@ const EmailSignIn = ({ navigation, route, ...props }) => {
               rightIcon={
                 field.type == `${STRING.TYPE.PASSWORD}` &&
                 <Feather
-                    name={field.isSecure ? "eye" : "eye-off"}
-                    size={24}
-                    color={COLOR.themeBlue}
-                    onPress={() => {
-                        field.isSecure = !showPassword
-                        setShowPassword(!showPassword)
-                    }}
-                    style={styles.eyeIcon}
+                  name={field.isSecure ? "eye" : "eye-off"}
+                  size={24}
+                  color={COLOR.themeBlue}
+                  onPress={() => {
+                    field.isSecure = !showPassword
+                    setShowPassword(!showPassword)
+                  }}
+                  style={styles.eyeIcon}
                 />
-            }
+              }
             />
           );
         })}
@@ -261,13 +270,13 @@ const EmailSignIn = ({ navigation, route, ...props }) => {
             buttonView={styles.buttonView}
             isDisabled={isButtonDisabled}
             raised={true}
-            onPress={() => continueClick()}
+            onPress={() => login()}
           />
         </View>
         <View style={styles.haveAcc}>
           <GlobalText text={STRING.DONT_HAVE_ACC} />
           <TouchableOpacity onPress={() => signUpScreen()}>
-            <GlobalText text={STRING.SIGN_UP} style={{fontWeight: "bold"}} />
+            <GlobalText text={STRING.SIGN_UP} style={{ fontWeight: "bold" }} />
           </TouchableOpacity>
         </View>
       </View>

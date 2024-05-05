@@ -38,6 +38,7 @@ const STRING = {
     NEXT: "Next",
     ADD_PHOTO: "Add Profile Photo",
     VIEW_MAP: "View on Map",
+    SEND: "Send",
   },
   SCREEN: {
     ROOT: "Root",
@@ -233,6 +234,7 @@ const STRING = {
   UNCOVER: "Enter your start and end points to uncover the best routes.",
   LOCATION: "Location",
   ADDRESS: "User Address",
+  CONNECT: "Connect with Us: We're Here to Listen",
 };
 
 export default STRING;

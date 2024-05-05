@@ -177,7 +177,7 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
               borderColor: COLOR.themeBlue,
               textAlign: "center",
               fontSize: 24,
-              color: COLOR.lightGreen,
+              color: COLOR.themeBlue,
               borderRadius: DIMENSIONS.borderRadiusXS
             }}
             inputContainerStyles={{ marginVertical: 10 }}

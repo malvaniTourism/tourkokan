@@ -20,6 +20,7 @@ import { setLoader } from "../Reducers/CommonActions";
 import { connect } from "react-redux";
 import STRING from "../Services/Constants/STRINGS";
 import { useTranslation } from 'react-i18next';
+import GlobalText from "../Components/Customs/Text";
 
 const ContactUs = ({ navigation, route, ...props }) => {
   const { t } = useTranslation();
@@ -112,7 +113,8 @@ const ContactUs = ({ navigation, route, ...props }) => {
         }
       />
       <Loader />
-      <SafeAreaView style={{ alignItems: "center", height: DIMENSIONS.screenHeight, backgroundColor: COLOR.white }}>
+      <GlobalText text={STRING.CONNECT} style={{textAlign: "left", marginLeft: 20}} />
+      <View style={{ alignItems: "center", height: DIMENSIONS.screenHeight, backgroundColor: COLOR.white }}>
         {ContactUsFields.map((field, index) => {
           return (
             <TextField
@@ -131,17 +133,13 @@ const ContactUs = ({ navigation, route, ...props }) => {
             />
           );
         })}
-        <TextButton
-          title={STRING.BUTTON.SUBMIT}
-          buttonView={styles.buttonView}
-          containerStyle={styles.contactButtonContainer}
-          buttonStyle={styles.contactButtonStyle}
-          titleStyle={styles.buttonTitle}
-          disabled={false}
-          raised={true}
-          onPress={() => submit()}
-        />
-      </SafeAreaView>
+      </View>
+      <TextButton
+        title={STRING.BUTTON.SEND}
+        buttonView={styles.searchButtonStyle}
+        titleStyle={styles.buttonTitleStyle}
+        onPress={submit}
+      />
       <Popup
         message={alertMessage}
         onPress={closePopup}
