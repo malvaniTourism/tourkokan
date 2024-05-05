@@ -24,6 +24,8 @@ const styles = StyleSheet.create({
   },
   titleStyle: {
     color: COLOR.white,
+    fontWeight: "bold",
+    fontSize: DIMENSIONS.buttonText
   },
   imageButtonSkeleton: {
     height: DIMENSIONS.iconXXL,

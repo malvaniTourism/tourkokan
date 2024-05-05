@@ -182,6 +182,13 @@ const STRING = {
     HARDWARE_BACK_PRESS: "hardwareBackPress",
     FOCUS: "focus",
   },
+  CHIPS: {
+    LANGUAGE: "Language",
+    UPDATE_LOCATION: "Update Location",
+    UPDATE_PROFILE: "Update Profile",
+    SETTINGS: "Settings",
+    LOGOUT: "Logout",
+  },
 
   PRESS_BACK: "Press back again to exit",
   OTP_VERIFICATION: "OTP Verification",

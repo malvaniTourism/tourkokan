@@ -225,6 +225,10 @@ const styles = StyleSheet.create({
     headerContainer: {
         alignItems: "center",
     },
+    chipContainer: {
+        alignItems: "center",
+        marginTop: DIMENSIONS.sectionGap
+    },
     coverPhoto: {
         width: "100%",
         height: 200,

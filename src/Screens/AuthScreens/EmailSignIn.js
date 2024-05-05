@@ -215,7 +215,7 @@ const EmailSignIn = ({ navigation, route, ...props }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: COLOR.white }}>
-      {/* <ImageBackground style={styles.loginImage} source={require("../../Assets/Images/kokan1.jpeg")} /> */}
+      <ImageBackground style={styles.loginImage} source={require("../../Assets/Images/Intro/login_background.png")} />
       {/* <Header
         name={""}
         startIcon={<View></View>}

@@ -50,6 +50,7 @@ const DIMENSIONS = {
     textSize: sw / 30,
     textSizeSmall: sw / 35,
     textSizeXS: sw / 40,
+    buttonText: 16,
 
     sectionGap: 20,
 

@@ -38,6 +38,8 @@ import STRING from "../Services/Constants/STRINGS";
 import NetInfo from "@react-native-community/netinfo";
 import CheckNet from "../Components/Common/CheckNet";
 import { useTranslation } from 'react-i18next';
+import ProfileChip from "../Components/Common/ProfileChip";
+import ChipOptions from "../Components/Common/ProfileViews/ChipOptions";
 
 const ProfileView = ({ navigation, route, ...props }) => {
   const { t, i18n } = useTranslation();
@@ -50,7 +52,8 @@ const ProfileView = ({ navigation, route, ...props }) => {
   const [initialRegion, setInitialRegion] = useState({})
   const [profile, setProfile] = useState([]);
   const [error, setError] = useState(null);
-  const [offline, setOffline] = useState(false)
+  const [offline, setOffline] = useState(false);
+  const [option, setOption] = useState(0);
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
@@ -187,6 +190,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
   }
 
   const handleLogout = () => {
+    // Logout
     props.setLoader(true);
     comnPost("v2/logout")
       .then((res) => {
@@ -203,9 +207,11 @@ const ProfileView = ({ navigation, route, ...props }) => {
 
   const handleEditPress = () => {
     navigateTo(navigation, STRING.SCREEN.PROFILE)
+    // Edit Profile
   }
 
   const setHomeLocation = () => {
+    // Update Location
     requestLocationPermission();
     setShowLocModal(false)
   }
@@ -213,6 +219,11 @@ const ProfileView = ({ navigation, route, ...props }) => {
   const setCurrLocation = () => {
     requestLocationPermission();
     setShowLocModal(false)
+  }
+
+  const changeLang = () => {
+    // Lang
+    i18n.changeLanguage("en")
   }
 
   return (
@@ -253,45 +264,13 @@ const ProfileView = ({ navigation, route, ...props }) => {
         }
       </View>
 
-      <View>
-        <TouchableOpacity onPress={() => i18n.changeLanguage("en")}>
-          <Text>English</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => i18n.changeLanguage("mr")}>
-          <Text>Marathi</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={{ flexDirection: "row", justifyContent: "space-evenly", marginTop: 30 }}>
-        <TextButton
-          title={STRING.BUTTON.EDIT_PROFILE}
-          buttonView={styles.editSeeMoreStyle}
-          containerStyle={styles.editButtonContainer}
-          buttonStyle={styles.editButtonStyle}
-          titleStyle={styles.planButtonTitleStyle}
-          raised={true}
-          onPress={handleEditPress}
-        />
-        <TextButton
-          title={STRING.BUTTON.UPDATE_LOCATION}
-          buttonView={styles.updateSeeMoreStyle}
-          containerStyle={styles.editButtonContainer}
-          buttonStyle={styles.editButtonStyle}
-          titleStyle={styles.planButtonTitleStyle}
-          raised={true}
-          onPress={() => setShowLocModal(true)}
-        />
-      </View>
-      <View style={{ flexDirection: "row", justifyContent: "space-evenly", marginVertical: 30 }}>
-        <TextButton
-          title={STRING.BUTTON.LOGOUT}
-          buttonView={styles.logoutStyle}
-          containerStyle={styles.editButtonContainer}
-          buttonStyle={styles.editButtonStyle}
-          titleStyle={styles.planButtonTitleStyle}
-          raised={true}
-          onPress={() => handleLogout()}
-        />
+      <View style={styles.chipContainer}>
+        {
+          option == 0 ?
+            <ChipOptions />
+            :
+            <ProfileChip />
+        }
       </View>
 
       <Overlay style={styles.locationModal} isVisible={showLocModal} onBackdropPress={() => setShowLocModal(false)}>

@@ -327,7 +327,21 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.cardBackground,
     position: "absolute",
     width: DIMENSIONS.halfWidth
-  }
+  },
+  profileChip: {
+    width: DIMENSIONS.bannerWidth,
+    height: 46,
+    borderWidth: 1,
+    borderColor: COLOR.themeBlue,
+    borderRadius: DIMENSIONS.borderRadiusXS,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 15
+  },
+  chipName: {
+    fontSize: DIMENSIONS.buttonText
+  },
 });
 
 export default styles;

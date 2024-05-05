@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   loginHeader: {
   },
   loginImage: {
-    height: DIMENSIONS.screenHeight,
+    height: DIMENSIONS.screenHeight - DIMENSIONS.headerHeight,
     width: DIMENSIONS.screenWidth,
     position: "absolute"
   },
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   loginName: {
     textAlign: "left",
     marginLeft: 20,
-    fontSize: DIMENSIONS.largeText,
+    fontSize: DIMENSIONS.xxxlText,
     fontWeight: "bold",
     color: COLOR.white,
     fontStyle: "italic"

@@ -178,6 +178,14 @@
         "HARDWARE_BACK_PRESS": "hardwareBackPress",
         "FOCUS": "focus"
     },
+    "CHIPS": {
+        "LANGUAGE": "भाषा",
+        "UPDATE_LOCATION": "स्थान अपडेट करा",
+        "UPDATE_PROFILE": "प्रोफाइल अपडेट करा",
+        "SETTINGS": "सेटिंग्ज",
+        "LOGOUT": "लॉगआउट"
+    },
+
     "PRESS_BACK": "बाहेर पडण्यासाठी पुन्हा दाबा",
     "OTP_VERIFICATION": "OTP पडताळणी",
     "WE_HAVE_SENT": "तुमच्या ईमेलची पडताळणी करण्यासाठी आम्ही एक OTP पाठवला आहे.",

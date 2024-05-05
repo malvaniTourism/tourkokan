@@ -306,6 +306,7 @@ const SignUp = ({ navigation, ...props }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: COLOR.white }}>
+      <ImageBackground style={styles.loginImage} source={require("../../Assets/Images/Intro/login_background.png")} />
 
       <View>
         <Loader text={fetchingText} />
