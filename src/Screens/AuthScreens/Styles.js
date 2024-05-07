@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   },
   loginText: {
     fontWeight: "bold",
-    fontSize: DIMENSIONS.headerTextSize,
+    fontSize: DIMENSIONS.largeText,
     textAlign: "left",
     width: DIMENSIONS.bannerWidth,
     marginLeft: 10
@@ -149,7 +149,8 @@ const styles = StyleSheet.create({
     textAlign: "left",
     marginLeft: 25,
     fontSize: DIMENSIONS.headerTextSize,
-    fontWeight: "300"
+    fontWeight: "300",
+    width: DIMENSIONS.bannerWidth
   },
   boldKokan: {
     textAlign: "left",

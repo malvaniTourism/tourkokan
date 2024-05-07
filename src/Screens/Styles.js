@@ -83,8 +83,6 @@ const styles = StyleSheet.create({
         marginBottom: 20
     },
     titleStyle: {
-        color: COLOR.themeBlue,
-        textAlign: "right"
     },
     buttonSkeleton: {
         width: DIMENSIONS.bannerWidth / 2,

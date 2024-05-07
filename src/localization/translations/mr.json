@@ -1,6 +1,6 @@
 {
     "language": "Marathi",
-    "appName": "TourKokan",
+    "appName": "Tourkokan",
     "EXPLORE": "एक्सप्लोर करा, मोहक",
     "KOKAN": "कोकण",
     "COMPANION": "महाराष्ट्राच्या किनारी रत्नासाठी तुमचा परम सहचर.",
@@ -39,7 +39,8 @@
         "NEXT": "पुढे",
         "ADD_PHOTO": "प्रोफाइल फोटो जोडा",
         "VIEW_MAP": "नकाशावर पहा",
-        "SEND": "पाठवा"
+        "SEND": "पाठवा",
+        "SAVE": "जतन करा"
     },
     "SCREEN": {
         "ROOT": "Root",
@@ -183,7 +184,8 @@
         "UPDATE_LOCATION": "स्थान अपडेट करा",
         "UPDATE_PROFILE": "प्रोफाइल अपडेट करा",
         "SETTINGS": "सेटिंग्ज",
-        "LOGOUT": "लॉगआउट"
+        "LOGOUT": "लॉगआउट",
+        "CHANGE_LANGUAGE": "भाषा बदला"
     },
 
     "PRESS_BACK": "बाहेर पडण्यासाठी पुन्हा दाबा",

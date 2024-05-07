@@ -1,6 +1,6 @@
 {
     "language": "English",
-    "appName": "TourKokan",
+    "appName": "Tourkokan",
     "EXPLORE": "Explore the Enchanting",
     "KOKAN": "KOKAN",
     "COMPANION": "Your Ultimate Travel Companion for Maharashtra's Coastal Gem.",
@@ -39,7 +39,8 @@
         "NEXT": "Next",
         "ADD_PHOTO": "Add Profile Photo",
         "VIEW_MAP": "View on Map",
-        "SEND": "Send"
+        "SEND": "Send",
+        "SAVE": "Save"
     },
     "SCREEN": {
         "ROOT": "Root",
@@ -183,7 +184,8 @@
         "UPDATE_LOCATION": "Update Location",
         "UPDATE_PROFILE": "Update Profile",
         "SETTINGS": "Settings",
-        "LOGOUT": "Logout"
+        "LOGOUT": "Logout",
+        "CHANGE_LANGUAGE": "Change Language"
     },
 
     "PRESS_BACK": "Press back again to exit",

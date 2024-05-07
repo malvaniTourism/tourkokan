@@ -129,32 +129,6 @@ export const ProfileFields = [
     required: true,
     disabled: false,
   },
-  {
-    name: STRING.LABEL.EMAIL,
-    placeholder: STRING.LABEL.EMAIL,
-    type: STRING.TYPE.EMAIL,
-    length: DIMENSIONS.fieldLength,
-    required: true,
-    disabled: false,
-  },
-  {
-    name: STRING.LABEL.PASSWORD,
-    placeholder: STRING.LABEL.SET_PASSWORD,
-    type: STRING.TYPE.PASSWORD,
-    length: DIMENSIONS.fieldLength,
-    required: true,
-    disabled: false,
-    isSecure: true
-  },
-  {
-    name: STRING.LABEL.CONFIRM_PASSWORD,
-    placeholder: STRING.LABEL.CONFIRM_PASSWORD,
-    type: STRING.TYPE.PASSWORD,
-    length: DIMENSIONS.fieldLength,
-    required: true,
-    disabled: false,
-    isSecure: true
-  }
 ];
 
 export const SrcDest = [

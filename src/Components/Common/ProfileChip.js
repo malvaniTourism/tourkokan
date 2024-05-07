@@ -5,14 +5,14 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import COLOR from '../../Services/Constants/COLORS';
 import GlobalText from '../Customs/Text';
 
-const ProfileChip = ({ icon, name, meta }) => {
+const ProfileChip = ({ clickChip, icon, name, meta }) => {
     return (
-        <TouchableOpacity style={styles.profileChip}>
-            <View>
+        <TouchableOpacity style={styles.profileChip} onPress={clickChip}>
+            <View style={styles.flexRow}>
                 {icon}
                 <GlobalText text={name} style={styles.chipName} />
             </View>
-            <View>
+            <View style={styles.flexRow}>
                 {meta}
                 <Ionicons
                     name="chevron-forward"

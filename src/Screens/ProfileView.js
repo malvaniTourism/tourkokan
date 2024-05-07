@@ -40,6 +40,8 @@ import CheckNet from "../Components/Common/CheckNet";
 import { useTranslation } from 'react-i18next';
 import ProfileChip from "../Components/Common/ProfileChip";
 import ChipOptions from "../Components/Common/ProfileViews/ChipOptions";
+import ChangeLang from "../Components/Common/ProfileViews/ChangeLang";
+import UpdateProfile from "../Components/Common/ProfileViews/UpdateProfile";
 
 const ProfileView = ({ navigation, route, ...props }) => {
   const { t, i18n } = useTranslation();
@@ -190,7 +192,6 @@ const ProfileView = ({ navigation, route, ...props }) => {
   }
 
   const handleLogout = () => {
-    // Logout
     props.setLoader(true);
     comnPost("v2/logout")
       .then((res) => {
@@ -267,9 +268,20 @@ const ProfileView = ({ navigation, route, ...props }) => {
       <View style={styles.chipContainer}>
         {
           option == 0 ?
-            <ChipOptions />
+            <ChipOptions
+              languageClick={() => setOption(1)}
+              locationClick={() => setShowLocModal(true)}
+              profileClick={() => setOption(3)}
+              logoutClick={() => handleLogout()}
+            />
             :
-            <ProfileChip />
+            option == 1 ?
+              <ChangeLang refreshOption={() => setOption(0)} />
+              :
+              option == 3 ?
+                <UpdateProfile />
+                :
+                <ProfileChip />
         }
       </View>
 
@@ -278,9 +290,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
         <View>
           <TextButton
             title={STRING.BUTTON.HOME_LOCATION}
-            containerStyle={styles.showMore}
             buttonView={styles.locBtnStyle}
-            buttonStyle={styles.buttonStyle}
             titleStyle={styles.titleStyle}
             raised={false}
             onPress={setHomeLocation}
@@ -294,9 +304,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
           />
           <TextButton
             title={STRING.BUTTON.CURRENT_LOCATION}
-            containerStyle={styles.showMore}
             buttonView={styles.locBtnStyle}
-            buttonStyle={styles.buttonStyle}
             titleStyle={styles.titleStyle}
             raised={false}
             onPress={setCurrLocation}

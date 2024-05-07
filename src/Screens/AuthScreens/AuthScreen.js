@@ -6,6 +6,7 @@ import GlobalText from '../../Components/Customs/Text'
 import STRING from '../../Services/Constants/STRINGS'
 import TextButton from '../../Components/Customs/Buttons/TextButton'
 import { navigateTo } from '../../Services/CommonMethods'
+import DIMENSIONS from '../../Services/Constants/DIMENSIONS'
 
 const AuthScreen = ({ navigation }) => {
 

@@ -1,5 +1,5 @@
 const STRING = {
-  appName: "TourKokan",
+  appName: "Tourkokan",
   EXPLORE: "Explore the Enchanting",
   KOKAN: "KOKAN",
   COMPANION: "Your Ultimate Travel Companion for Maharashtra's Coastal Gem.",
@@ -39,6 +39,7 @@ const STRING = {
     ADD_PHOTO: "Add Profile Photo",
     VIEW_MAP: "View on Map",
     SEND: "Send",
+    SAVE: "Save",
   },
   SCREEN: {
     ROOT: "Root",
@@ -188,6 +189,7 @@ const STRING = {
     UPDATE_PROFILE: "Update Profile",
     SETTINGS: "Settings",
     LOGOUT: "Logout",
+    CHANGE_LANGUAGE: "Change Language",
   },
 
   PRESS_BACK: "Press back again to exit",

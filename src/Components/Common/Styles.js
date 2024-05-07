@@ -342,6 +342,10 @@ const styles = StyleSheet.create({
   chipName: {
     fontSize: DIMENSIONS.buttonText
   },
+  flexRow: {
+    flexDirection: "row",
+    alignItems: "center"
+  }
 });
 
 export default styles;
