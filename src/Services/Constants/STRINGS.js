@@ -191,6 +191,11 @@ const STRING = {
     LOGOUT: "Logout",
     CHANGE_LANGUAGE: "Change Language",
   },
+  ICON: {
+    NAME: 'user',
+    EMAIL: 'mail',
+    MOBILE_NO: 'phone-call'
+  },
 
   PRESS_BACK: "Press back again to exit",
   OTP_VERIFICATION: "OTP Verification",

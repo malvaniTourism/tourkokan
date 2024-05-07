@@ -6,7 +6,6 @@
     "COMPANION": "Your Ultimate Travel Companion for Maharashtra's Coastal Gem.",
     "GOOGLE_API_KEY": "AIzaSyCUUzdHc1ccGZhOzia9NoPf8mf3Yv901ZQ",
     "WELCOME": "Welcome back to",
-
     "BUTTON": {
         "OK": "Ok",
         "SEARCH": "Search",
@@ -186,6 +185,11 @@
         "SETTINGS": "Settings",
         "LOGOUT": "Logout",
         "CHANGE_LANGUAGE": "Change Language"
+    },
+    "ICON": {
+        "NAME": "user",
+        "EMAIL": "mail",
+        "MOBILE_NO": "phone-cal"
     },
 
     "PRESS_BACK": "Press back again to exit",

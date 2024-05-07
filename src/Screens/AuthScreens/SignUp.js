@@ -180,43 +180,43 @@ const SignUp = ({ navigation, ...props }) => {
       setNotValid(true)
     } else {
       setNotValid(false)
-        myLocationPress()
+      myLocationPress()
     }
   }
 
   const Register = (lat, long) => {
-      props.setLoader(true);
-      const data = {
-        name: name,
-        email: email,
-        mobile: mobile,
-        // password: password,
-        // password_confirmation: cpassword,
-        // role_id: role.id,
-        profile_picture: uploadImage,
-        latitude: lat.toString(),
-        longitude: long.toString()
-      };
-      comnPost("v2/auth/register", data)
-        .then((res) => {
-          if (res.data.success) {
-            props.setLoader(false);
-            setIsSuccess(true);
-            setIsAlert(true);
-            setAlertMessage(res.data.message)
-          } else {
-            props.setLoader(false);
-            setAlertMessage(res.data.message.email ? res.data.message.email : res.data.message.mobile ? res.data.message.mobile : res.data.message.profile_picture);
-            setIsSuccess(false)
-            setIsAlert(true);
-          }
-        })
-        .catch((err) => {
+    props.setLoader(true);
+    const data = {
+      name: name,
+      email: email,
+      mobile: mobile,
+      // password: password,
+      // password_confirmation: cpassword,
+      // role_id: role.id,
+      profile_picture: uploadImage,
+      latitude: lat.toString(),
+      longitude: long.toString()
+    };
+    comnPost("v2/auth/register", data)
+      .then((res) => {
+        if (res.data.success) {
           props.setLoader(false);
+          setIsSuccess(true);
           setIsAlert(true);
+          setAlertMessage(res.data.message)
+        } else {
+          props.setLoader(false);
+          setAlertMessage(res.data.message.email ? res.data.message.email : res.data.message.mobile ? res.data.message.mobile : res.data.message.profile_picture);
           setIsSuccess(false)
-          setAlertMessage(STRING.ALERT.WENT_WRONG);
-        });
+          setIsAlert(true);
+        }
+      })
+      .catch((err) => {
+        props.setLoader(false);
+        setIsAlert(true);
+        setIsSuccess(false)
+        setAlertMessage(STRING.ALERT.WENT_WRONG);
+      });
   };
 
   const signInScreen = () => {
@@ -315,70 +315,74 @@ const SignUp = ({ navigation, ...props }) => {
       </View>
 
       <View style={styles.middleFlex}>
-          <GlobalText text={STRING.SIGN_UP} style={styles.loginText} />
-          <View style={{ alignItems: "center" }}>
-            <View style={{ flexDirection: "row", justifyContent: "space-evenly", width: "100%" }}>
-            </View>
-
-            {SignUpFields.map((field, index) => {
-              return (
-                <TextField
-                  name={field.name}
-                  label={field.name}
-                  placeholder={field.placeholder}
-                  fieldType={field.type}
-                  length={field.length}
-                  required={field.required}
-                  disabled={field.disabled}
-                  value={getValue(index)}
-                  setChild={(v, i) => setValue(v, i, index)}
-                  style={styles.containerStyle}
-                  inputContainerStyle={styles.inputContainerStyle}
-                  isSecure={field.isSecure}
-                  isError={emailErr}
-                  rightIcon={
-                    field.type == `${STRING.TYPE.PASSWORD}` &&
-                    <Feather
-                      name={field.isSecure ? "eye" : "eye-off"}
-                      size={24}
-                      color={COLOR.themeBlue}
-                      onPress={() => {
-                        field.isSecure = !showPassword
-                        setShowPassword(!showPassword)
-                      }}
-                      style={styles.eyeIcon}
-                    />
-                  }
-                />
-              );
-            })}
-            {notValid &&
-              <GlobalText text={STRING.PLEASE_FILL} style={{ color: "red", marginBottom: -10 }} />
-            }
-            <TextButton
-              title={STRING.BUTTON.REGISTER}
-              buttonView={styles.buttonView}
-              isDisabled={false}
-              raised={true}
-              onPress={() => checkValidation()}
-            />
-            <GlobalText text={errMsg} />
-            <View style={styles.haveAcc}>
-              <GlobalText text={STRING.HAVE_ACC} />
-              <TouchableOpacity onPress={() => signInScreen()}>
-                <GlobalText text={STRING.SIGN_IN} style={{fontWeight: "bold"}} />
-              </TouchableOpacity>
-            </View>
+        <GlobalText text={STRING.SIGN_UP} style={styles.loginText} />
+        <View style={{ alignItems: "center" }}>
+          <View style={{ flexDirection: "row", justifyContent: "space-evenly", width: "100%" }}>
           </View>
+
+          {SignUpFields.map((field, index) => {
+            return (
+              <TextField
+                name={field.name}
+                label={field.name}
+                leftIcon={
+                  <Feather name={field.leftIcon} size={24} style={styles.leftIcon} />
+                }
+                placeholder={field.placeholder}
+                fieldType={field.type}
+                length={field.length}
+                required={field.required}
+                disabled={field.disabled}
+                value={getValue(index)}
+                setChild={(v, i) => setValue(v, i, index)}
+                style={styles.signUpContainerStyle}
+                inputContainerStyle={styles.inputContainerStyle}
+                isSecure={field.isSecure}
+                isError={emailErr}
+                rightIcon={
+                  field.type == `${STRING.TYPE.PASSWORD}` &&
+                  <Feather
+                    name={field.isSecure ? "eye" : "eye-off"}
+                    size={24}
+                    color={COLOR.themeBlue}
+                    onPress={() => {
+                      field.isSecure = !showPassword
+                      setShowPassword(!showPassword)
+                    }}
+                    style={styles.eyeIcon}
+                  />
+                }
+
+              />
+            );
+          })}
+          {notValid &&
+            <GlobalText text={STRING.PLEASE_FILL} style={{ color: "red", marginBottom: -10 }} />
+          }
+          <TextButton
+            title={STRING.BUTTON.REGISTER}
+            buttonView={styles.buttonView}
+            isDisabled={false}
+            raised={true}
+            onPress={() => checkValidation()}
+          />
+          <GlobalText text={errMsg} />
+          <View style={styles.haveAcc}>
+            <GlobalText text={STRING.HAVE_ACC} />
+            <TouchableOpacity onPress={() => signInScreen()}>
+              <GlobalText text={STRING.SIGN_IN} style={{ fontWeight: "bold" }} />
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
 
       <KeyboardAvoidingView behavior="height" style={{ flex: 2 }}>
       </KeyboardAvoidingView>
       <Popup
-          message={alertMessage}
-          visible={isAlert}
-          onPress={closePopup}
-        />
+        message={alertMessage}
+        visible={isAlert}
+        onPress={closePopup}
+      />
     </View>
   );
 };

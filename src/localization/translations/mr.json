@@ -187,6 +187,11 @@
         "LOGOUT": "लॉगआउट",
         "CHANGE_LANGUAGE": "भाषा बदला"
     },
+    "ICON": {
+        "NAME": "user",
+        "EMAIL": "mail",
+        "MOBILE_NO": "phone-cal"
+    },
 
     "PRESS_BACK": "बाहेर पडण्यासाठी पुन्हा दाबा",
     "OTP_VERIFICATION": "OTP पडताळणी",

@@ -47,6 +47,12 @@ const styles = StyleSheet.create({
     borderRadius: DIMENSIONS.borderRadiusXS,
     borderColor: COLOR.themeBlue
   },
+  signUpContainerStyle: {
+    borderWidth: 1,
+    paddingLeft: 40,
+    borderRadius: DIMENSIONS.borderRadiusXS,
+    borderColor: COLOR.themeBlue
+  },
   otpContainerStyle: {
     borderWidth: 1,
     padding: 10,
@@ -57,6 +63,12 @@ const styles = StyleSheet.create({
   eyeIcon: {
     position: "absolute",
     left: -40
+  },
+  leftIcon: {
+    position: 'absolute', // Position the icon absolutely inside the input field
+    left: '50%', // Adjust the left position as needed
+    top: '70%', // Center vertically
+    transform: [{ translateY: -12 }],
   },
   roleDropDown: {
     borderWidth: 1,
