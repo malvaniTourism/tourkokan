@@ -249,6 +249,7 @@ const STRING = {
   LOCATION: "Location",
   ADDRESS: "User Address",
   CONNECT: "Connect with Us: We're Here to Listen",
+  ROUTES: "Routes"
 };
 
 export default STRING;

@@ -281,7 +281,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                 <Skeleton animation="pulse" variant="text" style={styles.buttonSkeleton} />
                                 :
                                 <View style={styles.flexAround}>
-                                    <GlobalText text={STRING.SCREEN.ROUTES} style={styles.sectionTitle} />
+                                    <GlobalText text={t("ROUTES")} style={styles.sectionTitle} />
                                     <TextButton
                                         title={t("BUTTON.SEE_ALL")}
                                         onPress={() => showMore(STRING.SCREEN.ALL_ROUTES_SEARCH)}

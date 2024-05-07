@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
         marginBottom: 20
     },
     titleStyle: {
+        color: COLOR.themeBlue
     },
     buttonSkeleton: {
         width: DIMENSIONS.bannerWidth / 2,
@@ -363,7 +364,8 @@ const styles = StyleSheet.create({
         backgroundColor: COLOR.transparent,
         elevation: 0,
         width: DIMENSIONS.halfWidth,
-        justifyContent: "flex-end"
+        justifyContent: "flex-end",
+        alignItems: "flex-end"
     },
     profileButtonStyle: {
         backgroundColor: COLOR.themeBlue,
