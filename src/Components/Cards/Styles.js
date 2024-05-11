@@ -285,17 +285,18 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     cityCardSmall: {
-        width: DIMENSIONS.bannerWidth / 2 - 20,
+        width: DIMENSIONS.bannerWidth / 2,
         height: DIMENSIONS.bannerHeight + 90,
         elevation: 10,
-        margin: 10,
+        marginVertical: 10,
+        marginHorizontal: 5,
         padding: 10,
         backgroundColor: COLOR.white,
         borderRadius: DIMENSIONS.borderRadius,
         justifyContent: "space-between"
     },
     citySmallImage: {
-        width: DIMENSIONS.bannerWidth / 2 - 20,
+        width: DIMENSIONS.bannerWidth / 2,
         height: DIMENSIONS.bannerHeight + 90,
         position: "absolute"
     },

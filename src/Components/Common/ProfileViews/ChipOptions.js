@@ -27,7 +27,7 @@ const ChipOptions = ({ languageClick, locationClick, profileClick, settingsClick
                     </View>
                 }
                 clickChip={languageClick}
-                meta={<GlobalText text={t('language')} />}
+                meta={<GlobalText text={t('LANGUAGE')} />}
             />
             <ProfileChip name={STRING.CHIPS.UPDATE_LOCATION}
                 icon={
@@ -53,7 +53,7 @@ const ChipOptions = ({ languageClick, locationClick, profileClick, settingsClick
                 }
                 clickChip={profileClick}
             />
-            <ProfileChip name={STRING.CHIPS.SETTINGS}
+            {/* <ProfileChip name={STRING.CHIPS.SETTINGS}
                 icon={
                     <View style={styles.chipIcon}>
                         <Ionicons
@@ -64,7 +64,7 @@ const ChipOptions = ({ languageClick, locationClick, profileClick, settingsClick
                     </View>
                 }
                 clickChip={settingsClick}
-            />
+            /> */}
             <ProfileChip name={STRING.CHIPS.LOGOUT}
                 icon={
                     <View style={styles.chipIcon}>

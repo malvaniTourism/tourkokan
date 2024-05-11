@@ -20,6 +20,7 @@ const RoutesList = ({ navigation, route }) => {
   const [list, setList] = useState(route.params.item.route_stops);
 
   useEffect(() => {
+    console.log('route.params.item - ', route.params.item);
     const backHandler = goBackHandler(navigation)
     checkLogin(navigation)
     return () => {

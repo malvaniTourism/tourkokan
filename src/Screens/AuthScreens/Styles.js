@@ -227,7 +227,20 @@ const styles = StyleSheet.create({
     fontSize: DIMENSIONS.xxlText,
     marginLeft: 25,
     marginTop: 50
-  }
+  },
+  dropdown: {
+    width: DIMENSIONS.bannerWidth,
+    height: 46,
+    borderWidth: 1,
+    borderColor: COLOR.themeBlue,
+    borderRadius: DIMENSIONS.borderRadiusXS,
+    marginTop: 15,
+    paddingLeft: 10
+  },
+  dropdownIcon: {
+    width: 30,
+    height: 30,
+  },
 });
 
 export default styles;

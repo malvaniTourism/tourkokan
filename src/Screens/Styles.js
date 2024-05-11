@@ -504,6 +504,9 @@ const styles = StyleSheet.create({
         color: COLOR.white,
         fontWeight: "bold",
     },
+    advStyle: {
+        color: COLOR.red
+    }
 });
 
 export default styles;

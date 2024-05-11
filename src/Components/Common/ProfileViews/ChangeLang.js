@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
 import GlobalText from '../../Customs/Text'
 import STRING from '../../../Services/Constants/STRINGS'
@@ -7,8 +7,9 @@ import { Dropdown } from "react-native-element-dropdown";
 import styles from './Styles'
 import TextButton from '../../Customs/Buttons/TextButton'
 import { useTranslation } from 'react-i18next';
+import { comnPost } from '../../../Services/Api/CommonServices'
 
-const ChangeLang = ({ refreshOption }) => {
+const ChangeLang = ({ refreshOption, setLoader }) => {
     const { t, i18n } = useTranslation();
 
     const [list, setList] = useState(
@@ -18,8 +19,22 @@ const ChangeLang = ({ refreshOption }) => {
     const [value, setValue] = useState(null);
     const [isFocus, setIsFocus] = useState(false);
 
+    useEffect(() => {
+        setValue(t("LANG"))
+    }, [])
+
     const saveLang = () => {
+        setLoader(true)
+        let data = {
+            Language: value
+        }
+        comnPost("v2/updateProfile", data)
+            .then(res => {
+            })
+            .catch(err => {
+            })
         i18n.changeLanguage(value);
+        setLoader(false)
         refreshOption()
     }
 
@@ -47,7 +62,7 @@ const ChangeLang = ({ refreshOption }) => {
             />
             <TextButton
                 title={STRING.BUTTON.SAVE}
-                buttonView={styles.searchButtonStyle}
+                buttonView={styles.langButtonStyle}
                 titleStyle={styles.buttonTitleStyle}
                 onPress={saveLang}
             />

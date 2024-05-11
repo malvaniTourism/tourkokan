@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, Text, TouchableOpacity, BackHandler, Image, ScrollView, ImageBackground, Animated, PermissionsAndroid, KeyboardAvoidingView } from "react-native";
+import { View, Text, TouchableOpacity, BackHandler, Image, ScrollView, ImageBackground, Animated, PermissionsAndroid, KeyboardAvoidingView, Keyboard } from "react-native";
 import { OTP, SignUpFields } from "../../Services/Constants/FIELDS";
 import TextField from "../../Components/Customs/TextField";
 import Header from "../../Components/Common/Header";
@@ -23,9 +23,13 @@ import STRING from "../../Services/Constants/STRINGS";
 import * as Animatable from 'react-native-animatable';
 import Geolocation from "@react-native-community/geolocation";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Dropdown } from "react-native-element-dropdown";
+import { useTranslation } from 'react-i18next';
 
 const SignUp = ({ navigation, ...props }) => {
   const opacity = useRef(new Animated.Value(0)).current;
+  const { i18n } = useTranslation();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
@@ -55,12 +59,34 @@ const SignUp = ({ navigation, ...props }) => {
   const [cPassErr, setCPassErr] = useState(false)
   const [notValid, setNotValid] = useState(false);
   const [fetchingText, setFetchingText] = useState("")
+  const [list, setList] = useState(
+    [{ label: 'English', value: 'en' },
+    { label: 'Marathi', value: 'mr' },]
+  )
+  const [language, setLanguage] = useState(null);
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN));
     // getRoles()
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardVisible(true);
+      }
+    );
+
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardVisible(false);
+      }
+    );
+
     return () => {
       backHandler.remove();
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
     }
   }, []);
 
@@ -195,7 +221,8 @@ const SignUp = ({ navigation, ...props }) => {
       // role_id: role.id,
       profile_picture: uploadImage,
       latitude: lat.toString(),
-      longitude: long.toString()
+      longitude: long.toString(),
+      language
     };
     comnPost("v2/auth/register", data)
       .then((res) => {
@@ -204,6 +231,7 @@ const SignUp = ({ navigation, ...props }) => {
           setIsSuccess(true);
           setIsAlert(true);
           setAlertMessage(res.data.message)
+          i18n.changeLanguage(value);
         } else {
           props.setLoader(false);
           setAlertMessage(res.data.message.email ? res.data.message.email : res.data.message.mobile ? res.data.message.mobile : res.data.message.profile_picture);
@@ -308,10 +336,10 @@ const SignUp = ({ navigation, ...props }) => {
     <View style={{ flex: 1, backgroundColor: COLOR.white }}>
       <ImageBackground style={styles.loginImage} source={require("../../Assets/Images/Intro/login_background.png")} />
 
-      <View>
+      <View style={{ display: isKeyboardVisible ? "none" : "flex" }}>
         <Loader text={fetchingText} />
         <GlobalText text={STRING.WELCOME} style={styles.welcomeText} />
-        <GlobalText text={STRING.appName} style={styles.boldKokan} />
+        <GlobalText text={STRING.APPNAME} style={styles.boldKokan} />
       </View>
 
       <View style={styles.middleFlex}>
@@ -352,10 +380,25 @@ const SignUp = ({ navigation, ...props }) => {
                     style={styles.eyeIcon}
                   />
                 }
-
               />
             );
           })}
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.dropdownIcon}
+            data={list}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder={'Select item'}
+            value={language}
+            onChange={item => {
+              setLanguage(item.value);
+            }}
+          />
           {notValid &&
             <GlobalText text={STRING.PLEASE_FILL} style={{ color: "red", marginBottom: -10 }} />
           }
@@ -376,7 +419,7 @@ const SignUp = ({ navigation, ...props }) => {
         </View>
       </View>
 
-      <KeyboardAvoidingView behavior="height" style={{ flex: 2 }}>
+      <KeyboardAvoidingView behavior="height" style={{ flex: 1 }}>
       </KeyboardAvoidingView>
       <Popup
         message={alertMessage}

@@ -24,10 +24,10 @@ import { connect } from "react-redux";
 import Loader from "../Components/Customs/Loader";
 import TopComponent from "../Components/Common/TopComponent";
 import { setLoader } from "../Reducers/CommonActions";
-import { Image } from "@rneui/themed";
+import { Image, Skeleton } from "@rneui/themed";
 import styles from "./Styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { checkLogin, backPage, goBackHandler, navigateTo } from "../Services/CommonMethods";
+import { checkLogin, backPage, goBackHandler, navigateTo, exitApp } from "../Services/CommonMethods";
 import GlobalText from "../Components/Customs/Text";
 import TextButton from "../Components/Customs/Buttons/TextButton";
 import Geolocation from "@react-native-community/geolocation";
@@ -42,6 +42,7 @@ import ProfileChip from "../Components/Common/ProfileChip";
 import ChipOptions from "../Components/Common/ProfileViews/ChipOptions";
 import ChangeLang from "../Components/Common/ProfileViews/ChangeLang";
 import UpdateProfile from "../Components/Common/ProfileViews/UpdateProfile";
+import ProfileChipSkeleton from "../Components/Common/ProfileChipSkeleton";
 
 const ProfileView = ({ navigation, route, ...props }) => {
   const { t, i18n } = useTranslation();
@@ -58,7 +59,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
   const [option, setOption] = useState(0);
 
   useEffect(() => {
-    const backHandler = goBackHandler(navigation)
+    const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => backPress());
     // requestLocationPermission();
     checkLogin(navigation)
     // getUserProfile();
@@ -87,6 +88,14 @@ const ProfileView = ({ navigation, route, ...props }) => {
       unsubscribe();
     };
   }, [route]);
+
+  const backPress = () => {
+    if (option == 0) {
+      backPage(navigation)
+    } else {
+      setOption(0)
+    }
+  }
 
   const requestLocationPermission = async () => {
     if (Platform.OS === "ios") {
@@ -206,11 +215,6 @@ const ProfileView = ({ navigation, route, ...props }) => {
       });
   };
 
-  const handleEditPress = () => {
-    navigateTo(navigation, STRING.SCREEN.PROFILE)
-    // Edit Profile
-  }
-
   const setHomeLocation = () => {
     // Update Location
     requestLocationPermission();
@@ -220,11 +224,6 @@ const ProfileView = ({ navigation, route, ...props }) => {
   const setCurrLocation = () => {
     requestLocationPermission();
     setShowLocModal(false)
-  }
-
-  const changeLang = () => {
-    // Lang
-    i18n.changeLanguage("en")
   }
 
   return (
@@ -237,7 +236,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
           <Ionicons
             name="chevron-back-outline"
             size={24}
-            onPress={() => backPage(navigation)}
+            onPress={() => backPress()}
             color={COLOR.black}
           />
         }
@@ -254,7 +253,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
 
       <View style={styles.headerContainer}>
         <GlobalText text={STRING.ADDRESS} />
-        {initialRegion.latitude &&
+        {initialRegion.latitude ?
           <View style={styles.profileMapView}>
             <MapView style={styles.map} initialRegion={initialRegion}>
               <Marker
@@ -262,26 +261,37 @@ const ProfileView = ({ navigation, route, ...props }) => {
               />
             </MapView>
           </View>
+          :
+          <Skeleton animation="pulse" variant="text" style={styles.profileMapView} />
         }
       </View>
 
       <View style={styles.chipContainer}>
         {
-          option == 0 ?
-            <ChipOptions
-              languageClick={() => setOption(1)}
-              locationClick={() => setShowLocModal(true)}
-              profileClick={() => setOption(3)}
-              logoutClick={() => handleLogout()}
-            />
-            :
-            option == 1 ?
-              <ChangeLang refreshOption={() => setOption(0)} />
+          initialRegion.latitude ?
+            option == 0 ?
+              <ChipOptions
+                languageClick={() => setOption(1)}
+                locationClick={() => setShowLocModal(true)}
+                profileClick={() => setOption(3)}
+                logoutClick={() => handleLogout()}
+              />
               :
-              option == 3 ?
-                <UpdateProfile />
+              option == 1 ?
+                <ChangeLang refreshOption={() => setOption(0)} setLoader={(v) => props.setLoader(v)} />
                 :
-                <ProfileChip />
+                option == 3 ?
+                  <UpdateProfile user={profile.email} phone={profile.mobile} setLoader={(v) => props.setLoader(v)} />
+                  :
+                  <ProfileChip />
+            :
+            <View>
+              <ProfileChipSkeleton />
+              <ProfileChipSkeleton />
+              <ProfileChipSkeleton />
+              <ProfileChipSkeleton />
+              {/* <ProfileChipSkeleton /> */}
+            </View>
         }
       </View>
 

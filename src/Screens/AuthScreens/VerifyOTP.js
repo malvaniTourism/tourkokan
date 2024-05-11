@@ -155,7 +155,7 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
       <View>
         <Loader />
         <GlobalText text={STRING.WELCOME} style={styles.welcomeText} />
-        <GlobalText text={STRING.appName} style={styles.boldKokan} />
+        <GlobalText text={STRING.APPNAME} style={styles.boldKokan} />
       </View>
 
       <View style={styles.middleFlex}>
@@ -214,7 +214,7 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
           )}
         </View>
       </View>
-      <KeyboardAvoidingView behavior="height" style={{ flex: 2 }}>
+      <KeyboardAvoidingView behavior="height" style={{ flex: 1 }}>
       </KeyboardAvoidingView>
       <Popup
         message={alertMessage}

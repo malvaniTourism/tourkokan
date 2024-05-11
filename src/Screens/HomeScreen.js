@@ -168,6 +168,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                 setCities(res.data.data.cities);
                 setRoutes(res.data.data.routes);
                 setBannerObject(res.data.data.banners);
+                console.log('res.data.data - - ', res.data.data);
                 setIsFetching(false)
                 setIsLoading(false)
                 props.setLoader(false);
@@ -197,7 +198,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                 setProfilePhoto(res.data.data.profile_picture);
                 AsyncStorage.setItem(STRING.STORAGE.USER_NAME, res.data.data.name)
                 AsyncStorage.setItem(STRING.STORAGE.USER_ID, JSON.stringify(res.data.data.id))
-                AsyncStorage.setItem(STRING.STORAGE.USER_EMAIL, JSON.stringify(res.data.data.email))
+                AsyncStorage.setItem(STRING.STORAGE.USER_EMAIL, res.data.data.email)
             })
             .catch((error) => {
                 setError(error.message);
@@ -309,7 +310,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
 
                 <View style={styles.sectionView}>
                     <GlobalText text={STRING.SCREEN.CITIES} style={styles.sectionTitle} />
-                    <ScrollView horizontal>
+                    <ScrollView horizontal style={{ marginLeft: 5 }}>
                         {
                             isLoading ?
                                 <>

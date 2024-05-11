@@ -124,6 +124,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "flex-start",
         marginTop: 10,
+        backgroundColor: COLOR.white,
+        elevation: 0
     },
     buttonStyle: {
         backgroundColor: COLOR.transparent,
@@ -131,7 +133,7 @@ const styles = StyleSheet.create({
     },
     titleStyle: {
         color: COLOR.themeBlue,
-        fontWeight: "200",
+        fontWeight: "400",
         fontSize: DIMENSIONS.textSize
     },
     viewMapButtonStyle: {

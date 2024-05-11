@@ -122,7 +122,8 @@ export const ProfileFields = [
     type: STRING.TYPE.TEXT,
     length: DIMENSIONS.fieldLength,
     required: true,
-    disabled: true,
+    disabled: false,
+    leftIcon: STRING.ICON.NAME,
   },
   {
     name: STRING.LABEL.MOBILE,
@@ -131,6 +132,7 @@ export const ProfileFields = [
     length: DIMENSIONS.mobileLength,
     required: true,
     disabled: false,
+    leftIcon: STRING.ICON.MOBILE_NO,
   },
 ];
 

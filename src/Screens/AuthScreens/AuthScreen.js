@@ -21,7 +21,7 @@ const AuthScreen = ({ navigation }) => {
 
             <View style={styles.authScreenView}>
                 <View style={styles.loginAppName}>
-                    <GlobalText text={STRING.appName} style={styles.loginName} />
+                    <GlobalText text={STRING.APPNAME} style={styles.loginName} />
                 </View>
 
                 <View>

@@ -1,6 +1,7 @@
 {
-    "language": "English",
-    "appName": "Tourkokan",
+    "LANGUAGE": "English",
+    "LANG": "en",
+    "APPNAME": "Tourkokan",
     "EXPLORE": "Explore the Enchanting",
     "KOKAN": "KOKAN",
     "COMPANION": "Your Ultimate Travel Companion for Maharashtra's Coastal Gem.",

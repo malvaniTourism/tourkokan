@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         width: 30,
         height: 30,
     },
-    searchButtonStyle: {
+    langButtonStyle: {
         height: 50,
         width: DIMENSIONS.bannerWidth / 3,
         backgroundColor: COLOR.themeBlue,
@@ -34,9 +34,34 @@ const styles = StyleSheet.create({
         marginTop: 200,
         marginRight: 20
     },
+    profileButtonStyle: {
+        height: 50,
+        width: DIMENSIONS.bannerWidth / 3,
+        backgroundColor: COLOR.themeBlue,
+        borderRadius: DIMENSIONS.borderRadiusXS,
+        alignSelf: "flex-end",
+        marginTop: 130,
+        marginRight: 20
+    },
     buttonTitleStyle: {
         color: COLOR.white,
         fontWeight: "bold",
+    },
+    containerStyle: {
+        borderWidth: 1,
+        paddingLeft: 45,
+        borderRadius: DIMENSIONS.borderRadiusXS,
+        borderColor: COLOR.themeBlue
+    },
+    profileContainerStyle: {
+        borderColor: COLOR.transparent,
+        marginBottom: 20
+    },
+    leftIcon: {
+        position: 'absolute',
+        left: 5,
+        top: '70%',
+        transform: [{ translateY: -12 }],
     },
 });
 

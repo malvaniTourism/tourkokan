@@ -163,7 +163,6 @@ const Profile = ({ navigation, ...props }) => {
         props.setLoader(false);
         if (res.data.success) setIsSuccess(true)
         else setIsSuccess(false)
-
       })
       .catch(err => {
         setIsAlert(true);

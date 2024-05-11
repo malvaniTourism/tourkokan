@@ -1,5 +1,5 @@
 const STRING = {
-  appName: "Tourkokan",
+  APPNAME: "Tourkokan",
   EXPLORE: "Explore the Enchanting",
   KOKAN: "KOKAN",
   COMPANION: "Your Ultimate Travel Companion for Maharashtra's Coastal Gem.",

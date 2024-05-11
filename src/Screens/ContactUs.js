@@ -78,9 +78,8 @@ const ContactUs = ({ navigation, route, ...props }) => {
     comnPost("v2/addQuery", data)
       .then(res => {
         setIsAlert(true);
-        setAlertMessage(res.data.message);
+        setAlertMessage(res.data.message.email ? res.data.message.email : res.data.message.phone ? res.data.message.phone : res.data.message.message ? res.data.message.message : res.data.message);
         props.setLoader(false);
-        setEmail("")
         setPhone("")
         setMessage("")
       })
