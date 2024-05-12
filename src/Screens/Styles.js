@@ -506,6 +506,9 @@ const styles = StyleSheet.create({
     },
     advStyle: {
         color: COLOR.red
+    },
+    callButton: {
+        width: "50"
     }
 });
 

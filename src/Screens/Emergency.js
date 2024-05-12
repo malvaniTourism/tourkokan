@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, View, Text, SafeAreaView, ScrollView } from "react-native";
+import { FlatList, View, Text, SafeAreaView, ScrollView, Linking} from "react-native";
 import { ListItem } from "@rneui/themed";
 import Header from "../Components/Common/Header";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -32,6 +32,7 @@ const Emergency = ({ navigation, route, ...props }) => {
     }
   }, []);
 
+
   const getData = () => {
     props.setLoader(true);
     let data = {
@@ -50,11 +51,31 @@ const Emergency = ({ navigation, route, ...props }) => {
       });
   }
 
+  const makePhoneCall = (address, apptype) => {
+    const value = address[0][apptype];
+    if (value && typeof value === 'string') {
+      const prefix = apptype === 'phone' ? 'tel' : 'mailto';
+      Linking.openURL(`${prefix}:${value}`);
+    }
+  };
+  
+
   const renderItem = ({ item }) => {
     return (
       <ListItem bottomDivider>
         <ListItem.Content>
-          <ListItem.Title>{item.name}</ListItem.Title>
+          <ListItem.Title>{item.name} 
+          <TextButton 
+            title="Call" 
+            onPress={() => makePhoneCall(item.address, 'phone')} 
+            style={styles.callButton}
+          />
+           <TextButton 
+            title="Email" 
+            onPress={() => makePhoneCall(item.address, 'email')} 
+            style={styles.callButton}
+          />
+          </ListItem.Title>
         </ListItem.Content>
       </ListItem>
     );
