@@ -71,7 +71,7 @@ const TopComponent = ({ navigation, openLocationSheet, currentCity, gotoProfile,
       {
         showCities &&
         <View>
-          <SearchDropdown placesList={cities} style={styles.citiesDropdown} setPlace={(v) => setCity(v.name)} closeDropdown={() => toggleCityDropdown()} />
+          <SearchDropdown placesList={cities} style={styles.citiesDropdown} setPlace={(v) => setCity(v)} closeDropdown={() => toggleCityDropdown()} />
         </View>
       }
     </View>

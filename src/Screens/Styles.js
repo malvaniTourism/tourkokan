@@ -191,6 +191,9 @@ const styles = StyleSheet.create({
         borderColor: COLOR.grey,
         borderRadius: DIMENSIONS.borderRadiusXXS,
     },
+    profileEdit: {
+        left: 80
+    },
     pricingOptionTitle: {
         fontSize: DIMENSIONS.largeText,
         fontWeight: "bold",
@@ -336,19 +339,6 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontWeight: "bold",
         fontSize: DIMENSIONS.headerTextSize
-    },
-    profileMapView: {
-        height: DIMENSIONS.bannerHeight / 2,
-        width: DIMENSIONS.bannerWidth,
-        marginVertical: 10,
-        borderWidth: 1,
-        borderColor: COLOR.grey,
-        position: "relative",
-        borderRadius: DIMENSIONS.borderRadiusXS,
-        overflow: 'hidden',
-    },
-    map: {
-        ...StyleSheet.absoluteFillObject,
     },
     roleDropDown: {
         borderWidth: 1,

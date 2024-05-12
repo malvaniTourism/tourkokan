@@ -18,7 +18,7 @@ import Header from "../Components/Common/Header";
 import COLOR from "../Services/Constants/COLORS";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import Octicons from "react-native-vector-icons/Octicons";
 import { comnGet, comnPost, dataSync, saveToStorage } from "../Services/Api/CommonServices";
 import { connect } from "react-redux";
 import Loader from "../Components/Customs/Loader";
@@ -43,6 +43,9 @@ import ChipOptions from "../Components/Common/ProfileViews/ChipOptions";
 import ChangeLang from "../Components/Common/ProfileViews/ChangeLang";
 import UpdateProfile from "../Components/Common/ProfileViews/UpdateProfile";
 import ProfileChipSkeleton from "../Components/Common/ProfileChipSkeleton";
+import MapContainer from "../Components/Common/MapContainer";
+import MapSkeleton from "../Components/Common/MapSkeleton";
+import { launchImageLibrary } from "react-native-image-picker"
 
 const ProfileView = ({ navigation, route, ...props }) => {
   const { t, i18n } = useTranslation();
@@ -57,6 +60,8 @@ const ProfileView = ({ navigation, route, ...props }) => {
   const [error, setError] = useState(null);
   const [offline, setOffline] = useState(false);
   const [option, setOption] = useState(0);
+  const [imageSource, setImageSource] = useState(null);
+  const [uploadImage, setUploadImage] = useState(null);
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => backPress());
@@ -226,6 +231,24 @@ const ProfileView = ({ navigation, route, ...props }) => {
     setShowLocModal(false)
   }
 
+  const handleImageUpload = () => {
+    launchImageLibrary(
+      {
+        mediaType: STRING.TYPE.PHOTO,
+        includeBase64: true, // Set to true to include base64 data
+        maxHeight: 200,
+        maxWidth: 200,
+      },
+      (response) => {
+        if (response.assets) {
+          // Upload the image to the API
+          setUploadImage(`data:${response.assets[0].type};base64,${response.assets[0].base64}`);
+          setImageSource(response.assets[0].uri);
+        }
+      }
+    );
+  };
+
   return (
     <ScrollView style={styles.container}>
       <CheckNet isOff={offline} />
@@ -248,21 +271,24 @@ const ProfileView = ({ navigation, route, ...props }) => {
           style={styles.profilePhoto}
           source={{ uri: `${profile.profile_picture ? Path.FTP_PATH + profile.profile_picture : "https://api-private.atlassian.com/users/2143ab39b9c73bcab4fe6562fff8d23d/avatar"}` }}
         />
+        {option == 3 &&
+          <Octicons
+            name="pencil"
+            size={15}
+            onPress={() => handleImageUpload()}
+            color={COLOR.black}
+            style={styles.profileEdit}
+          />
+        }
         <GlobalText text={profile.email} style={styles.pricingOptionTitle} />
       </View>
 
       <View style={styles.headerContainer}>
         <GlobalText text={STRING.ADDRESS} />
         {initialRegion.latitude ?
-          <View style={styles.profileMapView}>
-            <MapView style={styles.map} initialRegion={initialRegion}>
-              <Marker
-                coordinate={{ latitude: currentLatitude, longitude: currentLongitude }}
-              />
-            </MapView>
-          </View>
+          <MapContainer initialRegion={initialRegion} currentLatitude={currentLatitude} currentLongitude={currentLongitude} />
           :
-          <Skeleton animation="pulse" variant="text" style={styles.profileMapView} />
+          <MapSkeleton />
         }
       </View>
 
@@ -271,6 +297,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
           initialRegion.latitude ?
             option == 0 ?
               <ChipOptions
+                userLang={profile.language}
                 languageClick={() => setOption(1)}
                 locationClick={() => setShowLocModal(true)}
                 profileClick={() => setOption(3)}
@@ -278,7 +305,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
               />
               :
               option == 1 ?
-                <ChangeLang refreshOption={() => setOption(0)} setLoader={(v) => props.setLoader(v)} />
+                <ChangeLang userLang={profile.language} refreshOption={() => setOption(0)} setLoader={(v) => props.setLoader(v)} />
                 :
                 option == 3 ?
                   <UpdateProfile user={profile.email} phone={profile.mobile} setLoader={(v) => props.setLoader(v)} />

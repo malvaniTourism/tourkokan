@@ -33,7 +33,7 @@ const AuthScreen = ({ navigation }) => {
                         buttonView={styles.loginButton}
                         isDisabled={false}
                         raised={true}
-                        onPress={() => goTo(STRING.SCREEN.EMAIL_SIGN_IN)}
+                        onPress={() => goTo(STRING.SCREEN.EMAIL)}
                     />
                     <TextButton
                         title={STRING.BUTTON.SIGNUP}

@@ -28,6 +28,8 @@ import TextButton from "../../Components/Customs/Buttons/TextButton";
 import CityCardSkeleton from "../../Components/Cards/CityCardSkeleton";
 import { Skeleton } from "@rneui/themed";
 import MapView, { Marker, Polygon } from "react-native-maps";
+import MapContainer from "../../Components/Common/MapContainer";
+import MapSkeleton from "../../Components/Common/MapSkeleton";
 
 const CityDetails = ({ navigation, route, ...props }) => {
     const refRBSheet = useRef();
@@ -158,9 +160,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
             <TextButton
                 title={STRING.BUTTON.READ_MORE}
                 onPress={handlePress}
-                containerStyle={styles.showMore}
                 buttonView={styles.readMoreStyle}
-                buttonStyle={styles.buttonStyle}
                 titleStyle={styles.titleStyle}
                 endIcon={
                     <Ionicons
@@ -178,9 +178,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
             <TextButton
                 title={STRING.BUTTON.READ_LESS}
                 onPress={handlePress}
-                containerStyle={styles.showMore}
                 buttonView={styles.readMoreStyle}
-                buttonStyle={styles.buttonStyle}
                 titleStyle={styles.titleStyle}
                 endIcon={
                     <Ionicons
@@ -307,15 +305,13 @@ const CityDetails = ({ navigation, route, ...props }) => {
                                 </ReadMore>
                         }
 
-                        {/* {initialRegion.latitude &&
-                            <View style={styles.profileMapView}>
-                                <MapView style={styles.map} initialRegion={initialRegion}>
-                                    <Marker
-                                        coordinate={{ latitude: currentLatitude, longitude: currentLongitude }}
-                                    />
-                                </MapView>
-                            </View>
-                        } */}
+                        <View style={styles.sectionView}>
+                        {initialRegion.latitude ?
+                            <MapContainer initialRegion={initialRegion} currentLatitude={currentLatitude} currentLongitude={currentLongitude} />
+                            :
+                            <MapSkeleton />
+                        }
+                        </View>
 
                         <View style={styles.sectionView}>
                             <GlobalText text={STRING.SCREEN.PLACES} style={styles.sectionTitle} />

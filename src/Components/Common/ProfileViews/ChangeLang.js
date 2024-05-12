@@ -9,7 +9,7 @@ import TextButton from '../../Customs/Buttons/TextButton'
 import { useTranslation } from 'react-i18next';
 import { comnPost } from '../../../Services/Api/CommonServices'
 
-const ChangeLang = ({ refreshOption, setLoader }) => {
+const ChangeLang = ({ userLang, refreshOption, setLoader }) => {
     const { t, i18n } = useTranslation();
 
     const [list, setList] = useState(
@@ -20,7 +20,7 @@ const ChangeLang = ({ refreshOption, setLoader }) => {
     const [isFocus, setIsFocus] = useState(false);
 
     useEffect(() => {
-        setValue(t("LANG"))
+        setValue(userLang || t("LANG"))
     }, [])
 
     const saveLang = () => {

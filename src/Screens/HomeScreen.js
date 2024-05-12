@@ -158,17 +158,20 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         }
     };
 
-    const callLandingPageAPI = async () => {
+    const callLandingPageAPI = async (site_id) => {
+        let data = {
+            site_id
+        }
+        console.log('data - - ', data);
         props.setLoader(true);
         let isFirstTime = await AsyncStorage.getItem(STRING.STORAGE.IS_FIRST_TIME)
-        comnPost("v2/landingpage", navigation)
+        comnPost("v2/landingpage", data, navigation)
             .then((res) => {
                 if (res && res.data.data)
                     saveToStorage(STRING.STORAGE.LANDING_RESPONSE, JSON.stringify(res))
                 setCities(res.data.data.cities);
                 setRoutes(res.data.data.routes);
                 setBannerObject(res.data.data.banners);
-                console.log('res.data.data - - ', res.data.data);
                 setIsFetching(false)
                 setIsLoading(false)
                 props.setLoader(false);
@@ -236,13 +239,18 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         setIsLoading(false)
     }
 
+    const onCitySelect = (city) => {
+        setCurrentCity(city.name)
+        callLandingPageAPI(city.id)
+    }
+
     return (
         <ScrollView stickyHeaderIndices={[0]} style={{ backgroundColor: COLOR.white }}>
             {
                 isLoading ?
                     <TopComponentSkeleton />
                     :
-                    <TopComponent cities={cities} currentCity={currentCity} setCurrentCity={(v) => setCurrentCity(v)} navigation={navigation} openLocationSheet={() => openLocationSheet()} gotoProfile={() => openProfile()} profilePhoto={profilePhoto} />
+                    <TopComponent cities={cities} currentCity={currentCity} setCurrentCity={(v) => onCitySelect(v)} navigation={navigation} openLocationSheet={() => openLocationSheet()} gotoProfile={() => openProfile()} profilePhoto={profilePhoto} />
             }
             <CheckNet isOff={offline} />
             {/* <MyAnimatedLoader isVisible={isLoading} /> */}

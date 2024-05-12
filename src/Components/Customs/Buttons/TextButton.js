@@ -7,12 +7,8 @@ import GlobalText from "../Text";
 
 const TextButton = ({
   title,
-  containerStyle,
-  buttonStyle,
   titleStyle,
   isDisabled,
-  raised,
-  type,
   onPress,
   startIcon,
   endIcon,

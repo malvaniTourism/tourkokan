@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
   banner: {
     width: DIMENSIONS.screenWidth,
     height: DIMENSIONS.halfWidth,
-    borderRadius: DIMENSIONS.borderRadiusSmall,
     // elevation: 10,
     animation: "fadeinout 4s infinite",
     marginBottom: -25
@@ -70,7 +69,6 @@ const styles = StyleSheet.create({
     height: DIMENSIONS.halfWidth,
     animation: "fadeinout 4s infinite",
     opacity: 1,
-    borderRadius: DIMENSIONS.borderRadiusSmall,
   },
   alertContainerStyle: {
     width: DIMENSIONS.bannerWidth - 40,

@@ -345,7 +345,20 @@ const styles = StyleSheet.create({
   flexRow: {
     flexDirection: "row",
     alignItems: "center"
-  }
+  },
+  profileMapView: {
+    height: DIMENSIONS.bannerHeight / 2,
+    width: DIMENSIONS.bannerWidth,
+    marginVertical: 10,
+    borderWidth: 1,
+    borderColor: COLOR.grey,
+    position: "relative",
+    borderRadius: DIMENSIONS.borderRadiusXS,
+    overflow: 'hidden',
+},
+map: {
+    ...StyleSheet.absoluteFillObject,
+},
 });
 
 export default styles;

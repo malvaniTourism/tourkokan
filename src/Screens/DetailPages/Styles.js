@@ -107,10 +107,6 @@ const styles = StyleSheet.create({
         marginRight: 5,
         marginTop: 15
     },
-    showMore: {
-        width: "auto",
-        alignItems: "center"
-    },
     buttonView: {
         width: DIMENSIONS.screenWidth / 2,
         alignItems: "center",
@@ -125,11 +121,8 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         marginTop: 10,
         backgroundColor: COLOR.white,
+        alignSelf: "flex-start",
         elevation: 0
-    },
-    buttonStyle: {
-        backgroundColor: COLOR.transparent,
-        width: "auto"
     },
     titleStyle: {
         color: COLOR.themeBlue,

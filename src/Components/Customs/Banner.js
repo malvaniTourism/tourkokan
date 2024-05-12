@@ -53,7 +53,7 @@ const Banner = ({ style, bannerImages }) => {
         height={DIMENSIONS.windowWidth / 2}
         autoPlay={true}
         data={bannerImages}
-        scrollAnimationDuration={1000}
+        scrollAnimationDuration={3000}
         // onSnapToItem={(index) => console.log("current index:", index)}
         renderItem={({ index }) => (
           <AnimationStyle

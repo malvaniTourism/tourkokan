@@ -11,7 +11,7 @@ import COLOR from "../../../Services/Constants/COLORS";
 import GlobalText from "../../Customs/Text";
 import { useTranslation } from 'react-i18next';
 
-const ChipOptions = ({ languageClick, locationClick, profileClick, settingsClick, logoutClick }) => {
+const ChipOptions = ({ userLang, languageClick, locationClick, profileClick, settingsClick, logoutClick }) => {
     const { t } = useTranslation();
 
     return (
@@ -27,7 +27,7 @@ const ChipOptions = ({ languageClick, locationClick, profileClick, settingsClick
                     </View>
                 }
                 clickChip={languageClick}
-                meta={<GlobalText text={t('LANGUAGE')} />}
+                meta={<GlobalText text={t([userLang]) || t('LANGUAGE')} />}
             />
             <ProfileChip name={STRING.CHIPS.UPDATE_LOCATION}
                 icon={
