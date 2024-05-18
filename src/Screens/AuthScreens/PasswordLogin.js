@@ -24,6 +24,7 @@ import EmailPassword from "./LoginComponents/EmailPassword";
 import LoginChoice from "./LoginComponents/LoginChoice";
 import EmailOtp from "./LoginComponents/EmailOtp";
 import Feather from "react-native-vector-icons/Feather";
+import { CommonActions } from "@react-navigation/native";
 
 const PasswordLogin = ({ navigation, route, ...props }) => {
     const [email, setEmail] = useState(route?.params?.email);
@@ -69,7 +70,14 @@ const PasswordLogin = ({ navigation, route, ...props }) => {
     const closePopup = () => {
         if (isSuccess) {
             AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, JSON.stringify(true))
-            navigateTo(navigation, STRING.SCREEN.HOME);
+            navigation.dispatch(
+                CommonActions.reset({
+                    index: 0,
+                    routes: [
+                        { name: STRING.SCREEN.HOME },
+                    ],
+                })
+            );
         }
         setIsAlert(false)
     }
@@ -97,7 +105,14 @@ const PasswordLogin = ({ navigation, route, ...props }) => {
                     props.setLoader(false);
                     // setIsSuccess(true)
                     AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, JSON.stringify(true))
-                    navigateTo(navigation, STRING.SCREEN.HOME);
+                    navigation.dispatch(
+                        CommonActions.reset({
+                            index: 0,
+                            routes: [
+                                { name: STRING.SCREEN.HOME },
+                            ],
+                        })
+                    );
                 } else {
                     setIsAlert(true);
                     setAlertMessage(res.data.message.email ? res.data.message.email : res.data.message.password ? res.data.message.password : res.data.message);

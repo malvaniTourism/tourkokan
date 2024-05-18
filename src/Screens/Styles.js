@@ -67,6 +67,13 @@ const styles = StyleSheet.create({
     contactButtonContainer: {
         // marginTop: 15,
     },
+    fieldTitle: {
+        textAlign: "left",
+        marginTop: 10,
+        marginLeft: 10,
+        marginBottom: -10,
+        fontWeight: 500
+    },
     containerStyle: {
         borderWidth: 1,
         padding: 10,
@@ -84,6 +91,9 @@ const styles = StyleSheet.create({
     },
     titleStyle: {
         color: COLOR.themeBlue
+    },
+    locButtonTitle: {
+        color: COLOR.white
     },
     buttonSkeleton: {
         width: DIMENSIONS.bannerWidth / 2,
@@ -370,6 +380,9 @@ const styles = StyleSheet.create({
     categoriesButtonScroll: {
         flexDirection: "row",
     },
+    categoriesCircleButton: {
+        borderRadius: DIMENSIONS.borderRadiusLarge,
+    },
     categoryButtonText: {
         fontSize: DIMENSIONS.textSizeSmall
     },
@@ -493,6 +506,18 @@ const styles = StyleSheet.create({
     buttonTitleStyle: {
         color: COLOR.white,
         fontWeight: "bold",
+    },
+    attachmentButtonStyle: {
+        height: 50,
+        width: DIMENSIONS.bannerWidth / 2,
+        backgroundColor: COLOR.white,
+        borderRadius: DIMENSIONS.borderRadiusXS,
+        alignSelf: "flex-start",
+        elevation: 0,
+        marginLeft: 10
+    },
+    attachmentTitleStyle: {
+        color: COLOR.themeBlue,
     },
     advStyle: {
         color: COLOR.red

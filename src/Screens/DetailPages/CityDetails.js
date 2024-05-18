@@ -86,7 +86,6 @@ const CityDetails = ({ navigation, route, ...props }) => {
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
         };
-        console.log(myInitialRegion);
         setInitialRegion(myInitialRegion)
     }
 

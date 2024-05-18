@@ -27,6 +27,7 @@ import Popup from "../../Components/Common/Popup";
 import STRING from "../../Services/Constants/STRINGS";
 import AppLogo from "../../Assets/Images/tourKokan.png";
 import Feather from "react-native-vector-icons/Feather";
+import { CommonActions } from "@react-navigation/native";
 
 const VerifyOTP = ({ navigation, route, ...props }) => {
   const [otp, setOtp] = useState(null);
@@ -77,7 +78,15 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
           props.saveAccess_token(res.data.data.access_token);
           props.setLoader(false);
           AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, JSON.stringify(true))
-          navigateTo(navigation, STRING.SCREEN.HOME);
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [
+                { name: STRING.SCREEN.HOME },
+              ],
+            })
+          );
+          // navigateTo(navigation, STRING.SCREEN.HOME);
         } else {
           setIsAlert(true);
           setAlertMessage(res.data.message?.otp ? res.data.message?.otp : res.data.message);

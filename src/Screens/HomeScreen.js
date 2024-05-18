@@ -162,7 +162,6 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         let data = {
             site_id
         }
-        console.log('data - - ', data);
         props.setLoader(true);
         let isFirstTime = await AsyncStorage.getItem(STRING.STORAGE.IS_FIRST_TIME)
         comnPost("v2/landingpage", data, navigation)

@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     },
     cityOverlay: {
         ...StyleSheet.absoluteFillObject,
-        backgroundColor: COLOR.black,
+        // backgroundColor: COLOR.black,
         borderRadius: DIMENSIONS.borderRadius
     },
     cityLikeView: {
@@ -245,7 +245,6 @@ const styles = StyleSheet.create({
     },
     cityImage: {
         width: DIMENSIONS.bannerWidth,
-        height: DIMENSIONS.bannerWidth + 20,
         position: "absolute"
     },
     placeImage: {
@@ -255,6 +254,7 @@ const styles = StyleSheet.create({
     },
     cityImageStyle: {
         borderRadius: DIMENSIONS.borderRadius,
+        height: DIMENSIONS.bannerWidth / 1.19,
     },
     cityDetailsOverlay: {
         width: DIMENSIONS.bannerWidth - 40,
@@ -321,16 +321,6 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         justifyContent: "center",
         alignItems: "center"
-    },
-    cityStarView: {
-        backgroundColor: COLOR.white,
-        height: 35,
-        width: 100,
-        left: 10,
-        top: 10,
-        borderRadius: DIMENSIONS.borderRadius,
-        justifyContent: "center",
-        alignItems: "center",
     },
     citySmallName: {
         fontSize: DIMENSIONS.textSize,

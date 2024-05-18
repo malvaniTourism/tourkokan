@@ -40,6 +40,7 @@ const STRING = {
     VIEW_MAP: "View on Map",
     SEND: "Send",
     SAVE: "Save",
+    ATTACHMENT: "+ Upload Attachment",
   },
   SCREEN: {
     ROOT: "Root",
@@ -177,7 +178,9 @@ const STRING = {
     CONFIRM_PASSWORD: "Confirm Password",
     CITY_NAME: "City Name",
     MESSAGE: "Message",
-    COMMENT: "Comment"
+    COMMENT: "Comment",
+    TITLE: "Title",
+    DESCRIPTION: "Description",
   },
   EVENT: {
     HARDWARE_BACK_PRESS: "hardwareBackPress",

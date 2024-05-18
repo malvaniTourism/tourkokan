@@ -1,8 +1,8 @@
 {
-    "LANGUAGE": "Marathi",
+    "LANGUAGE": "मराठी",
     "LANG": "mr",
     "en": "English",
-    "mr": "Marathi",
+    "mr": "मराठी",
     "APPNAME": "Tourkokan",
     "EXPLORE": "एक्सप्लोर करा, मोहक",
     "KOKAN": "कोकण",
@@ -43,7 +43,8 @@
         "ADD_PHOTO": "प्रोफाइल फोटो जोडा",
         "VIEW_MAP": "नकाशावर पहा",
         "SEND": "पाठवा",
-        "SAVE": "जतन करा"
+        "SAVE": "जतन करा",
+        "ATTACHMENT": "+ संलग्नक अपलोड करा"
     },
     "SCREEN": {
         "ROOT": "Root",
@@ -103,23 +104,23 @@
         "CATEGORIES_RESPONSE": "categoriesResponse"
     },
     "HEADER": {
-        "BUS_TIMINGS": "Bus Timings",
-        "CONTACT_US": "Contact Us",
-        "EMERGENCY": "Emergency",
-        "PRICING": "Pricing",
-        "VERIFY_OTP": "Verify OTP",
-        "CITY": "City",
-        "PLACE": "Place",
-        "CITIES": "Cities",
-        "EXPLORE": "Explore",
-        "PLACE_CATEGORIES": "Place Categories",
-        "PROJECTS": "Projects",
-        "ROUTE": "Route",
-        "ROUTES": "Routes",
-        "STOPS": "Stops",
-        "COMMENTS": "Comments",
-        "SUBCATEGORIES": "sub-categories",
-        "CLASSIFICATIONS": "Classifications"
+        "BUS_TIMINGS": "बसच्या वेळा",
+        "CONTACT_US": "आमच्याशी संपर्क साधा",
+        "EMERGENCY": "आपत्कालीन संपर्क",
+        "PRICING": "किंमत धोरण",
+        "VERIFY_OTP": "OTP सत्यापित करा",
+        "CITY": "शहर",
+        "PLACE": "ठिकाण",
+        "CITIES": "शहरे",
+        "EXPLORE": "अन्वेषण",
+        "PLACE_CATEGORIES": "स्थान श्रेणी",
+        "PROJECTS": "प्रकल्प",
+        "ROUTE": "मार्ग",
+        "ROUTES": "मार्ग",
+        "STOPS": "बस स्थानक",
+        "COMMENTS": "टिप्पण्या",
+        "SUBCATEGORIES": "उप-श्रेणी",
+        "CLASSIFICATIONS": "वर्गीकरण"
     },
     "ALERT": {
         "FAILED": "अयशस्वी",
@@ -141,9 +142,9 @@
         "SITE": "Site"
     },
     "CITY": {
-        "DEVGAD": "Devgad",
-        "KANKAVLI": "Kankavli",
-        "MAHARASHTRA": "Maharashtra"
+        "DEVGAD": "देवगड",
+        "KANKAVLI": "कणकवली",
+        "MAHARASHTRA": "महाराष्ट्र"
     },
     "TYPE": {
         "TEXT": "text",
@@ -163,20 +164,22 @@
         "SEARCH_CITY_PLACE": "शहर, ठिकाण शोधा"
     },
     "LABEL": {
-        "SOURCE": "Source",
-        "DESTINATION": "Destination",
-        "MOBILE": "Mobile",
-        "MOBILE_NO": "Mobile Number",
-        "PASSWORD": "Password",
-        "SET_PASSWORD": "Set Password",
-        "EMAIL": "Email",
-        "EMAIL_ID": "Email ID",
-        "NAME": "Name",
+        "SOURCE": "स्त्रोत",
+        "DESTINATION": "गंतव्यस्थान",
+        "MOBILE": "मोबाईल",
+        "MOBILE_NO": "मोबाईल नंबर",
+        "PASSWORD": "पासवर्ड",
+        "SET_PASSWORD": "पासवर्ड सेट करा",
+        "EMAIL": "ईमेल",
+        "EMAIL_ID": "ई - मेल आयडी",
+        "NAME": "नाव",
         "OTP": "OTP",
-        "CONFIRM_PASSWORD": "Confirm Password",
-        "CITY_NAME": "City Name",
-        "MESSAGE": "Message",
-        "COMMENT": "Comment"
+        "CONFIRM_PASSWORD": "पासवर्डची पुष्टी करा",
+        "CITY_NAME": "शहराचे नाव",
+        "MESSAGE": "संदेश",
+        "COMMENT": "टिप्पणी",
+        "TITLE": "शीर्षक",
+        "DESCRIPTION": "वर्णन"
     },
     "EVENT": {
         "HARDWARE_BACK_PRESS": "hardwareBackPress",

@@ -14,7 +14,6 @@ const Advertise = ({navigation}) => {
     })
 
     useEffect(() => {
-        console.log('render');
         onUpdate('b')
     }, [adv])
 

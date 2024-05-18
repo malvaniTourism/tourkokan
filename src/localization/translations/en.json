@@ -2,7 +2,7 @@
     "LANGUAGE": "English",
     "LANG": "en",
     "en": "English",
-    "mr": "Marathi",
+    "mr": "मराठी",
     "APPNAME": "Tourkokan",
     "EXPLORE": "Explore the Enchanting",
     "KOKAN": "KOKAN",
@@ -42,7 +42,8 @@
         "ADD_PHOTO": "Add Profile Photo",
         "VIEW_MAP": "View on Map",
         "SEND": "Send",
-        "SAVE": "Save"
+        "SAVE": "Save",
+        "ATTACHMENT": "+ Upload Attachment"
     },
     "SCREEN": {
         "ROOT": "Root",
@@ -175,7 +176,9 @@
         "CONFIRM_PASSWORD": "Confirm Password",
         "CITY_NAME": "City Name",
         "MESSAGE": "Message",
-        "COMMENT": "Comment"
+        "COMMENT": "Comment",
+        "TITLE": "Title",
+        "DESCRIPTION": "Description"
     },
     "EVENT": {
         "HARDWARE_BACK_PRESS": "hardwareBackPress",

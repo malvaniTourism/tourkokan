@@ -21,6 +21,17 @@ const styles = StyleSheet.create({
         marginTop: 15,
         paddingLeft: 10
     },
+    selectedTextStyle: {
+        color: COLOR.black
+    },
+    itemTextStyle: {
+        color: COLOR.black
+    },
+    dropdownText: {
+        color: COLOR.black,
+        fontSize: DIMENSIONS.textSize,
+        textAlign: "center"
+    },
     dropdownIcon: {
         width: 30,
         height: 30,

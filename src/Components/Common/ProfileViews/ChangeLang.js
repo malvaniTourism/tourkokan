@@ -9,59 +9,60 @@ import TextButton from '../../Customs/Buttons/TextButton'
 import { useTranslation } from 'react-i18next';
 import { comnPost } from '../../../Services/Api/CommonServices'
 
-const ChangeLang = ({ userLang, refreshOption, setLoader }) => {
+const ChangeLang = ({ refreshOption, setLoader }) => {
     const { t, i18n } = useTranslation();
 
     const [list, setList] = useState(
         [{ label: 'English', value: 'en' },
-        { label: 'Marathi', value: 'mr' },]
+        { label: 'मराठी', value: 'mr' },]
     )
-    const [value, setValue] = useState(null);
+    const [language, setLanguage] = useState(null);
     const [isFocus, setIsFocus] = useState(false);
 
     useEffect(() => {
-        setValue(userLang || t("LANG"))
+        setLanguage(t("LANG"))
     }, [])
 
     const saveLang = () => {
         setLoader(true)
         let data = {
-            Language: value
+            language
         }
         comnPost("v2/updateProfile", data)
             .then(res => {
             })
             .catch(err => {
             })
-        i18n.changeLanguage(value);
-        setLoader(false)
+        i18n.changeLanguage(language);
         refreshOption()
     }
 
     return (
         <View>
-            <GlobalText text={STRING.CHIPS.CHANGE_LANGUAGE} style={{ textAlign: "left" }} />
+            <GlobalText text={t("CHIPS.CHANGE_LANGUAGE")} style={{ textAlign: "left" }} />
             <Dropdown
                 style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
                 placeholderStyle={styles.placeholderStyle}
                 selectedTextStyle={styles.selectedTextStyle}
                 inputSearchStyle={styles.inputSearchStyle}
+                itemTextStyle={styles.itemTextStyle}
+                dropdownTextStyle={styles.dropdownText}
                 iconStyle={styles.dropdownIcon}
                 data={list}
                 maxHeight={300}
                 labelField="label"
                 valueField="value"
                 placeholder={!isFocus ? 'Select item' : '...'}
-                value={value}
+                value={language}
                 onFocus={() => setIsFocus(true)}
                 onBlur={() => setIsFocus(false)}
                 onChange={item => {
-                    setValue(item.value);
+                    setLanguage(item.value);
                     setIsFocus(false);
                 }}
             />
             <TextButton
-                title={STRING.BUTTON.SAVE}
+                title={t("BUTTON.SAVE")}
                 buttonView={styles.langButtonStyle}
                 titleStyle={styles.buttonTitleStyle}
                 onPress={saveLang}

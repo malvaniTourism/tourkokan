@@ -67,6 +67,9 @@ const styles = StyleSheet.create({
     citiesButtonScroll: {
         flexDirection: "row",
     },
+    citiesCircleButton: {
+        borderRadius: DIMENSIONS.borderRadiusLarge,
+    },
     cityButtonText: {
         fontSize: DIMENSIONS.textSizeSmall
     },

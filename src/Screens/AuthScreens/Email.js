@@ -24,6 +24,7 @@ import EmailPassword from "./LoginComponents/EmailPassword";
 import LoginChoice from "./LoginComponents/LoginChoice";
 import EmailOtp from "./LoginComponents/EmailOtp";
 import Feather from "react-native-vector-icons/Feather";
+import { CommonActions } from "@react-navigation/native";
 
 const Email = ({ navigation, route, ...props }) => {
     const [email, setEmail] = useState("");
@@ -121,52 +122,17 @@ const Email = ({ navigation, route, ...props }) => {
         }
     };
 
-    const getOtpValue = (i) => {
-        switch (i) {
-            case 0:
-                return email;
-            case 1:
-                return otp;
-        }
-    };
-
-    const verifyOtp = () => {
-        props.setLoader(true);
-        const data = {
-            email,
-            otp,
-        };
-        comnPost("v2/auth/verifyOtp", data)
-            .then((res) => {
-                if (res.data.success) {
-                    // setIsAlert(true);
-                    // setAlertMessage(res.data.message);
-                    AsyncStorage.setItem(STRING.STORAGE.ACCESS_TOKEN, res.data.data.access_token);
-                    AsyncStorage.setItem(STRING.STORAGE.USER_ID, res.data.data.user.id);
-                    props.saveAccess_token(res.data.data.access_token);
-                    props.setLoader(false);
-                    // setIsSuccess(true)
-                    AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, JSON.stringify(true))
-                    navigateTo(navigation, STRING.SCREEN.HOME);
-                } else {
-                    setIsAlert(true);
-                    setAlertMessage(res.data.message.email ? res.data.message.email : res.data.message);
-                    props.setLoader(false);
-                    setIsSuccess(false)
-                }
-            })
-            .catch((err) => {
-                setIsAlert(true);
-                setIsSuccess(false)
-                setAlertMessage(STRING.ALERT.WENT_WRONG);
-                props.setLoader(false);
-            });
-    };
-
     const closePopup = () => {
         if (isSuccess) {
             AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, JSON.stringify(true))
-            navigateTo(navigation, STRING.SCREEN.HOME);
+            navigation.dispatch(
+                CommonActions.reset({
+                    index: 0,
+                    routes: [
+                        { name: STRING.SCREEN.HOME },
+                    ],
+                })
+            );
         }
         setIsAlert(false)
     }
@@ -182,7 +148,6 @@ const Email = ({ navigation, route, ...props }) => {
         };
         comnPost("v2/auth/sendOtp", data)
             .then((res) => {
-                console.log('res- ', res);
                 if (res.data?.success) {
                     props.setLoader(false);
                     navigateTo(navigation, STRING.SCREEN.VERIFY_OTP, { email })
@@ -194,7 +159,6 @@ const Email = ({ navigation, route, ...props }) => {
                 }
             })
             .catch((err) => {
-                console.log('err - ', err);
                 setIsAlert(true);
                 setIsSuccess(false)
                 setAlertMessage(STRING.ALERT.WENT_WRONG);

@@ -180,7 +180,6 @@ const ProfileView = ({ navigation, route, ...props }) => {
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
     };
-    console.log(myInitialRegion);
     setInitialRegion(myInitialRegion)
   }
 
@@ -196,6 +195,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
         if (res && res.data.data)
           saveToStorage(STRING.STORAGE.PROFILE_RESPONSE, JSON.stringify(res))
         setProfile(res.data.data); // Update places state with response data
+        setOption(0);
         setLocationMap(res.data.data.addresses[0].latitude, res.data.data.addresses[0].longitude)
         props.setLoader(false);
       })
@@ -284,7 +284,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
       </View>
 
       <View style={styles.headerContainer}>
-        <GlobalText text={STRING.ADDRESS} />
+        <GlobalText text={t("ADDRESS")} />
         {initialRegion.latitude ?
           <MapContainer initialRegion={initialRegion} currentLatitude={currentLatitude} currentLongitude={currentLongitude} />
           :
@@ -297,7 +297,6 @@ const ProfileView = ({ navigation, route, ...props }) => {
           initialRegion.latitude ?
             option == 0 ?
               <ChipOptions
-                userLang={profile.language}
                 languageClick={() => setOption(1)}
                 locationClick={() => setShowLocModal(true)}
                 profileClick={() => setOption(3)}
@@ -305,10 +304,10 @@ const ProfileView = ({ navigation, route, ...props }) => {
               />
               :
               option == 1 ?
-                <ChangeLang userLang={profile.language} refreshOption={() => setOption(0)} setLoader={(v) => props.setLoader(v)} />
+                <ChangeLang refreshOption={() => getUserProfile()} setLoader={(v) => props.setLoader(v)} />
                 :
                 option == 3 ?
-                  <UpdateProfile user={profile.email} phone={profile.mobile} setLoader={(v) => props.setLoader(v)} />
+                  <UpdateProfile user={profile.email} phone={profile.mobile} refreshOption={() => getUserProfile()} setLoader={(v) => props.setLoader(v)} />
                   :
                   <ProfileChip />
             :
@@ -328,7 +327,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
           <TextButton
             title={STRING.BUTTON.HOME_LOCATION}
             buttonView={styles.locBtnStyle}
-            titleStyle={styles.titleStyle}
+            titleStyle={styles.locButtonTitle}
             raised={false}
             onPress={setHomeLocation}
             startIcon={
@@ -342,7 +341,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
           <TextButton
             title={STRING.BUTTON.CURRENT_LOCATION}
             buttonView={styles.locBtnStyle}
-            titleStyle={styles.titleStyle}
+            titleStyle={styles.locButtonTitle}
             raised={false}
             onPress={setCurrLocation}
             startIcon={

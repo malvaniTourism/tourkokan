@@ -65,9 +65,9 @@ const styles = StyleSheet.create({
     left: -40
   },
   leftIcon: {
-    position: 'absolute', // Position the icon absolutely inside the input field
-    left: '50%', // Adjust the left position as needed
-    top: '70%', // Center vertically
+    position: 'absolute',
+    left: '50%',
+    top: '70%',
     transform: [{ translateY: -12 }],
   },
   roleDropDown: {
@@ -79,6 +79,14 @@ const styles = StyleSheet.create({
   },
   selectedTextStyle: {
     color: COLOR.black
+  },
+  itemTextStyle: {
+    color: COLOR.black
+  },
+  dropdownText: {
+    color: COLOR.black,
+    fontSize: DIMENSIONS.textSize,
+    textAlign: "center"
   },
   imageContainerStyle: {
     borderWidth: 1,

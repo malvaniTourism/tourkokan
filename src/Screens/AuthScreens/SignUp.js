@@ -61,7 +61,7 @@ const SignUp = ({ navigation, ...props }) => {
   const [fetchingText, setFetchingText] = useState("")
   const [list, setList] = useState(
     [{ label: 'English', value: 'en' },
-    { label: 'Marathi', value: 'mr' },]
+    { label: 'मराठी', value: 'mr' },]
   )
   const [language, setLanguage] = useState(null);
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
@@ -231,10 +231,10 @@ const SignUp = ({ navigation, ...props }) => {
           setIsSuccess(true);
           setIsAlert(true);
           setAlertMessage(res.data.message)
-          i18n.changeLanguage(value);
+          i18n.changeLanguage(language);
         } else {
           props.setLoader(false);
-          setAlertMessage(res.data.message.email ? res.data.message.email : res.data.message.mobile ? res.data.message.mobile : res.data.message.profile_picture);
+          setAlertMessage(res.data.message.email ? res.data.message.email : res.data.message.mobile ? res.data.message.mobile : res.data.message);
           setIsSuccess(false)
           setIsAlert(true);
         }
@@ -248,7 +248,7 @@ const SignUp = ({ navigation, ...props }) => {
   };
 
   const signInScreen = () => {
-    navigateTo(navigation, STRING.SCREEN.EMAIL_SIGN_IN);
+    navigateTo(navigation, STRING.SCREEN.EMAIL);
   };
 
   const closePopup = () => {
@@ -385,9 +385,11 @@ const SignUp = ({ navigation, ...props }) => {
           })}
           <Dropdown
             style={[styles.dropdown]}
-            placeholderStyle={styles.placeholderStyle}
+            placeholderStyle={styles.itemTextStyle}
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
+            itemTextStyle={styles.itemTextStyle}
+            dropdownTextStyle={styles.dropdownText}
             iconStyle={styles.dropdownIcon}
             data={list}
             maxHeight={300}

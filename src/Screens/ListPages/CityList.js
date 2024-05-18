@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, ScrollView, Text, TouchableOpacity } from "react-native";
+import { View, ScrollView, Text, TouchableOpacity, FlatList } from "react-native";
 import SmallCard from "../../Components/Customs/SmallCard";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import COLOR from "../../Services/Constants/COLORS";
@@ -27,7 +27,8 @@ const CityList = ({ navigation, route, ...props }) => {
   const [error, setError] = useState(null); // State to store error message
   const [isLandingDataFetched, setIsLandingDataFetched] = useState(false);
   const [offline, setOffline] = useState(false);
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
+  const [page, setPage] = useState(1)
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
@@ -71,11 +72,13 @@ const CityList = ({ navigation, route, ...props }) => {
       parent_id: route?.params?.parent_id,
       category: route?.params?.subCat || "other"
     };
-    comnPost("v2/sites", data, navigation)
+    comnPost(`v2/sites?page=${page}`, data, navigation)
       .then((res) => {
         if (res && res.data.data)
           saveToStorage(STRING.STORAGE.CITIES_RESPONSE, JSON.stringify(res))
-        setCities(res.data.data.data); // Update cities state with response data
+        setCities([...cities, res.data.data.data]); // Update cities state with response data
+        let nextUrl = res.data.data.next_page_url
+        setPage(nextUrl[nextUrl.length - 1])
         setIsLoading(false);
       })
       .catch((error) => {
@@ -88,8 +91,12 @@ const CityList = ({ navigation, route, ...props }) => {
     navigateTo(navigation, STRING.SCREEN.CITY_DETAILS, { id })
   }
 
+  const renderItem = ({ item }) => (
+    <CityCard data={item} navigation={navigation} reload={() => getCities()} onClick={() => getCityDetails(item.id)} />
+  );
+
   return (
-    <ScrollView stickyHeaderIndices={[0]}>
+    <View style={{ backgroundColor: COLOR.white }}>
       <CheckNet isOff={offline} />
       <Header name={route?.params?.subCat || STRING.HEADER.CITIES}
         startIcon={
@@ -110,17 +117,22 @@ const CityList = ({ navigation, route, ...props }) => {
           </View>
           :
           cities[0] ?
-            <View style={{ flex: 1, alignItems: "center" }}>
-              {cities.map((city) => (
-                <CityCard data={city} navigation={navigation} reload={() => getCities()} onClick={() => getCityDetails(city.id)} />
-              ))}
+            <View style={{ alignItems: "center", marginBottom: 150 }}>
+              <FlatList
+                data={cities[0]}
+                numColumns={1}
+                keyExtractor={(item) => item.id?.toString()}
+                renderItem={renderItem}
+                onEndReached={() => getCities()}
+                onEndReachedThreshold={0.5}
+              />
             </View>
             :
-            <View>
+            <View style={{ height: DIMENSIONS.screenHeight }}>
               <GlobalText text={STRING.NO_DATA} />
             </View>
       }
-    </ScrollView>
+    </View>
   );
 };
 

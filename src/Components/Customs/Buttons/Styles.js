@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
   imageButtonCircle: {
     height: DIMENSIONS.iconXXL,
     width: DIMENSIONS.iconXXL,
-    borderRadius: DIMENSIONS.borderRadiusLarge,
     borderWidth: 4,
     borderColor: COLOR.grey,
     justifyContent: "center",

@@ -26,8 +26,10 @@ import ImageButtonSkeleton from "../../Components/Customs/Buttons/ImageButtonSke
 import Feather from "react-native-vector-icons/Feather";
 import { Skeleton } from "@rneui/themed";
 import CityCardSkeleton from "../../Components/Cards/CityCardSkeleton";
+import { useTranslation } from "react-i18next";
 
 const Explore = ({ route, navigation, ...props }) => {
+  const { t } = useTranslation();
 
   const [places, setPlaces] = useState([]);
   const [cities, setCities] = useState([]);
@@ -168,6 +170,7 @@ const Explore = ({ route, navigation, ...props }) => {
                   onPress={() => handleCityPress(city)}
                   isSelected={selectedCity === city.name}
                   image={city.image}
+                  imageButtonCircle={styles.citiesCircleButton}
                   text={
                     <GlobalText text={city.name} style={styles.cityButtonText} />
                   }
@@ -188,7 +191,7 @@ const Explore = ({ route, navigation, ...props }) => {
                 resizeMode="cover"
               />
               <View style={styles.details}>
-                <GlobalText text={STRING.TO_EXPLORE} style={styles.whiteText} />
+                <GlobalText text={t("TO_EXPLORE")} style={styles.whiteText} />
               </View>
             </View>
         }
@@ -199,7 +202,7 @@ const Explore = ({ route, navigation, ...props }) => {
             <Skeleton animation="pulse" variant="text" style={styles.buttonSkeleton} />
             :
             <TextButton
-              title={STRING.BUTTON.SEE_MORE}
+              title={t("BUTTON.SEE_MORE")}
               buttonView={styles.buttonView}
               titleStyle={styles.titleStyle}
               raised={false}

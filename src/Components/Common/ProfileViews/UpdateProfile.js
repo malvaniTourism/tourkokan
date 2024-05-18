@@ -6,8 +6,12 @@ import styles from './Styles';
 import STRING from '../../../Services/Constants/STRINGS';
 import TextButton from '../../Customs/Buttons/TextButton';
 import Feather from "react-native-vector-icons/Feather";
+import { useTranslation } from 'react-i18next';
+import { comnPost } from '../../../Services/Api/CommonServices';
 
-const UpdateProfile = ({ user, phone, setLoader }) => {
+const UpdateProfile = ({ user, phone, refreshOption, setLoader }) => {
+    const { t } = useTranslation();
+
     const [name, setName] = useState(user);
     const [mobile, setMobile] = useState(phone);
 
@@ -72,7 +76,7 @@ const UpdateProfile = ({ user, phone, setLoader }) => {
 
             <View>
                 <TextButton
-                    title={STRING.BUTTON.SAVE}
+                    title={t("BUTTON.SAVE")}
                     buttonView={styles.profileButtonStyle}
                     titleStyle={styles.buttonTitleStyle}
                     onPress={save}

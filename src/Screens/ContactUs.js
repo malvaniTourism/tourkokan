@@ -21,6 +21,7 @@ import { connect } from "react-redux";
 import STRING from "../Services/Constants/STRINGS";
 import { useTranslation } from 'react-i18next';
 import GlobalText from "../Components/Customs/Text";
+import DocumentPicker from 'react-native-document-picker';
 
 const ContactUs = ({ navigation, route, ...props }) => {
   const { t } = useTranslation();
@@ -29,7 +30,8 @@ const ContactUs = ({ navigation, route, ...props }) => {
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
-  const [isAlert, setIsAlert] = useState(false)
+  const [isAlert, setIsAlert] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
 
   useEffect(async () => {
     setEmail(await AsyncStorage.getItem(STRING.STORAGE.USER_EMAIL))
@@ -94,6 +96,22 @@ const ContactUs = ({ navigation, route, ...props }) => {
     setIsAlert(false)
   }
 
+  const selectFile = async () => {
+    try {
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.allFiles], // Allow all types of files
+      });
+      setSelectedFile(res);
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        console.log('User cancelled file picker');
+      } else {
+        console.log('Unknown Error: ', err);
+        throw err;
+      }
+    }
+  };
+
   return (
     <View style={{ backgroundColor: COLOR.white }}>
       <Header
@@ -112,26 +130,35 @@ const ContactUs = ({ navigation, route, ...props }) => {
         }
       />
       <Loader />
-      <GlobalText text={STRING.CONNECT} style={{textAlign: "left", marginLeft: 20}} />
+      <GlobalText text={STRING.CONNECT} style={{ textAlign: "left", marginLeft: 20 }} />
       <View style={{ alignItems: "center", height: DIMENSIONS.screenHeight, backgroundColor: COLOR.white }}>
         {ContactUsFields.map((field, index) => {
           return (
-            <TextField
-              name={field.name}
-              label={field.name}
-              placeholder={field.placeholder}
-              fieldType={field.type}
-              length={field.length}
-              required={field.required}
-              disabled={index == 0}
-              value={getValue(index)}
-              setChild={(v, i) => setValue(v, i, index)}
-              style={styles.containerStyle}
-              inputContainerStyle={styles.inputContainerStyle}
-              multiline={field.multiline}
-            />
+            <View>
+              <GlobalText text={field.placeholder} style={styles.fieldTitle} />
+              <TextField
+                name={field.name}
+                label={field.name}
+                placeholder={field.placeholder}
+                fieldType={field.type}
+                length={field.length}
+                required={field.required}
+                disabled={index == 0}
+                value={getValue(index)}
+                setChild={(v, i) => setValue(v, i, index)}
+                style={styles.containerStyle}
+                inputContainerStyle={styles.inputContainerStyle}
+                multiline={field.multiline}
+              />
+            </View>
           );
         })}
+        <TextButton
+          title={STRING.BUTTON.ATTACHMENT}
+          buttonView={styles.attachmentButtonStyle}
+          titleStyle={styles.attachmentTitleStyle}
+          onPress={selectFile}
+        />
       </View>
       <TextButton
         title={STRING.BUTTON.SEND}

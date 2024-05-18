@@ -73,7 +73,6 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
         source_place_id: a || source?.id,
         destination_place_id: b || destination?.id,
       };
-      console.log('data:: ', data);
       comnPost(`v2/routes?page=${isNext ? nextPage : 1}`, data, navigation)
         .then((res) => {
           if (res.data.success) {

@@ -11,12 +11,12 @@ import COLOR from "../../../Services/Constants/COLORS";
 import GlobalText from "../../Customs/Text";
 import { useTranslation } from 'react-i18next';
 
-const ChipOptions = ({ userLang, languageClick, locationClick, profileClick, settingsClick, logoutClick }) => {
+const ChipOptions = ({ languageClick, locationClick, profileClick, settingsClick, logoutClick }) => {
     const { t } = useTranslation();
 
     return (
         <View>
-            <ProfileChip name={STRING.CHIPS.LANGUAGE}
+            <ProfileChip name={t("CHIPS.LANGUAGE")}
                 icon={
                     <View style={styles.chipIcon}>
                         <FontAwesome
@@ -27,9 +27,9 @@ const ChipOptions = ({ userLang, languageClick, locationClick, profileClick, set
                     </View>
                 }
                 clickChip={languageClick}
-                meta={<GlobalText text={t([userLang]) || t('LANGUAGE')} />}
+                meta={<GlobalText text={t('LANGUAGE')} />}
             />
-            <ProfileChip name={STRING.CHIPS.UPDATE_LOCATION}
+            <ProfileChip name={t("CHIPS.UPDATE_LOCATION")}
                 icon={
                     <View style={styles.chipIcon}>
                         <Ionicons
@@ -41,7 +41,7 @@ const ChipOptions = ({ userLang, languageClick, locationClick, profileClick, set
                 }
                 clickChip={locationClick}
             />
-            <ProfileChip name={STRING.CHIPS.UPDATE_PROFILE}
+            <ProfileChip name={t("CHIPS.UPDATE_PROFILE")}
                 icon={
                     <View style={styles.chipIcon}>
                         <Feather
@@ -53,7 +53,7 @@ const ChipOptions = ({ userLang, languageClick, locationClick, profileClick, set
                 }
                 clickChip={profileClick}
             />
-            {/* <ProfileChip name={STRING.CHIPS.SETTINGS}
+            {/* <ProfileChip name={t("CHIPS.SETTINGS")}
                 icon={
                     <View style={styles.chipIcon}>
                         <Ionicons
@@ -65,7 +65,7 @@ const ChipOptions = ({ userLang, languageClick, locationClick, profileClick, set
                 }
                 clickChip={settingsClick}
             /> */}
-            <ProfileChip name={STRING.CHIPS.LOGOUT}
+            <ProfileChip name={t("CHIPS.LOGOUT")}
                 icon={
                     <View style={styles.chipIcon}>
                         <MaterialIcons

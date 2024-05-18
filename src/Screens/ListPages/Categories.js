@@ -133,6 +133,7 @@ const Categories = ({ route, navigation, ...props }) => {
                                     onPress={() => handleCategoryPress(category)}
                                     isSelected={selectedCategory === category.name}
                                     image={category.icon}
+                                    imageButtonCircle={styles.categoriesCircleButton}
                                     buttonIcon={styles.catIconStyle}
                                     text={
                                         <GlobalText text={category.name} style={styles.categoryButtonText} />
