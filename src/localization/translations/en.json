@@ -249,5 +249,7 @@
     "LOCATION": "Location",
     "ADDRESS": "User Address",
     "CONNECT": "Connect with Us: We're Here to Listen",
-    "ROUTES": "Routes"
+    "ROUTES": "Routes",
+    "CITIES": "Cities",
+    "TO": "To"
 }
