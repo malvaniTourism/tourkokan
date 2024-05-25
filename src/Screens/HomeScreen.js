@@ -316,7 +316,22 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                 </View>
 
                 <View style={styles.sectionView}>
-                    <GlobalText text={STRING.SCREEN.CITIES} style={styles.sectionTitle} />
+                <View>
+                        {
+                            isLoading ?
+                                <Skeleton animation="pulse" variant="text" style={styles.buttonSkeleton} />
+                                :
+                                <View style={styles.flexAround}>
+                                    <GlobalText text={t("CITIES")} style={styles.sectionTitle} />
+                                    <TextButton
+                                        title={t("BUTTON.SEE_ALL")}
+                                        onPress={() => showMore(STRING.SCREEN.CITIES)}
+                                        buttonView={styles.buttonView}
+                                        titleStyle={styles.titleStyle}
+                                    />
+                                </View>
+                        }
+                    </View>
                     <ScrollView horizontal style={{ marginLeft: 5 }}>
                         {
                             isLoading ?

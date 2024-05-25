@@ -38,8 +38,8 @@ const UpdateProfile = ({ user, phone, refreshOption, setLoader }) => {
     const save = () => {
         setLoader(true)
         let data = {
-            name,
-            mobile
+            email: name,
+            mobile: mobile
         }
         comnPost("v2/updateProfile", data)
             .then(res => {

@@ -12,9 +12,11 @@ import DIMENSIONS from "../../Services/Constants/DIMENSIONS"
 import Fontisto from "react-native-vector-icons/Fontisto";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { useTranslation } from 'react-i18next';
 
 const RouteHeadCard = ({ data, cardClick, style, bus }) => {
     let imagePath = `../../Assets/Images/Buses/OrdinaryExpress.png`;
+    const { t } = useTranslation();
 
     return (
         <TouchableOpacity style={[styles.routeHeadCard, style]} onPress={() => cardClick()}>
@@ -27,7 +29,7 @@ const RouteHeadCard = ({ data, cardClick, style, bus }) => {
                     )}
                 </View>
                 <View style={{ flex: 3, justifyContent: "space-evenly" }}>
-                    <GlobalText text={data.name} style={styles.routeHeadCardTitle} />
+                    <GlobalText text={data.source_place.name + "    " + t("TO") + "     " + data.destination_place.name} style={styles.routeHeadCardTitle} />
                     {/* <GlobalText text={`${data.start_time} - ${data.end_time}`} /> */}
                     <View>
                         <View style={{ flexDirection: "row", justifyContent: "space-between", width: "95%" }}>
