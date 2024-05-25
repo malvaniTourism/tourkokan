@@ -1,5 +1,5 @@
 import React from "react"
-import { FlatList, View } from "react-native"
+import { FlatList, ScrollView, View } from "react-native"
 import { ListItem } from "@rneui/themed";
 import styles from "./Styles";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -19,7 +19,7 @@ const SearchDropdown = ({ placesList, goToNext, setPlace, closeDropdown, style }
     };
 
     return (
-        <View style={[styles.searchDropView, style]}>
+        <ScrollView nestedScrollEnabled style={[styles.searchDropView, style]}>
             <Ionicons
                 style={styles.dropCloseIcon}
                 name="close-circle"
@@ -32,10 +32,11 @@ const SearchDropdown = ({ placesList, goToNext, setPlace, closeDropdown, style }
                 data={placesList}
                 renderItem={renderItem}
                 // onEndReached={goToNext}
+                nestedScrollEnabled
                 onEndReachedThreshold={0.5}
                 style={{ marginBottom: 20 }}
             />
-        </View>
+        </ScrollView>
     )
 }
 

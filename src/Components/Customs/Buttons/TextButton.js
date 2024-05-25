@@ -17,7 +17,7 @@ const TextButton = ({
   return (
     <TouchableOpacity onPress={isDisabled ? null : onPress} style={[styles.buttonView, buttonView]}>
       {startIcon}
-      <GlobalText text={title} style={[styles.titleStyle, titleStyle]} />
+      {title && <GlobalText text={title} style={[styles.titleStyle, titleStyle]} />}
       {endIcon}
     </TouchableOpacity>
   );

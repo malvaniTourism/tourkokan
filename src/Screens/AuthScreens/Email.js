@@ -154,7 +154,7 @@ const Email = ({ navigation, route, ...props }) => {
                 } else {
                     setIsAlert(true);
                     setIsSuccess(false)
-                    setAlertMessage(res.data?.message);
+                    setAlertMessage(res.data?.message.email ? res.data?.message.email : res.data?.message);
                     props.setLoader(false);
                 }
             })

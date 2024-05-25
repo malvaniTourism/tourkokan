@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, View, Text, SafeAreaView, ScrollView, Linking} from "react-native";
+import { FlatList, View, Text, SafeAreaView, ScrollView, Linking } from "react-native";
 import { ListItem } from "@rneui/themed";
 import Header from "../Components/Common/Header";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -19,6 +19,7 @@ import Loader from "../Components/Customs/Loader";
 import { setLoader } from "../Reducers/CommonActions";
 import { connect } from "react-redux";
 import STRING from "../Services/Constants/STRINGS";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 const Emergency = ({ navigation, route, ...props }) => {
   const [data, setData] = useState([])
@@ -37,13 +38,12 @@ const Emergency = ({ navigation, route, ...props }) => {
     props.setLoader(true);
     let data = {
       apitype: "list",
-      // parent_id: 1,
       category: "emergency"
     };
     comnPost("v2/sites", data)
       .then((res) => {
         if (res && res.data.data)
-        setData(res.data.data.data);
+          setData(res.data.data.data);
         props.setLoader(false);
       })
       .catch((error) => {
@@ -51,31 +51,46 @@ const Emergency = ({ navigation, route, ...props }) => {
       });
   }
 
-  const makePhoneCall = (address, apptype) => {
+  const makeContact = (address, apptype) => {
     const value = address[0][apptype];
     if (value && typeof value === 'string') {
       const prefix = apptype === 'phone' ? 'tel' : 'mailto';
       Linking.openURL(`${prefix}:${value}`);
     }
   };
-  
+
 
   const renderItem = ({ item }) => {
     return (
       <ListItem bottomDivider>
-        <ListItem.Content>
-          <ListItem.Title>{item.name} 
-          <TextButton 
-            title="Call" 
-            onPress={() => makePhoneCall(item.address, 'phone')} 
-            style={styles.callButton}
-          />
-           <TextButton 
-            title="Email" 
-            onPress={() => makePhoneCall(item.address, 'email')} 
-            style={styles.callButton}
-          />
-          </ListItem.Title>
+        <ListItem.Content style={{ flexDirection: "row" }}>
+          <ListItem.Title>{item.name}</ListItem.Title>
+          <ListItem.Content style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+            <TextButton
+              title=""
+              onPress={() => makeContact(item.address, 'phone')}
+              buttonView={styles.callButton}
+              endIcon={
+                <Feather
+                  name="phone-call"
+                  size={24}
+                  color={COLOR.themeBlue}
+                />
+              }
+            />
+            <TextButton
+              title=""
+              onPress={() => makeContact(item.address, 'email')}
+              buttonView={styles.callButton}
+              endIcon={
+                <MaterialIcons
+                  name="email"
+                  size={24}
+                  color={COLOR.themeBlue}
+                />
+              }
+            />
+          </ListItem.Content>
         </ListItem.Content>
       </ListItem>
     );
@@ -100,14 +115,14 @@ const Emergency = ({ navigation, route, ...props }) => {
       />
       <Loader />
       <ScrollView>
-      <FlatList
-        keyExtractor={(item) => item.id}
-        data={data}
-        renderItem={renderItem}
-        onEndReached={getData}
-        onEndReachedThreshold={0.5}
-        style={{ marginBottom: 30 }}
-      />
+        <FlatList
+          keyExtractor={(item) => item.id}
+          data={data}
+          renderItem={renderItem}
+          onEndReached={getData}
+          onEndReachedThreshold={0.5}
+          style={{ marginBottom: 30 }}
+        />
       </ScrollView>
     </View>
   );

@@ -40,10 +40,6 @@ const styles = StyleSheet.create({
         width: DIMENSIONS.bannerWidth - 30,
         shadowColor: COLOR.headingColor2
     },
-    overlay: {
-        ...StyleSheet.absoluteFillObject,
-        backgroundColor: COLOR.black,
-    },
     placesList: {
         flexDirection: "row",
         flexWrap: "wrap",
@@ -102,12 +98,6 @@ const styles = StyleSheet.create({
         borderRadius: DIMENSIONS.borderRadiusXS,
         alignSelf: "flex-end",
         marginLeft: DIMENSIONS.bannerWidth / 2,
-    },
-    buttonView: {
-        width: DIMENSIONS.bannerWidth / 2,
-        alignItems: "center",
-        flexDirection: "row",
-        justifyContent: "flex-end",
     },
     locBtnStyle: {
         width: DIMENSIONS.bannerWidth,
@@ -327,7 +317,6 @@ const styles = StyleSheet.create({
         color: "red",
         marginVertical: 16,
     },
-
     containerMap: {
         position: "absolute",
         top: 0,
@@ -523,7 +512,10 @@ const styles = StyleSheet.create({
         color: COLOR.red
     },
     callButton: {
-        width: "50"
+        width: 30,
+        backgroundColor: COLOR.white,
+        elevation: 0,
+        marginRight: 10
     }
 });
 

@@ -153,12 +153,12 @@ const ContactUs = ({ navigation, route, ...props }) => {
             </View>
           );
         })}
-        <TextButton
+        {/* <TextButton
           title={STRING.BUTTON.ATTACHMENT}
           buttonView={styles.attachmentButtonStyle}
           titleStyle={styles.attachmentTitleStyle}
           onPress={selectFile}
-        />
+        /> */}
       </View>
       <TextButton
         title={STRING.BUTTON.SEND}

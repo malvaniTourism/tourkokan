@@ -70,7 +70,7 @@ const CityList = ({ navigation, route, ...props }) => {
     let data = {
       apitype: "list",
       parent_id: route?.params?.parent_id,
-      category: route?.params?.subCat || "other"
+      category: route?.params?.subCat?.code || "other"
     };
     comnPost(`v2/sites?page=${page}`, data, navigation)
       .then((res) => {
@@ -98,7 +98,7 @@ const CityList = ({ navigation, route, ...props }) => {
   return (
     <View style={{ backgroundColor: COLOR.white }}>
       <CheckNet isOff={offline} />
-      <Header name={route?.params?.subCat || STRING.HEADER.CITIES}
+      <Header name={route?.params?.subCat?.name || STRING.HEADER.CITIES}
         startIcon={
           <Ionicons
             name="chevron-back-outline"
@@ -116,7 +116,7 @@ const CityList = ({ navigation, route, ...props }) => {
             <CityCardSkeleton type={STRING.TABLE.PLACE} />
           </View>
           :
-          cities[0] ?
+          cities[0] != "" ?
             <View style={{ alignItems: "center", marginBottom: 150 }}>
               <FlatList
                 data={cities[0]}

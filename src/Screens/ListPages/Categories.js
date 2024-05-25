@@ -91,7 +91,7 @@ const Categories = ({ route, navigation, ...props }) => {
 
     const renderItem = ({ item }) => {
         return (
-            <SubCatCard data={item} onClick={() => goToSubCats(item.name)} />
+            <SubCatCard data={item} onClick={() => goToSubCats(item)} />
         )
     }
 

@@ -46,7 +46,6 @@ const UpdateProfile = ({ user, phone, refreshOption, setLoader }) => {
             })
             .catch(err => {
             })
-        setLoader(false)
         refreshOption()
     }
 

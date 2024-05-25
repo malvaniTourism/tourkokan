@@ -213,8 +213,7 @@ const styles = StyleSheet.create({
     height: "auto"
   },
   searchDropView: {
-    zIndex: 10,
-    top: -70,
+    zIndex: 100,
     borderWidth: 2,
     borderRadius: DIMENSIONS.borderRadiusSmall,
     borderColor: COLOR.themeBlue,
@@ -316,6 +315,7 @@ const styles = StyleSheet.create({
     height: DIMENSIONS.iconLarge,
     resizeMode: "cover",
     borderRadius: DIMENSIONS.borderRadiusXXS,
+    backgroundColor: COLOR.greyDark
   },
   citiesDropdown: {
     zIndex: 10,

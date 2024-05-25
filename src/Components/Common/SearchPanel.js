@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, ScrollView, View } from "react-native";
 import { SrcDest } from "../../Services/Constants/FIELDS";
 import TextButton from "../Customs/Buttons/TextButton";
 import TextField from "../Customs/TextField";
@@ -165,7 +165,7 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
   }
 
   return (
-    <View style={{ marginVertical: 20 }}>
+    <View style={{ marginVertical: 20, zIndex: 50 }}>
       <View style={styles.fieldsView}>
         <GlobalText text={STRING.UNCOVER} style={styles.instructionText} />
         {SrcDest.map((field, index) => {
@@ -229,11 +229,11 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
         raised={false}
         onPress={gotoRoutes}
       />
-      <View style={{ position: "relative", marginTop: -32 }}>
+      <ScrollView nestedScrollEnabled style={{ position: "absolute", zIndex: 100, width: DIMENSIONS.bannerWidth }}>
         {placesList[0] &&
           <SearchDropdown placesList={placesList} goToNext={goToNext} setPlace={setPlace} closeDropdown={() => closeDropdown()} />
         }
-      </View>
+      </ScrollView>
     </View>
   );
 };

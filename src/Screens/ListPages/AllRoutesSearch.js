@@ -80,7 +80,7 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
               saveToStorage(STRING.STORAGE.ROUTES_RESPONSE, JSON.stringify(res))
             let myNextUrl = res.data.data.next_page_url
             setNextUrl(myNextUrl)
-            isNext ?
+            nextPage !== myNextUrl[myNextUrl.length - 1] && isNext ?
               setList([...list, ...res.data.data.data])
               :
               setList([...res.data.data.data])
@@ -149,7 +149,7 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
             <RoutesSearchPanel mySource={source} myDestination={destination} setSourceId={(v) => setSource(v)} setDestinationId={(v) => setDestination(v)} route={route} navigation={navigation} from={STRING.SCREEN.ALL_ROUTES_SEARCH} searchRoutes={(a, b) => searchRoute(a, b)} onSwap={(a, b) => searchRoute(a, b)} />
         }
       </View>
-      <SafeAreaView style={{ paddingBottom: 150 }}>
+      <SafeAreaView style={{ paddingBottom: 180 }}>
         {
           isFirstTime && isLoading ?
             <>

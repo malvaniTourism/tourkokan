@@ -64,7 +64,9 @@ const TopComponent = ({ navigation, openLocationSheet, currentCity, gotoProfile,
           </TouchableOpacity>
         </View>
         <TouchableOpacity onPress={() => openProfile()} style={styles.profileIconView}>
-          <Image source={{ uri: Path.FTP_PATH + profilePhoto }} style={styles.profileIcon} />
+          <Image
+            source={{ uri: `${profilePhoto ? Path.FTP_PATH + profilePhoto : "https://api-private.atlassian.com/users/2143ab39b9c73bcab4fe6562fff8d23d/avatar"}` }}
+            style={styles.profileIcon} />
         </TouchableOpacity>
       </View>
 
