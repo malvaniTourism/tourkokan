@@ -34,6 +34,7 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
         setIsFav(!isFav)
         comnPost("v2/addDeleteFavourite", placeData)
             .then(res => {
+                props.setLoader(false);
                 reload()
             })
             .catch(err => {
@@ -70,6 +71,7 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
         }
         comnPost('v2/addUpdateRating', placeData)
             .then(res => {
+                props.setLoader(false);
                 reload()
             })
             .catch(err => {

@@ -96,7 +96,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
     }
 
     const onHeartClick = async () => {
-        setLoader(true)
+        // setLoader(true)
         let placeData = {
             user_id: await AsyncStorage.getItem(STRING.STORAGE.USER_ID),
             favouritable_type: STRING.TABLE.SITES,
@@ -105,22 +105,30 @@ const CityDetails = ({ navigation, route, ...props }) => {
         setIsFav(!isFav)
         comnPost("v2/addDeleteFavourite", placeData)
             .then(res => {
-                getDetails()
+                props.setLoader(false);
+                // getDetails()
+                reload()
             })
             .catch(err => {
             })
     }
 
     const onStarRatingPress = async (rate) => {
+        setRating(rating)
         const placeData = {
             user_id: await AsyncStorage.getItem(STRING.STORAGE.USER_ID),
             rateable_type: STRING.TABLE.SITE,
             rateable_id: city.id,
             rate
         }
+        console.log();
         comnPost('v2/addUpdateRating', placeData)
             .then(res => {
-                getDetails()
+                console.log("res".res);
+
+                props.setLoader(false);
+                // getDetails()
+                reload()
             })
             .catch(err => {
             })

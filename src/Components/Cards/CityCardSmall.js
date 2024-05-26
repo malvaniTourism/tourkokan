@@ -35,6 +35,7 @@ const CityCardSmall = ({ data, reload, navigation, addComment, onClick }) => {
         setIsFav(!isFav)
         comnPost("v2/addDeleteFavourite", placeData)
             .then(res => {
+                props.setLoader(false);
                 reload()
             })
             .catch(err => {

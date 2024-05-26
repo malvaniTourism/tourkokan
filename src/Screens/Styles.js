@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
     },
     sectionView: {
         alignItems: "center",
-        zIndex: 1
+        zIndex: 1,
+        marginTop: 25, zIndex: 10 
     },
     routeHeadCard: {
         marginVertical: 10
