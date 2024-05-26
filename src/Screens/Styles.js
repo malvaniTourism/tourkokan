@@ -16,8 +16,8 @@ const styles = StyleSheet.create({
         width: DIMENSIONS.bannerWidth
     },
     sectionView: {
-        marginVertical: DIMENSIONS.sectionGap,
         alignItems: "center",
+        zIndex: 1
     },
     routeHeadCard: {
         marginVertical: 10
@@ -142,7 +142,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        width: DIMENSIONS.bannerWidth
+        width: DIMENSIONS.bannerWidth,
+        marginVertical: -20
     },
     prjImgContainer: {
         marginBottom: 20,

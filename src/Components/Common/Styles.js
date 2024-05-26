@@ -81,12 +81,15 @@ const styles = StyleSheet.create({
   },
   inputContainerStyle: {
     borderRadius: DIMENSIONS.borderRadiusSmall,
-    backgroundColor: COLOR.lightGrey,
+    backgroundColor: COLOR.white,
     width: DIMENSIONS.bannerWidth,
     borderColor: COLOR.lightGrey
   },
   searchPanelField: {
-    borderWidth: 0,
+    borderWidth: 1,
+    borderRadius: DIMENSIONS.borderRadiusSmall,
+    borderColor: COLOR.themeBlue,
+    height: 45
   },
   routesFieldsView: {
   },
@@ -112,11 +115,11 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end"
   },
   searchButtonStyle: {
-    height: 50,
     width: DIMENSIONS.bannerWidth / 3,
     backgroundColor: COLOR.themeBlue,
     borderRadius: DIMENSIONS.borderRadiusXS,
-    alignSelf: "flex-end"
+    alignSelf: "flex-end",
+    alignContent: "center"
   },
   searchButtonDisable: {
     height: 50,
@@ -156,12 +159,12 @@ const styles = StyleSheet.create({
   },
   swapIcon: {
     position: "absolute",
-    top: 88,
+    top: 84,
     right: 40
   },
   refreshIcon: {
     position: "absolute",
-    top: 88,
+    top: 84,
   },
   routesSwapIcon: {
     position: "absolute",
@@ -177,7 +180,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
     lineHeight: 20,
-    paddingTop: 10
+    paddingBottom: 5
   },
   tabView: {
     width: DIMENSIONS.screenWidth,
@@ -217,7 +220,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: DIMENSIONS.borderRadiusSmall,
     borderColor: COLOR.themeBlue,
-    backgroundColor: COLOR.cardBackground
+    backgroundColor: COLOR.cardBackground,
+    height: 400
   },
   dropCloseIcon: {
     alignSelf: "flex-end"

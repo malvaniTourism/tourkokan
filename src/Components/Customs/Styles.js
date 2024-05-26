@@ -60,14 +60,14 @@ const styles = StyleSheet.create({
   },
   banner: {
     width: DIMENSIONS.screenWidth,
-    height: DIMENSIONS.halfWidth,
+    height: DIMENSIONS.halfWidth - 30,
     // elevation: 10,
     animation: "fadeinout 4s infinite",
     marginBottom: -25
   },
   bannerImage: {
     width: DIMENSIONS.screenWidth,
-    height: DIMENSIONS.halfWidth,
+    height: DIMENSIONS.halfWidth - 30,
     animation: "fadeinout 4s infinite",
     opacity: 1,
   },

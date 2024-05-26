@@ -130,7 +130,6 @@ const styles = StyleSheet.create({
         backgroundColor: COLOR.white,
         alignSelf: "center",
         elevation: 10,
-        zIndex: 10,
         borderRadius: DIMENSIONS.borderRadiusXS,
         justifyContent: "space-between",
         marginVertical: 10
@@ -302,13 +301,13 @@ const styles = StyleSheet.create({
     },
     citySmallDetailsOverlay: {
         width: DIMENSIONS.bannerWidth / 2 - 30,
-        height: "auto",
+        height: 110,
         backgroundColor: COLOR.white,
         borderRadius: DIMENSIONS.borderRadiusSmall,
         padding: 10,
         alignSelf: "center",
         justifyContent: "space-between",
-        marginBottom: 5,
+        marginBottom: -20,
         textAlign: "left"
     },
     citySmallLikeView: {

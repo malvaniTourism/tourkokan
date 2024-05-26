@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
         height: 30,
     },
     langButtonStyle: {
-        height: 50,
         width: DIMENSIONS.bannerWidth / 3,
         backgroundColor: COLOR.themeBlue,
         borderRadius: DIMENSIONS.borderRadiusXS,
@@ -46,7 +45,6 @@ const styles = StyleSheet.create({
         marginRight: 20
     },
     profileButtonStyle: {
-        height: 50,
         width: DIMENSIONS.bannerWidth / 3,
         backgroundColor: COLOR.themeBlue,
         borderRadius: DIMENSIONS.borderRadiusXS,

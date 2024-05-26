@@ -12,13 +12,13 @@ import { comnPost } from '../../../Services/Api/CommonServices';
 const UpdateProfile = ({ user, phone, refreshOption, setLoader }) => {
     const { t } = useTranslation();
 
-    const [name, setName] = useState(user);
+    const [email, setEmail] = useState(user);
     const [mobile, setMobile] = useState(phone);
-
+console.log('phone - - ', phone);
     const setValue = (val, isVal, index) => {
         switch (index) {
             case 0:
-                setName(val);
+                setEmail(val);
                 break;
             case 1:
                 setMobile(val);
@@ -29,7 +29,7 @@ const UpdateProfile = ({ user, phone, refreshOption, setLoader }) => {
     const getValue = (i) => {
         switch (i) {
             case 0:
-                return name;
+                return email;
             case 1:
                 return mobile;
         }
@@ -38,8 +38,8 @@ const UpdateProfile = ({ user, phone, refreshOption, setLoader }) => {
     const save = () => {
         setLoader(true)
         let data = {
-            email: name,
-            mobile: mobile
+            email,
+            mobile
         }
         comnPost("v2/updateProfile", data)
             .then(res => {

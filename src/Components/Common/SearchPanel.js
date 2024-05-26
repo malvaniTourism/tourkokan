@@ -229,11 +229,11 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
         raised={false}
         onPress={gotoRoutes}
       />
-      <ScrollView nestedScrollEnabled style={{ position: "absolute", zIndex: 100, width: DIMENSIONS.bannerWidth }}>
+      <View style={{ position: "absolute", zIndex: 100, width: DIMENSIONS.bannerWidth }}>
         {placesList[0] &&
           <SearchDropdown placesList={placesList} goToNext={goToNext} setPlace={setPlace} closeDropdown={() => closeDropdown()} />
         }
-      </ScrollView>
+      </View>
     </View>
   );
 };

@@ -19,7 +19,7 @@ const SearchDropdown = ({ placesList, goToNext, setPlace, closeDropdown, style }
     };
 
     return (
-        <ScrollView nestedScrollEnabled style={[styles.searchDropView, style]}>
+        <View nestedScrollEnabled style={[styles.searchDropView, style]}>
             <Ionicons
                 style={styles.dropCloseIcon}
                 name="close-circle"
@@ -36,7 +36,7 @@ const SearchDropdown = ({ placesList, goToNext, setPlace, closeDropdown, style }
                 onEndReachedThreshold={0.5}
                 style={{ marginBottom: 20 }}
             />
-        </ScrollView>
+        </View>
     )
 }
 

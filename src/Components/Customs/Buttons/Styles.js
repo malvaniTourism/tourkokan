@@ -6,11 +6,11 @@ const styles = StyleSheet.create({
   buttonView: {
     overflow: "hidden",
     borderRadius: DIMENSIONS.borderRadiusXS,
-    elevation: 0,
     backgroundColor: COLOR.themeBlue,
-    paddingVertical: 15,
+    paddingVertical: 10,
     width: DIMENSIONS.bannerWidth,
     alignSelf: "center",
+    alignItems: "center",
     elevation: 10
   },
   containerStyle: {

@@ -109,7 +109,7 @@ const CityCardSmall = ({ data, reload, navigation, addComment, onClick }) => {
             <View style={cardType == "city" ? styles.citySmallDetailsOverlay : styles.placeDetailsOverlay}>
                 <View>
                     <GlobalText text={data.name} style={styles.citySmallName} />
-                    <GlobalText text={data.tag_line} style={styles.citySmallTagLine} />
+                    <GlobalText text={`${data.tag_line.slice(0, 50)}${data.tag_line.length > 50 ? "..." : ""}`} style={styles.citySmallTagLine} />
                 </View>
                 <View style={cardType == "city" ? styles.citySmallStarView : styles.placeStarView}>
                     <StarRating

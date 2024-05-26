@@ -274,7 +274,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                 />
                             );
                         })} */}
-                <View style={{ marginTop: 25 }}>
+                <View style={{ marginTop: 25, zIndex: 10 }}>
                     {
                         isLoading ?
                             <SearchPanelSkeleton />
@@ -316,7 +316,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                 </View>
 
                 <View style={styles.sectionView}>
-                <View>
+                    <View style={{marginTop: 20}}>
                         {
                             isLoading ?
                                 <Skeleton animation="pulse" variant="text" style={styles.buttonSkeleton} />

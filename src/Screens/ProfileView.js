@@ -195,6 +195,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
         if (res && res.data.data)
           saveToStorage(STRING.STORAGE.PROFILE_RESPONSE, JSON.stringify(res))
         setProfile(res.data.data); // Update places state with response data
+        console.log('res- - - - ', res.data.data);
         setOption(0);
         setLocationMap(res.data.data.addresses[0].latitude, res.data.data.addresses[0].longitude)
         props.setLoader(false);

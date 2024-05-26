@@ -117,13 +117,13 @@ export const SignUpFields = [
 
 export const ProfileFields = [
   {
-    name: STRING.LABEL.NAME,
-    placeholder: STRING.LABEL.NAME,
+    name: STRING.LABEL.EMAIL,
+    placeholder: STRING.LABEL.EMAIL,
     type: STRING.TYPE.TEXT,
     length: DIMENSIONS.fieldLength,
     required: true,
     disabled: false,
-    leftIcon: STRING.ICON.NAME,
+    leftIcon: STRING.ICON.EMAIL,
   },
   {
     name: STRING.LABEL.MOBILE,
