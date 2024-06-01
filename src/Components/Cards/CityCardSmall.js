@@ -18,7 +18,7 @@ const CityCardSmall = ({ data, reload, navigation, addComment, onClick }) => {
     const [isFav, setIsFav] = useState(data?.is_favorite)
     const [rating, setRating] = useState(data?.rating_avg_rate)
     const [commentCount, setCommentCount] = useState(data?.comment_count || 0)
-    const [rate, setRate] = useState(data?.rate?.rate)
+    const [rate, setRate] = useState(data?.rate?.rating_avg_rate)
     const [cardType, setCardType] = useState("city")
     // const [cardType, setCardType] = useState(data.category?.code)
 
@@ -63,7 +63,7 @@ const CityCardSmall = ({ data, reload, navigation, addComment, onClick }) => {
     };
 
     const onStarRatingPress = async (rate) => {
-        setRate(rate)
+        setRating(rate)
         const placeData = {
             user_id: await AsyncStorage.getItem(STRING.STORAGE.USER_ID),
             rateable_type: STRING.TABLE.SITE,
@@ -95,16 +95,16 @@ const CityCardSmall = ({ data, reload, navigation, addComment, onClick }) => {
                             <Octicons name="heart" color={COLOR.black} size={DIMENSIONS.iconSize} />
                     }
                 </TouchableOpacity>
+                <GlobalText text={commentCount} style={styles.commentCount} />
                 <TouchableOpacity style={styles.citySmallLikeView}>
-                    <GlobalText text={commentCount} style={styles.avgRating} />
-                    <Octicons name="comment" color={COLOR.themeComicBlue} size={DIMENSIONS.iconSize} />
+                    <Octicons name="comment" color={COLOR.black} size={DIMENSIONS.iconSize} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.citySmallLikeView}>
+                {/* <TouchableOpacity style={styles.citySmallLikeView}>
                     {rating > 0 &&
                         <GlobalText text={rating.slice(0, 3)} style={styles.avgRating} />
                     }
                     <Octicons name="star" color={COLOR.yellow} size={DIMENSIONS.iconSize} />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
 
             <View style={cardType == "city" ? styles.citySmallDetailsOverlay : styles.placeDetailsOverlay}>
@@ -116,7 +116,7 @@ const CityCardSmall = ({ data, reload, navigation, addComment, onClick }) => {
                     <StarRating
                         disabled={false}
                         maxStars={5}
-                        rating={rate}
+                        rating={rating}
                         selectedStar={(rating) => onStarRatingPress(rating)}
                         starSize={13}
                         starStyle={styles.starStyle}

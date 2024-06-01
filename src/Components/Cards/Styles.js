@@ -194,6 +194,7 @@ const styles = StyleSheet.create({
         height: DIMENSIONS.bannerHeight + 100,
         elevation: 10,
         margin: 10,
+        marginBottom: 30,
         padding: 10,
         backgroundColor: COLOR.white,
         borderRadius: DIMENSIONS.borderRadius,
@@ -214,6 +215,17 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         justifyContent: "center",
         alignItems: "center"
+    },
+    commentCount: {
+        borderRadius: DIMENSIONS.borderRadius,
+        zIndex: 10,
+        fontWeight: "bold",
+        backgroundColor: COLOR.themeBlue,
+        color: COLOR.white,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        bottom: -15,
+        left: 5,
     },
     avgRating: {
         borderRadius: DIMENSIONS.borderRadiusLarge,
@@ -317,7 +329,6 @@ const styles = StyleSheet.create({
         borderRadius: DIMENSIONS.borderRadius,
         right: 5,
         top: 0,
-        marginBottom: 10,
         justifyContent: "center",
         alignItems: "center"
     },

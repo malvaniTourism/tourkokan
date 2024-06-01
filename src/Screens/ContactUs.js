@@ -130,7 +130,7 @@ const ContactUs = ({ navigation, route, ...props }) => {
         }
       />
       <Loader />
-      <GlobalText text={STRING.CONNECT} style={{ textAlign: "left", marginLeft: 20 }} />
+      <GlobalText text={STRING.CONNECT} style={{ textAlign: "left", marginLeft: 20, fontSize: DIMENSIONS.subtitleTextSize }} />
       <View style={{ alignItems: "center", height: DIMENSIONS.screenHeight, backgroundColor: COLOR.white }}>
         {ContactUsFields.map((field, index) => {
           return (

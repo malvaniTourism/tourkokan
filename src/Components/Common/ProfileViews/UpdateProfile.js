@@ -8,13 +8,16 @@ import TextButton from '../../Customs/Buttons/TextButton';
 import Feather from "react-native-vector-icons/Feather";
 import { useTranslation } from 'react-i18next';
 import { comnPost } from '../../../Services/Api/CommonServices';
+import Popup from '../Popup';
 
-const UpdateProfile = ({ user, phone, refreshOption, setLoader }) => {
+const UpdateProfile = ({ user, phone, uploadImage, refreshOption, setLoader }) => {
     const { t } = useTranslation();
 
     const [email, setEmail] = useState(user);
     const [mobile, setMobile] = useState(phone);
-console.log('phone - - ', phone);
+    const [isAlert, setIsAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("");
+
     const setValue = (val, isVal, index) => {
         switch (index) {
             case 0:
@@ -39,14 +42,28 @@ console.log('phone - - ', phone);
         setLoader(true)
         let data = {
             email,
-            mobile
+            mobile,
+            profile_picture: uploadImage,
         }
         comnPost("v2/updateProfile", data)
             .then(res => {
+                if (res.data.success) {
+                    refreshOption()
+                } else {
+                    setIsAlert(true);
+                    setAlertMessage(res.data.message.email ? res.data.message.email : res.data.message.mobile ? res.data.message.mobile : res.data.message);
+                    setLoader(false)
+                }
             })
             .catch(err => {
+                setIsAlert(true);
+                setAlertMessage(STRING.ALERT.WENT_WRONG);
+                setLoader(false)
             })
-        refreshOption()
+    }
+
+    const closePopup = () => {
+        setIsAlert(false)
     }
 
     return (
@@ -81,6 +98,11 @@ console.log('phone - - ', phone);
                     onPress={save}
                 />
             </View>
+            <Popup
+                message={alertMessage}
+                onPress={closePopup}
+                visible={isAlert}
+            />
         </View>
     )
 }

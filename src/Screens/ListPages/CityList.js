@@ -27,20 +27,19 @@ const CityList = ({ navigation, route, ...props }) => {
   const [error, setError] = useState(null); // State to store error message
   const [isLandingDataFetched, setIsLandingDataFetched] = useState(false);
   const [offline, setOffline] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState(1)
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
     checkLogin(navigation)
-    setIsLoading(true);
+    props.setLoader(true);
 
     if (props.access_token) {
       if (!isLandingDataFetched && props.access_token) {
         // getCities()
         setIsLandingDataFetched(true); // Mark the data as fetched
       }
-      setIsLoading(false);
+      props.setLoader(false);
     }
 
     const unsubscribe = NetInfo.addEventListener(state => {
@@ -54,7 +53,7 @@ const CityList = ({ navigation, route, ...props }) => {
           } else if (resp) {
             setOffline(true)
           }
-          setIsLoading(false);
+          props.setLoader(false);
         })
       // removeFromStorage(STRING.STORAGE.LANDING_RESPONSE)
     });
@@ -66,7 +65,7 @@ const CityList = ({ navigation, route, ...props }) => {
   }, []);
 
   const getCities = () => {
-    setIsLoading(true);
+    props.setLoader(true);
     let data = {
       apitype: "list",
       parent_id: route?.params?.parent_id,
@@ -79,10 +78,10 @@ const CityList = ({ navigation, route, ...props }) => {
         setCities([...cities, res.data.data.data]); // Update cities state with response data
         let nextUrl = res.data.data.next_page_url
         setPage(nextUrl[nextUrl.length - 1])
-        setIsLoading(false);
+        props.setLoader(false);
       })
       .catch((error) => {
-        setIsLoading(false);
+        props.setLoader(false);
         setError(error.message); // Update error state with error message
       });
   }
@@ -98,6 +97,7 @@ const CityList = ({ navigation, route, ...props }) => {
   return (
     <View style={{ backgroundColor: COLOR.white }}>
       <CheckNet isOff={offline} />
+      <Loader />
       <Header name={route?.params?.subCat?.name || STRING.HEADER.CITIES}
         startIcon={
           <Ionicons
@@ -109,14 +109,7 @@ const CityList = ({ navigation, route, ...props }) => {
         }
       />
       {
-        isLoading ?
-          <View style={{ alignItems: "center" }}>
-            <CityCardSkeleton type={STRING.TABLE.PLACE} />
-            <CityCardSkeleton type={STRING.TABLE.PLACE} />
-            <CityCardSkeleton type={STRING.TABLE.PLACE} />
-          </View>
-          :
-          cities[0] != "" ?
+          cities[0] ?
             <View style={{ alignItems: "center", marginBottom: 150 }}>
               <FlatList
                 data={cities[0]}

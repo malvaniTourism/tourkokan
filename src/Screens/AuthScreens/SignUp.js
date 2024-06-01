@@ -25,10 +25,12 @@ import Geolocation from "@react-native-community/geolocation";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Dropdown } from "react-native-element-dropdown";
 import { useTranslation } from 'react-i18next';
+import { CheckBox } from "@rneui/themed";
+import PrivacyPolicy from "../../Components/PrivacyPolicy";
 
 const SignUp = ({ navigation, ...props }) => {
   const opacity = useRef(new Animated.Value(0)).current;
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -65,6 +67,8 @@ const SignUp = ({ navigation, ...props }) => {
   )
   const [language, setLanguage] = useState(null);
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  const [isPrivacyChecked, setIsPrivacyChecked] = useState(false)
+  const [showPrivacy, setShowPrivacy] = useState(false)
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN));
@@ -326,11 +330,12 @@ const SignUp = ({ navigation, ...props }) => {
     setWatchID(WatchID)
   };
 
-  const timer = () => {
-    if (sec) {
-      setSec(sec - 1);
-    }
-  };
+  const privacyClicked = () => {
+    setIsPrivacyChecked(!isPrivacyChecked)
+    setShowPrivacy(true)
+    setIsAlert(true)
+    setAlertMessage(t("PRIVACY_POLICY"))
+  }
 
   return (
     <View style={{ flex: 1, backgroundColor: COLOR.white }}>
@@ -404,6 +409,9 @@ const SignUp = ({ navigation, ...props }) => {
           {notValid &&
             <GlobalText text={STRING.PLEASE_FILL} style={{ color: "red", marginBottom: -10 }} />
           }
+          <View style={{ justifyContent: "flex-start", width: DIMENSIONS.bannerWidth }}>
+            <CheckBox title={t("PRIVACY_POLICY")} onPress={() => privacyClicked()} checked={isPrivacyChecked} />
+          </View>
           <TextButton
             title={STRING.BUTTON.REGISTER}
             buttonView={styles.buttonView}
@@ -427,6 +435,7 @@ const SignUp = ({ navigation, ...props }) => {
         message={alertMessage}
         visible={isAlert}
         onPress={closePopup}
+        Component={showPrivacy && <PrivacyPolicy /> }
       />
     </View>
   );

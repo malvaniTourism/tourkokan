@@ -144,6 +144,18 @@ const styles = StyleSheet.create({
         color: COLOR.cancelButton,
         marginBottom: 20
     },
+    placesCard: {
+        width: DIMENSIONS.halfWidth - 50,
+        backgroundColor: COLOR.white,
+        borderRadius: DIMENSIONS.borderRadiusSmall,
+        height: DIMENSIONS.headerHeight,
+        alignItems: "center",
+        justifyContent: "center",
+        marginBottom: 10,
+        elevation: 5,
+        alignSelf: "stretch",
+        marginHorizontal: 10
+    },
 })
 
 export default styles;

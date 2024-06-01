@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { View, Text, ScrollView, LogBox, Image, BackHandler, SafeAreaView, FlatList } from "react-native";
+import { View, Text, ScrollView, LogBox, Image, BackHandler, SafeAreaView, FlatList, KeyboardAvoidingView } from "react-native";
 import SearchPanel from "../Components/Common/SearchPanel";
 import TopComponent from "../Components/Common/TopComponent";
 import Banner from "../Components/Customs/Banner";
@@ -274,15 +274,15 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                 />
                             );
                         })} */}
-                <View style={{ marginTop: 25, zIndex: 10 }}>
+                <KeyboardAvoidingView style={{ marginTop: 25, zIndex: 10 }}>
                     {
                         isLoading ?
                             <SearchPanelSkeleton />
                             :
                             <SearchPanel route={route} navigation={navigation} from={STRING.SCREEN.HOME} />
                     }
-                </View>
-                <View style={styles.sectionView}>
+                </KeyboardAvoidingView>
+                <View style={styles.headerContainer}>
                     <View>
                         {
                             isLoading ?
@@ -316,7 +316,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                 </View>
 
                 <View style={styles.sectionView}>
-                    <View style={{marginTop: 20}}>
+                    <View style={{ marginTop: 20 }}>
                         {
                             isLoading ?
                                 <Skeleton animation="pulse" variant="text" style={styles.buttonSkeleton} />

@@ -17,8 +17,8 @@ const styles = StyleSheet.create({
     },
     sectionView: {
         alignItems: "center",
-        zIndex: 1,
-        marginTop: 25, zIndex: 10 
+        marginTop: 25,
+        zIndex: 10 
     },
     routeHeadCard: {
         marginVertical: 10
@@ -194,7 +194,8 @@ const styles = StyleSheet.create({
         borderRadius: DIMENSIONS.borderRadiusXXS,
     },
     profileEdit: {
-        left: 80
+        left: 80,
+        top: -30
     },
     pricingOptionTitle: {
         fontSize: DIMENSIONS.largeText,

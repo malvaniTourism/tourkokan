@@ -193,9 +193,8 @@ const ProfileView = ({ navigation, route, ...props }) => {
     comnPost("v2/user-profile", props.access_token, navigation)
       .then((res) => {
         if (res && res.data.data)
-          saveToStorage(STRING.STORAGE.PROFILE_RESPONSE, JSON.stringify(res))
+        saveToStorage(STRING.STORAGE.PROFILE_RESPONSE, JSON.stringify(res))
         setProfile(res.data.data); // Update places state with response data
-        console.log('res- - - - ', res.data.data);
         setOption(0);
         setLocationMap(res.data.data.addresses[0].latitude, res.data.data.addresses[0].longitude)
         props.setLoader(false);
@@ -251,7 +250,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} key={option}>
       <CheckNet isOff={offline} />
       <Header
         // style={{ backgroundColor: "transparent", zIndex: 10 }}
@@ -268,14 +267,18 @@ const ProfileView = ({ navigation, route, ...props }) => {
       <Loader />
 
       <View style={styles.profileContainer}>
-        <Image
-          style={styles.profilePhoto}
-          source={{ uri: `${profile.profile_picture ? Path.FTP_PATH + profile.profile_picture : "https://api-private.atlassian.com/users/2143ab39b9c73bcab4fe6562fff8d23d/avatar"}` }}
-        />
+        {imageSource ?
+          <Image source={{ uri: imageSource }} style={styles.profilePhoto} />
+          :
+          <Image
+            style={styles.profilePhoto}
+            source={{ uri: `${profile.profile_picture ? Path.FTP_PATH + profile.profile_picture : "https://api-private.atlassian.com/users/2143ab39b9c73bcab4fe6562fff8d23d/avatar"}` }}
+          />
+        }
         {option == 3 &&
           <Octicons
             name="pencil"
-            size={15}
+            size={17}
             onPress={() => handleImageUpload()}
             color={COLOR.black}
             style={styles.profileEdit}
@@ -308,7 +311,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
                 <ChangeLang refreshOption={() => getUserProfile()} setLoader={(v) => props.setLoader(v)} />
                 :
                 option == 3 ?
-                  <UpdateProfile user={profile.email} phone={profile.mobile} refreshOption={() => getUserProfile()} setLoader={(v) => props.setLoader(v)} />
+                  <UpdateProfile user={profile.email} phone={profile.mobile} uploadImage={uploadImage} refreshOption={() => getUserProfile()} setLoader={(v) => props.setLoader(v)} />
                   :
                   <ProfileChip />
             :

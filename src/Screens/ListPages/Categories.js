@@ -62,7 +62,7 @@ const Categories = ({ route, navigation, ...props }) => {
         }
     }, []);
 
-    const getCategories = (selectedCategory) => {
+    const getCategories = () => {
         setIsLoading(true)
         let data = {
             parent_list: "1",
@@ -74,8 +74,8 @@ const Categories = ({ route, navigation, ...props }) => {
                 if (res && res.data.data)
                     saveToStorage(STRING.STORAGE.CATEGORIES_RESPONSE, JSON.stringify(res))
                 setCategories(res.data.data.data);
-                setSelectedCategory(selectedCategory || res.data.data.data[0].name)
-                setSelectedSubCategory(selectedCategory ? categories.find((item) => item.name === selectedCategory).sub_categories : res.data.data.data[0].sub_categories)
+                setSelectedCategory(res.data.data.data[0].name)
+                setSelectedSubCategory(res.data.data.data[0].sub_categories)
                 // setSelectedSubCategory(res.data.data.data[0].sub_categories)
                 setIsLoading(false);
             })
@@ -86,7 +86,7 @@ const Categories = ({ route, navigation, ...props }) => {
 
     const handleCategoryPress = (category) => {
         setSelectedCategory(category.name);
-        getCategories(category.name)
+        setSelectedSubCategory(categories.find((item) => item.name === category.name).sub_categories)
     };
 
     const renderItem = ({ item }) => {

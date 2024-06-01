@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, ScrollView, Text, ImageBackground, Image, TouchableOpacity, Share, Linking } from "react-native";
+import { View, ScrollView, Text, ImageBackground, Image, TouchableOpacity, Share, Linking, FlatList } from "react-native";
 import SmallCard from "../../Components/Customs/SmallCard";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import COLOR from "../../Services/Constants/COLORS";
@@ -121,11 +121,8 @@ const CityDetails = ({ navigation, route, ...props }) => {
             rateable_id: city.id,
             rate
         }
-        console.log();
         comnPost('v2/addUpdateRating', placeData)
             .then(res => {
-                console.log("res".res);
-
                 props.setLoader(false);
                 // getDetails()
                 reload()
@@ -200,6 +197,14 @@ const CityDetails = ({ navigation, route, ...props }) => {
 
     const handleTextReady = () => {
         // ...
+    }
+
+    const renderItem = ({ item }) => {
+        return (
+            <View style={styles.placesCard}>
+                <GlobalText text={item.name} />
+            </View>
+        )
     }
 
     return (
@@ -313,11 +318,11 @@ const CityDetails = ({ navigation, route, ...props }) => {
                         }
 
                         <View style={styles.sectionView}>
-                        {initialRegion.latitude ?
-                            <MapContainer initialRegion={initialRegion} currentLatitude={currentLatitude} currentLongitude={currentLongitude} />
-                            :
-                            <MapSkeleton />
-                        }
+                            {initialRegion.latitude ?
+                                <MapContainer initialRegion={initialRegion} currentLatitude={currentLatitude} currentLongitude={currentLongitude} />
+                                :
+                                <MapSkeleton />
+                            }
                         </View>
 
                         <View style={styles.sectionView}>
@@ -331,9 +336,14 @@ const CityDetails = ({ navigation, route, ...props }) => {
                                             <CityCardSkeleton />
                                         </>
                                         :
-                                        city.sites && city.sites.map((place, index) => (
-                                            <CityCard data={place} navigation={navigation} reload={() => console.log('getDetails()')} onClick={() => console.log('getDetails()')} />
-                                        ))
+                                        <View>
+                                            <FlatList
+                                                keyExtractor={(item) => item.id}
+                                                data={city.sites}
+                                                renderItem={renderItem}
+                                                numColumns={2}
+                                            />
+                                        </View>
                                 }
                             </ScrollView>
                         </View>

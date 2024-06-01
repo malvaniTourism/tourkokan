@@ -228,7 +228,7 @@ const Explore = ({ route, navigation, ...props }) => {
             :
             selectedSites[0] ?
               <ScrollView
-                style={{ marginBottom: 450 }}
+                style={{ marginBottom: 520 }}
               >
                 {selectedSites.map((place) => (
                   <CityCard data={place} navigation={navigation} reload={() => getCities()} onClick={() => getCityDetails(place.id)} />

@@ -155,16 +155,16 @@ const styles = StyleSheet.create({
     position: "absolute",
     justifyContent: "flex-end",
     flexDirection: "row",
-    width: "90%"
+    width: "100%"
   },
   swapIcon: {
     position: "absolute",
-    top: 84,
+    top: 83,
     right: 40
   },
   refreshIcon: {
     position: "absolute",
-    top: 84,
+    top: 83,
   },
   routesSwapIcon: {
     position: "absolute",

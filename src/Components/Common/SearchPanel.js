@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, ScrollView, View } from "react-native";
+import { FlatList, KeyboardAvoidingView, ScrollView, View } from "react-native";
 import { SrcDest } from "../../Services/Constants/FIELDS";
 import TextButton from "../Customs/Buttons/TextButton";
 import TextField from "../Customs/TextField";
@@ -165,7 +165,7 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
   }
 
   return (
-    <View style={{ marginVertical: 20, zIndex: 50 }}>
+    <KeyboardAvoidingView style={{ marginVertical: 20, zIndex: 50 }}>
       <View style={styles.fieldsView}>
         <GlobalText text={STRING.UNCOVER} style={styles.instructionText} />
         {SrcDest.map((field, index) => {
@@ -201,14 +201,14 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
             style={styles.swapIcon}
             name="swap-vert-circle"
             color={isValid ? COLOR.black : COLOR.grey}
-            size={DIMENSIONS.iconLarge}
+            size={DIMENSIONS.iconL}
             onPress={isValid ? swap : null}
           />
           <Ionicons
             style={styles.refreshIcon}
             name="refresh-circle"
             color={source?.name ? COLOR.black : COLOR.grey}
-            size={DIMENSIONS.iconLarge}
+            size={DIMENSIONS.iconL}
             onPress={source?.name ? refresh : null}
           />
         </View>
@@ -229,12 +229,12 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
         raised={false}
         onPress={gotoRoutes}
       />
-      <View style={{ position: "absolute", zIndex: 100, width: DIMENSIONS.bannerWidth }}>
+      <KeyboardAvoidingView style={{ position: "absolute", zIndex: 100, width: DIMENSIONS.bannerWidth, top: 160 }}>
         {placesList[0] &&
           <SearchDropdown placesList={placesList} goToNext={goToNext} setPlace={setPlace} closeDropdown={() => closeDropdown()} />
         }
-      </View>
-    </View>
+      </KeyboardAvoidingView>
+    </KeyboardAvoidingView>
   );
 };
 
