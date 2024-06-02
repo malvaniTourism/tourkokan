@@ -330,7 +330,8 @@ const styles = StyleSheet.create({
     borderColor: COLOR.themeBlue,
     backgroundColor: COLOR.cardBackground,
     position: "absolute",
-    width: DIMENSIONS.halfWidth
+    width: DIMENSIONS.halfWidth,
+    height: "auto"
   },
   profileChip: {
     width: DIMENSIONS.bannerWidth,
@@ -350,6 +351,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center"
   },
+  spaceBetween: {
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
   profileMapView: {
     height: DIMENSIONS.bannerHeight / 2,
     width: DIMENSIONS.bannerWidth,
@@ -359,10 +364,13 @@ const styles = StyleSheet.create({
     position: "relative",
     borderRadius: DIMENSIONS.borderRadiusXS,
     overflow: 'hidden',
-},
-map: {
+  },
+  map: {
     ...StyleSheet.absoluteFillObject,
-},
+  },
+  privacyButtons: {
+    width: DIMENSIONS.halfWidth - 80
+  },
 });
 
 export default styles;

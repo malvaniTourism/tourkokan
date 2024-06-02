@@ -163,11 +163,16 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     placeCardSkeleton: {
-        width: DIMENSIONS.bannerWidth,
-        height: DIMENSIONS.bannerHeight + 100,
-        borderRadius: DIMENSIONS.borderRadius,
-        elevation: 10,
-        margin: 10,
+        width: DIMENSIONS.halfWidth - 50,
+        backgroundColor: COLOR.white,
+        borderRadius: DIMENSIONS.borderRadiusSmall,
+        height: DIMENSIONS.headerHeight,
+        alignItems: "center",
+        justifyContent: "center",
+        marginBottom: 10,
+        elevation: 5,
+        alignSelf: "stretch",
+        marginHorizontal: 10
     },
     cityCard: {
         width: DIMENSIONS.bannerWidth,
@@ -222,10 +227,11 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         backgroundColor: COLOR.themeBlue,
         color: COLOR.white,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        bottom: -15,
-        left: 5,
+        paddingHorizontal: 7,
+        paddingVertical: 2,
+        left: 13,
+        top: -7,
+        position: "absolute"
     },
     avgRating: {
         borderRadius: DIMENSIONS.borderRadiusLarge,
@@ -330,7 +336,8 @@ const styles = StyleSheet.create({
         right: 5,
         top: 0,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        marginBottom: 13
     },
     citySmallName: {
         fontSize: DIMENSIONS.textSize,
@@ -346,7 +353,6 @@ const styles = StyleSheet.create({
         height: 30,
         width: 80,
         left: 10,
-        top: 10,
         borderRadius: DIMENSIONS.borderRadius,
         justifyContent: "center",
         alignItems: "center",

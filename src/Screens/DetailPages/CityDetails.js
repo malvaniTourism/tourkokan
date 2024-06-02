@@ -62,6 +62,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
         comnPost(`v2/getSite`, data)
             .then((res) => {
                 if (res.data.success) {
+                    console.log('res.data.data --  ', res.data.data);
                     setCity(res.data.data);
                     setIsFav(res.data.data.is_favorite)
                     setRating(res.data.data.rating_avg_rate)

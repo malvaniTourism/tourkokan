@@ -13,7 +13,7 @@ const DrawerNavigator = () => {
   return (
     <Drawer.Navigator screenOptions={{ headerShown: false }}>
       <Drawer.Screen name={STRING.SCREEN.HOME} component={TabNavigator} />
-      <Drawer.Screen name={STRING.SCREEN.REQUEST_PAID_ADVERTISEMENT} component={Pricing} />
+      {/* <Drawer.Screen name={STRING.SCREEN.REQUEST_PAID_ADVERTISEMENT} component={Pricing} /> */}
       <Drawer.Screen name={STRING.SCREEN.EMERGENCY} component={Emergency} />
       <Drawer.Screen name={STRING.SCREEN.CONTACT_US} component={ContactUs} />
       {/* <Drawer.Screen name={STRING.SCREEN.WEATHER} component={Weather} /> */}

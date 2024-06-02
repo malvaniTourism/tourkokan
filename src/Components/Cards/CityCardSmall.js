@@ -95,8 +95,8 @@ const CityCardSmall = ({ data, reload, navigation, addComment, onClick }) => {
                             <Octicons name="heart" color={COLOR.black} size={DIMENSIONS.iconSize} />
                     }
                 </TouchableOpacity>
-                <GlobalText text={commentCount} style={styles.commentCount} />
                 <TouchableOpacity style={styles.citySmallLikeView}>
+                    <GlobalText text={commentCount} style={styles.commentCount} />
                     <Octicons name="comment" color={COLOR.black} size={DIMENSIONS.iconSize} />
                 </TouchableOpacity>
                 {/* <TouchableOpacity style={styles.citySmallLikeView}>

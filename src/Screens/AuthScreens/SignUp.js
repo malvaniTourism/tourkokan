@@ -26,7 +26,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Dropdown } from "react-native-element-dropdown";
 import { useTranslation } from 'react-i18next';
 import { CheckBox } from "@rneui/themed";
-import PrivacyPolicy from "../../Components/PrivacyPolicy";
+import PrivacyPolicy from "../../Components/Common/PrivacyPolicy";
 
 const SignUp = ({ navigation, ...props }) => {
   const opacity = useRef(new Animated.Value(0)).current;
@@ -60,6 +60,7 @@ const SignUp = ({ navigation, ...props }) => {
   const [passErr, setPassErr] = useState(false)
   const [cPassErr, setCPassErr] = useState(false)
   const [notValid, setNotValid] = useState(false);
+  const [noPrivacy, setNoPrivacy] = useState(false);
   const [fetchingText, setFetchingText] = useState("")
   const [list, setList] = useState(
     [{ label: 'English', value: 'en' },
@@ -208,7 +209,11 @@ const SignUp = ({ navigation, ...props }) => {
       (email == "" || emailErr)
     ) {
       setNotValid(true)
-    } else {
+    } else if (!isPrivacyChecked) {
+      setNotValid(false)
+      setNoPrivacy(true)
+    }
+    else {
       setNotValid(false)
       myLocationPress()
     }
@@ -331,10 +336,18 @@ const SignUp = ({ navigation, ...props }) => {
   };
 
   const privacyClicked = () => {
+    if (isPrivacyChecked) {
+      setIsPrivacyChecked(!isPrivacyChecked)
+    } else {
+      setShowPrivacy(true)
+      setIsAlert(true)
+      setAlertMessage(t("PRIVACY_POLICY"))
+    }
+  }
+
+  const acceptClick = () => {
     setIsPrivacyChecked(!isPrivacyChecked)
-    setShowPrivacy(true)
-    setIsAlert(true)
-    setAlertMessage(t("PRIVACY_POLICY"))
+    closePopup()
   }
 
   return (
@@ -406,8 +419,11 @@ const SignUp = ({ navigation, ...props }) => {
               setLanguage(item.value);
             }}
           />
-          {notValid &&
-            <GlobalText text={STRING.PLEASE_FILL} style={{ color: "red", marginBottom: -10 }} />
+          {notValid ?
+            <GlobalText text={t("PLEASE_FILL")} style={{ color: "red" }} />
+            :
+            noPrivacy &&
+            <GlobalText text={t("PLEASE_FILL")} style={{ color: "red" }} />
           }
           <View style={{ justifyContent: "flex-start", width: DIMENSIONS.bannerWidth }}>
             <CheckBox title={t("PRIVACY_POLICY")} onPress={() => privacyClicked()} checked={isPrivacyChecked} />
@@ -435,7 +451,8 @@ const SignUp = ({ navigation, ...props }) => {
         message={alertMessage}
         visible={isAlert}
         onPress={closePopup}
-        Component={showPrivacy && <PrivacyPolicy /> }
+        Component={showPrivacy && <PrivacyPolicy acceptClick={acceptClick} cancelClick={closePopup} />}
+        noButton={showPrivacy}
       />
     </View>
   );

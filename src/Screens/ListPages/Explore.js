@@ -96,7 +96,7 @@ const Explore = ({ route, navigation, ...props }) => {
       });
   }
 
-  const getCities = (selectedCity, selectedCityId) => {
+  const getCities = () => {
     setIsLoading(true)
     let data = {
       apitype: "list",
@@ -108,9 +108,9 @@ const Explore = ({ route, navigation, ...props }) => {
         if (res && res.data.data)
           saveToStorage(STRING.STORAGE.CITIES_RESPONSE, JSON.stringify(res))
         setCities(res.data.data.data);
-        setSelectedCity(selectedCity || res.data.data.data[0].name)
-        setSelectedCityId(selectedCityId || res.data.data.data[0].id)
-        setSelectedSites(selectedCity ? cities.find((item) => item.name === selectedCity).sites : res.data.data.data[0].sites)
+        setSelectedCity(res.data.data.data[0].name)
+        setSelectedCityId(res.data.data.data[0].id)
+        setSelectedSites(res.data.data.data[0].sites)
         // setSelectedSites(res.data.data.data[0].sites)
         setIsLoading(false);
       })
@@ -128,10 +128,18 @@ const Explore = ({ route, navigation, ...props }) => {
     navigateTo(navigation, STRING.SCREEN.CITY_LIST, { parent_id: selectedCityId })
   }
 
+  const renderItem = ({ item }) => {
+    return (
+      <View style={styles.placesCard}>
+        <GlobalText text={item.name} />
+      </View>
+    )
+  }
+
   const handleCityPress = (city) => {
     setSelectedCity(city.name);
     setSelectedCityId(city.id);
-    getCities(city.name, city.id)
+    setSelectedSites(cities.find((item) => item.name === city.name).sites)
   };
 
   const getCityDetails = (id) => {
@@ -196,44 +204,49 @@ const Explore = ({ route, navigation, ...props }) => {
             </View>
         }
       </View>
-      <View style={{ paddingBottom: 10 }}>
+      <View style={{ paddingBottom: 10, flexDirection: "row", justifyContent: "center" }}>
         {
           isLoading ?
-            <Skeleton animation="pulse" variant="text" style={styles.buttonSkeleton} />
+            <View style={styles.flexAroundSkeleton}>
+              <Skeleton animation="pulse" variant="text" style={{ width: 100, height: 30 }} />
+              <Skeleton animation="pulse" variant="text" style={{ width: 100, height: 30 }} />
+            </View>
             :
-            <TextButton
-              title={t("BUTTON.SEE_MORE")}
-              buttonView={styles.buttonView}
-              titleStyle={styles.titleStyle}
-              raised={false}
-              onPress={() => seeMore()}
-              endIcon={
-                <Feather
-                  name="chevrons-right"
-                  size={24}
-                  color={COLOR.themeBlue}
-                />
-              }
-            />
+            <View style={styles.flexAround}>
+              <GlobalText text={t("VILLAGES")} style={styles.sectionTitle} />
+              <TextButton
+                title={t("BUTTON.SEE_MORE")}
+                buttonView={styles.buttonView}
+                titleStyle={styles.titleStyle}
+                raised={false}
+                onPress={() => seeMore()}
+              />
+            </View>
         }
       </View>
       <View style={{ minHeight: DIMENSIONS.screenHeight, alignItems: "center" }}>
         {
           isLoading ?
-            <>
-              <CityCardSkeleton type={STRING.HEADER.PLACE} />
-              <CityCardSkeleton type={STRING.HEADER.PLACE} />
-              <CityCardSkeleton type={STRING.HEADER.PLACE} />
-            </>
+            <View>
+              <FlatList
+                keyExtractor={(item) => item.id}
+                data={selectedSites}
+                renderItem={() => (
+                  <CityCardSkeleton type={STRING.HEADER.PLACE} />
+                )}
+                numColumns={2}
+              />
+            </View>
             :
             selectedSites[0] ?
-              <ScrollView
-                style={{ marginBottom: 520 }}
-              >
-                {selectedSites.map((place) => (
-                  <CityCard data={place} navigation={navigation} reload={() => getCities()} onClick={() => getCityDetails(place.id)} />
-                ))}
-              </ScrollView>
+              <View>
+                <FlatList
+                  keyExtractor={(item) => item.id}
+                  data={selectedSites}
+                  renderItem={renderItem}
+                  numColumns={2}
+                />
+              </View>
               :
               <View style={{ marginTop: 20 }}>
                 <GlobalText text={STRING.ADDED} style={styles.boldText} />

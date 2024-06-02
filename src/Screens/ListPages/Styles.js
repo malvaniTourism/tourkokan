@@ -130,6 +130,37 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 16
     },
+    placesCard: {
+        width: DIMENSIONS.halfWidth - 30,
+        backgroundColor: COLOR.white,
+        borderRadius: DIMENSIONS.borderRadiusSmall,
+        height: DIMENSIONS.headerHeight,
+        alignItems: "center",
+        justifyContent: "center",
+        marginBottom: 10,
+        elevation: 5,
+        alignSelf: "stretch",
+        marginHorizontal: 10
+    },
+    flexAroundSkeleton: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        width: DIMENSIONS.bannerWidth,
+        marginVertical: 20,
+    },
+    flexAround: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        width: DIMENSIONS.bannerWidth,
+        marginVertical: 10
+    },
+    sectionTitle: {
+        fontWeight: "bold",
+        fontSize: DIMENSIONS.headerTextSize,
+        color: COLOR.black,
+    },
 })
 
 export default styles;

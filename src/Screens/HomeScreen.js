@@ -286,7 +286,10 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                     <View>
                         {
                             isLoading ?
-                                <Skeleton animation="pulse" variant="text" style={styles.buttonSkeleton} />
+                                <View style={styles.flexAroundSkeleton}>
+                                    <Skeleton animation="pulse" variant="text" style={{ width: 100, height: 30 }} />
+                                    <Skeleton animation="pulse" variant="text" style={{ width: 100, height: 30 }} />
+                                </View>
                                 :
                                 <View style={styles.flexAround}>
                                     <GlobalText text={t("ROUTES")} style={styles.sectionTitle} />

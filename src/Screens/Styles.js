@@ -146,6 +146,13 @@ const styles = StyleSheet.create({
         width: DIMENSIONS.bannerWidth,
         marginVertical: -20
     },
+    flexAroundSkeleton: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        width: DIMENSIONS.bannerWidth,
+        marginVertical: 10
+    },
     prjImgContainer: {
         marginBottom: 20,
         width: DIMENSIONS.screenWidth,

@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
         marginBottom: 20
     },
     placesCard: {
-        width: DIMENSIONS.halfWidth - 50,
+        width: DIMENSIONS.halfWidth - 30,
         backgroundColor: COLOR.white,
         borderRadius: DIMENSIONS.borderRadiusSmall,
         height: DIMENSIONS.headerHeight,

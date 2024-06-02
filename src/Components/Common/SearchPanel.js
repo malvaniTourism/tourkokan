@@ -165,7 +165,7 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
   }
 
   return (
-    <KeyboardAvoidingView style={{ marginVertical: 20, zIndex: 50 }}>
+    <KeyboardAvoidingView behavior="padding" style={{ marginVertical: 20, zIndex: 50 }}>
       <View style={styles.fieldsView}>
         <GlobalText text={STRING.UNCOVER} style={styles.instructionText} />
         {SrcDest.map((field, index) => {
@@ -229,7 +229,7 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
         raised={false}
         onPress={gotoRoutes}
       />
-      <KeyboardAvoidingView style={{ position: "absolute", zIndex: 100, width: DIMENSIONS.bannerWidth, top: 160 }}>
+      <KeyboardAvoidingView behavior="height" style={{ position: "absolute", width: DIMENSIONS.bannerWidth, top: 160 }}>
         {placesList[0] &&
           <SearchDropdown placesList={placesList} goToNext={goToNext} setPlace={setPlace} closeDropdown={() => closeDropdown()} />
         }

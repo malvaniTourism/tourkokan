@@ -19,7 +19,7 @@ const SearchDropdown = ({ placesList, goToNext, setPlace, closeDropdown, style }
     };
 
     return (
-        <KeyboardAvoidingView nestedScrollEnabled style={[styles.searchDropView, style]}>
+        <KeyboardAvoidingView behavior="height" nestedScrollEnabled style={[styles.searchDropView, style]}>
             <Ionicons
                 style={styles.dropCloseIcon}
                 name="close-circle"

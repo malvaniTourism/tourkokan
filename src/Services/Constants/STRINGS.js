@@ -7,6 +7,8 @@ const STRING = {
 
   BUTTON: {
     OK: "Ok",
+    CANCEL: "Cancel",
+    ACCEPT: "Accept",
     SEARCH: "Search",
     SUBMIT: "Submit",
     SEE_MORE: "See More",
@@ -247,12 +249,14 @@ const STRING = {
   LOG_IN: "Login",
   LOG_IN_SUB: "Enter your email and choose a login option to continue.",
   CHANGE: "Click to Change Option",
-  PLEASE_FILL: "Please fill all the details to Register",
+  PLEASE_FILL: "Please fill all the details to Register.",
+  ACCEPT_POLICY: "Please accept Privacy Policy to Register.",
   UNCOVER: "Enter your start and end points to uncover the best routes.",
   LOCATION: "Location",
   ADDRESS: "User Address",
   CONNECT: "Connect with Us: We're Here to Listen",
-  ROUTES: "Routes"
+  ROUTES: "Routes",
+  VILLAGES: "Villages",
 };
 
 export default STRING;
