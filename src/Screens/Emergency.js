@@ -20,8 +20,11 @@ import { setLoader } from "../Reducers/CommonActions";
 import { connect } from "react-redux";
 import STRING from "../Services/Constants/STRINGS";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { useTranslation } from "react-i18next";
 
 const Emergency = ({ navigation, route, ...props }) => {
+  const { t } = useTranslation();
+
   const [data, setData] = useState([])
 
   useEffect(() => {
@@ -99,7 +102,7 @@ const Emergency = ({ navigation, route, ...props }) => {
   return (
     <View>
       <Header
-        name={STRING.HEADER.EMERGENCY}
+        name={t("HEADER.EMERGENCY")}
         goBack={() => backPage(navigation)}
         startIcon={
           <Ionicons

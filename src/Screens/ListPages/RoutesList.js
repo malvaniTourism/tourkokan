@@ -15,8 +15,11 @@ import { StyleSheet } from "react-native";
 import { Text } from "react-native-svg";
 import styles from "./Styles";
 import STRING from "../../Services/Constants/STRINGS";
+import { useTranslation } from "react-i18next";
 
 const RoutesList = ({ navigation, route }) => {
+  const { t } = useTranslation();
+
   const [list, setList] = useState(route.params.item.route_stops);
 
   useEffect(() => {
@@ -49,8 +52,8 @@ const RoutesList = ({ navigation, route }) => {
                 <GlobalText text={item.site.name} style={{ color: (isFirst || isLast) ? COLOR.themeBlue : COLOR.black }} />
               </View>
               <View>
-                {/* <GlobalText text={STRING.ETA + item.dept_time.slice(0, -3)} /> */}
-                {/* <GlobalText text={STRING.ETD + item.arr_time.slice(0, -3)} /> */}
+                {/* <GlobalText text={t("ETA") + item.dept_time.slice(0, -3)} /> */}
+                {/* <GlobalText text={t("ETD") + item.arr_time.slice(0, -3)} /> */}
               </View>
             </View>
           </ListItem.Title>
@@ -62,7 +65,7 @@ const RoutesList = ({ navigation, route }) => {
   return (
     <ScrollView stickyHeaderIndices={[0]}>
       <Header
-        name={STRING.HEADER.ROUTE}
+        name={t("HEADER.ROUTE")}
         goBack={() => backPage(navigation)}
         startIcon={
           <Ionicons

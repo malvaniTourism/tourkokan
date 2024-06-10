@@ -8,8 +8,11 @@ import styles from '../Styles';
 import STRING from '../../../Services/Constants/STRINGS';
 import COLOR from '../../../Services/Constants/COLORS';
 import GlobalText from '../../../Components/Customs/Text';
+import { useTranslation } from 'react-i18next';
 
 const EmailOtp = ({ setValue, getValue, Login, changeChoice, isOtpSent, resend }) => {
+    const { t } = useTranslation();
+
     const [sec, setSec] = useState(30);
     const [otpSent, setOtpSent] = useState(isOtpSent)
 
@@ -36,7 +39,7 @@ const EmailOtp = ({ setValue, getValue, Login, changeChoice, isOtpSent, resend }
     return (
         <View style={{ justifyContent: "center", alignItems: "center" }}>
             <TouchableOpacity onPress={changeChoice}>
-                <GlobalText text={STRING.CHANGE} style={styles.changeOption} />
+                <GlobalText text={t("CHANGE")} style={styles.changeOption} />
             </TouchableOpacity>
             {EmailOtpFields.map((field, index) => {
                 return (
@@ -54,7 +57,7 @@ const EmailOtp = ({ setValue, getValue, Login, changeChoice, isOtpSent, resend }
                         inputContainerStyle={styles.inputContainerStyle}
                         isSecure={field.isSecure}
                         rightIcon={
-                            field.type == `${STRING.TYPE.PASSWORD}` &&
+                            field.type == `${t("TYPE.PASSWORD")}` &&
                             <Feather
                                 name={field.isSecure ? "eye" : "eye-off"}
                                 size={24}
@@ -72,18 +75,18 @@ const EmailOtp = ({ setValue, getValue, Login, changeChoice, isOtpSent, resend }
             <View style={{ marginVertical: 10 }}>
                 {otpSent ?
                     sec >= 1 ? (
-                        <GlobalText text={`${STRING.RESEND_WITHIN}${sec > 9 ? sec : "0" + sec})`} style={styles.whiteText} />
+                        <GlobalText text={`${t("RESEND_WITHIN")}${sec > 9 ? sec : "0" + sec})`} style={styles.whiteText} />
                     ) : (
                         <View>
-                            <GlobalText style={styles.whiteText} text={STRING.DIDNT_RECEIVE} />
+                            <GlobalText style={styles.whiteText} text={t("DIDNT_RECEIVE")} />
                             <TouchableOpacity onPress={() => resend()}>
-                                <GlobalText text={STRING.RESEND} style={styles.whiteText} />
+                                <GlobalText text={t("RESEND")} style={styles.whiteText} />
                             </TouchableOpacity>
                         </View>
                     )
                     :
                     <TextButton
-                        title={STRING.BUTTON.SEND_OTP}
+                        title={t("BUTTON.SEND_OTP")}
                         buttonView={styles.buttonView}
                         containerStyle={styles.buttonContainer}
                         buttonStyle={styles.buttonStyle}
@@ -95,7 +98,7 @@ const EmailOtp = ({ setValue, getValue, Login, changeChoice, isOtpSent, resend }
                 }
             </View>
             <TextButton
-                title={STRING.BUTTON.LOGIN}
+                title={t("BUTTON.LOGIN")}
                 buttonView={styles.buttonView}
                 containerStyle={styles.buttonContainer}
                 buttonStyle={styles.buttonStyle}

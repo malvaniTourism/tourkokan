@@ -19,8 +19,11 @@ import {
 import GlobalText from "../Customs/Text";
 import STRING from "../../Services/Constants/STRINGS";
 import SearchDropdown from "./SearchDropdown";
+import { useTranslation } from "react-i18next";
 
 const RoutesSearchPanel = ({ mySource, myDestination, navigation, from, onSwap, setSourceId, setDestinationId, searchRoutes, ...props }) => {
+  const { t } = useTranslation();
+
   const [isValid, setIsValid] = useState(false)
   const [errorText, setErrorText] = useState("")
   const [placesList, setPlacesList] = useState([]);
@@ -70,7 +73,7 @@ const RoutesSearchPanel = ({ mySource, myDestination, navigation, from, onSwap, 
     // setDestination("")
     if (isValid) {
       searchRoutes(source.id, destination.id)
-    } else setErrorText(STRING.ALERT.SOURCE_DESTINATION_REQUIRED)
+    } else setErrorText(t("ALERT.SOURCE_DESTINATION_REQUIRED"))
   };
 
   const swap = async () => {
@@ -138,7 +141,7 @@ const RoutesSearchPanel = ({ mySource, myDestination, navigation, from, onSwap, 
   };
 
   const setPlace = (place) => {
-    if (fieldType == STRING.LABEL.SOURCE) {
+    if (fieldType == t("LABEL.SOURCE")) {
       setSource(place);
       setSourceId(place.id)
     } else {
@@ -161,7 +164,7 @@ const RoutesSearchPanel = ({ mySource, myDestination, navigation, from, onSwap, 
 
   const closeDropdown = () => {
     setPlacesList([])
-    if (fieldType == STRING.LABEL.SOURCE) {
+    if (fieldType == t("LABEL.SOURCE")) {
       setSource({ name: "" })
     } else {
       setDestination({ name: "" })
@@ -217,7 +220,7 @@ const RoutesSearchPanel = ({ mySource, myDestination, navigation, from, onSwap, 
         }
       </View>
       <TextButton
-        title={STRING.BUTTON.SEARCH}
+        title={t("BUTTON.SEARCH")}
         buttonView={styles.searchButtonStyle}
         titleStyle={styles.buttonTitleStyle}
         raised={false}

@@ -22,14 +22,16 @@ import ImageButton from "../../Components/Customs/Buttons/ImageButton";
 import SubCatCard from "../../Components/Cards/SubCatCard";
 import ImageButtonSkeleton from "../../Components/Customs/Buttons/ImageButtonSkeleton";
 import Path from "../../Services/Api/BaseUrl";
+import { useTranslation } from "react-i18next";
 
 const Categories = ({ route, navigation, ...props }) => {
+    const { t } = useTranslation();
     const refRBSheet = useRef();
 
     const [places, setPlaces] = useState([]);
     const [categories, setCategories] = useState([]);
     const [error, setError] = useState(null);
-    const [isEnabled, setIsEnabled] = useState(route.name == STRING.SCREEN.CATEGORIES)
+    const [isEnabled, setIsEnabled] = useState(route.name == t("SCREEN.CATEGORIES"))
     const [isLandingDataFetched, setIsLandingDataFetched] = useState(false);
     const [nextPage, setNextPage] = useState(1)
     const [offline, setOffline] = useState(false)
@@ -45,7 +47,7 @@ const Categories = ({ route, navigation, ...props }) => {
         const unsubscribe = NetInfo.addEventListener(state => {
             setOffline(false)
 
-            dataSync(STRING.STORAGE.CATEGORIES_RESPONSE, getCategories())
+            dataSync(t("STORAGE.CATEGORIES_RESPONSE"), getCategories())
                 .then(resp => {
                     let res = JSON.parse(resp)
                     if (res.data && res.data.data) {
@@ -72,7 +74,7 @@ const Categories = ({ route, navigation, ...props }) => {
         comnPost("v2/listcategories", data, navigation)
             .then((res) => {
                 if (res && res.data.data)
-                    saveToStorage(STRING.STORAGE.CATEGORIES_RESPONSE, JSON.stringify(res))
+                    saveToStorage(t("STORAGE.CATEGORIES_RESPONSE"), JSON.stringify(res))
                 setCategories(res.data.data.data);
                 setSelectedCategory(res.data.data.data[0].name)
                 setSelectedSubCategory(res.data.data.data[0].sub_categories)
@@ -96,7 +98,7 @@ const Categories = ({ route, navigation, ...props }) => {
     }
 
     const goToSubCats = (subCat) => {
-        navigateTo(navigation, STRING.SCREEN.CITY_LIST, { subCat })
+        navigateTo(navigation, t("SCREEN.CITY_LIST"), { subCat })
     }
 
     return (
@@ -104,7 +106,7 @@ const Categories = ({ route, navigation, ...props }) => {
             <Loader />
             <CheckNet isOff={offline} />
             <Header
-                name={STRING.SCREEN.CATEGORIES}
+                name={t("SCREEN.CATEGORIES")}
                 startIcon={
                     <Ionicons
                         name="chevron-back-outline"
@@ -145,7 +147,7 @@ const Categories = ({ route, navigation, ...props }) => {
 
             <View style={styles.subCatContainer}>
                 <View>
-                    <GlobalText text={STRING.HEADER.CLASSIFICATIONS} style={styles.subCatHeader} />
+                    <GlobalText text={t("HEADER.CLASSIFICATIONS")} style={styles.subCatHeader} />
                 </View>
                 <View style={styles.subCatView}>
                     <View style={styles.verticalNameContainer}>

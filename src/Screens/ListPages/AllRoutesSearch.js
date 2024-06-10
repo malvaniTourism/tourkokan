@@ -22,8 +22,11 @@ import SearchPanel from "../../Components/Common/SearchPanel";
 import RoutesSearchPanel from "../../Components/Common/RoutesSearchPanel";
 import RoutesSearchPanelSkeleton from "../../Components/Common/RoutesSearchPanelSkeleton";
 import RouteHeadCardSkeleton from "../../Components/Cards/RouteHeadCardSkeleton";
+import { useTranslation } from "react-i18next";
 
 const AllRoutesSearch = ({ navigation, route, ...props }) => {
+  const { t } = useTranslation();
+
   const [list, setList] = useState([]);
   const [offline, setOffline] = useState(false);
   const [nextPage, setNextPage] = useState(1);
@@ -41,7 +44,7 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
     const unsubscribe = NetInfo.addEventListener(state => {
       setOffline(false)
 
-      dataSync(STRING.STORAGE.ROUTES_RESPONSE, searchRoute())
+      dataSync(t("STORAGE.ROUTES_RESPONSE"), searchRoute())
         .then(resp => {
           let res = JSON.parse(resp)
           if (res.data && res.data.data) {
@@ -52,7 +55,7 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
           setIsLoading(false)
           props.setLoader(false)
         })
-      // removeFromStorage(STRING.STORAGE.LANDING_RESPONSE)
+      // removeFromStorage(t("STORAGE.LANDING_RESPONSE"))
     });
 
     return () => {
@@ -62,7 +65,7 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
   }, []);
 
   const getRoutesList = (item) => {
-    navigateTo(navigation, STRING.SCREEN.ROUTES_LIST, { item });
+    navigateTo(navigation, t("SCREEN.ROUTES_LIST"), { item });
   };
 
   const searchRoute = (a, b, isNext) => {
@@ -77,7 +80,7 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
         .then((res) => {
           if (res.data.success) {
             if (res && res.data.data)
-              saveToStorage(STRING.STORAGE.ROUTES_RESPONSE, JSON.stringify(res))
+              saveToStorage(t("STORAGE.ROUTES_RESPONSE"), JSON.stringify(res))
             let myNextUrl = res.data.data.next_page_url
             setNextUrl(myNextUrl)
             nextPage !== myNextUrl[myNextUrl.length - 1] && isNext ?
@@ -129,7 +132,7 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
       <CheckNet isOff={offline} />
       <Loader />
       <Header
-        name={STRING.HEADER.ROUTES}
+        name={t("HEADER.ROUTES")}
         goBack={() => backPage(navigation)}
         startIcon={
           <Ionicons
@@ -146,7 +149,7 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
           isFirstTime && isLoading ?
             <RoutesSearchPanelSkeleton />
             :
-            <RoutesSearchPanel mySource={source} myDestination={destination} setSourceId={(v) => setSource(v)} setDestinationId={(v) => setDestination(v)} route={route} navigation={navigation} from={STRING.SCREEN.ALL_ROUTES_SEARCH} searchRoutes={(a, b) => searchRoute(a, b)} onSwap={(a, b) => searchRoute(a, b)} />
+            <RoutesSearchPanel mySource={source} myDestination={destination} setSourceId={(v) => setSource(v)} setDestinationId={(v) => setDestination(v)} route={route} navigation={navigation} from={t("SCREEN.ALL_ROUTES_SEARCH")} searchRoutes={(a, b) => searchRoute(a, b)} onSwap={(a, b) => searchRoute(a, b)} />
         }
       </View>
       <SafeAreaView style={{ paddingBottom: 180 }}>
@@ -171,7 +174,7 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
                 )}
               />
             ) : (
-              <GlobalText text={STRING.NO_ROUTES} />
+              <GlobalText text={t("NO_ROUTES")} />
             )}
       </SafeAreaView>
     </View>

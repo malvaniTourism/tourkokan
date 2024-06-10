@@ -19,8 +19,11 @@ import {
 import GlobalText from "../Customs/Text";
 import STRING from "../../Services/Constants/STRINGS";
 import SearchDropdown from "./SearchDropdown";
+import { useTranslation } from "react-i18next";
 
 const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
+  const { t } = useTranslation();
+
   const [isValid, setIsValid] = useState(false)
   const [errorText, setErrorText] = useState("")
   const [placesList, setPlacesList] = useState([]);
@@ -69,8 +72,8 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
     // setSource("")
     // setDestination("")
     if (isValid) {
-      navigateTo(navigation, STRING.SCREEN.ALL_ROUTES_SEARCH, { source, destination });
-    } else setErrorText(STRING.ALERT.SOURCE_DESTINATION_REQUIRED)
+      navigateTo(navigation, t("SCREEN.ALL_ROUTES_SEARCH"), { source, destination });
+    } else setErrorText(t("ALERT.SOURCE_DESTINATION_REQUIRED"))
     setSource({})
     setDestination({})
   };
@@ -136,7 +139,7 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
   };
 
   const setPlace = (place) => {
-    if (fieldType == STRING.LABEL.SOURCE) {
+    if (fieldType == t("LABEL.SOURCE")) {
       setSource(place);
     } else {
       setDestination(place);
@@ -157,7 +160,7 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
 
   const closeDropdown = () => {
     setPlacesList([])
-    if (fieldType == STRING.LABEL.SOURCE) {
+    if (fieldType == t("LABEL.SOURCE")) {
       setSource({ name: "" })
     } else {
       setDestination({ name: "" })
@@ -167,7 +170,7 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
   return (
     <KeyboardAvoidingView behavior="padding" style={{ marginVertical: 20, zIndex: 50 }}>
       <View style={styles.fieldsView}>
-        <GlobalText text={STRING.UNCOVER} style={styles.instructionText} />
+        <GlobalText text={t("UNCOVER")} style={styles.instructionText} />
         {SrcDest.map((field, index) => {
           return (
             <TextField
@@ -184,15 +187,15 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
               style={styles.searchPanelField}
               containerStyle={styles.textContainerStyle}
               inputContainerStyle={styles.inputContainerStyle}
-              // leftIcon={
-              //   <Ionicons
-              //     style={styles.inputBusIcon}
-              //     name="bus"
-              //     color={COLOR.grey}
-              //     size={DIMENSIONS.iconBig}
-              //     onPress={isValid ? swap : null}
-              //   />
-              // }
+            // leftIcon={
+            //   <Ionicons
+            //     style={styles.inputBusIcon}
+            //     name="bus"
+            //     color={COLOR.grey}
+            //     size={DIMENSIONS.iconBig}
+            //     onPress={isValid ? swap : null}
+            //   />
+            // }
             />
           );
         })}
@@ -223,7 +226,7 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
         }
       </View>
       <TextButton
-        title={STRING.BUTTON.SEARCH}
+        title={t("BUTTON.SEARCH")}
         buttonView={styles.searchButtonStyle}
         titleStyle={styles.buttonTitleStyle}
         raised={false}

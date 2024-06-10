@@ -48,7 +48,7 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
         const unsubscribe = NetInfo.addEventListener(state => {
             setOffline(false)
 
-            dataSync(STRING.STORAGE.EXPLORE_CITIES_RESPONSE, getData())
+            dataSync(t("STORAGE.EXPLORE_CITIES_RESPONSE"), getData())
                 .then(resp => {
                     let res = JSON.parse(resp)
                     if (res.data && res.data.data) {

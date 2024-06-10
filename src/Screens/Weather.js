@@ -4,8 +4,11 @@ import { View, Text } from "react-native";
 import ComingSoon from "../Components/Common/ComingSoon";
 import { navigateTo } from "../Services/CommonMethods";
 import STRING from "../Services/Constants/STRINGS";
+import { useTranslation } from "react-i18next";
 
 const Weather = ({ navigation }) => {
+  const { t } = useTranslation();
+
   const [weatherData, setWeatherData] = useState(null);
   const [isVisible, setIsVisible] = useState(true)
 
@@ -23,7 +26,7 @@ const Weather = ({ navigation }) => {
     //   });
     setTimeout(() => {
       setIsVisible(false)
-      navigateTo(navigation, STRING.SCREEN.HOME)
+      navigateTo(navigation, t("SCREEN.HOME"))
     }, 2000)
   }, []);
 
@@ -39,7 +42,7 @@ const Weather = ({ navigation }) => {
           {/* Add more weather data as needed */}
         </View>
       ) : (
-        <ComingSoon message={STRING.COMING_SOON} visible={isVisible} />
+        <ComingSoon message={t("COMING_SOON")} visible={isVisible} />
       )}
     </View>
   );

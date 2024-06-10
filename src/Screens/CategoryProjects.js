@@ -17,8 +17,11 @@ import styles from "./Styles";
 import ProjectCard from "../Components/Cards/ProjectCard";
 import GlobalText from "../Components/Customs/Text";
 import STRING from "../Services/Constants/STRINGS";
+import { useTranslation } from "react-i18next";
 
 const CategoryProjects = ({ navigation, route, ...props }) => {
+  const { t } = useTranslation();
+
   const [projects, setProjects] = useState([]); // State to store Projects
   const [error, setError] = useState(null); // State to store error message
 
@@ -46,7 +49,7 @@ const CategoryProjects = ({ navigation, route, ...props }) => {
 
   // Function to handle SmallCard click
   const handleSmallCardClick = (id) => {
-    navigateTo(navigation, STRING.SCREEN.PROJECT_DETAILS, { id });
+    navigateTo(navigation, t("SCREEN.PROJECT_DETAILS"), { id });
   };
 
   return (

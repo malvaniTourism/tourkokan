@@ -13,8 +13,11 @@ import { backPage, navigateTo } from "../../Services/CommonMethods";
 import styles from "./Styles";
 import Path from "../../Services/Api/BaseUrl";
 import STRING from "../../Services/Constants/STRINGS";
+import { useTranslation } from "react-i18next";
 
 const StopList = ({ navigation, ...props }) => {
+  const { t } = useTranslation();
+
   const [stops, setStops] = useState([]); // State to store stops
   const [error, setError] = useState(null); // State to store error message
 
@@ -32,14 +35,14 @@ const StopList = ({ navigation, ...props }) => {
   }, []);
 
   const handleSmallCardClick = (id) => {
-    navigateTo(navigation, STRING.SCREEN.PLACE_DETAILS, { id });
+    navigateTo(navigation, t("SCREEN.PLACE_DETAILS"), { id });
   };
 
   return (
     <ScrollView>
       <View style={{ flex: 1, alignItems: "center" }}>
         <Loader />
-        <Header name={STRING.HEADER.STOPS}
+        <Header name={t("HEADER.STOPS")}
           startIcon={
             <Ionicons
               name="chevron-back-outline"

@@ -57,7 +57,7 @@ const UpdateProfile = ({ user, phone, uploadImage, refreshOption, setLoader }) =
             })
             .catch(err => {
                 setIsAlert(true);
-                setAlertMessage(STRING.ALERT.WENT_WRONG);
+                setAlertMessage(t("ALERT.WENT_WRONG"));
                 setLoader(false)
             })
     }

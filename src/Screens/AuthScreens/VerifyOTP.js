@@ -28,8 +28,11 @@ import STRING from "../../Services/Constants/STRINGS";
 import AppLogo from "../../Assets/Images/tourKokan.png";
 import Feather from "react-native-vector-icons/Feather";
 import { CommonActions } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 const VerifyOTP = ({ navigation, route, ...props }) => {
+  const { t } = useTranslation();
+
   const [otp, setOtp] = useState(null);
   const [email, setEmail] = useState(route.params?.email);
   const [sec, setSec] = useState(30);
@@ -37,12 +40,12 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
   const [alertMessage, setAlertMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false)
   const [password, setPassword] = useState("");
-  const [choiceText, setChoiceText] = useState(STRING.BUTTON.LOGINPASS);
+  const [choiceText, setChoiceText] = useState(t("BUTTON.LOGINPASS"));
   const [showPassword, setShowPassword] = useState(false)
 
   useEffect(() => {
     resend()
-    const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN));
+    const backHandler = BackHandler.addEventListener(t("EVENT.HARDWARE_BACK_PRESS"), () => navigateTo(navigation, t("SCREEN.AUTH_SCREEN")));
     // setInterval(() => timer(), 1000);
     startListeningForOtp();
     return () => {
@@ -73,20 +76,20 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
     comnPost("v2/auth/verifyOtp", data)
       .then((res) => {
         if (res.data.success) {
-          AsyncStorage.setItem(STRING.STORAGE.ACCESS_TOKEN, res.data.data.access_token);
-          AsyncStorage.setItem(STRING.STORAGE.USER_ID, res.data.data.user.id);
+          AsyncStorage.setItem(t("STORAGE.ACCESS_TOKEN"), res.data.data.access_token);
+          AsyncStorage.setItem(t("STORAGE.USER_ID"), res.data.data.user.id);
           props.saveAccess_token(res.data.data.access_token);
           props.setLoader(false);
-          AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, JSON.stringify(true))
+          AsyncStorage.setItem(t("STORAGE.IS_FIRST_TIME"), JSON.stringify(true))
           navigation.dispatch(
             CommonActions.reset({
               index: 0,
               routes: [
-                { name: STRING.SCREEN.HOME },
+                { name: t("SCREEN.HOME") },
               ],
             })
           );
-          // navigateTo(navigation, STRING.SCREEN.HOME);
+          // navigateTo(navigation, t("SCREEN.HOME"));
         } else {
           setIsAlert(true);
           setAlertMessage(res.data.message?.otp ? res.data.message?.otp : res.data.message);
@@ -97,7 +100,7 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
       .catch((err) => {
         setIsAlert(true);
         setIsSuccess(false)
-        setAlertMessage(STRING.ALERT.WENT_WRONG);
+        setAlertMessage(t("ALERT.WENT_WRONG"));
         setIsSuccess(false)
         props.setLoader(false);
       });
@@ -157,22 +160,22 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
   return (
     <View style={{ flex: 1, backgroundColor: COLOR.white }}>
       <ImageBackground style={styles.loginImage} source={require("../../Assets/Images/Intro/login_background.png")} />
-      {/* <Header name={STRING.HEADER.VERIFY_OTP} style={{ marginBottom: 50 }}
+      {/* <Header name={t("HEADER.VERIFY_OTP")} style={{ marginBottom: 50 }}
         startIcon={<></>}
       /> */}
 
       <View>
         <Loader />
-        <GlobalText text={STRING.WELCOME} style={styles.welcomeText} />
-        <GlobalText text={STRING.APPNAME} style={styles.boldKokan} />
+        <GlobalText text={t("WELCOME")} style={styles.welcomeText} />
+        <GlobalText text={t("APPNAME")} style={styles.boldKokan} />
       </View>
 
       <View style={styles.middleFlex}>
         <View>
           <View>
-            <GlobalText text={STRING.LOG_IN} style={styles.loginText} />
-            {/* <GlobalText text={STRING.WE_HAVE_SENT} />
-            <GlobalText text={`${STRING.SENT_TO} ${route.params?.email}`} /> */}
+            <GlobalText text={t("LOG_IN")} style={styles.loginText} />
+            {/* <GlobalText text={t("WE_HAVE_SENT")} />
+            <GlobalText text={`${t("SENT_TO")} ${route.params?.email}`} /> */}
           </View>
           <OtpInputs
             style={{ flexDirection: "row" }}
@@ -205,19 +208,19 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
           />
         </View>
         <TextButton
-          title={STRING.BUTTON.LOGIN}
+          title={t("BUTTON.LOGIN")}
           disabled={false}
           raised={true}
           onPress={() => loginClick()}
         />
         <View style={styles.haveAcc}>
           {sec >= 1 ? (
-            <GlobalText text={`${STRING.RESEND_WITHIN}${sec > 9 ? sec : "0" + sec})`} />
+            <GlobalText text={`${t("RESEND_WITHIN")}${sec > 9 ? sec : "0" + sec})`} />
           ) : (
-            <View style={{flexDirection: "row"}}>
-              <GlobalText text={STRING.DIDNT_RECEIVE} />
+            <View style={{ flexDirection: "row" }}>
+              <GlobalText text={t("DIDNT_RECEIVE")} />
               <TouchableOpacity onPress={() => resend()}>
-                <GlobalText text={STRING.RESEND} style={styles.sendOTPText} />
+                <GlobalText text={t("RESEND")} style={styles.sendOTPText} />
               </TouchableOpacity>
             </View>
           )}

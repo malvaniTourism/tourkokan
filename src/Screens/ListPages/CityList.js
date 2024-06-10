@@ -20,9 +20,12 @@ import CheckNet from "../../Components/Common/CheckNet";
 import BottomSheet from "../../Components/Customs/BottomSheet";
 import GlobalText from "../../Components/Customs/Text";
 import CityCardSkeleton from "../../Components/Cards/CityCardSkeleton";
+import { useTranslation } from "react-i18next";
 
 const CityList = ({ navigation, route, ...props }) => {
+  const { t } = useTranslation();
   const refRBSheet = useRef();
+
   const [cities, setCities] = useState([]); // State to store cities
   const [error, setError] = useState(null); // State to store error message
   const [isLandingDataFetched, setIsLandingDataFetched] = useState(false);
@@ -45,7 +48,7 @@ const CityList = ({ navigation, route, ...props }) => {
     const unsubscribe = NetInfo.addEventListener(state => {
       setOffline(false)
 
-      dataSync(STRING.STORAGE.CITIES_RESPONSE, getCities())
+      dataSync(t("STORAGE.CITIES_RESPONSE"), getCities())
         .then(resp => {
           let res = JSON.parse(resp)
           if (res.data && res.data.data) {
@@ -55,7 +58,7 @@ const CityList = ({ navigation, route, ...props }) => {
           }
           props.setLoader(false);
         })
-      // removeFromStorage(STRING.STORAGE.LANDING_RESPONSE)
+      // removeFromStorage(t("STORAGE.LANDING_RESPONSE"))
     });
 
     return () => {
@@ -74,7 +77,7 @@ const CityList = ({ navigation, route, ...props }) => {
     comnPost(`v2/sites?page=${page}`, data, navigation)
       .then((res) => {
         if (res && res.data.data)
-          saveToStorage(STRING.STORAGE.CITIES_RESPONSE, JSON.stringify(res))
+          saveToStorage(t("STORAGE.CITIES_RESPONSE"), JSON.stringify(res))
         setCities([...cities, res.data.data.data]); // Update cities state with response data
         let nextUrl = res.data.data.next_page_url
         setPage(nextUrl[nextUrl.length - 1])
@@ -87,7 +90,7 @@ const CityList = ({ navigation, route, ...props }) => {
   }
 
   const getCityDetails = (id) => {
-    navigateTo(navigation, STRING.SCREEN.CITY_DETAILS, { id })
+    navigateTo(navigation, t("SCREEN.CITY_DETAILS"), { id })
   }
 
   const renderItem = ({ item }) => (
@@ -98,7 +101,7 @@ const CityList = ({ navigation, route, ...props }) => {
     <View style={{ backgroundColor: COLOR.white }}>
       <CheckNet isOff={offline} />
       <Loader />
-      <Header name={route?.params?.subCat?.name || STRING.HEADER.CITIES}
+      <Header name={route?.params?.subCat?.name || t("HEADER.CITIES")}
         startIcon={
           <Ionicons
             name="chevron-back-outline"
@@ -109,21 +112,21 @@ const CityList = ({ navigation, route, ...props }) => {
         }
       />
       {
-          cities[0] ?
-            <View style={{ alignItems: "center", marginBottom: 150 }}>
-              <FlatList
-                data={cities[0]}
-                numColumns={1}
-                keyExtractor={(item) => item.id?.toString()}
-                renderItem={renderItem}
-                onEndReached={() => getCities()}
-                onEndReachedThreshold={0.5}
-              />
-            </View>
-            :
-            <View style={{ height: DIMENSIONS.screenHeight }}>
-              <GlobalText text={STRING.NO_DATA} />
-            </View>
+        cities[0] ?
+          <View style={{ alignItems: "center", marginBottom: 150 }}>
+            <FlatList
+              data={cities[0]}
+              numColumns={1}
+              keyExtractor={(item) => item.id?.toString()}
+              renderItem={renderItem}
+              onEndReached={() => getCities()}
+              onEndReachedThreshold={0.5}
+            />
+          </View>
+          :
+          <View style={{ height: DIMENSIONS.screenHeight }}>
+            <GlobalText text={t("NO_DATA")} />
+          </View>
       }
     </View>
   );

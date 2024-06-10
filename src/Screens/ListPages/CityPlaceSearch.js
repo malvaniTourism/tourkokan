@@ -11,8 +11,11 @@ import { comnPost } from "../../Services/Api/CommonServices";
 import GlobalText from "../../Components/Customs/Text";
 import { setLoader } from "../../Reducers/CommonActions";
 import STRING from "../../Services/Constants/STRINGS";
+import { useTranslation } from "react-i18next";
 
 const CityPlaceSearch = ({ navigation, route, ...props }) => {
+    const { t } = useTranslation();
+
     const [searchValue, setSearchValue] = useState("");
     const [tableName, setTableName] = useState("places")
     const [placesList, setPlacesList] = useState([]);
@@ -23,7 +26,7 @@ const CityPlaceSearch = ({ navigation, route, ...props }) => {
         props.setLoader(true)
         const backHandler = goBackHandler(navigation)
         checkLogin(navigation)
-        searchPlace("", STRING.TABLE.PLACES)
+        searchPlace("", t("TABLE.PLACES"))
         return () => {
             backHandler.remove()
         }
@@ -52,18 +55,18 @@ const CityPlaceSearch = ({ navigation, route, ...props }) => {
 
     const onChipClick = (val) => {
         setIsCity(val)
-        let table = STRING.TABLE.CITIES
+        let table = t("TABLE.CITIES")
         if (!val) {
-            setTableName(STRING.TABLE.PLACES)
-            table = STRING.TABLE.PLACES
+            setTableName(t("TABLE.PLACES"))
+            table = t("TABLE.PLACES")
         }
-        else setTableName(STRING.TABLE.CITIES)
+        else setTableName(t("TABLE.CITIES"))
         searchPlace(searchValue, table)
     }
 
     const onListItemClick = (id) => {
-        if (isCity) navigateTo(navigation, STRING.SCREEN.CITY_DETAILS, { id });
-        else navigateTo(navigation, STRING.SCREEN.PLACE_DETAILS, { id });
+        if (isCity) navigateTo(navigation, t("SCREEN.CITY_DETAILS"), { id });
+        else navigateTo(navigation, t("SCREEN.PLACE_DETAILS"), { id });
     }
 
     const renderItem = ({ item }) => {
@@ -82,7 +85,7 @@ const CityPlaceSearch = ({ navigation, route, ...props }) => {
             <Header
                 Component={
                     <SearchBar
-                        placeholder={STRING.PLACEHOLDER.ENTER_TEXT}
+                        placeholder={t("PLACEHOLDER.ENTER_TEXT")}
                         value={searchValue}
                         onChangeText={(v) => searchPlace(v, tableName)}
                     />

@@ -10,6 +10,7 @@ import STRING from "../Services/Constants/STRINGS";
 import AllRoutesSearch from "../Screens/ListPages/AllRoutesSearch";
 import PasswordLogin from "../Screens/AuthScreens/PasswordLogin";
 import Email from "../Screens/AuthScreens/Email";
+import { useTranslation } from "react-i18next";
 
 const SignIn = lazy(() => import("../Screens/AuthScreens/SignIn"));
 const SignUp = lazy(() => import("../Screens/AuthScreens/SignUp"));
@@ -49,20 +50,21 @@ const linking = {
 };
 
 const StackNavigator = () => {
+  const { t } = useTranslation()
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   return (
-    <Suspense fallback={<GlobalText text={STRING.ALERT.LOADING} />}>
+    <Suspense fallback={<GlobalText text={t("ALERT.LOADING")} />}>
       <NavigationContainer linking={linking}>
         <Stack.Navigator
-        screenOptions={{
-          cardStyle: { backgroundColor: '#fff' }
-        }}>
+          screenOptions={{
+            cardStyle: { backgroundColor: '#fff' }
+          }}>
           {isLoggedIn ? (
             // Screens for logged in users
-            <Stack.Group screenOptions={{ headerShown: false, cardStyle: { backgroundColor: '#fff' }}}>
+            <Stack.Group screenOptions={{ headerShown: false, cardStyle: { backgroundColor: '#fff' } }}>
               <Stack.Screen
-                name={STRING.SCREEN.ROOT}
+                name={t("SCREEN.ROOT")}
                 component={DrawerNavigator}
                 options={{ headerShown: false }}
               />
@@ -70,8 +72,8 @@ const StackNavigator = () => {
             </Stack.Group>
           ) : (
             // Auth screens
-            <Stack.Group screenOptions={{ headerShown: false, cardStyle: { backgroundColor: '#fff' }}}>
-              <Stack.Screen name={STRING.SCREEN.EMAIL_SIGN_IN} component={EmailSignIn} />
+            <Stack.Group screenOptions={{ headerShown: false, cardStyle: { backgroundColor: '#fff' } }}>
+              <Stack.Screen name={t("SCREEN.EMAIL_SIGN_IN")} component={EmailSignIn} />
               {/* <Stack.Screen name="SignUp" component={SignUp} /> */}
             </Stack.Group>
           )}
@@ -79,34 +81,34 @@ const StackNavigator = () => {
           <Stack.Group
             screenOptions={{ headerShown: false, presentation: "modal", cardStyle: { backgroundColor: '#fff' } }}
           >
-            <Stack.Screen name={STRING.SCREEN.HOME} component={DrawerNavigator} options={{ headerShown: false }} />
-            <Stack.Screen name={STRING.SCREEN.SEARCH_LIST} component={SearchList} />
-            <Stack.Screen name={STRING.SCREEN.ALL_ROUTES_SEARCH} component={AllRoutesSearch} />
-            <Stack.Screen name={STRING.SCREEN.ROUTES_LIST} component={RoutesList} />
-            <Stack.Screen name={STRING.SCREEN.BUS_TIMINGS} component={BusTimings} />
-            <Stack.Screen name={STRING.SCREEN.AUTH_SCREEN} component={AuthScreen} />
-            <Stack.Screen name={STRING.SCREEN.LOGIN} component={SignIn} />
-            <Stack.Screen name={STRING.SCREEN.EMAIL_SIGN_IN} component={EmailSignIn} />
-            <Stack.Screen name={STRING.SCREEN.EMAIL} component={Email} />
-            <Stack.Screen name={STRING.SCREEN.PASSWORD_LOGIN} component={PasswordLogin} />
-            <Stack.Screen name={STRING.SCREEN.VERIFY_OTP} component={VerifyOTP} />
-            <Stack.Screen name={STRING.SCREEN.SIGN_UP} component={SignUp} />
-            <Stack.Screen name={STRING.SCREEN.CATEGORY_PROJECTS} component={CategoryProjects} />
-            <Stack.Screen name={STRING.SCREEN.CITY_LIST} component={CityList} />
-            <Stack.Screen name={STRING.SCREEN.EXPLORE} component={Explore} />
-            <Stack.Screen name={STRING.SCREEN.CATEGORIES} component={Categories} />
-            <Stack.Screen name={STRING.SCREEN.PROJECT_LIST} component={ProjectList} />
-            <Stack.Screen name={STRING.SCREEN.STOP_LIST} component={StopList} />
-            <Stack.Screen name={STRING.SCREEN.CITY_DETAILS} component={CityDetails} />
-            <Stack.Screen name={STRING.SCREEN.PLACE_DETAILS} component={PlaceDetails} />
-            <Stack.Screen name={STRING.SCREEN.PROJECT_DETAILS} component={ProjectDetails} />
-            <Stack.Screen name={STRING.SCREEN.STOP_DETAILS} component={StopDetails} />
-            <Stack.Screen name={STRING.SCREEN.SEARCH_PLACE} component={SearchPlace} />
-            <Stack.Screen name={STRING.SCREEN.MAP_SCREEN} component={MapScreen} />
-            <Stack.Screen name={STRING.SCREEN.CITY_PLACE_SEARCH} component={CityPlaceSearch} />
-            <Stack.Screen name={STRING.SCREEN.PROFILE_VIEW} component={ProfileView} />
-            <Stack.Screen name={STRING.SCREEN.PROFILE} component={Profile} />
-            <Stack.Screen name={STRING.SCREEN.EXPLOREGRID} component={ExploreGrid} />
+            <Stack.Screen name={t("SCREEN.HOME")} component={DrawerNavigator} options={{ headerShown: false }} />
+            <Stack.Screen name={t("SCREEN.SEARCH_LIST")} component={SearchList} />
+            <Stack.Screen name={t("SCREEN.ALL_ROUTES_SEARCH")} component={AllRoutesSearch} />
+            <Stack.Screen name={t("SCREEN.ROUTES_LIST")} component={RoutesList} />
+            <Stack.Screen name={t("SCREEN.BUS_TIMINGS")} component={BusTimings} />
+            <Stack.Screen name={t("SCREEN.AUTH_SCREEN")} component={AuthScreen} />
+            <Stack.Screen name={t("SCREEN.LOGIN")} component={SignIn} />
+            <Stack.Screen name={t("SCREEN.EMAIL_SIGN_IN")} component={EmailSignIn} />
+            <Stack.Screen name={t("SCREEN.EMAIL")} component={Email} />
+            <Stack.Screen name={t("SCREEN.PASSWORD_LOGIN")} component={PasswordLogin} />
+            <Stack.Screen name={t("SCREEN.VERIFY_OTP")} component={VerifyOTP} />
+            <Stack.Screen name={t("SCREEN.SIGN_UP")} component={SignUp} />
+            <Stack.Screen name={t("SCREEN.CATEGORY_PROJECTS")} component={CategoryProjects} />
+            <Stack.Screen name={t("SCREEN.CITY_LIST")} component={CityList} />
+            <Stack.Screen name={t("SCREEN.EXPLORE")} component={Explore} />
+            <Stack.Screen name={t("SCREEN.CATEGORIES")} component={Categories} />
+            <Stack.Screen name={t("SCREEN.PROJECT_LIST")} component={ProjectList} />
+            <Stack.Screen name={t("SCREEN.STOP_LIST")} component={StopList} />
+            <Stack.Screen name={t("SCREEN.CITY_DETAILS")} component={CityDetails} />
+            <Stack.Screen name={t("SCREEN.PLACE_DETAILS")} component={PlaceDetails} />
+            <Stack.Screen name={t("SCREEN.PROJECT_DETAILS")} component={ProjectDetails} />
+            <Stack.Screen name={t("SCREEN.STOP_DETAILS")} component={StopDetails} />
+            <Stack.Screen name={t("SCREEN.SEARCH_PLACE")} component={SearchPlace} />
+            <Stack.Screen name={t("SCREEN.MAP_SCREEN")} component={MapScreen} />
+            <Stack.Screen name={t("SCREEN.CITY_PLACE_SEARCH")} component={CityPlaceSearch} />
+            <Stack.Screen name={t("SCREEN.PROFILE_VIEW")} component={ProfileView} />
+            <Stack.Screen name={t("SCREEN.PROFILE")} component={Profile} />
+            <Stack.Screen name={t("SCREEN.EXPLOREGRID")} component={ExploreGrid} />
           </Stack.Group>
         </Stack.Navigator>
       </NavigationContainer>

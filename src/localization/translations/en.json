@@ -28,6 +28,7 @@
         "LOGIN": "Login",
         "SIGNUP": "Sign Up",
         "SEND_OTP": "Send OTP",
+        "GENERATE_OTP": "Generate OTP",
         "LOGIN_WITH_PASSWORD": "Login with Password",
         "LOGIN_WITH_OTP": "Login with OTP",
         "REGISTER": "Register",

@@ -7,8 +7,10 @@ import DIMENSIONS from "../Services/Constants/DIMENSIONS";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { backPage, checkLogin, goBackHandler } from "../Services/CommonMethods";
 import STRING from "../Services/Constants/STRINGS";
+import { useTranslation } from "react-i18next";
 
 const BusTimings = ({ navigation }) => {
+  const { t } = useTranslation();
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
@@ -21,7 +23,7 @@ const BusTimings = ({ navigation }) => {
   return (
     <View>
       <Header
-        name={STRING.HEADER.BUS_TIMINGS}
+        name={t("HEADER.BUS_TIMINGS")}
         startIcon={
           <Ionicons
             name="chevron-back-outline"

@@ -15,9 +15,12 @@ import styles from "./Styles";
 import { backPage, checkLogin, goBackHandler, navigateTo } from "../../Services/CommonMethods";
 import MapView, { Marker } from "react-native-maps";
 import STRING from "../../Services/Constants/STRINGS";
+import { useTranslation } from "react-i18next";
 
 
 const ProjectList = ({ navigation, ...props }) => {
+  const { t } = useTranslation();
+
   const [projects, setProjects] = useState([]); // State to store projects
   const [error, setError] = useState(null); // State to store error message
 
@@ -45,14 +48,14 @@ const ProjectList = ({ navigation, ...props }) => {
   }
 
   const handleSmallCardClick = (id) => {
-    navigateTo(navigation, STRING.SCREEN.PROJECT_DETAILS, { id });
+    navigateTo(navigation, t("SCREEN.PROJECT_DETAILS"), { id });
   };
 
   return (
     // <ScrollView>
     //   <View style={{ flex: 1, alignItems: "center" }}>
     //     <Loader />
-    //      <Header name={STRING.HEADER.PROJECTS}
+    //      <Header name={t("HEADER.PROJECTS")}
     //       startIcon={
     //         <Ionicons
     //           name="chevron-back-outline"
@@ -99,8 +102,8 @@ const ProjectList = ({ navigation, ...props }) => {
             onDragEnd={
               (e) => alert(JSON.stringify(e.nativeEvent.coordinate))
             }
-            title={STRING.TEST_MARKER}
-            description={STRING.MARKER_DESCRIPTION}
+            title={t("TEST_MARKER")}
+            description={t("MARKER_DESCRIPTION")}
           />
         </MapView>
       </View>

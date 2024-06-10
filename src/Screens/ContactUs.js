@@ -34,7 +34,7 @@ const ContactUs = ({ navigation, route, ...props }) => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   useEffect(async () => {
-    setEmail(await AsyncStorage.getItem(STRING.STORAGE.USER_EMAIL))
+    setEmail(await AsyncStorage.getItem(t("STORAGE.USER_EMAIL")))
     const backHandler = goBackHandler(navigation)
     checkLogin(navigation)
     return () => {
@@ -70,8 +70,8 @@ const ContactUs = ({ navigation, route, ...props }) => {
   const submit = async () => {
     props.setLoader(true);
     let data = {
-      user_id: await AsyncStorage.getItem(STRING.STORAGE.USER_ID),
-      name: await AsyncStorage.getItem(STRING.STORAGE.USER_NAME),
+      user_id: await AsyncStorage.getItem(t("STORAGE.USER_ID")),
+      name: await AsyncStorage.getItem(t("STORAGE.USER_NAME")),
       email,
       phone,
       message
@@ -87,7 +87,7 @@ const ContactUs = ({ navigation, route, ...props }) => {
       })
       .catch(err => {
         setIsAlert(true);
-        setAlertMessage(STRING.ALERT.FAILED);
+        setAlertMessage(t("ALERT.FAILED"));
         props.setLoader(false);
       })
   }
@@ -115,7 +115,7 @@ const ContactUs = ({ navigation, route, ...props }) => {
   return (
     <View style={{ backgroundColor: COLOR.white }}>
       <Header
-        name={STRING.HEADER.CONTACT_US}
+        name={t("HEADER.CONTACT_US")}
         goBack={() => backPage(navigation)}
         startIcon={
           <Ionicons
@@ -130,7 +130,7 @@ const ContactUs = ({ navigation, route, ...props }) => {
         }
       />
       <Loader />
-      <GlobalText text={STRING.CONNECT} style={{ textAlign: "left", marginLeft: 20, fontSize: DIMENSIONS.subtitleTextSize }} />
+      <GlobalText text={t("CONNECT")} style={{ textAlign: "left", marginLeft: 20, fontSize: DIMENSIONS.headerTextSize }} />
       <View style={{ alignItems: "center", height: DIMENSIONS.screenHeight, backgroundColor: COLOR.white }}>
         {ContactUsFields.map((field, index) => {
           return (
@@ -154,14 +154,14 @@ const ContactUs = ({ navigation, route, ...props }) => {
           );
         })}
         {/* <TextButton
-          title={STRING.BUTTON.ATTACHMENT}
+          title={t("BUTTON.ATTACHMENT")}
           buttonView={styles.attachmentButtonStyle}
           titleStyle={styles.attachmentTitleStyle}
           onPress={selectFile}
         /> */}
       </View>
       <TextButton
-        title={STRING.BUTTON.SEND}
+        title={t("BUTTON.SEND")}
         buttonView={styles.searchButtonStyle}
         titleStyle={styles.buttonTitleStyle}
         onPress={submit}

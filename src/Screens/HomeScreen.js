@@ -40,8 +40,8 @@ import CityCardSmallSkeleton from "../Components/Cards/CityCardSmallSkeleton";
 import { useTranslation } from 'react-i18next';
 
 const HomeScreen = ({ navigation, route, ...props }) => {
-    const refRBSheet = useRef();
     const { t } = useTranslation();
+    const refRBSheet = useRef();
 
     const [searchValue, setSearchValue] = useState("");
     const [categories, setCategories] = useState([]);
@@ -80,11 +80,11 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         },
     ]);
     const [bannerObject, setBannerObject] = useState([])
-    const [currentCity, setCurrentCity] = useState(STRING.CITY.DEVGAD);
+    const [currentCity, setCurrentCity] = useState(t("CITY.DEVGAD"));
     const [profilePhoto, setProfilePhoto] = useState('')
 
     useEffect(() => {
-        const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => exitApp());
+        const backHandler = BackHandler.addEventListener(t("EVENT.HARDWARE_BACK_PRESS"), () => exitApp());
         if (props.access_token) {
             if (!isLandingDataFetched && props.access_token) {
                 // callLandingPageAPI();
@@ -98,7 +98,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         const unsubscribe = NetInfo.addEventListener(state => {
             setOffline(false)
 
-            dataSync(STRING.STORAGE.PROFILE_RESPONSE, getUserProfile())
+            dataSync(t("STORAGE.PROFILE_RESPONSE"), getUserProfile())
                 .then(resp => {
                     let res = JSON.parse(resp)
                     if (res.data && res.data.data) {
@@ -117,7 +117,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                     props.setLoader(false);
                 })
 
-            dataSync(STRING.STORAGE.LANDING_RESPONSE, callLandingPageAPI())
+            dataSync(t("STORAGE.LANDING_RESPONSE"), callLandingPageAPI())
                 .then(resp => {
                     let res = JSON.parse(resp)
                     if (res.data && res.data.data) {
@@ -137,24 +137,24 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                     }
                     props.setLoader(false);
                 })
-            // removeFromStorage(STRING.STORAGE.LANDING_RESPONSE)
+            // removeFromStorage(t("STORAGE.LANDING_RESPONSE"))
         });
 
 
         return () => {
             backHandler.remove();
-            AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, JSON.stringify(false))
+            AsyncStorage.setItem(t("STORAGE.IS_FIRST_TIME"), JSON.stringify(false))
             unsubscribe();
         };
     }, [props.access_token]);
 
     const saveToken = async () => {
-        props.saveAccess_token(await AsyncStorage.getItem(STRING.STORAGE.ACCESS_TOKEN));
+        props.saveAccess_token(await AsyncStorage.getItem(t("STORAGE.ACCESS_TOKEN")));
         if (
-            (await AsyncStorage.getItem(STRING.STORAGE.ACCESS_TOKEN)) == null ||
-            (await AsyncStorage.getItem(STRING.STORAGE.ACCESS_TOKEN)) == ""
+            (await AsyncStorage.getItem(t("STORAGE.ACCESS_TOKEN"))) == null ||
+            (await AsyncStorage.getItem(t("STORAGE.ACCESS_TOKEN"))) == ""
         ) {
-            navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN);
+            navigateTo(navigation, t("SCREEN.AUTH_SCREEN"));
         }
     };
 
@@ -163,11 +163,11 @@ const HomeScreen = ({ navigation, route, ...props }) => {
             site_id
         }
         props.setLoader(true);
-        let isFirstTime = await AsyncStorage.getItem(STRING.STORAGE.IS_FIRST_TIME)
+        let isFirstTime = await AsyncStorage.getItem(t("STORAGE.IS_FIRST_TIME"))
         comnPost("v2/landingpage", data, navigation)
             .then((res) => {
                 if (res && res.data.data)
-                    saveToStorage(STRING.STORAGE.LANDING_RESPONSE, JSON.stringify(res))
+                    saveToStorage(t("STORAGE.LANDING_RESPONSE"), JSON.stringify(res))
                 setCities(res.data.data.cities);
                 setRoutes(res.data.data.routes);
                 setBannerObject(res.data.data.banners);
@@ -182,7 +182,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
 
                 if (isFirstTime == "true") {
                     // refRBSheet.current.open()
-                    AsyncStorage.setItem(STRING.STORAGE.IS_FIRST_TIME, JSON.stringify(false))
+                    AsyncStorage.setItem(t("STORAGE.IS_FIRST_TIME"), JSON.stringify(false))
                 }
             })
             .catch((error) => {
@@ -198,9 +198,9 @@ const HomeScreen = ({ navigation, route, ...props }) => {
             .then((res) => {
                 props.setLoader(false);
                 setProfilePhoto(res.data.data.profile_picture);
-                AsyncStorage.setItem(STRING.STORAGE.USER_NAME, res.data.data.name)
-                AsyncStorage.setItem(STRING.STORAGE.USER_ID, JSON.stringify(res.data.data.id))
-                AsyncStorage.setItem(STRING.STORAGE.USER_EMAIL, res.data.data.email)
+                AsyncStorage.setItem(t("STORAGE.USER_NAME"), res.data.data.name)
+                AsyncStorage.setItem(t("STORAGE.USER_ID"), JSON.stringify(res.data.data.id))
+                AsyncStorage.setItem(t("STORAGE.USER_EMAIL"), res.data.data.email)
             })
             .catch((error) => {
                 setError(error.message);
@@ -209,15 +209,15 @@ const HomeScreen = ({ navigation, route, ...props }) => {
     }
 
     const getRoutesList = (item) => {
-        navigateTo(navigation, STRING.SCREEN.ROUTES_LIST, { item });
+        navigateTo(navigation, t("SCREEN.ROUTES_LIST"), { item });
     };
 
     const showMore = (page, subCat) => {
-        navigateTo(navigation, page, { from: STRING.SCREEN.HOME, subCat });
+        navigateTo(navigation, page, { from: t("SCREEN.HOME"), subCat });
     }
 
     const onSearchFocus = () => {
-        navigateTo(navigation, STRING.SCREEN.CITY_PLACE_SEARCH)
+        navigateTo(navigation, t("SCREEN.CITY_PLACE_SEARCH"))
     }
 
     const openLocationSheet = () => {
@@ -229,12 +229,12 @@ const HomeScreen = ({ navigation, route, ...props }) => {
     }
 
     const getCityDetails = (id) => {
-        navigateTo(navigation, STRING.SCREEN.CITY_DETAILS, { id })
+        navigateTo(navigation, t("SCREEN.CITY_DETAILS"), { id })
     }
 
     const openProfile = () => {
         setIsLoading(true)
-        navigateTo(navigation, STRING.SCREEN.PROFILE_VIEW);
+        navigateTo(navigation, t("SCREEN.PROFILE_VIEW"));
         setIsLoading(false)
     }
 
@@ -279,7 +279,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                         isLoading ?
                             <SearchPanelSkeleton />
                             :
-                            <SearchPanel route={route} navigation={navigation} from={STRING.SCREEN.HOME} />
+                            <SearchPanel route={route} navigation={navigation} from={t("SCREEN.HOME")} />
                     }
                 </KeyboardAvoidingView>
                 <View style={styles.headerContainer}>
@@ -295,7 +295,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                     <GlobalText text={t("ROUTES")} style={styles.sectionTitle} />
                                     <TextButton
                                         title={t("BUTTON.SEE_ALL")}
-                                        onPress={() => showMore(STRING.SCREEN.ALL_ROUTES_SEARCH)}
+                                        onPress={() => showMore(t("SCREEN.ALL_ROUTES_SEARCH"))}
                                         buttonView={styles.buttonView}
                                         titleStyle={styles.titleStyle}
                                     />
@@ -328,7 +328,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                     <GlobalText text={t("CITIES")} style={styles.sectionTitle} />
                                     <TextButton
                                         title={t("BUTTON.SEE_ALL")}
-                                        onPress={() => showMore(STRING.SCREEN.CITIES)}
+                                        onPress={() => showMore(t("SCREEN.CITIES"))}
                                         buttonView={styles.buttonView}
                                         titleStyle={styles.titleStyle}
                                     />
@@ -361,8 +361,8 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                             <Skeleton animation="pulse" variant="text" style={styles.buttonSkeleton} />
                             :
                             <TextButton
-                                title={STRING.BUTTON.SEE_MORE}
-                                onPress={() => showMore(STRING.SCREEN.CITY_LIST, "city")}
+                                title={t("BUTTON.SEE_MORE")}
+                                onPress={() => showMore(t("SCREEN.CITY_LIST"), "city")}
                                 containerStyle={styles.showMore}
                                 buttonView={styles.buttonView}
                                 buttonStyle={styles.buttonStyle}

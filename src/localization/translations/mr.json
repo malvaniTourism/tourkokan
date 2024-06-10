@@ -29,6 +29,7 @@
         "LOGIN": "लॉगिन करा",
         "SIGNUP": "साइन अप करा",
         "SEND_OTP": "OTP पाठवा",
+        "GENERATE_OTP": "OTP जनरेट करा",
         "LOGIN_WITH_PASSWORD": "पासवर्डने लॉगिन करा",
         "LOGIN_WITH_OTP": "OTP लॉगिन करा",
         "REGISTER": "नोंदणी करा",

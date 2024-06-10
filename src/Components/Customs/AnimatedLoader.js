@@ -5,8 +5,11 @@ import styles from "./Styles";
 import COLOR from "../../Services/Constants/COLORS";
 import GlobalText from "./Text";
 import STRING from "../../Services/Constants/STRINGS";
+import { useTranslation } from "react-i18next";
 
 const MyAnimatedLoader = ({ isVisible }) => {
+    const { t } = useTranslation();
+
     const [fadeAnim, setFadeAnim] = useState(new Animated.Value(1))
     const [isAnimated, setIsAnimated] = useState(isVisible)
 
@@ -37,7 +40,7 @@ const MyAnimatedLoader = ({ isVisible }) => {
                 animationStyle={styles.lottie}
                 speed={2}
             >
-                <GlobalText text={STRING.LOADER_TEXT} style={styles.loaderText} />
+                <GlobalText text={t("LOADER_TEXT")} style={styles.loaderText} />
             </AnimatedLoader>
         </Animated.View>
     )

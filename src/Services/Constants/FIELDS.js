@@ -1,11 +1,14 @@
+import { useTranslation } from "react-i18next";
 import DIMENSIONS from "./DIMENSIONS";
 import STRING from "./STRINGS";
 
+const { t } = useTranslation();
+
 export const MobileNo = [
   {
-    name: STRING.LABEL.MOBILE,
-    placeholder: STRING.PLACEHOLDER.MOBILE_NUMBER,
-    type: STRING.TYPE.NUM,
+    name: t("LABEL.MOBILE"),
+    placeholder: t("PLACEHOLDER.MOBILE_NUMBER"),
+    type: t("TYPE.NUM"),
     length: DIMENSIONS.fieldLength,
     required: true,
     disabled: false,
@@ -14,9 +17,9 @@ export const MobileNo = [
 
 export const OTP = [
   {
-    name: STRING.LABEL.OTP,
-    placeholder: STRING.PLACEHOLDER.ENTER_OTP,
-    type: STRING.TYPE.NUM,
+    name: t("LABEL.OTP"),
+    placeholder: t("PLACEHOLDER.ENTER_OTP"),
+    type: t("TYPE.NUM"),
     length: DIMENSIONS.fieldLength,
     required: true,
     disabled: false,
@@ -25,17 +28,17 @@ export const OTP = [
 
 export const SignInFields = [
   {
-    name: STRING.LABEL.EMAIL,
-    placeholder: STRING.LABEL.EMAIL,
-    type: STRING.TYPE.TEXT,
+    name: t("LABEL.EMAIL"),
+    placeholder: t("LABEL.EMAIL"),
+    type: t("TYPE.TEXT"),
     length: DIMENSIONS.fieldLength,
     required: true,
     disabled: false,
   },
   {
-    name: STRING.LABEL.PASSWORD,
-    placeholder: STRING.LABEL.PASSWORD,
-    type: STRING.TYPE.PASSWORD,
+    name: t("LABEL.PASSWORD"),
+    placeholder: t("LABEL.PASSWORD"),
+    type: t("TYPE.PASSWORD"),
     isSecure: true,
     length: DIMENSIONS.fieldLength,
     required: true,
@@ -45,9 +48,9 @@ export const SignInFields = [
 
 export const EmailField = [
   {
-    name: STRING.LABEL.EMAIL,
-    placeholder: STRING.LABEL.EMAIL,
-    type: STRING.TYPE.EMAIL,
+    name: t("LABEL.EMAIL"),
+    placeholder: t("LABEL.EMAIL"),
+    type: t("TYPE.EMAIL"),
     length: DIMENSIONS.fieldLength,
     required: true,
     disabled: true,
@@ -56,17 +59,17 @@ export const EmailField = [
 
 export const EmailOtpFields = [
   {
-    name: STRING.LABEL.EMAIL,
-    placeholder: STRING.LABEL.EMAIL,
-    type: STRING.TYPE.EMAIL,
+    name: t("LABEL.EMAIL"),
+    placeholder: t("LABEL.EMAIL"),
+    type: t("TYPE.EMAIL"),
     length: DIMENSIONS.fieldLength,
     required: true,
     disabled: false,
   },
   {
-    name: STRING.LABEL.OTP,
-    placeholder: STRING.PLACEHOLDER.ENTER_OTP,
-    type: STRING.TYPE.NUM,
+    name: t("LABEL.OTP"),
+    placeholder: t("PLACEHOLDER.ENTER_OTP"),
+    type: t("TYPE.NUM"),
     length: DIMENSIONS.fieldLength,
     required: true,
     disabled: false,
@@ -75,9 +78,9 @@ export const EmailOtpFields = [
 
 export const Password = [
   {
-    name: STRING.LABEL.PASSWORD,
-    placeholder: STRING.LABEL.PASSWORD,
-    type: STRING.TYPE.PASSWORD,
+    name: t("LABEL.PASSWORD"),
+    placeholder: t("LABEL.PASSWORD"),
+    type: t("TYPE.PASSWORD"),
     length: DIMENSIONS.fieldLength,
     required: true,
     disabled: false,
@@ -87,68 +90,68 @@ export const Password = [
 
 export const SignUpFields = [
   {
-    name: STRING.LABEL.NAME,
-    placeholder: STRING.LABEL.NAME,
-    type: STRING.TYPE.TEXT,
+    name: t("LABEL.NAME"),
+    placeholder: t("LABEL.NAME"),
+    type: t("TYPE.TEXT"),
     length: DIMENSIONS.fieldLength,
     required: true,
     disabled: false,
-    leftIcon: STRING.ICON.NAME,
+    leftIcon: t("ICON.NAME"),
   },
   {
-    name: STRING.LABEL.EMAIL,
-    placeholder: STRING.LABEL.EMAIL_ID,
-    type: STRING.TYPE.EMAIL,
+    name: t("LABEL.EMAIL"),
+    placeholder: t("LABEL.EMAIL_ID"),
+    type: t("TYPE.EMAIL"),
     length: DIMENSIONS.fieldLength,
     required: true,
     disabled: false,
-    leftIcon: STRING.ICON.EMAIL,
+    leftIcon: t("ICON.EMAIL"),
   },
   {
-    name: STRING.LABEL.MOBILE,
-    placeholder: STRING.LABEL.MOBILE_NO,
-    type: STRING.TYPE.PHONE,
+    name: t("LABEL.MOBILE"),
+    placeholder: t("LABEL.MOBILE_NO"),
+    type: t("TYPE.PHONE"),
     length: DIMENSIONS.mobileLength,
     required: false,
     disabled: false,
-    leftIcon: STRING.ICON.MOBILE_NO,
+    leftIcon: t("ICON.MOBILE_NO"),
   }
 ];
 
 export const ProfileFields = [
   {
-    name: STRING.LABEL.EMAIL,
-    placeholder: STRING.LABEL.EMAIL,
-    type: STRING.TYPE.TEXT,
+    name: t("LABEL.EMAIL"),
+    placeholder: t("LABEL.EMAIL"),
+    type: t("TYPE.TEXT"),
     length: DIMENSIONS.fieldLength,
     required: true,
     disabled: false,
-    leftIcon: STRING.ICON.EMAIL,
+    leftIcon: t("ICON.EMAIL"),
   },
   {
-    name: STRING.LABEL.MOBILE,
-    placeholder: STRING.LABEL.MOBILE,
-    type: STRING.TYPE.PHONE,
+    name: t("LABEL.MOBILE"),
+    placeholder: t("LABEL.MOBILE"),
+    type: t("TYPE.PHONE"),
     length: DIMENSIONS.mobileLength,
     required: true,
     disabled: false,
-    leftIcon: STRING.ICON.MOBILE_NO,
+    leftIcon: t("ICON.MOBILE_NO"),
   },
 ];
 
 export const SrcDest = [
   {
-    name: STRING.LABEL.SOURCE,
-    placeholder: STRING.LABEL.SOURCE,
-    type: STRING.TYPE.TEXT,
+    name: t("LABEL.SOURCE"),
+    placeholder: t("LABEL.SOURCE"),
+    type: t("TYPE.TEXT"),
     length: DIMENSIONS.fieldLength,
     required: true,
     disabled: false,
   },
   {
-    name: STRING.LABEL.DESTINATION,
-    placeholder: STRING.LABEL.DESTINATION,
-    type: STRING.TYPE.TEXT,
+    name: t("LABEL.DESTINATION"),
+    placeholder: t("LABEL.DESTINATION"),
+    type: t("TYPE.TEXT"),
     length: DIMENSIONS.fieldLength,
     required: true,
     disabled: false,
@@ -157,9 +160,9 @@ export const SrcDest = [
 
 export const Source = [
   {
-    name: STRING.LABEL.SOURCE,
-    placeholder: STRING.PLACEHOLDER.SEARCH_SOURCE,
-    type: STRING.TYPE.TEXT,
+    name: t("LABEL.SOURCE"),
+    placeholder: t("PLACEHOLDER.SEARCH_SOURCE"),
+    type: t("TYPE.TEXT"),
     length: DIMENSIONS.fieldLength,
     required: true,
     disabled: false,
@@ -168,9 +171,9 @@ export const Source = [
 
 export const Destination = [
   {
-    name: STRING.LABEL.DESTINATION,
-    placeholder: STRING.PLACEHOLDER.SEARCH_DESTINATION,
-    type: STRING.TYPE.TEXT,
+    name: t("LABEL.DESTINATION"),
+    placeholder: t("PLACEHOLDER.SEARCH_DESTINATION"),
+    type: t("TYPE.TEXT"),
     length: DIMENSIONS.fieldLength,
     required: true,
     disabled: false,
@@ -179,9 +182,9 @@ export const Destination = [
 
 export const CityName = [
   {
-    name: STRING.LABEL.CITY_NAME,
-    placeholder: STRING.PLACEHOLDER.SEARCH_CITY_PLACE,
-    type: STRING.TYPE.TEXT,
+    name: t("LABEL.CITY_NAME"),
+    placeholder: t("PLACEHOLDER.SEARCH_CITY_PLACE"),
+    type: t("TYPE.TEXT"),
     length: DIMENSIONS.fieldLength,
     required: true,
     disabled: false,
@@ -190,25 +193,25 @@ export const CityName = [
 
 export const ContactUsFields = [
   {
-    name: STRING.LABEL.EMAIL,
-    placeholder: STRING.LABEL.EMAIL,
-    type: STRING.TYPE.EMAIL,
+    name: t("LABEL.EMAIL"),
+    placeholder: t("LABEL.EMAIL"),
+    type: t("TYPE.EMAIL"),
     length: DIMENSIONS.fieldLength,
     required: true,
     disabled: false,
   },
   {
-    name: STRING.LABEL.MOBILE,
-    placeholder: STRING.LABEL.MOBILE,
-    type: STRING.TYPE.NUM,
+    name: t("LABEL.MOBILE"),
+    placeholder: t("LABEL.MOBILE"),
+    type: t("TYPE.NUM"),
     length: DIMENSIONS.mobileLength,
     required: true,
     disabled: false,
   },
   {
-    name: STRING.LABEL.MESSAGE,
-    placeholder: STRING.LABEL.MESSAGE,
-    type: STRING.TYPE.TEXT,
+    name: t("LABEL.MESSAGE"),
+    placeholder: t("LABEL.MESSAGE"),
+    type: t("TYPE.TEXT"),
     length: DIMENSIONS.fieldLength,
     required: true,
     disabled: false,
@@ -218,9 +221,9 @@ export const ContactUsFields = [
 
 export const Comment = [
   {
-    name: STRING.LABEL.COMMENT,
-    placeholder: STRING.LABEL.COMMENT,
-    type: STRING.TYPE.TEXT,
+    name: t("LABEL.COMMENT"),
+    placeholder: t("LABEL.COMMENT"),
+    type: t("TYPE.TEXT"),
     length: DIMENSIONS.fieldLength,
     required: true,
     disabled: false,

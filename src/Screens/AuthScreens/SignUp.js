@@ -30,7 +30,7 @@ import PrivacyPolicy from "../../Components/Common/PrivacyPolicy";
 
 const SignUp = ({ navigation, ...props }) => {
   const opacity = useRef(new Animated.Value(0)).current;
-  const { i18n, t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -72,7 +72,7 @@ const SignUp = ({ navigation, ...props }) => {
   const [showPrivacy, setShowPrivacy] = useState(false)
 
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN));
+    const backHandler = BackHandler.addEventListener(t("EVENT.HARDWARE_BACK_PRESS"), () => navigateTo(navigation, t("SCREEN.AUTH_SCREEN")));
     // getRoles()
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
@@ -188,7 +188,7 @@ const SignUp = ({ navigation, ...props }) => {
   const handleImageUpload = () => {
     launchImageLibrary(
       {
-        mediaType: `${STRING.TYPE.PHOTO}`,
+        mediaType: `${t("TYPE.PHOTO")}`,
         includeBase64: true,
         maxHeight: 200,
         maxWidth: 200,
@@ -252,17 +252,17 @@ const SignUp = ({ navigation, ...props }) => {
         props.setLoader(false);
         setIsAlert(true);
         setIsSuccess(false)
-        setAlertMessage(STRING.ALERT.WENT_WRONG);
+        setAlertMessage(t("ALERT.WENT_WRONG"));
       });
   };
 
   const signInScreen = () => {
-    navigateTo(navigation, STRING.SCREEN.EMAIL);
+    navigateTo(navigation, t("SCREEN.EMAIL"));
   };
 
   const closePopup = () => {
-    if (alertMessage[0].includes(STRING.TAKEN) || isSuccess) {
-      navigateTo(navigation, STRING.SCREEN.VERIFY_OTP, { email });
+    if (alertMessage[0].includes(t("TAKEN")) || isSuccess) {
+      navigateTo(navigation, t("SCREEN.VERIFY_OTP"), { email });
     }
     setIsAlert(false)
   }
@@ -276,8 +276,8 @@ const SignUp = ({ navigation, ...props }) => {
         const granted = await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
           {
-            title: STRING.LOCATION_ACCESS_REQUIRED,
-            message: STRING.NEEDS_TO_ACCESS,
+            title: t("LOCATION_ACCESS_REQUIRED"),
+            message: t("NEEDS_TO_ACCESS"),
           }
         );
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
@@ -285,7 +285,7 @@ const SignUp = ({ navigation, ...props }) => {
           getOneTimeLocation();
           subscribeLocation();
         } else {
-          setLocationStatus(STRING.PERMISSION_DENIED);
+          setLocationStatus(t("PERMISSION_DENIED"));
         }
       } catch (err) {
         console.warn(err);
@@ -295,11 +295,11 @@ const SignUp = ({ navigation, ...props }) => {
 
   const getOneTimeLocation = () => {
     props.setLoader(true);
-    setFetchingText(STRING.ALERT.FETCHING_TEXT);
-    setLocationStatus(STRING.GETTING_LOCATION);
+    setFetchingText(t("ALERT.FETCHING_TEXT"));
+    setLocationStatus(t("GETTING_LOCATION"));
     Geolocation.getCurrentPosition(
       (position) => {
-        setLocationStatus(STRING.YOU_ARE_HERE);
+        setLocationStatus(t("YOU_ARE_HERE"));
         const currentLatitude = position.coords.latitude;
         const currentLongitude = position.coords.longitude;
         setCurrentLatitude(currentLatitude);
@@ -319,7 +319,7 @@ const SignUp = ({ navigation, ...props }) => {
   const subscribeLocation = () => {
     let WatchID = Geolocation.watchPosition(
       (position) => {
-        setLocationStatus(STRING.YOU_ARE_HERE);
+        setLocationStatus(t("YOU_ARE_HERE"));
         const currentLatitude = position.coords.latitude;
         const currentLongitude = position.coords.longitude;
         setCurrentLatitude(currentLatitude);
@@ -356,12 +356,12 @@ const SignUp = ({ navigation, ...props }) => {
 
       <View style={{ display: isKeyboardVisible ? "none" : "flex" }}>
         <Loader text={fetchingText} />
-        <GlobalText text={STRING.WELCOME} style={styles.welcomeText} />
-        <GlobalText text={STRING.APPNAME} style={styles.boldKokan} />
+        <GlobalText text={t("WELCOME")} style={styles.welcomeText} />
+        <GlobalText text={t("APPNAME")} style={styles.boldKokan} />
       </View>
 
       <View style={styles.middleFlex}>
-        <GlobalText text={STRING.SIGN_UP} style={styles.loginText} />
+        <GlobalText text={t("SIGN_UP")} style={styles.loginText} />
         <View style={{ alignItems: "center" }}>
           <View style={{ flexDirection: "row", justifyContent: "space-evenly", width: "100%" }}>
           </View>
@@ -386,7 +386,7 @@ const SignUp = ({ navigation, ...props }) => {
                 isSecure={field.isSecure}
                 isError={emailErr}
                 rightIcon={
-                  field.type == `${STRING.TYPE.PASSWORD}` &&
+                  field.type == `${t("TYPE.PASSWORD")}` &&
                   <Feather
                     name={field.isSecure ? "eye" : "eye-off"}
                     size={24}
@@ -429,7 +429,7 @@ const SignUp = ({ navigation, ...props }) => {
             <CheckBox title={t("PRIVACY_POLICY")} onPress={() => privacyClicked()} checked={isPrivacyChecked} />
           </View>
           <TextButton
-            title={STRING.BUTTON.REGISTER}
+            title={t("BUTTON.REGISTER")}
             buttonView={styles.buttonView}
             isDisabled={false}
             raised={true}
@@ -437,9 +437,9 @@ const SignUp = ({ navigation, ...props }) => {
           />
           <GlobalText text={errMsg} />
           <View style={styles.haveAcc}>
-            <GlobalText text={STRING.HAVE_ACC} />
+            <GlobalText text={t("HAVE_ACC")} />
             <TouchableOpacity onPress={() => signInScreen()}>
-              <GlobalText text={STRING.SIGN_IN} style={{ fontWeight: "bold" }} />
+              <GlobalText text={t("SIGN_IN")} style={{ fontWeight: "bold" }} />
             </TouchableOpacity>
           </View>
         </View>

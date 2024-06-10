@@ -13,8 +13,11 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import COLOR from "../../Services/Constants/COLORS"
 import { connect } from "react-redux"
 import { setLoader } from "../../Reducers/CommonActions"
+import { useTranslation } from "react-i18next"
 
 const CommentsSheet = ({ openCommentsSheet, closeCommentsSheet, reload, key, commentable_id, commentable_type, ...props }) => {
+    const { t } = useTranslation();
+
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
     const [isActive, setIsActive] = useState(false);
@@ -48,7 +51,7 @@ const CommentsSheet = ({ openCommentsSheet, closeCommentsSheet, reload, key, com
         props.setLoader(true);
         const newData = {
             comment: newComment,
-            commentable_type: STRING.TABLE.SITE,
+            commentable_type: t("TABLE.SITE"),
             commentable_id
         }
         comnPost("v2/comment", newData)
@@ -130,7 +133,7 @@ const CommentsSheet = ({ openCommentsSheet, closeCommentsSheet, reload, key, com
             <Loader />
             <View>
                 <View style={styles.commentsHeader}>
-                    <GlobalText text={STRING.HEADER.COMMENTS} style={styles.fontBold} />
+                    <GlobalText text={t("HEADER.COMMENTS")} style={styles.fontBold} />
                 </View>
             </View>
             <View style={{ overflowY: "scroll", zIndex: 100 }}>
@@ -143,8 +146,8 @@ const CommentsSheet = ({ openCommentsSheet, closeCommentsSheet, reload, key, com
                     />
                 ) : (
                     <View style={[styles.noComments, { flex: 1 }]}>
-                        <GlobalText text={STRING.NO_COMMENTS} style={styles.fontBold} />
-                        <GlobalText text={STRING.START_CONVO} />
+                        <GlobalText text={t("NO_COMMENTS")} style={styles.fontBold} />
+                        <GlobalText text={t("START_CONVO")} />
                     </View>
                 )}
                 <KeyboardAvoidingView

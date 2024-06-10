@@ -13,6 +13,7 @@ const PrivacyPolicy = ({ cancelClick, acceptClick }) => {
         <View style={{ height: DIMENSIONS.screenHeight - 300, width: DIMENSIONS.bannerWidth }}>
             <WebView
                 source={{ uri: 'https://dev.tourkokan.com/terms/true' }}
+                style={{ marginBottom: 10 }}
             />
             <View style={styles.spaceBetween}>
                 <TextButton

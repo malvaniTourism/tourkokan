@@ -7,8 +7,10 @@ import STRING from '../../Services/Constants/STRINGS'
 import TextButton from '../../Components/Customs/Buttons/TextButton'
 import { navigateTo } from '../../Services/CommonMethods'
 import DIMENSIONS from '../../Services/Constants/DIMENSIONS'
+import { useTranslation } from 'react-i18next'
 
 const AuthScreen = ({ navigation }) => {
+    const { t } = useTranslation();
 
     const goTo = (screen) => {
         navigateTo(navigation, screen)
@@ -21,27 +23,27 @@ const AuthScreen = ({ navigation }) => {
 
             <View style={styles.authScreenView}>
                 <View style={styles.loginAppName}>
-                    <GlobalText text={STRING.APPNAME} style={styles.loginName} />
+                    <GlobalText text={t("APPNAME")} style={styles.loginName} />
                 </View>
 
                 <View>
-                    <GlobalText text={STRING.EXPLORE} style={styles.exploreText} />
-                    <GlobalText text={STRING.KOKAN} style={styles.boldKokan} />
-                    <GlobalText text={STRING.COMPANION} style={styles.textLeft} />
+                    <GlobalText text={t("EXPLORE")} style={styles.exploreText} />
+                    <GlobalText text={t("KOKAN")} style={styles.boldKokan} />
+                    <GlobalText text={t("COMPANION")} style={styles.textLeft} />
                     <TextButton
-                        title={STRING.BUTTON.LOGIN}
+                        title={t("BUTTON.LOGIN")}
                         buttonView={styles.loginButton}
                         isDisabled={false}
                         raised={true}
-                        onPress={() => goTo(STRING.SCREEN.EMAIL)}
+                        onPress={() => goTo(t("SCREEN.EMAIL"))}
                     />
                     <TextButton
-                        title={STRING.BUTTON.SIGNUP}
+                        title={t("BUTTON.SIGNUP")}
                         buttonView={styles.signUpButton}
                         titleStyle={styles.buttonTitle}
                         isDisabled={false}
                         raised={true}
-                        onPress={() => goTo(STRING.SCREEN.SIGN_UP)}
+                        onPress={() => goTo(t("SCREEN.SIGN_UP"))}
                     />
                 </View>
             </View>

@@ -8,14 +8,17 @@ import styles from '../Styles';
 import STRING from '../../../Services/Constants/STRINGS';
 import COLOR from '../../../Services/Constants/COLORS';
 import GlobalText from '../../../Components/Customs/Text';
+import { useTranslation } from 'react-i18next';
 
 const EmailPassword = ({ setValue, getValue, Login, changeChoice }) => {
+    const { t } = useTranslation();
+
     const [showPassword, setShowPassword] = useState(false);
 
     return (
         <View style={{ justifyContent: "center", alignItems: "center" }}>
             <TouchableOpacity onPress={changeChoice}>
-                <GlobalText text={STRING.CHANGE} style={styles.changeOption} />
+                <GlobalText text={t("CHANGE")} style={styles.changeOption} />
             </TouchableOpacity>
             {SignInFields.map((field, index) => {
                 return (
@@ -33,7 +36,7 @@ const EmailPassword = ({ setValue, getValue, Login, changeChoice }) => {
                         inputContainerStyle={styles.inputContainerStyle}
                         isSecure={field.isSecure}
                         rightIcon={
-                            field.type == `${STRING.TYPE.PASSWORD}` &&
+                            field.type == `${t("TYPE.PASSWORD")}` &&
                             <Feather
                                 name={field.isSecure ? "eye" : "eye-off"}
                                 size={24}
@@ -49,7 +52,7 @@ const EmailPassword = ({ setValue, getValue, Login, changeChoice }) => {
                 );
             })}
             <TextButton
-                title={STRING.BUTTON.LOGIN}
+                title={t("BUTTON.LOGIN")}
                 buttonView={styles.buttonView}
                 containerStyle={styles.buttonContainer}
                 buttonStyle={styles.buttonStyle}

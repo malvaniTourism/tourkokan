@@ -12,9 +12,11 @@ import styles from "./Styles";
 import DialogBox from "react-native-dialogbox";
 import Geolocation from "@react-native-community/geolocation";
 import STRING from "../../Services/Constants/STRINGS";
+import { useTranslation } from "react-i18next";
 
 const LocationSheet = ({ openLocationSheet, closeLocationSheet, setCurrentCity }) => {
     const refDialogBox = useRef();
+    const { t } = useTranslation();
 
     const [searchValue, setSearchValue] = useState("");
     const [placesList, setPlacesList] = useState([]);
@@ -36,14 +38,14 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet, setCurrentCity }
         };
         if (val.length >= 1) {
             comnPost("v2/sites", data)
-            .then((res) => {
-                if (res && res.data.data)
-                    setPlacesList(res.data.data.data);
-                props.setLoader(false);
-            })
-            .catch((error) => {
-                props.setLoader(false);
-            });
+                .then((res) => {
+                    if (res && res.data.data)
+                        setPlacesList(res.data.data.data);
+                    props.setLoader(false);
+                })
+                .catch((error) => {
+                    props.setLoader(false);
+                });
         } else {
             setPlacesList([]);
         }
@@ -73,8 +75,8 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet, setCurrentCity }
                 const granted = await PermissionsAndroid.request(
                     PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
                     {
-                        title: STRING.LOCATION_ACCESS_REQUIRED,
-                        message: STRING.NEEDS_TO_ACCESS,
+                        title: t("LOCATION_ACCESS_REQUIRED"),
+                        message: t("NEEDS_TO_ACCESS"),
                     }
                 );
                 if (granted === PermissionsAndroid.RESULTS.GRANTED) {
@@ -82,7 +84,7 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet, setCurrentCity }
                     getOneTimeLocation();
                     subscribeLocation();
                 } else {
-                    setLocationStatus(STRING.PERMISSION_DENIED);
+                    setLocationStatus(t("PERMISSION_DENIED"));
                 }
             } catch (err) {
                 console.warn(err);
@@ -91,10 +93,10 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet, setCurrentCity }
     }
 
     const getOneTimeLocation = () => {
-        setLocationStatus(STRING.GETTING_LOCATION);
+        setLocationStatus(t("GETTING_LOCATION"));
         Geolocation.getCurrentPosition(
             (position) => {
-                setLocationStatus(STRING.YOU_ARE_HERE);
+                setLocationStatus(t("YOU_ARE_HERE"));
                 const currentLongitude = position.coords.longitude;
                 const currentLatitude = position.coords.latitude;
                 setCurrentLongitude(currentLongitude);
@@ -110,7 +112,7 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet, setCurrentCity }
     const subscribeLocation = () => {
         let WatchID = Geolocation.watchPosition(
             (position) => {
-                setLocationStatus(STRING.YOU_ARE_HERE);
+                setLocationStatus(t("YOU_ARE_HERE"));
                 const currentLongitude = position.coords.longitude;
                 const currentLatitude = position.coords.latitude;
                 setCurrentLongitude(currentLongitude);
@@ -158,7 +160,7 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet, setCurrentCity }
 
     const setAddress = async () => {
         if (props.currAddr !== undefined && props.currAddr !== null) {
-            await AsyncStorage.setItem(STRING.STORAGE.ADDRESS, JSON.stringify(props.currAddr))
+            await AsyncStorage.setItem(t("STORAGE.ADDRESS"), JSON.stringify(props.currAddr))
         }
     }
 
@@ -167,7 +169,7 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet, setCurrentCity }
 
         } else {
             const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-            if (granted === STRING.GRANTED) {
+            if (granted === t("GRANTED")) {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
                         setLatitude(position.coords.latitude)
@@ -191,7 +193,7 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet, setCurrentCity }
 
     const getAddress = (position) => {
         closeLocationSheet()
-        fetch("https://maps.googleapis.com/maps/api/geocode/json?address=" + position.coords.latitude + "," + position.coords.longitude + "&key=" + STRING.GOOGLE_API_KEY)
+        fetch("https://maps.googleapis.com/maps/api/geocode/json?address=" + position.coords.latitude + "," + position.coords.longitude + "&key=" + t("GOOGLE_API_KEY"))
             .then((response) => response.json())
             .then((json) => {
                 let currentcity = ""; let zip = "", state = "Maharashtra"; let locality = ""; let locality1 = ""; let locality2 = "";
@@ -254,7 +256,7 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet, setCurrentCity }
         <View>
             <View style={{ position: "relative" }}>
                 <Search
-                    placeholder={STRING.SEARCH_FOR_AREA}
+                    placeholder={t("SEARCH_FOR_AREA")}
                     value={searchValue}
                     onChangeText={(text) => searchPlace(text, "places")}
                 />
@@ -277,11 +279,11 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet, setCurrentCity }
                     size={DIMENSIONS.userIconSize}
                     style={{ marginRight: 20 }}
                 />
-                <GlobalText text={STRING.USE_CURRENT_LOCATION} style={styles.fontBold} />
+                <GlobalText text={t("USE_CURRENT_LOCATION")} style={styles.fontBold} />
             </TouchableOpacity>
 
             <View style={styles.recentsView}>
-                <GlobalText text={STRING.RECENT_LOCATION} style={styles.fontBold} />
+                <GlobalText text={t("RECENT_LOCATION")} style={styles.fontBold} />
                 <TouchableOpacity style={styles.recentsListView} onPress={() => closeLocationSheet()}>
                     <MaterialIcons
                         name="location-pin"
@@ -290,8 +292,8 @@ const LocationSheet = ({ openLocationSheet, closeLocationSheet, setCurrentCity }
                         style={{ marginRight: 20 }}
                     />
                     <View>
-                        <GlobalText text={STRING.CITY.KANKAVLI} />
-                        <GlobalText text={STRING.CITY.MAHARASHTRA} />
+                        <GlobalText text={t("CITY.KANKAVLI")} />
+                        <GlobalText text={t("CITY.MAHARASHTRA")} />
                     </View>
                 </TouchableOpacity>
             </View>

@@ -21,15 +21,18 @@ import Popup from "../../Components/Common/Popup";
 import Feather from "react-native-vector-icons/Feather";
 import STRING from "../../Services/Constants/STRINGS";
 import AppLogo from "../../Assets/Images/tourKokan.png";
+import { useTranslation } from "react-i18next";
 
 const SignIn = ({ navigation, ...props }) => {
+  const { t } = useTranslation();
+
   const [mobile, setMobile] = useState("");
   const [isAlert, setIsAlert] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
   const [successAlert, setSuccessAlert] = useState(false)
 
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => exitApp());
+    const backHandler = BackHandler.addEventListener(t("EVENT.HARDWARE_BACK_PRESS"), () => exitApp());
     return () => {
       backHandler.remove();
       setIsAlert(false);
@@ -75,7 +78,7 @@ const SignIn = ({ navigation, ...props }) => {
       .catch((err) => {
         props.setLoader(false);
         setIsAlert(true);
-        setAlertMessage(STRING.ALERT.WENT_WRONG);
+        setAlertMessage(t("ALERT.WENT_WRONG"));
       });
   };
 
@@ -85,15 +88,15 @@ const SignIn = ({ navigation, ...props }) => {
 
   const proceed = () => {
     setIsAlert(false)
-    navigateTo(navigation, STRING.SCREEN.VERIFY_OTP, { mobile });
+    navigateTo(navigation, t("SCREEN.VERIFY_OTP"), { mobile });
   }
 
   const signUpScreen = () => {
-    navigateTo(navigation, STRING.SCREEN.SIGN_UP);
+    navigateTo(navigation, t("SCREEN.SIGN_UP"));
   };
 
   const emailLogin = () => {
-    navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN);
+    navigateTo(navigation, t("SCREEN.AUTH_SCREEN"));
   };
 
   return (
@@ -111,7 +114,7 @@ const SignIn = ({ navigation, ...props }) => {
 
       <Loader />
       <View style={styles.loginContentsBox}>
-        <GlobalText text={STRING.LOG_IN} style={styles.loginText} />
+        <GlobalText text={t("LOG_IN")} style={styles.loginText} />
         {MobileNo.map((field, index) => {
           return (
             <TextField
@@ -130,7 +133,7 @@ const SignIn = ({ navigation, ...props }) => {
           );
         })}
         <TextButton
-          title={STRING.BUTTON.SEND_OTP}
+          title={t("BUTTON.SEND_OTP")}
           buttonView={styles.buttonView}
           containerStyle={styles.buttonContainer}
           buttonStyle={styles.buttonStyle}
@@ -141,9 +144,9 @@ const SignIn = ({ navigation, ...props }) => {
         />
 
         <View style={{ marginTop: 20, alignItems: "center" }}>
-          <GlobalText text={STRING.OR} style={styles.whiteText} />
+          <GlobalText text={t("OR")} style={styles.whiteText} />
           <TextButton
-            title={STRING.BUTTON.LOGIN_WITH_EMAIL}
+            title={t("BUTTON.LOGIN_WITH_EMAIL")}
             buttonView={styles.buttonView}
             containerStyle={styles.buttonContainer}
             buttonStyle={styles.buttonStyle}
@@ -155,9 +158,9 @@ const SignIn = ({ navigation, ...props }) => {
         </View>
 
         <View style={styles.haveAcc}>
-          <GlobalText style={styles.whiteText} text={STRING.DONT_HAVE_ACC} />
+          <GlobalText style={styles.whiteText} text={t("DONT_HAVE_ACC")} />
           <TouchableOpacity onPress={() => signUpScreen()}>
-            <GlobalText style={styles.whiteText} text={STRING.SIGN_UP} />
+            <GlobalText style={styles.whiteText} text={t("SIGN_UP")} />
           </TouchableOpacity>
         </View>
         <Popup

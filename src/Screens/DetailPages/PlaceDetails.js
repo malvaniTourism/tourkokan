@@ -17,10 +17,13 @@ import CityCard from "../../Components/Cards/CityCard";
 import GlobalText from "../../Components/Customs/Text";
 import STRING from "../../Services/Constants/STRINGS";
 import CommentsSheet from "../../Components/Common/CommentsSheet";
+import { useTranslation } from "react-i18next";
 // import SkeletonContent from "react-native-skeleton-content";
 
 const PlaceDetails = ({ navigation, route, ...props }) => {
+    const { t } = useTranslation();
     const refRBSheet = useRef();
+
     const [place, setPlace] = useState([]); // State to store city
     const [error, setError] = useState(null); // State to store error message
     const [isLoading, setIsLoading] = useState(true)
@@ -63,7 +66,7 @@ const PlaceDetails = ({ navigation, route, ...props }) => {
     return (
         <ScrollView>
             <Header
-                name={STRING.HEADER.PLACE}
+                name={t("HEADER.PLACE")}
                 startIcon={
                     <Ionicons
                         name="chevron-back-outline"

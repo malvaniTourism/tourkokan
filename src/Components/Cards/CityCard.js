@@ -12,8 +12,11 @@ import StarRating from "react-native-star-rating";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { comnPost } from "../../Services/Api/CommonServices";
 import STRING from "../../Services/Constants/STRINGS";
+import { useTranslation } from "react-i18next";
 
 const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
+    const { t } = useTranslation();
+
     const [isVisible, setIsVisible] = useState(false)
     const [isFav, setIsFav] = useState(data?.is_favorite)
     const [rating, setRating] = useState(data?.rating_avg_rate)
@@ -27,8 +30,8 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
 
     const onHeartClick = async () => {
         let placeData = {
-            user_id: await AsyncStorage.getItem(STRING.STORAGE.USER_ID),
-            favouritable_type: STRING.TABLE.SITE,
+            user_id: await AsyncStorage.getItem(t("STORAGE.USER_ID")),
+            favouritable_type: t("TABLE.SITE"),
             favouritable_id: data.id
         }
         setIsFav(!isFav)
@@ -64,8 +67,8 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
     const onStarRatingPress = async (rate) => {
         setRate(rate)
         const placeData = {
-            user_id: await AsyncStorage.getItem(STRING.STORAGE.USER_ID),
-            rateable_type: STRING.TABLE.SITE,
+            user_id: await AsyncStorage.getItem(t("STORAGE.USER_ID")),
+            rateable_type: t("TABLE.SITE"),
             rateable_id: data.id,
             rate
         }
@@ -96,8 +99,8 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
                     }
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.cityLikeView}>
-                    <GlobalText text={commentCount} style={styles.avgRating} />
-                    <Octicons name="comment" color={COLOR.themeComicBlue} size={DIMENSIONS.iconSize} />
+                    <GlobalText text={commentCount} style={styles.commentCount} />
+                    <Octicons name="comment" color={COLOR.black} size={DIMENSIONS.iconSize} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.cityLikeView}>
                     {rating > 0 &&
@@ -131,7 +134,7 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
                     <GlobalText text={data.tag_line} style={styles.boldText} />
                 </View>
             </View>
-            <ComingSoon message={STRING.COMING_SOON} visible={isVisible} />
+            <ComingSoon message={t("COMING_SOON")} visible={isVisible} />
         </TouchableOpacity>
     )
 }

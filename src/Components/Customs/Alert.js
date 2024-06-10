@@ -4,8 +4,11 @@ import styles from "./Styles";
 import TextButton from "./Buttons/TextButton";
 import GlobalText from "./Text";
 import STRING from "../../Services/Constants/STRINGS";
+import { useTranslation } from "react-i18next";
 
 const Alert = ({ alertMessage, closeAlert, successAlert, proceed }) => {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.alertBackdrop}>
       <View style={styles.alertContainer}>
@@ -15,9 +18,9 @@ const Alert = ({ alertMessage, closeAlert, successAlert, proceed }) => {
         <View style={styles.alertButtonView}>
           {
             successAlert ?
-              <TextButton containerStyle={styles.alertContainerStyle} buttonStyle={styles.alertButtonStyle} title={STRING.BUTTON.OK} onPress={proceed} />
+              <TextButton containerStyle={styles.alertContainerStyle} buttonStyle={styles.alertButtonStyle} title={t("BUTTON.OK")} onPress={proceed} />
               :
-              <TextButton containerStyle={styles.alertContainerStyle} buttonStyle={styles.alertButtonStyle} title={STRING.BUTTON.OK} onPress={closeAlert} />
+              <TextButton containerStyle={styles.alertContainerStyle} buttonStyle={styles.alertButtonStyle} title={t("BUTTON.OK")} onPress={closeAlert} />
           }
         </View>
       </View>

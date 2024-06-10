@@ -6,8 +6,11 @@ import { Text, Card } from "@rneui/base";
 import COLOR from "../../Services/Constants/COLORS";
 import GlobalText from "../Customs/Text";
 import STRING from "../../Services/Constants/STRINGS";
+import { useTranslation } from "react-i18next";
 
 const TabView = ({ data }) => {
+    const {t} = useTranslation();
+
     const [selectedTab, setSelectedTab] = useState(0);
 
     const handleTabChange = (index) => {
@@ -23,7 +26,7 @@ const TabView = ({ data }) => {
 
     const renderEmptyPlace = () => (
         <View style={styles.emptyPlace}>
-            <GlobalText text={STRING.ALERT.ADDING_SOON} />
+            <GlobalText text={t("ALERT.ADDING_SOON")} />
         </View>
     );
 

@@ -15,8 +15,8 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { useTranslation } from 'react-i18next';
 
 const RouteHeadCard = ({ data, cardClick, style, bus }) => {
-    let imagePath = `../../Assets/Images/Buses/OrdinaryExpress.png`;
     const { t } = useTranslation();
+    let imagePath = `../../Assets/Images/Buses/OrdinaryExpress.png`;
 
     return (
         <TouchableOpacity style={[styles.routeHeadCard, style]} onPress={() => cardClick()}>
@@ -40,7 +40,7 @@ const RouteHeadCard = ({ data, cardClick, style, bus }) => {
                                     size={DIMENSIONS.smallIcon}
                                     style={styles.routeCardIcons}
                                 />
-                                <GlobalText text={`${data.distance?.toFixed(2)} ${STRING.KM}`} />
+                                <GlobalText text={`${data.distance?.toFixed(2)} ${t("KM")}`} />
                             </View>
                             <View style={[styles.flexRow]}>
                                 <MaterialCommunityIcons
@@ -49,7 +49,7 @@ const RouteHeadCard = ({ data, cardClick, style, bus }) => {
                                     size={DIMENSIONS.smallIcon}
                                     style={styles.routeCardIcons}
                                 />
-                                <GlobalText text={`${data.route_stops.length} ${STRING.STOPS}`} />
+                                <GlobalText text={`${data.route_stops.length} ${t("STOPS")}`} />
                             </View>
                         </View>
                         <View style={{ flexDirection: "row", justifyContent: "space-between", width: "95%" }}>
@@ -69,7 +69,7 @@ const RouteHeadCard = ({ data, cardClick, style, bus }) => {
                                     size={DIMENSIONS.smallIcon}
                                     style={styles.routeCardIcons}
                                 />
-                                <GlobalText text={`${STRING.NON_RESERVATION}`} />
+                                <GlobalText text={`${t("NON_RESERVATION")}`} />
                             </View>
                         </View>
                     </View>

@@ -13,6 +13,7 @@ import MapView, { Marker, Polygon } from "react-native-maps";
 import Geolocation from "react-native-geolocation-service";
 import STRING from "../Services/Constants/STRINGS";
 import COLOR from "../Services/Constants/COLORS";
+import { useTranslation } from "react-i18next";
 
 const screenWidth = Dimensions.get("window").width;
 const districtCoordinates = [
@@ -24,6 +25,8 @@ const districtCoordinates = [
 ];
 
 const MapScreen = ({ navigation }) => {
+  const {t} = useTranslation();
+
   const districtCenter = { latitude: 16.349219, longitude: 73.559413 };
   const [currentLocation, setCurrentLocation] = useState(null);
 
@@ -31,6 +34,7 @@ const MapScreen = ({ navigation }) => {
 
   const imageAspectRatio = 16 / 9; // Replace this with the actual aspect ratio of your images if they are not fixed
   const imageHeight = screenWidth / imageAspectRatio;
+
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
     checkLogin(navigation)
@@ -40,7 +44,7 @@ const MapScreen = ({ navigation }) => {
         setCurrentLocation({ latitude, longitude });
       },
       (error) => {
-        console.log(STRING.ALERT.ERROR_CURRENT_LOCATION, error);
+        console.log(t("ALERT.ERROR_CURRENT_LOCATION"), error);
       },
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );

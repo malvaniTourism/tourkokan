@@ -26,8 +26,11 @@ import STRING from "../Services/Constants/STRINGS";
 import NetInfo from "@react-native-community/netinfo";
 import CheckNet from "../Components/Common/CheckNet";
 import Feather from "react-native-vector-icons/Feather";
+import { useTranslation } from "react-i18next";
 
 const Profile = ({ navigation, ...props }) => {
+  const { t } = useTranslation();
+
   const [profile, setProfile] = useState([]);
   const [error, setError] = useState(null);
   const [name, setName] = useState("");
@@ -52,7 +55,7 @@ const Profile = ({ navigation, ...props }) => {
 
     const unsubscribe = NetInfo.addEventListener(state => {
       setOffline(false)
-      dataSync(STRING.STORAGE.PROFILE_RESPONSE, getUserProfile())
+      dataSync(t("STORAGE.PROFILE_RESPONSE"), getUserProfile())
         .then(resp => {
           let res = JSON.parse(resp)
           if (res.data && res.data.data) {
@@ -66,7 +69,7 @@ const Profile = ({ navigation, ...props }) => {
           }
           props.setLoader(false);
         })
-      // removeFromStorage(STRING.STORAGE.LANDING_RESPONSE)
+      // removeFromStorage(t("STORAGE.LANDING_RESPONSE"))
     });
 
     return () => {
@@ -79,7 +82,7 @@ const Profile = ({ navigation, ...props }) => {
     comnPost("v2/user-profile", props.access_token)
       .then((res) => {
         if (res && res.data.data)
-          saveToStorage(STRING.STORAGE.PROFILE_RESPONSE, JSON.stringify(res))
+          saveToStorage(t("STORAGE.PROFILE_RESPONSE"), JSON.stringify(res))
         setProfile(res.data.data); // Update places state with response data
         props.setLoader(false);
         setName(res.data.data.name)
@@ -131,7 +134,7 @@ const Profile = ({ navigation, ...props }) => {
   const handleImageUpload = () => {
     launchImageLibrary(
       {
-        mediaType: STRING.TYPE.PHOTO,
+        mediaType: t("TYPE.PHOTO"),
         includeBase64: true, // Set to true to include base64 data
         maxHeight: 200,
         maxWidth: 200,
@@ -166,14 +169,14 @@ const Profile = ({ navigation, ...props }) => {
       })
       .catch(err => {
         setIsAlert(true);
-        setAlertMessage(STRING.ALERT.FAILED);
+        setAlertMessage(t("ALERT.FAILED"));
         props.setLoader(false);
       })
   }
 
   const closePopup = () => {
     if (isSuccess) {
-      navigateTo(navigation, STRING.SCREEN.PROFILE_VIEW);
+      navigateTo(navigation, t("SCREEN.PROFILE_VIEW"));
     }
     setIsAlert(false)
   }
@@ -212,7 +215,7 @@ const Profile = ({ navigation, ...props }) => {
                 size={35}
                 color={COLOR.black}
               />
-              <GlobalText text={STRING.BUTTON.CLICK_TO_UPDATE} />
+              <GlobalText text={t("BUTTON.CLICK_TO_UPDATE")} />
             </View>
           </TouchableOpacity>
           <View style={styles.profileDetails}>
@@ -232,7 +235,7 @@ const Profile = ({ navigation, ...props }) => {
                   inputContainerStyle={styles.profileContainerStyle}
                   isSecure={field.isSecure}
                   rightIcon={
-                    field.type == `${STRING.TYPE.PASSWORD}` &&
+                    field.type == `${t("TYPE.PASSWORD")}` &&
                     <Feather
                       name={field.isSecure ? "eye" : "eye-off"}
                       size={24}
@@ -248,7 +251,7 @@ const Profile = ({ navigation, ...props }) => {
               );
             })}
             <TextButton
-              title={STRING.BUTTON.UPDATE}
+              title={t("BUTTON.UPDATE")}
               buttonView={styles.buttonView}
               containerStyle={styles.buttonContainer}
               buttonStyle={styles.profileButtonStyle}

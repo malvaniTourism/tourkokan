@@ -168,12 +168,12 @@ const styles = StyleSheet.create({
   },
   routesSwapIcon: {
     position: "absolute",
-    top: 50,
+    top: 45,
     right: 40
   },
   routesRefreshIcon: {
     position: "absolute",
-    top: 50,
+    top: 45,
   },
   errorText: {
     color: COLOR.red,

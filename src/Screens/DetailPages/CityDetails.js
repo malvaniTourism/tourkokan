@@ -30,9 +30,12 @@ import { Skeleton } from "@rneui/themed";
 import MapView, { Marker, Polygon } from "react-native-maps";
 import MapContainer from "../../Components/Common/MapContainer";
 import MapSkeleton from "../../Components/Common/MapSkeleton";
+import { useTranslation } from "react-i18next";
 
 const CityDetails = ({ navigation, route, ...props }) => {
+    const { t } = useTranslation();
     const refRBSheet = useRef();
+
     const [city, setCity] = useState([]); // State to store city
     const [error, setError] = useState(null); // State to store error message
     const [cityId, setCityId] = useState(route.params.id);
@@ -99,8 +102,8 @@ const CityDetails = ({ navigation, route, ...props }) => {
     const onHeartClick = async () => {
         // setLoader(true)
         let placeData = {
-            user_id: await AsyncStorage.getItem(STRING.STORAGE.USER_ID),
-            favouritable_type: STRING.TABLE.SITES,
+            user_id: await AsyncStorage.getItem(t("STORAGE.USER_ID")),
+            favouritable_type: t("TABLE.SITES"),
             favouritable_id: city.id
         }
         setIsFav(!isFav)
@@ -117,8 +120,8 @@ const CityDetails = ({ navigation, route, ...props }) => {
     const onStarRatingPress = async (rate) => {
         setRating(rating)
         const placeData = {
-            user_id: await AsyncStorage.getItem(STRING.STORAGE.USER_ID),
-            rateable_type: STRING.TABLE.SITE,
+            user_id: await AsyncStorage.getItem(t("STORAGE.USER_ID")),
+            rateable_type: t("TABLE.SITE"),
             rateable_id: city.id,
             rate
         }
@@ -163,7 +166,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
     const renderTruncatedFooter = (handlePress) => {
         return (
             <TextButton
-                title={STRING.BUTTON.READ_MORE}
+                title={t("BUTTON.READ_MORE")}
                 onPress={handlePress}
                 buttonView={styles.readMoreStyle}
                 titleStyle={styles.titleStyle}
@@ -181,7 +184,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
     const renderRevealedFooter = (handlePress) => {
         return (
             <TextButton
-                title={STRING.BUTTON.READ_LESS}
+                title={t("BUTTON.READ_LESS")}
                 onPress={handlePress}
                 buttonView={styles.readMoreStyle}
                 titleStyle={styles.titleStyle}
@@ -327,7 +330,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
                         </View>
 
                         <View style={styles.sectionView}>
-                            <GlobalText text={STRING.SCREEN.PLACES} style={styles.sectionTitle} />
+                            <GlobalText text={t("SCREEN.PLACES")} style={styles.sectionTitle} />
                             <ScrollView showsHorizontalScrollIndicator={false}>
                                 {
                                     isLoading ?
@@ -357,7 +360,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
                 height={DIMENSIONS.halfHeight + 50}
                 Component={<CommentsSheet
                     key={city.comment?.length}
-                    commentable_type={STRING.TABLE.SITE}
+                    commentable_type={t("TABLE.SITE")}
                     commentable_id={city.id}
                     reload={() => getDetails()}
                     setLoader={(v) => setLoader(v)}

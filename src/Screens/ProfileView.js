@@ -64,17 +64,17 @@ const ProfileView = ({ navigation, route, ...props }) => {
   const [uploadImage, setUploadImage] = useState(null);
 
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => backPress());
+    const backHandler = BackHandler.addEventListener(t("EVENT.HARDWARE_BACK_PRESS"), () => backPress());
     // requestLocationPermission();
     checkLogin(navigation)
     // getUserProfile();
-    const unsubscribeFocus = navigation.addListener(STRING.EVENT.FOCUS, () => {
+    const unsubscribeFocus = navigation.addListener(t("EVENT.FOCUS"), () => {
       getUserProfile();
     });
 
     const unsubscribe = NetInfo.addEventListener(state => {
       setOffline(false)
-      dataSync(STRING.STORAGE.PROFILE_RESPONSE, getUserProfile())
+      dataSync(t("STORAGE.PROFILE_RESPONSE"), getUserProfile())
         .then(resp => {
           let res = JSON.parse(resp)
           if (res.data && res.data.data) {
@@ -84,7 +84,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
           }
           props.setLoader(false);
         })
-      // removeFromStorage(STRING.STORAGE.LANDING_RESPONSE)
+      // removeFromStorage(t("STORAGE.LANDING_RESPONSE"))
     });
     return () => {
       Geolocation.clearWatch(watchID);
@@ -111,8 +111,8 @@ const ProfileView = ({ navigation, route, ...props }) => {
         const granted = await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
           {
-            title: STRING.LOCATION_ACCESS_REQUIRED,
-            message: STRING.NEEDS_TO_ACCESS,
+            title: t("LOCATION_ACCESS_REQUIRED"),
+            message: t("NEEDS_TO_ACCESS"),
           }
         );
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
@@ -120,7 +120,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
           getOneTimeLocation();
           subscribeLocation();
         } else {
-          setLocationStatus(STRING.PERMISSION_DENIED);
+          setLocationStatus(t("PERMISSION_DENIED"));
         }
       } catch (err) {
         console.warn(err);
@@ -129,11 +129,11 @@ const ProfileView = ({ navigation, route, ...props }) => {
   };
 
   const getOneTimeLocation = () => {
-    setLocationStatus(STRING.GETTING_LOCATION);
+    setLocationStatus(t("GETTING_LOCATION"));
     Geolocation.getCurrentPosition(
       //Will give you the current location
       (position) => {
-        setLocationStatus(STRING.YOU_ARE_HERE);
+        setLocationStatus(t("YOU_ARE_HERE"));
         setInitialLocation(position.coords.longitude, position.coords.latitude)
         const currentLongitude = position.coords.longitude;
         //getting the Longitude from the location json
@@ -154,7 +154,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
   const subscribeLocation = () => {
     let WatchID = Geolocation.watchPosition(
       (position) => {
-        setLocationStatus(STRING.YOU_ARE_HERE);
+        setLocationStatus(t("YOU_ARE_HERE"));
         //Will give you the location on location change
         const currentLongitude = position.coords.longitude;
         //getting the Longitude from the location json
@@ -193,7 +193,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
     comnPost("v2/user-profile", props.access_token, navigation)
       .then((res) => {
         if (res && res.data.data)
-        saveToStorage(STRING.STORAGE.PROFILE_RESPONSE, JSON.stringify(res))
+          saveToStorage(t("STORAGE.PROFILE_RESPONSE"), JSON.stringify(res))
         setProfile(res.data.data); // Update places state with response data
         setOption(0);
         setLocationMap(res.data.data.addresses[0].latitude, res.data.data.addresses[0].longitude)
@@ -212,7 +212,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
         if (res.data.success) {
           props.setLoader(false);
           AsyncStorage.clear()
-          navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN);
+          navigateTo(navigation, t("SCREEN.AUTH_SCREEN"));
         }
       })
       .catch((error) => {
@@ -234,7 +234,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
   const handleImageUpload = () => {
     launchImageLibrary(
       {
-        mediaType: STRING.TYPE.PHOTO,
+        mediaType: t("TYPE.PHOTO"),
         includeBase64: true, // Set to true to include base64 data
         maxHeight: 200,
         maxWidth: 200,
@@ -326,10 +326,10 @@ const ProfileView = ({ navigation, route, ...props }) => {
       </View>
 
       <Overlay style={styles.locationModal} isVisible={showLocModal} onBackdropPress={() => setShowLocModal(false)}>
-        <GlobalText text={STRING.SET_LOCATION} style={styles.locationModal} />
+        <GlobalText text={t("SET_LOCATION")} style={styles.locationModal} />
         <View>
           <TextButton
-            title={STRING.BUTTON.HOME_LOCATION}
+            title={t("BUTTON.HOME_LOCATION")}
             buttonView={styles.locBtnStyle}
             titleStyle={styles.locButtonTitle}
             raised={false}
@@ -343,7 +343,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
             }
           />
           <TextButton
-            title={STRING.BUTTON.CURRENT_LOCATION}
+            title={t("BUTTON.CURRENT_LOCATION")}
             buttonView={styles.locBtnStyle}
             titleStyle={styles.locButtonTitle}
             raised={false}

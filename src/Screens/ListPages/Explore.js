@@ -34,7 +34,7 @@ const Explore = ({ route, navigation, ...props }) => {
   const [places, setPlaces] = useState([]);
   const [cities, setCities] = useState([]);
   const [error, setError] = useState(null);
-  const [isEnabled, setIsEnabled] = useState(route.name == STRING.SCREEN.CITIES)
+  const [isEnabled, setIsEnabled] = useState(route.name == t("SCREEN.CITIES"))
   const [isLandingDataFetched, setIsLandingDataFetched] = useState(false);
   const [nextPage, setNextPage] = useState(1)
   const [offline, setOffline] = useState(false)
@@ -51,7 +51,7 @@ const Explore = ({ route, navigation, ...props }) => {
     const unsubscribe = NetInfo.addEventListener(state => {
       setOffline(false)
 
-      dataSync(STRING.STORAGE.CITIES_RESPONSE, getCities())
+      dataSync(t("STORAGE.CITIES_RESPONSE"), getCities())
         .then(resp => {
           let res = JSON.parse(resp)
           if (res.data && res.data.data) {
@@ -61,7 +61,7 @@ const Explore = ({ route, navigation, ...props }) => {
           }
         })
 
-      // dataSync(STRING.STORAGE.PLACES_RESPONSE, getPlaces())
+      // dataSync(t("STORAGE.PLACES_RESPONSE"), getPlaces())
       //   .then(resp => {
       //     let res = JSON.parse(resp)
       //     if (res.data && res.data.data) {
@@ -70,7 +70,7 @@ const Explore = ({ route, navigation, ...props }) => {
       //       setOffline(true)
       //     }
       //   })
-      // removeFromStorage(STRING.STORAGE.LANDING_RESPONSE)
+      // removeFromStorage(t("STORAGE.LANDING_RESPONSE"))
     });
 
     return () => {
@@ -85,7 +85,7 @@ const Explore = ({ route, navigation, ...props }) => {
       .then((res) => {
         checkTokenExpired(res)
         if (res && res.data.data)
-          saveToStorage(STRING.STORAGE.PLACES_RESPONSE, JSON.stringify(res))
+          saveToStorage(t("STORAGE.PLACES_RESPONSE"), JSON.stringify(res))
         setPlaces([...places, ...res.data.data.data]);
         setIsLoading(false);
         let nextUrl = res.data.data.next_page_url
@@ -106,7 +106,7 @@ const Explore = ({ route, navigation, ...props }) => {
     comnPost("v2/sites", data, navigation)
       .then((res) => {
         if (res && res.data.data)
-          saveToStorage(STRING.STORAGE.CITIES_RESPONSE, JSON.stringify(res))
+          saveToStorage(t("STORAGE.CITIES_RESPONSE"), JSON.stringify(res))
         setCities(res.data.data.data);
         setSelectedCity(res.data.data.data[0].name)
         setSelectedCityId(res.data.data.data[0].id)
@@ -125,7 +125,7 @@ const Explore = ({ route, navigation, ...props }) => {
   }
 
   const seeMore = () => {
-    navigateTo(navigation, STRING.SCREEN.CITY_LIST, { parent_id: selectedCityId })
+    navigateTo(navigation, t("SCREEN.CITY_LIST"), { parent_id: selectedCityId })
   }
 
   const renderItem = ({ item }) => {
@@ -143,14 +143,14 @@ const Explore = ({ route, navigation, ...props }) => {
   };
 
   const getCityDetails = (id) => {
-    navigateTo(navigation, STRING.SCREEN.CITY_DETAILS, { id })
+    navigateTo(navigation, t("SCREEN.CITY_DETAILS"), { id })
   }
 
   return (
     <View style={{ flex: 1, justifyContent: "flex-start" }}>
       <CheckNet isOff={offline} />
       <Header
-        name={STRING.SCREEN.CITIES}
+        name={t("SCREEN.CITIES")}
         startIcon={
           <Ionicons
             name="chevron-back-outline"
@@ -232,7 +232,7 @@ const Explore = ({ route, navigation, ...props }) => {
                 keyExtractor={(item) => item.id}
                 data={selectedSites}
                 renderItem={() => (
-                  <CityCardSkeleton type={STRING.HEADER.PLACE} />
+                  <CityCardSkeleton type={t("HEADER.PLACE")} />
                 )}
                 numColumns={2}
               />
@@ -249,7 +249,7 @@ const Explore = ({ route, navigation, ...props }) => {
               </View>
               :
               <View style={{ marginTop: 20 }}>
-                <GlobalText text={STRING.ADDED} style={styles.boldText} />
+                <GlobalText text={t("ADDED")} style={styles.boldText} />
               </View>
         }
       </View>

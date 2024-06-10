@@ -13,8 +13,11 @@ import GlobalText from "../Customs/Text";
 import { navigateTo } from "../../Services/CommonMethods";
 import ComingSoon from "../Common/ComingSoon";
 import STRING from "../../Services/Constants/STRINGS";
+import { useTranslation } from "react-i18next";
 
 const PlaceCard = ({ data, reload, navigation }) => {
+    const { t } = useTranslation();
+
     const [isFav, setIsFav] = useState(data.is_favorite)
     const [isLiked, setIsLiked] = useState(false)
     const [rating, setRating] = useState(3.5)
@@ -22,8 +25,8 @@ const PlaceCard = ({ data, reload, navigation }) => {
 
     const onHeartClick = async () => {
         let cityData = {
-            user_id: await AsyncStorage.getItem(STRING.STORAGE.USER_ID),
-            favouritable_type: STRING.TABLE.SITES,
+            user_id: await AsyncStorage.getItem(t("STORAGE.USER_ID")),
+            favouritable_type: t("TABLE.SITES"),
             favouritable_id: data.id
         }
         setIsFav(!isFav)
@@ -38,17 +41,17 @@ const PlaceCard = ({ data, reload, navigation }) => {
     const onStarRatingPress = async (rate) => {
         setRating(rate)
         const placeData = {
-            user_id: await AsyncStorage.getItem(STRING.STORAGE.USER_ID),
-            rateable_type: STRING.TABLE.SITE,
+            user_id: await AsyncStorage.getItem(t("STORAGE.USER_ID")),
+            rateable_type: t("TABLE.SITE"),
             rateable_id: data.id,
             rate
         }
         comnPost('v2/addUpdateRating', placeData)
-        .then(res => {
-            reload()
-        })
-        .catch(err => {
-        })
+            .then(res => {
+                reload()
+            })
+            .catch(err => {
+            })
     }
 
     const onLikeClick = () => {
@@ -57,7 +60,7 @@ const PlaceCard = ({ data, reload, navigation }) => {
     }
 
     const getPlace = (id) => {
-        // navigateTo(navigation, STRING.SCREEN.PLACE_DETAILS, { id })
+        // navigateTo(navigation, t("SCREEN.PLACE_DETAILS"), { id })
         // setIsVisible(true)
         // setTimeout(() => {
         //     setIsVisible(false)
@@ -116,7 +119,7 @@ const PlaceCard = ({ data, reload, navigation }) => {
                     </View>
                 </View>
             </View>
-            <ComingSoon message={STRING.COMING_SOON} visible={isVisible} />
+            <ComingSoon message={t("COMING_SOON")} visible={isVisible} />
         </View>
     )
 }

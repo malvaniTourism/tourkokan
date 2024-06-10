@@ -19,8 +19,11 @@ import STRING from "../../Services/Constants/STRINGS";
 import NetInfo from "@react-native-community/netinfo";
 import CheckNet from "../../Components/Common/CheckNet";
 import SearchPanel from "../../Components/Common/SearchPanel";
+import { useTranslation } from "react-i18next";
 
 const SearchList = ({ navigation, route, ...props }) => {
+  const { t } = useTranslation();
+
   const [list, setList] = useState([]);
   const [offline, setOffline] = useState(false);
   const [nextPage, setNextPage] = useState(1);
@@ -34,7 +37,7 @@ const SearchList = ({ navigation, route, ...props }) => {
     const unsubscribe = NetInfo.addEventListener(state => {
       setOffline(false)
 
-      dataSync(STRING.STORAGE.ROUTES_RESPONSE, searchRoute())
+      dataSync(t("STORAGE.ROUTES_RESPONSE"), searchRoute())
         .then(resp => {
           let res = JSON.parse(resp)
           if (res.data && res.data.data) {
@@ -44,7 +47,7 @@ const SearchList = ({ navigation, route, ...props }) => {
           }
           props.setLoader(false);
         })
-      // removeFromStorage(STRING.STORAGE.LANDING_RESPONSE)
+      // removeFromStorage(t("STORAGE.LANDING_RESPONSE"))
     });
 
     return () => {
@@ -54,7 +57,7 @@ const SearchList = ({ navigation, route, ...props }) => {
   }, []);
 
   const getRoutesList = (item) => {
-    navigateTo(navigation, STRING.SCREEN.ROUTES_LIST, { item });
+    navigateTo(navigation, t("SCREEN.ROUTES_LIST"), { item });
   };
 
   const searchRoute = (a, b) => {
@@ -68,7 +71,7 @@ const SearchList = ({ navigation, route, ...props }) => {
         .then((res) => {
           if (res.data.success) {
             if (res && res.data.data)
-              saveToStorage(STRING.STORAGE.ROUTES_RESPONSE, JSON.stringify(res))
+              saveToStorage(t("STORAGE.ROUTES_RESPONSE"), JSON.stringify(res))
             let myNextUrl = res.data.data.next_page_url
             setNextUrl(myNextUrl)
             setList([...list, ...res.data.data.data]);
@@ -110,7 +113,7 @@ const SearchList = ({ navigation, route, ...props }) => {
     <View>
       <CheckNet isOff={offline} />
       <Header
-        name={STRING.HEADER.ROUTES}
+        name={t("HEADER.ROUTES")}
         goBack={() => backPage(navigation)}
         startIcon={
           <Ionicons
@@ -123,7 +126,7 @@ const SearchList = ({ navigation, route, ...props }) => {
       />
       <Loader />
       <View style={{ alignItems: "center" }}>
-      {/* <SearchPanel navigation={navigation} from={STRING.SCREEN.SEARCH_LIST} onSwap={(a, b) => searchRoute(a, b)} /> */}
+        {/* <SearchPanel navigation={navigation} from={t("SCREEN.SEARCH_LIST")} onSwap={(a, b) => searchRoute(a, b)} /> */}
       </View>
       <SafeAreaView style={{ paddingBottom: 150 }}>
         {list.length > 0 ? (
@@ -137,7 +140,7 @@ const SearchList = ({ navigation, route, ...props }) => {
             )}
           />
         ) : (
-          <GlobalText text={STRING.NO_ROUTES} />
+          <GlobalText text={t("NO_ROUTES")} />
         )}
       </SafeAreaView>
     </View>

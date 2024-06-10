@@ -15,8 +15,11 @@ import Loader from "../Components/Customs/Loader";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { checkLogin, goBackHandler, navigateTo } from "../Services/CommonMethods";
 import STRING from "../Services/Constants/STRINGS";
+import { useTranslation } from "react-i18next";
 
 const SearchPlace = ({ navigation, route, ...props }) => {
+  const { t } = useTranslation();
+
   const [searchValue, setSearchValue] = useState("");
   const [placesList, setPlacesList] = useState([]);
   const [nextPage, setNextPage] = useState(1);
@@ -79,13 +82,13 @@ const SearchPlace = ({ navigation, route, ...props }) => {
   };
 
   const setPlace = (place) => {
-    if (route.params.type == STRING.LABEL.SOURCE) {
+    if (route.params.type == t("LABEL.SOURCE")) {
       props.setSource(place);
     } else {
       props.setDestination(place);
     }
     setSearchValue("");
-    navigateTo(navigation, STRING.SCREEN.HOME);
+    navigateTo(navigation, t("SCREEN.HOME"));
   };
 
   const goToNext = () => {

@@ -17,10 +17,13 @@ import BusImg from "../Assets/Images/B3.svg"
 import STRING from "../Services/Constants/STRINGS";
 import ExploreGrid from "../Screens/ListPages/ExploreGrid";
 import AllRoutesSearch from "../Screens/ListPages/AllRoutesSearch";
+import { useTranslation } from "react-i18next";
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
+  const { t } = useTranslation();
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -31,10 +34,10 @@ const TabNavigator = () => {
       }}
     >
       <Tab.Screen
-        name={STRING.SCREEN.HOME}
+        name={t("SCREEN.HOME")}
         component={HomeScreen}
         options={{
-          tabBarLabel: `${STRING.SCREEN.HOME}`,
+          tabBarLabel: `${t("SCREEN.HOME")}`,
           tabBarIcon: ({ color, size }) => (
             <Ionicons
               name="home-outline"
@@ -46,11 +49,11 @@ const TabNavigator = () => {
       />
 
       <Tab.Screen
-        name={STRING.SCREEN.CITIES}
+        name={t("SCREEN.CITIES")}
         component={Explore}
         options={{
-          pageName: `${STRING.SCREEN.EXPLORE}`,
-          tabBarLabel: `${STRING.SCREEN.CITIES}`,
+          pageName: `${t("SCREEN.EXPLORE")}`,
+          tabBarLabel: `${t("SCREEN.CITIES")}`,
           tabBarIcon: ({ color, size }) => (
             <Ionicons
               name="location-outline"
@@ -62,7 +65,7 @@ const TabNavigator = () => {
       />
 
       <Tab.Screen
-        name={STRING.SCREEN.ROUTES}
+        name={t("SCREEN.ROUTES")}
         component={AllRoutesSearch}
         options={{
           tabBarIcon: ({ color, size }) => (
@@ -76,11 +79,11 @@ const TabNavigator = () => {
       />
 
       <Tab.Screen
-        name={STRING.SCREEN.CATEGORIES}
+        name={t("SCREEN.CATEGORIES")}
         component={Categories}
         options={{
-          pageName: `${STRING.SCREEN.CATEGORIES}`,
-          tabBarLabel: `${STRING.SCREEN.CATEGORIES}`,
+          pageName: `${t("SCREEN.CATEGORIES")}`,
+          tabBarLabel: `${t("SCREEN.CATEGORIES")}`,
           tabBarIcon: ({ color, size }) => (
             <Ionicons
               name="md-person-circle-sharp"
@@ -92,10 +95,10 @@ const TabNavigator = () => {
       />
 
       <Tab.Screen
-        name={STRING.SCREEN.MAP_SCREEN}
+        name={t("SCREEN.MAP_SCREEN")}
         component={MapScreen}
         options={{
-          tabBarLabel: `${STRING.SCREEN.MAP}`,
+          tabBarLabel: `${t("SCREEN.MAP")}`,
           tabBarIcon: ({ color, size }) => (
             <Ionicons
               name="map-outline"

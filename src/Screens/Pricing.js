@@ -9,9 +9,11 @@ import GlobalText from "../Components/Customs/Text";
 import styles from "./Styles";
 import TextButton from "../Components/Customs/Buttons/TextButton";
 import STRING from "../Services/Constants/STRINGS";
+import { useTranslation } from "react-i18next";
 
 
 const Pricing = ({ navigation, ...props }) => {
+  const { t } = useTranslation();
 
   useEffect(() => {
     const backHandler = goBackHandler(navigation)
@@ -28,7 +30,7 @@ const Pricing = ({ navigation, ...props }) => {
   return (
     <ScrollView stickyHeaderIndices={[0]}>
       <Header
-        name={STRING.HEADER.PRICING}
+        name={t("HEADER.PRICING")}
         goBack={() => backPage(navigation)}
         startIcon={
           <Ionicons
@@ -51,7 +53,7 @@ const Pricing = ({ navigation, ...props }) => {
             <GlobalText text={"Basic support"} style={styles.pricingOptionFeature} />
           </View>
           <TextButton
-            title={STRING.BUTTON.CHOOSE_PLAN}
+            title={t("BUTTON.CHOOSE_PLAN")}
             containerStyle={styles.planButtonContainer}
             buttonStyle={styles.planButtonStyle}
             titleStyle={styles.planButtonTitleStyle}
@@ -69,7 +71,7 @@ const Pricing = ({ navigation, ...props }) => {
             <GlobalText text={"Priority support"} style={styles.pricingOptionFeature} />
           </View>
           <TextButton
-            title={STRING.BUTTON.CHOOSE_PLAN}
+            title={t("BUTTON.CHOOSE_PLAN")}
             containerStyle={styles.planButtonContainer}
             buttonStyle={styles.planButtonStyle}
             titleStyle={styles.planButtonTitleStyle}
@@ -87,7 +89,7 @@ const Pricing = ({ navigation, ...props }) => {
             <GlobalText text={"24/7 support"} style={styles.pricingOptionFeature} />
           </View>
           <TextButton
-            title={STRING.BUTTON.CHOOSE_PLAN}
+            title={t("BUTTON.CHOOSE_PLAN")}
             containerStyle={styles.planButtonContainer}
             buttonStyle={styles.planButtonStyle}
             titleStyle={styles.planButtonTitleStyle}
