@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     flexRow: {
         flexDirection: "row",
         justifyContent: "space-between",
-        alignItems: "center"
+        alignItems: "center",
     },
     placeContainer: {
         alignSelf: "center",
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLOR.white,
         borderRadius: DIMENSIONS.borderRadius,
         elevation: 5,
-        marginVertical: 10
+        marginVertical: 10,
     },
     placeImageView: {
         flex: 2,
@@ -36,47 +36,47 @@ const styles = StyleSheet.create({
         right: 5,
         top: 5,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     placeImageStyle: {
         borderTopLeftRadius: DIMENSIONS.borderRadius,
-        borderBottomLeftRadius: DIMENSIONS.borderRadius
+        borderBottomLeftRadius: DIMENSIONS.borderRadius,
     },
     placeContentView: {
         flex: 3,
         padding: 10,
         flexDirection: "column",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
     },
     placeContentTop: {
         flex: 1,
         justifyContent: "space-between",
-        paddingBottom: 10
+        paddingBottom: 10,
     },
     placeName: {
         fontSize: DIMENSIONS.headerTextSize,
         fontWeight: "bold",
-        color: COLOR.black
+        color: COLOR.black,
     },
     placeTag: {
         fontSize: DIMENSIONS.subtitleTextSize,
-        fontWeight: 600
+        fontWeight: 600,
     },
     starStyle: {
         // width: "50%"
-        color: COLOR.yellow
+        color: COLOR.yellow,
     },
     placeMetaView: {
         paddingTop: 10,
         flexDirection: "row",
         borderTopWidth: 1,
         borderColor: COLOR.grey,
-        borderStyle: "dashed"
+        borderStyle: "dashed",
     },
     vertDivider: {
         borderWidth: 1,
         marginHorizontal: 5,
-        borderColor: COLOR.grey
+        borderColor: COLOR.grey,
     },
     splitView: {
         padding: 5,
@@ -88,11 +88,11 @@ const styles = StyleSheet.create({
     catCardContainer: {
         justifyContent: "space-evenly",
         margin: 10,
-        flexDirection: "row"
+        flexDirection: "row",
     },
     catCardIcon: {
         width: DIMENSIONS.bannerWidth / 4,
-        height: DIMENSIONS.bannerWidth / 4
+        height: DIMENSIONS.bannerWidth / 4,
     },
     projectCard: {
         minHeight: DIMENSIONS.bannerHeight,
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         borderWidth: 1,
         borderColor: COLOR.grey,
-        marginVertical: 10
+        marginVertical: 10,
     },
     overlay: {
         ...StyleSheet.absoluteFillObject,
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
         height: DIMENSIONS.bannerHeight - 30,
     },
     projectImageStyle: {
-        opacity: 0.7
+        opacity: 0.7,
     },
     routeHeadCardSkeleton: {
         height: DIMENSIONS.bannerHeight / 2 + 32,
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
         zIndex: 10,
         borderRadius: DIMENSIONS.borderRadiusXS,
         justifyContent: "space-between",
-        marginVertical: 10
+        marginVertical: 10,
     },
     routeHeadCard: {
         height: DIMENSIONS.bannerHeight / 2 + 32,
@@ -132,19 +132,19 @@ const styles = StyleSheet.create({
         elevation: 10,
         borderRadius: DIMENSIONS.borderRadiusXS,
         justifyContent: "space-between",
-        marginVertical: 10
+        marginVertical: 10,
     },
     routeHeadCardTitle: {
         fontWeight: "bold",
         lineHeight: 17,
         fontSize: DIMENSIONS.subtitleTextSize,
-        textAlign: "left"
+        textAlign: "left",
     },
     routeHeadCardBottom: {
         borderBottomLeftRadius: DIMENSIONS.borderRadiusXS,
         borderBottomRightRadius: DIMENSIONS.borderRadiusXS,
         alignItems: "center",
-        paddingVertical: 4
+        paddingVertical: 4,
     },
     busImage: {
         height: DIMENSIONS.iconXXL,
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     routeHeadCardImage: {
         flex: 1,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     cityCardSkeleton: {
         width: DIMENSIONS.bannerWidth,
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         elevation: 5,
         alignSelf: "stretch",
-        marginHorizontal: 10
+        marginHorizontal: 10,
     },
     cityCard: {
         width: DIMENSIONS.bannerWidth,
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: COLOR.white,
         borderRadius: DIMENSIONS.borderRadius,
-        justifyContent: "space-evenly"
+        justifyContent: "space-evenly",
     },
     subCatCard: {
         width: DIMENSIONS.iconCard,
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: COLOR.white,
         borderRadius: DIMENSIONS.borderRadius,
-        justifyContent: "center"
+        justifyContent: "center",
     },
     placeCard: {
         width: DIMENSIONS.bannerWidth,
@@ -203,12 +203,12 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: COLOR.white,
         borderRadius: DIMENSIONS.borderRadius,
-        justifyContent: "space-evenly"
+        justifyContent: "space-evenly",
     },
     cityOverlay: {
         ...StyleSheet.absoluteFillObject,
         // backgroundColor: COLOR.black,
-        borderRadius: DIMENSIONS.borderRadius
+        borderRadius: DIMENSIONS.borderRadius,
     },
     cityLikeView: {
         backgroundColor: COLOR.white,
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
         top: 0,
         marginBottom: 10,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     commentCount: {
         borderRadius: DIMENSIONS.borderRadius,
@@ -231,14 +231,14 @@ const styles = StyleSheet.create({
         paddingVertical: 2,
         left: 13,
         top: -7,
-        position: "absolute"
+        position: "absolute",
     },
     avgRating: {
         borderRadius: DIMENSIONS.borderRadiusLarge,
         zIndex: 10,
         position: "absolute",
         padding: 2,
-        fontWeight: "bold"
+        fontWeight: "bold",
     },
     cityStarView: {
         backgroundColor: COLOR.white,
@@ -262,12 +262,12 @@ const styles = StyleSheet.create({
     },
     cityImage: {
         width: DIMENSIONS.bannerWidth,
-        position: "absolute"
+        position: "absolute",
     },
     placeImage: {
         width: DIMENSIONS.bannerWidth,
         height: DIMENSIONS.bannerHeight + 100,
-        position: "absolute"
+        position: "absolute",
     },
     cityImageStyle: {
         borderRadius: DIMENSIONS.borderRadius,
@@ -282,7 +282,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         justifyContent: "space-between",
         marginBottom: 5,
-        textAlign: "left"
+        textAlign: "left",
     },
     placeDetailsOverlay: {
         width: DIMENSIONS.bannerWidth - 40,
@@ -296,10 +296,10 @@ const styles = StyleSheet.create({
     },
     cityName: {
         fontSize: DIMENSIONS.headerTextSize,
-        fontWeight: "bold"
+        fontWeight: "bold",
     },
     boldText: {
-        fontWeight: "bold"
+        fontWeight: "bold",
     },
     cityCardSmall: {
         width: DIMENSIONS.bannerWidth / 2,
@@ -310,12 +310,12 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: COLOR.white,
         borderRadius: DIMENSIONS.borderRadius,
-        justifyContent: "space-between"
+        justifyContent: "space-between",
     },
     citySmallImage: {
         width: DIMENSIONS.bannerWidth / 2,
         height: DIMENSIONS.bannerHeight + 90,
-        position: "absolute"
+        position: "absolute",
     },
     citySmallDetailsOverlay: {
         width: DIMENSIONS.bannerWidth / 2 - 30,
@@ -326,7 +326,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         justifyContent: "space-between",
         marginBottom: -20,
-        textAlign: "left"
+        textAlign: "left",
     },
     citySmallLikeView: {
         backgroundColor: COLOR.white,
@@ -337,16 +337,16 @@ const styles = StyleSheet.create({
         top: 0,
         justifyContent: "center",
         alignItems: "center",
-        marginBottom: 13
+        marginBottom: 13,
     },
     citySmallName: {
         fontSize: DIMENSIONS.textSize,
         fontWeight: "bold",
-        textAlign: "left"
+        textAlign: "left",
     },
     citySmallTagLine: {
         fontSize: DIMENSIONS.textSizeSmall,
-        textAlign: "left"
+        textAlign: "left",
     },
     citySmallStarView: {
         backgroundColor: COLOR.white,
@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
         borderRadius: DIMENSIONS.borderRadius,
         justifyContent: "center",
         alignItems: "center",
-        alignSelf: "flex-end"
+        alignSelf: "flex-end",
     },
     cityCardSmallSkeleton: {
         width: DIMENSIONS.bannerWidth / 2,
@@ -366,8 +366,8 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     routeCardIcons: {
-        marginRight: 3
-    }
-})
+        marginRight: 3,
+    },
+});
 
-export default styles
+export default styles;

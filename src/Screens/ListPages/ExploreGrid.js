@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react";
 import MasonryGrid from "../../Components/Customs/MasonryGrid";
 import { comnPost, dataSync } from "../../Services/Api/CommonServices";
 import { View } from "react-native";
@@ -10,32 +10,28 @@ import {
 } from "../../Reducers/CommonActions";
 import { connect } from "react-redux";
 import Header from "../../Components/Common/Header";
-import STRING from "../../Services/Constants/STRINGS";
-import COLOR from "../../Services/Constants/COLORS";
-import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import { backPage, checkLogin, goBackHandler, navigateTo } from "../../Services/CommonMethods";
+import { checkLogin, goBackHandler } from "../../Services/CommonMethods";
 import CheckNet from "../../Components/Common/CheckNet";
 import NetInfo from "@react-native-community/netinfo";
 import Search from "../../Components/Customs/Search";
 import styles from "./Styles";
 
 const ExploreGrid = ({ route, navigation, ...props }) => {
-    const [citiesData, setCitiesData] = useState([])
-    const [offline, setOffline] = useState(false)
+    const [citiesData, setCitiesData] = useState([]);
+    const [offline, setOffline] = useState(false);
     const [searchValue, setSearchValue] = useState("");
     const [placesList, setPlacesList] = useState([]);
-    const [nextPage, setNextPage] = useState(2)
+    const [nextPage, setNextPage] = useState(2);
 
     // route.params.cities
 
     useEffect(() => {
-        getData("")
-    }, [])
+        getData("");
+    }, []);
 
     useEffect(() => {
-        const backHandler = goBackHandler(navigation)
-        checkLogin(navigation)
+        const backHandler = goBackHandler(navigation);
+        checkLogin(navigation);
         props.setLoader(true);
 
         if (props.access_token) {
@@ -45,25 +41,26 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
             props.setLoader(false);
         }
 
-        const unsubscribe = NetInfo.addEventListener(state => {
-            setOffline(false)
+        const unsubscribe = NetInfo.addEventListener((state) => {
+            setOffline(false);
 
-            dataSync(t("STORAGE.EXPLORE_CITIES_RESPONSE"), getData())
-                .then(resp => {
-                    let res = JSON.parse(resp)
+            dataSync(t("STORAGE.EXPLORE_CITIES_RESPONSE"), getData()).then(
+                (resp) => {
+                    let res = JSON.parse(resp);
                     if (res.data && res.data.data) {
                         setCitiesData(res.data.data.data);
                     } else if (resp) {
-                        setOffline(true)
+                        setOffline(true);
                     }
-                })
+                }
+            );
             props.setLoader(false);
         });
 
         return () => {
-            backHandler.remove()
+            backHandler.remove();
             unsubscribe();
-        }
+        };
     }, []);
 
     const getData = (v) => {
@@ -72,10 +69,10 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
             apitype: "list",
             // category: "city",
             global: 1,
-            search: v
-        }
+            search: v,
+        };
         comnPost(`v2/sites`, data)
-            .then(res => {
+            .then((res) => {
                 if (res.data.success) {
                     props.setLoader(false);
                     setCitiesData(res.data.data.data);
@@ -83,35 +80,35 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
                     props.setLoader(false);
                 }
             })
-            .catch(err => {
+            .catch((err) => {
                 props.setLoader(false);
-            })
-    }
+            });
+    };
 
     const getScrollData = (v, page) => {
-        props.setLoader(true)
+        props.setLoader(true);
         setSearchValue(v);
         let data = {
             apitype: "list",
             // category: "city",
             global: 1,
-            search: v
-        }
+            search: v,
+        };
         comnPost(`v2/sites?page=${page}`, data)
-            .then(res => {
+            .then((res) => {
                 if (res.data.success) {
                     props.setLoader(false);
-                    let nextUrl = res.data.data.next_page_url
+                    let nextUrl = res.data.data.next_page_url;
                     setCitiesData([...citiesData, ...res.data.data.data]);
-                    setNextPage(nextUrl[nextUrl.length - 1])
+                    setNextPage(nextUrl[nextUrl.length - 1]);
                 } else {
                     props.setLoader(false);
                 }
             })
-            .catch(err => {
+            .catch((err) => {
                 props.setLoader(false);
-            })
-    }
+            });
+    };
 
     return (
         <View>
@@ -127,10 +124,13 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
                     />
                 }
             />
-            <MasonryGrid data={citiesData} loadMore={() => getScrollData("", nextPage)} />
+            <MasonryGrid
+                data={citiesData}
+                loadMore={() => getScrollData("", nextPage)}
+            />
         </View>
-    )
-}
+    );
+};
 
 const mapStateToProps = (state) => {
     return {

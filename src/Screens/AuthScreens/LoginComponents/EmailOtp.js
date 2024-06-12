@@ -1,26 +1,32 @@
-import React, { useEffect, useState } from 'react'
-import { EmailOtpFields, SignInFields } from '../../../Services/Constants/FIELDS';
-import { TouchableOpacity, View } from 'react-native';
-import TextField from '../../../Components/Customs/TextField';
-import TextButton from '../../../Components/Customs/Buttons/TextButton';
+import React, { useEffect, useState } from "react";
+import { EmailOtpFields } from "../../../Services/Constants/FIELDS";
+import { TouchableOpacity, View } from "react-native";
+import TextField from "../../../Components/Customs/TextField";
+import TextButton from "../../../Components/Customs/Buttons/TextButton";
 import Feather from "react-native-vector-icons/Feather";
-import styles from '../Styles';
-import STRING from '../../../Services/Constants/STRINGS';
-import COLOR from '../../../Services/Constants/COLORS';
-import GlobalText from '../../../Components/Customs/Text';
-import { useTranslation } from 'react-i18next';
+import styles from "../Styles";
+import COLOR from "../../../Services/Constants/COLORS";
+import GlobalText from "../../../Components/Customs/Text";
+import { useTranslation } from "react-i18next";
 
-const EmailOtp = ({ setValue, getValue, Login, changeChoice, isOtpSent, resend }) => {
+const EmailOtp = ({
+    setValue,
+    getValue,
+    Login,
+    changeChoice,
+    isOtpSent,
+    resend,
+}) => {
     const { t } = useTranslation();
 
     const [sec, setSec] = useState(30);
-    const [otpSent, setOtpSent] = useState(isOtpSent)
+    const [otpSent, setOtpSent] = useState(isOtpSent);
 
     const sendOtp = () => {
-        setSec(30)
-        resend()
-        setOtpSent(true)
-    }
+        setSec(30);
+        resend();
+        setOtpSent(true);
+    };
 
     useEffect(() => {
         let intervalId;
@@ -57,34 +63,46 @@ const EmailOtp = ({ setValue, getValue, Login, changeChoice, isOtpSent, resend }
                         inputContainerStyle={styles.inputContainerStyle}
                         isSecure={field.isSecure}
                         rightIcon={
-                            field.type == `${t("TYPE.PASSWORD")}` &&
-                            <Feather
-                                name={field.isSecure ? "eye" : "eye-off"}
-                                size={24}
-                                color={COLOR.themeBlue}
-                                onPress={() => {
-                                    field.isSecure = !showPassword
-                                    setShowPassword(!showPassword)
-                                }}
-                                style={styles.eyeIcon}
-                            />
+                            field.type == `${t("TYPE.PASSWORD")}` && (
+                                <Feather
+                                    name={field.isSecure ? "eye" : "eye-off"}
+                                    size={24}
+                                    color={COLOR.themeBlue}
+                                    onPress={() => {
+                                        field.isSecure = !showPassword;
+                                        setShowPassword(!showPassword);
+                                    }}
+                                    style={styles.eyeIcon}
+                                />
+                            )
                         }
                     />
                 );
             })}
             <View style={{ marginVertical: 10 }}>
-                {otpSent ?
+                {otpSent ? (
                     sec >= 1 ? (
-                        <GlobalText text={`${t("RESEND_WITHIN")}${sec > 9 ? sec : "0" + sec})`} style={styles.whiteText} />
+                        <GlobalText
+                            text={`${t("RESEND_WITHIN")}${
+                                sec > 9 ? sec : "0" + sec
+                            })`}
+                            style={styles.whiteText}
+                        />
                     ) : (
                         <View>
-                            <GlobalText style={styles.whiteText} text={t("DIDNT_RECEIVE")} />
+                            <GlobalText
+                                style={styles.whiteText}
+                                text={t("DIDNT_RECEIVE")}
+                            />
                             <TouchableOpacity onPress={() => resend()}>
-                                <GlobalText text={t("RESEND")} style={styles.whiteText} />
+                                <GlobalText
+                                    text={t("RESEND")}
+                                    style={styles.whiteText}
+                                />
                             </TouchableOpacity>
                         </View>
                     )
-                    :
+                ) : (
                     <TextButton
                         title={t("BUTTON.SEND_OTP")}
                         buttonView={styles.buttonView}
@@ -95,7 +113,7 @@ const EmailOtp = ({ setValue, getValue, Login, changeChoice, isOtpSent, resend }
                         raised={true}
                         onPress={() => sendOtp()}
                     />
-                }
+                )}
             </View>
             <TextButton
                 title={t("BUTTON.LOGIN")}
@@ -108,7 +126,7 @@ const EmailOtp = ({ setValue, getValue, Login, changeChoice, isOtpSent, resend }
                 onPress={() => Login()}
             />
         </View>
-    )
-}
+    );
+};
 
-export default EmailOtp
+export default EmailOtp;

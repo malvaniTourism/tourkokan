@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import { SafeAreaView, View, FlatList } from "react-native";
 import MaterialTabs from "react-native-material-tabs";
 import styles from "./Styles";
-import { Text, Card } from "@rneui/base";
+import { Card } from "@rneui/base";
 import COLOR from "../../Services/Constants/COLORS";
 import GlobalText from "../Customs/Text";
-import STRING from "../../Services/Constants/STRINGS";
 import { useTranslation } from "react-i18next";
 
 const TabView = ({ data }) => {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
 
     const [selectedTab, setSelectedTab] = useState(0);
 

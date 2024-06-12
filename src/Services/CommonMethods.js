@@ -5,18 +5,20 @@ import STRING from "./Constants/STRINGS";
 let lastBackPressed = 0;
 
 export const goBackHandler = (navigation) => {
-    return BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () => backPage(navigation));
-}
+    return BackHandler.addEventListener(STRING.EVENT.HARDWARE_BACK_PRESS, () =>
+        backPage(navigation)
+    );
+};
 
 export const backPage = (navigation) => {
-    navigation.goBack()
-    return true
-}
+    navigation.goBack();
+    return true;
+};
 
 export const navigateTo = (navigation, page, params) => {
-    navigation.navigate(page, params)
-    return true
-}
+    navigation.navigate(page, params);
+    return true;
+};
 
 export const checkLogin = async (navigation) => {
     if (
@@ -25,7 +27,7 @@ export const checkLogin = async (navigation) => {
     ) {
         navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN);
     }
-}
+};
 
 export const exitApp = () => {
     const currentTime = new Date().getTime();
@@ -38,4 +40,4 @@ export const exitApp = () => {
         lastBackPressed = currentTime;
         return true;
     }
-}
+};

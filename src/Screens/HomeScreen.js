@@ -1,43 +1,41 @@
 import { useEffect, useState, useRef } from "react";
-import { View, Text, ScrollView, LogBox, Image, BackHandler, SafeAreaView, FlatList, KeyboardAvoidingView } from "react-native";
+import {
+    View,
+    ScrollView,
+    LogBox,
+    BackHandler,
+    KeyboardAvoidingView,
+} from "react-native";
 import SearchPanel from "../Components/Common/SearchPanel";
 import TopComponent from "../Components/Common/TopComponent";
 import Banner from "../Components/Customs/Banner";
-import SearchBar from "../Components/Customs/Search";
-import SmallCard from "../Components/Customs/SmallCard";
-import { CityName } from "../Services/Constants/FIELDS";
 import styles from "./Styles";
 import COLOR from "../Services/Constants/COLORS";
-import DIMENSIONS from "../Services/Constants/DIMENSIONS";
 import Feather from "react-native-vector-icons/Feather";
-import { comnGet, comnPost, dataSync, login, removeFromStorage, saveToStorage } from "../Services/Api/CommonServices";
+import {
+    comnPost,
+    dataSync,
+    saveToStorage,
+} from "../Services/Api/CommonServices";
 import { connect } from "react-redux";
 import { saveAccess_token, setLoader } from "../Reducers/CommonActions";
-import Loader from "../Components/Customs/Loader";
 import SplashScreen from "react-native-splash-screen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Path from "../Services/Api/BaseUrl";
 import TextButton from "../Components/Customs/Buttons/TextButton";
 import { exitApp, navigateTo } from "../Services/CommonMethods";
-import TabView from "../Components/Common/TabView";
-import CityCard from "../Components/Cards/CityCard";
-import CategoryCard from "../Components/Cards/CategoryCard";
 import GlobalText from "../Components/Customs/Text";
 import BottomSheet from "../Components/Customs/BottomSheet";
 import LocationSheet from "../Components/Common/LocationSheet";
 import RouteHeadCard from "../Components/Cards/RouteHeadCard";
-import STRING from "../Services/Constants/STRINGS";
 import CheckNet from "../Components/Common/CheckNet";
 import NetInfo from "@react-native-community/netinfo";
-import MyAnimatedLoader from "../Components/Customs/AnimatedLoader";
 import RouteHeadCardSkeleton from "../Components/Cards/RouteHeadCardSkeleton";
-import CityCardSkeleton from "../Components/Cards/CityCardSkeleton";
 import { Skeleton } from "@rneui/themed";
 import SearchPanelSkeleton from "../Components/Common/SearchPanelSkeleton";
 import TopComponentSkeleton from "../Components/Common/TopComponentSkeleton";
 import CityCardSmall from "../Components/Cards/CityCardSmall";
 import CityCardSmallSkeleton from "../Components/Cards/CityCardSmallSkeleton";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 const HomeScreen = ({ navigation, route, ...props }) => {
     const { t } = useTranslation();
@@ -50,41 +48,44 @@ const HomeScreen = ({ navigation, route, ...props }) => {
     const [stops, setStops] = useState([]);
     const [place_category, setPlace_category] = useState([]);
     const [places, setPlaces] = useState([]);
-    const [routes, setRoutes] = useState([])
+    const [routes, setRoutes] = useState([]);
     const [error, setError] = useState(null);
-    const [cityList, setCityList] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
+    const [cityList, setCityList] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [isLandingDataFetched, setIsLandingDataFetched] = useState(false);
-    const [offline, setOffline] = useState(false)
-    const [isFetching, setIsFetching] = useState(true)
+    const [offline, setOffline] = useState(false);
+    const [isFetching, setIsFetching] = useState(true);
     const [bannerImages, setBannerImages] = useState([
         {
-            "id": 1,
-            "name": "Angnewadi Yatra 2024",
-            "image": "https://c4.wallpaperflare.com/wallpaper/766/970/409/cities-city-building-cityscape-wallpaper-preview.jpg",
+            id: 1,
+            name: "Angnewadi Yatra 2024",
+            image: "https://c4.wallpaperflare.com/wallpaper/766/970/409/cities-city-building-cityscape-wallpaper-preview.jpg",
         },
         {
-            "id": 1,
-            "name": "Angnewadi Yatra 2024",
-            "image": "https://c4.wallpaperflare.com/wallpaper/631/683/713/nature-bridge-sky-city-wallpaper-preview.jpg",
+            id: 1,
+            name: "Angnewadi Yatra 2024",
+            image: "https://c4.wallpaperflare.com/wallpaper/631/683/713/nature-bridge-sky-city-wallpaper-preview.jpg",
         },
         {
-            "id": 1,
-            "name": "Angnewadi Yatra 2024",
-            "image": "https://c4.wallpaperflare.com/wallpaper/977/138/381/tbilisi-georgia-wallpaper-preview.jpg",
+            id: 1,
+            name: "Angnewadi Yatra 2024",
+            image: "https://c4.wallpaperflare.com/wallpaper/977/138/381/tbilisi-georgia-wallpaper-preview.jpg",
         },
         {
-            "id": 1,
-            "name": "Angnewadi Yatra 2024",
-            "image": "https://4kwallpapers.com/images/walls/thumbs_3t/912.jpg",
+            id: 1,
+            name: "Angnewadi Yatra 2024",
+            image: "https://4kwallpapers.com/images/walls/thumbs_3t/912.jpg",
         },
     ]);
-    const [bannerObject, setBannerObject] = useState([])
+    const [bannerObject, setBannerObject] = useState([]);
     const [currentCity, setCurrentCity] = useState(t("CITY.DEVGAD"));
-    const [profilePhoto, setProfilePhoto] = useState('')
+    const [profilePhoto, setProfilePhoto] = useState("");
 
     useEffect(() => {
-        const backHandler = BackHandler.addEventListener(t("EVENT.HARDWARE_BACK_PRESS"), () => exitApp());
+        const backHandler = BackHandler.addEventListener(
+            t("EVENT.HARDWARE_BACK_PRESS"),
+            () => exitApp()
+        );
         if (props.access_token) {
             if (!isLandingDataFetched && props.access_token) {
                 // callLandingPageAPI();
@@ -95,61 +96,67 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         LogBox.ignoreAllLogs();
         saveToken();
         SplashScreen.hide();
-        const unsubscribe = NetInfo.addEventListener(state => {
-            setOffline(false)
+        const unsubscribe = NetInfo.addEventListener((state) => {
+            setOffline(false);
 
-            dataSync(t("STORAGE.PROFILE_RESPONSE"), getUserProfile())
-                .then(resp => {
-                    let res = JSON.parse(resp)
+            dataSync(t("STORAGE.PROFILE_RESPONSE"), getUserProfile()).then(
+                (resp) => {
+                    let res = JSON.parse(resp);
                     if (res.data && res.data.data) {
-                        setIsFetching(false)
-                        setIsLoading(false)
+                        setIsFetching(false);
+                        setIsLoading(false);
                         // setCategories(res.data.data.categories);
                         // setProjects(res.data.data.projects);
                         // setStops(res.data.data.stops);
                         // setPlace_category(res.data.data.place_category);
                         // setPlaces(res.data.data.places);
                     } else if (resp) {
-                        setOffline(true)
-                        setIsFetching(false)
-                        setIsLoading(false)
+                        setOffline(true);
+                        setIsFetching(false);
+                        setIsLoading(false);
                     }
                     props.setLoader(false);
-                })
+                }
+            );
 
-            dataSync(t("STORAGE.LANDING_RESPONSE"), callLandingPageAPI())
-                .then(resp => {
-                    let res = JSON.parse(resp)
+            dataSync(t("STORAGE.LANDING_RESPONSE"), callLandingPageAPI()).then(
+                (resp) => {
+                    let res = JSON.parse(resp);
                     if (res.data && res.data.data) {
                         setCities(res.data.data.cities);
-                        setRoutes(res.data.data.routes)
-                        setIsFetching(false)
-                        setIsLoading(false)
+                        setRoutes(res.data.data.routes);
+                        setIsFetching(false);
+                        setIsLoading(false);
                         // setCategories(res.data.data.categories);
                         // setProjects(res.data.data.projects);
                         // setStops(res.data.data.stops);
                         // setPlace_category(res.data.data.place_category);
                         // setPlaces(res.data.data.places);
                     } else if (resp) {
-                        setOffline(true)
-                        setIsFetching(false)
-                        setIsLoading(false)
+                        setOffline(true);
+                        setIsFetching(false);
+                        setIsLoading(false);
                     }
                     props.setLoader(false);
-                })
+                }
+            );
             // removeFromStorage(t("STORAGE.LANDING_RESPONSE"))
         });
 
-
         return () => {
             backHandler.remove();
-            AsyncStorage.setItem(t("STORAGE.IS_FIRST_TIME"), JSON.stringify(false))
+            AsyncStorage.setItem(
+                t("STORAGE.IS_FIRST_TIME"),
+                JSON.stringify(false)
+            );
             unsubscribe();
         };
     }, [props.access_token]);
 
     const saveToken = async () => {
-        props.saveAccess_token(await AsyncStorage.getItem(t("STORAGE.ACCESS_TOKEN")));
+        props.saveAccess_token(
+            await AsyncStorage.getItem(t("STORAGE.ACCESS_TOKEN"))
+        );
         if (
             (await AsyncStorage.getItem(t("STORAGE.ACCESS_TOKEN"))) == null ||
             (await AsyncStorage.getItem(t("STORAGE.ACCESS_TOKEN"))) == ""
@@ -160,19 +167,24 @@ const HomeScreen = ({ navigation, route, ...props }) => {
 
     const callLandingPageAPI = async (site_id) => {
         let data = {
-            site_id
-        }
+            site_id,
+        };
         props.setLoader(true);
-        let isFirstTime = await AsyncStorage.getItem(t("STORAGE.IS_FIRST_TIME"))
+        let isFirstTime = await AsyncStorage.getItem(
+            t("STORAGE.IS_FIRST_TIME")
+        );
         comnPost("v2/landingpage", data, navigation)
             .then((res) => {
                 if (res && res.data.data)
-                    saveToStorage(t("STORAGE.LANDING_RESPONSE"), JSON.stringify(res))
+                    saveToStorage(
+                        t("STORAGE.LANDING_RESPONSE"),
+                        JSON.stringify(res)
+                    );
                 setCities(res.data.data.cities);
                 setRoutes(res.data.data.routes);
                 setBannerObject(res.data.data.banners);
-                setIsFetching(false)
-                setIsLoading(false)
+                setIsFetching(false);
+                setIsLoading(false);
                 props.setLoader(false);
                 // setCategories(res.data.data.categories);
                 // setProjects(res.data.data.projects);
@@ -182,7 +194,10 @@ const HomeScreen = ({ navigation, route, ...props }) => {
 
                 if (isFirstTime == "true") {
                     // refRBSheet.current.open()
-                    AsyncStorage.setItem(t("STORAGE.IS_FIRST_TIME"), JSON.stringify(false))
+                    AsyncStorage.setItem(
+                        t("STORAGE.IS_FIRST_TIME"),
+                        JSON.stringify(false)
+                    );
                 }
             })
             .catch((error) => {
@@ -198,15 +213,24 @@ const HomeScreen = ({ navigation, route, ...props }) => {
             .then((res) => {
                 props.setLoader(false);
                 setProfilePhoto(res.data.data.profile_picture);
-                AsyncStorage.setItem(t("STORAGE.USER_NAME"), res.data.data.name)
-                AsyncStorage.setItem(t("STORAGE.USER_ID"), JSON.stringify(res.data.data.id))
-                AsyncStorage.setItem(t("STORAGE.USER_EMAIL"), res.data.data.email)
+                AsyncStorage.setItem(
+                    t("STORAGE.USER_NAME"),
+                    res.data.data.name
+                );
+                AsyncStorage.setItem(
+                    t("STORAGE.USER_ID"),
+                    JSON.stringify(res.data.data.id)
+                );
+                AsyncStorage.setItem(
+                    t("STORAGE.USER_EMAIL"),
+                    res.data.data.email
+                );
             })
             .catch((error) => {
                 setError(error.message);
                 props.setLoader(false);
             });
-    }
+    };
 
     const getRoutesList = (item) => {
         navigateTo(navigation, t("SCREEN.ROUTES_LIST"), { item });
@@ -214,43 +238,53 @@ const HomeScreen = ({ navigation, route, ...props }) => {
 
     const showMore = (page, subCat) => {
         navigateTo(navigation, page, { from: t("SCREEN.HOME"), subCat });
-    }
+    };
 
     const onSearchFocus = () => {
-        navigateTo(navigation, t("SCREEN.CITY_PLACE_SEARCH"))
-    }
+        navigateTo(navigation, t("SCREEN.CITY_PLACE_SEARCH"));
+    };
 
     const openLocationSheet = () => {
-        refRBSheet.current.open()
-    }
+        refRBSheet.current.open();
+    };
 
     const closeLocationSheet = () => {
-        refRBSheet.current.close()
-    }
+        refRBSheet.current.close();
+    };
 
     const getCityDetails = (id) => {
-        navigateTo(navigation, t("SCREEN.CITY_DETAILS"), { id })
-    }
+        navigateTo(navigation, t("SCREEN.CITY_DETAILS"), { id });
+    };
 
     const openProfile = () => {
-        setIsLoading(true)
+        setIsLoading(true);
         navigateTo(navigation, t("SCREEN.PROFILE_VIEW"));
-        setIsLoading(false)
-    }
+        setIsLoading(false);
+    };
 
     const onCitySelect = (city) => {
-        setCurrentCity(city.name)
-        callLandingPageAPI(city.id)
-    }
+        setCurrentCity(city.name);
+        callLandingPageAPI(city.id);
+    };
 
     return (
-        <ScrollView stickyHeaderIndices={[0]} style={{ backgroundColor: COLOR.white }}>
-            {
-                isLoading ?
-                    <TopComponentSkeleton />
-                    :
-                    <TopComponent cities={cities} currentCity={currentCity} setCurrentCity={(v) => onCitySelect(v)} navigation={navigation} openLocationSheet={() => openLocationSheet()} gotoProfile={() => openProfile()} profilePhoto={profilePhoto} />
-            }
+        <ScrollView
+            stickyHeaderIndices={[0]}
+            style={{ backgroundColor: COLOR.white }}
+        >
+            {isLoading ? (
+                <TopComponentSkeleton />
+            ) : (
+                <TopComponent
+                    cities={cities}
+                    currentCity={currentCity}
+                    setCurrentCity={(v) => onCitySelect(v)}
+                    navigation={navigation}
+                    openLocationSheet={() => openLocationSheet()}
+                    gotoProfile={() => openProfile()}
+                    profilePhoto={profilePhoto}
+                />
+            )}
             <CheckNet isOff={offline} />
             {/* <MyAnimatedLoader isVisible={isLoading} /> */}
             {/* {
@@ -259,11 +293,11 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                     <></>
                     : */}
             <View style={{ flex: 1, alignItems: "center" }}>
-                {bannerObject[0] ?
+                {bannerObject[0] ? (
                     <Banner bannerImages={bannerObject} />
-                    :
+                ) : (
                     <Banner bannerImages={bannerImages} />
-                }
+                )}
                 {/* {CityName.map((field, index) => {
                             return (
                                 <SearchBar
@@ -275,117 +309,152 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                             );
                         })} */}
                 <KeyboardAvoidingView style={{ marginTop: 25, zIndex: 10 }}>
-                    {
-                        isLoading ?
-                            <SearchPanelSkeleton />
-                            :
-                            <SearchPanel route={route} navigation={navigation} from={t("SCREEN.HOME")} />
-                    }
+                    {isLoading ? (
+                        <SearchPanelSkeleton />
+                    ) : (
+                        <SearchPanel
+                            route={route}
+                            navigation={navigation}
+                            from={t("SCREEN.HOME")}
+                        />
+                    )}
                 </KeyboardAvoidingView>
                 <View style={styles.headerContainer}>
                     <View>
-                        {
-                            isLoading ?
-                                <View style={styles.flexAroundSkeleton}>
-                                    <Skeleton animation="pulse" variant="text" style={{ width: 100, height: 30 }} />
-                                    <Skeleton animation="pulse" variant="text" style={{ width: 100, height: 30 }} />
-                                </View>
-                                :
-                                <View style={styles.flexAround}>
-                                    <GlobalText text={t("ROUTES")} style={styles.sectionTitle} />
-                                    <TextButton
-                                        title={t("BUTTON.SEE_ALL")}
-                                        onPress={() => showMore(t("SCREEN.ALL_ROUTES_SEARCH"))}
-                                        buttonView={styles.buttonView}
-                                        titleStyle={styles.titleStyle}
-                                    />
-                                </View>
-                        }
+                        {isLoading ? (
+                            <View style={styles.flexAroundSkeleton}>
+                                <Skeleton
+                                    animation="pulse"
+                                    variant="text"
+                                    style={{ width: 100, height: 30 }}
+                                />
+                                <Skeleton
+                                    animation="pulse"
+                                    variant="text"
+                                    style={{ width: 100, height: 30 }}
+                                />
+                            </View>
+                        ) : (
+                            <View style={styles.flexAround}>
+                                <GlobalText
+                                    text={t("ROUTES")}
+                                    style={styles.sectionTitle}
+                                />
+                                <TextButton
+                                    title={t("BUTTON.SEE_ALL")}
+                                    onPress={() =>
+                                        showMore(t("SCREEN.ALL_ROUTES_SEARCH"))
+                                    }
+                                    buttonView={styles.buttonView}
+                                    titleStyle={styles.titleStyle}
+                                />
+                            </View>
+                        )}
                     </View>
                     <View style={styles.cardsWrap}>
-                        {
-                            isLoading ?
-                                <>
-                                    <RouteHeadCardSkeleton />
-                                    <RouteHeadCardSkeleton />
-                                    <RouteHeadCardSkeleton />
-                                </>
-                                :
-                                routes.map((route, index) => (
-                                    route && <RouteHeadCard data={route} bus={"Hirkani"} cardClick={() => getRoutesList(route)} />
-                                ))
-                        }
+                        {isLoading ? (
+                            <>
+                                <RouteHeadCardSkeleton />
+                                <RouteHeadCardSkeleton />
+                                <RouteHeadCardSkeleton />
+                            </>
+                        ) : (
+                            routes.map(
+                                (route, index) =>
+                                    route && (
+                                        <RouteHeadCard
+                                            data={route}
+                                            bus={"Hirkani"}
+                                            cardClick={() =>
+                                                getRoutesList(route)
+                                            }
+                                        />
+                                    )
+                            )
+                        )}
                     </View>
                 </View>
 
                 <View style={styles.sectionView}>
                     <View style={{ marginTop: 20 }}>
-                        {
-                            isLoading ?
-                                <Skeleton animation="pulse" variant="text" style={styles.buttonSkeleton} />
-                                :
-                                <View style={styles.flexAround}>
-                                    <GlobalText text={t("CITIES")} style={styles.sectionTitle} />
-                                    <TextButton
-                                        title={t("BUTTON.SEE_ALL")}
-                                        onPress={() => showMore(t("SCREEN.CITIES"))}
-                                        buttonView={styles.buttonView}
-                                        titleStyle={styles.titleStyle}
-                                    />
-                                </View>
-                        }
+                        {isLoading ? (
+                            <Skeleton
+                                animation="pulse"
+                                variant="text"
+                                style={styles.buttonSkeleton}
+                            />
+                        ) : (
+                            <View style={styles.flexAround}>
+                                <GlobalText
+                                    text={t("CITIES")}
+                                    style={styles.sectionTitle}
+                                />
+                                <TextButton
+                                    title={t("BUTTON.SEE_ALL")}
+                                    onPress={() => showMore(t("SCREEN.CITIES"))}
+                                    buttonView={styles.buttonView}
+                                    titleStyle={styles.titleStyle}
+                                />
+                            </View>
+                        )}
                     </View>
                     <ScrollView horizontal style={{ marginLeft: 5 }}>
-                        {
-                            isLoading ?
-                                <>
-                                    <CityCardSmallSkeleton />
-                                    <CityCardSmallSkeleton />
-                                    <CityCardSmallSkeleton />
-                                </>
-                                :
-                                cities.map((city, index) => (
-                                    <CityCardSmall
-                                        data={city}
-                                        reload={() => {
-                                            callLandingPageAPI()
-                                        }}
-                                        navigation={navigation}
-                                        onClick={() => getCityDetails(city.id)}
-                                    />
-                                ))
-                        }
+                        {isLoading ? (
+                            <>
+                                <CityCardSmallSkeleton />
+                                <CityCardSmallSkeleton />
+                                <CityCardSmallSkeleton />
+                            </>
+                        ) : (
+                            cities.map((city, index) => (
+                                <CityCardSmall
+                                    data={city}
+                                    reload={() => {
+                                        callLandingPageAPI();
+                                    }}
+                                    navigation={navigation}
+                                    onClick={() => getCityDetails(city.id)}
+                                />
+                            ))
+                        )}
                     </ScrollView>
-                    {
-                        isLoading ?
-                            <Skeleton animation="pulse" variant="text" style={styles.buttonSkeleton} />
-                            :
-                            <TextButton
-                                title={t("BUTTON.SEE_MORE")}
-                                onPress={() => showMore(t("SCREEN.CITY_LIST"), "city")}
-                                containerStyle={styles.showMore}
-                                buttonView={styles.buttonView}
-                                buttonStyle={styles.buttonStyle}
-                                titleStyle={styles.titleStyle}
-                                endIcon={
-                                    <Feather
-                                        name="chevrons-right"
-                                        size={24}
-                                        color={COLOR.themeBlue}
-                                    />
-                                }
-                            />
-                    }
+                    {isLoading ? (
+                        <Skeleton
+                            animation="pulse"
+                            variant="text"
+                            style={styles.buttonSkeleton}
+                        />
+                    ) : (
+                        <TextButton
+                            title={t("BUTTON.SEE_MORE")}
+                            onPress={() =>
+                                showMore(t("SCREEN.CITY_LIST"), "city")
+                            }
+                            containerStyle={styles.showMore}
+                            buttonView={styles.buttonView}
+                            buttonStyle={styles.buttonStyle}
+                            titleStyle={styles.titleStyle}
+                            endIcon={
+                                <Feather
+                                    name="chevrons-right"
+                                    size={24}
+                                    color={COLOR.themeBlue}
+                                />
+                            }
+                        />
+                    )}
                 </View>
             </View>
             <BottomSheet
                 refRBSheet={refRBSheet}
                 height={300}
-                Component={<LocationSheet
-                    setCurrentCity={(name) => setCurrentCity(name)}
-                    openLocationSheet={() => openLocationSheet()}
-                    closeLocationSheet={() => closeLocationSheet()}
-                />}
+                Component={
+                    <LocationSheet
+                        setCurrentCity={(name) => setCurrentCity(name)}
+                        openLocationSheet={() => openLocationSheet()}
+                        closeLocationSheet={() => closeLocationSheet()}
+                    />
+                }
                 openLocationSheet={() => openLocationSheet()}
                 closeLocationSheet={() => closeLocationSheet()}
             />

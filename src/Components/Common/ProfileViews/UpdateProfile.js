@@ -1,16 +1,21 @@
-import React, { useState } from 'react'
-import { View } from 'react-native'
-import { ProfileFields } from '../../../Services/Constants/FIELDS';
-import TextField from '../../Customs/TextField';
-import styles from './Styles';
-import STRING from '../../../Services/Constants/STRINGS';
-import TextButton from '../../Customs/Buttons/TextButton';
+import React, { useState } from "react";
+import { View } from "react-native";
+import { ProfileFields } from "../../../Services/Constants/FIELDS";
+import TextField from "../../Customs/TextField";
+import styles from "./Styles";
+import TextButton from "../../Customs/Buttons/TextButton";
 import Feather from "react-native-vector-icons/Feather";
-import { useTranslation } from 'react-i18next';
-import { comnPost } from '../../../Services/Api/CommonServices';
-import Popup from '../Popup';
+import { useTranslation } from "react-i18next";
+import { comnPost } from "../../../Services/Api/CommonServices";
+import Popup from "../Popup";
 
-const UpdateProfile = ({ user, phone, uploadImage, refreshOption, setLoader }) => {
+const UpdateProfile = ({
+    user,
+    phone,
+    uploadImage,
+    refreshOption,
+    setLoader,
+}) => {
     const { t } = useTranslation();
 
     const [email, setEmail] = useState(user);
@@ -39,32 +44,38 @@ const UpdateProfile = ({ user, phone, uploadImage, refreshOption, setLoader }) =
     };
 
     const save = () => {
-        setLoader(true)
+        setLoader(true);
         let data = {
             email,
             mobile,
             profile_picture: uploadImage,
-        }
+        };
         comnPost("v2/updateProfile", data)
-            .then(res => {
+            .then((res) => {
                 if (res.data.success) {
-                    refreshOption()
+                    refreshOption();
                 } else {
                     setIsAlert(true);
-                    setAlertMessage(res.data.message.email ? res.data.message.email : res.data.message.mobile ? res.data.message.mobile : res.data.message);
-                    setLoader(false)
+                    setAlertMessage(
+                        res.data.message.email
+                            ? res.data.message.email
+                            : res.data.message.mobile
+                            ? res.data.message.mobile
+                            : res.data.message
+                    );
+                    setLoader(false);
                 }
             })
-            .catch(err => {
+            .catch((err) => {
                 setIsAlert(true);
                 setAlertMessage(t("ALERT.WENT_WRONG"));
-                setLoader(false)
-            })
-    }
+                setLoader(false);
+            });
+    };
 
     const closePopup = () => {
-        setIsAlert(false)
-    }
+        setIsAlert(false);
+    };
 
     return (
         <View>
@@ -84,7 +95,11 @@ const UpdateProfile = ({ user, phone, uploadImage, refreshOption, setLoader }) =
                         inputContainerStyle={styles.profileContainerStyle}
                         isSecure={field.isSecure}
                         leftIcon={
-                            <Feather name={field.leftIcon} size={24} style={styles.leftIcon} />
+                            <Feather
+                                name={field.leftIcon}
+                                size={24}
+                                style={styles.leftIcon}
+                            />
                         }
                     />
                 );
@@ -104,7 +119,7 @@ const UpdateProfile = ({ user, phone, uploadImage, refreshOption, setLoader }) =
                 visible={isAlert}
             />
         </View>
-    )
-}
+    );
+};
 
-export default UpdateProfile
+export default UpdateProfile;

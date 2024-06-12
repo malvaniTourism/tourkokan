@@ -1,12 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, TouchableOpacity, FlatList, Modal, TouchableWithoutFeedback, Dimensions } from "react-native";
+import {
+    View,
+    Text,
+    Image,
+    TouchableOpacity,
+    FlatList,
+    Modal,
+    TouchableWithoutFeedback,
+    Dimensions,
+} from "react-native";
 import Path from "../../Services/Api/BaseUrl";
 import styles from "./Styles";
 import GlobalText from "./Text";
 
 const MasonryGrid = ({ data, loadMore }) => {
     const [selectedImage, setSelectedImage] = useState(null);
-    const [screenWidth, setScreenWidth] = useState(Dimensions.get("window").width);
+    const [screenWidth, setScreenWidth] = useState(
+        Dimensions.get("window").width
+    );
 
     useEffect(() => {
         const updateDimensions = () => {
@@ -49,14 +60,17 @@ const MasonryGrid = ({ data, loadMore }) => {
     });
 
     const renderItem = ({ item }) => (
-        <TouchableOpacity
-            onLongPress={() => handleLongPress(item)}
-        >
-            <View style={[styles.masonryContainer, { width: item.dimensions.width, height: item.dimensions.height }]}>
-                <Image
-                    source={{ uri: item.uri }}
-                    style={styles.gridImage}
-                />
+        <TouchableOpacity onLongPress={() => handleLongPress(item)}>
+            <View
+                style={[
+                    styles.masonryContainer,
+                    {
+                        width: item.dimensions.width,
+                        height: item.dimensions.height,
+                    },
+                ]}
+            >
+                <Image source={{ uri: item.uri }} style={styles.gridImage} />
                 <Text style={styles.gridText}>{item.text}</Text>
             </View>
         </TouchableOpacity>
@@ -87,7 +101,10 @@ const MasonryGrid = ({ data, loadMore }) => {
                             style={styles.modalImage}
                         />
                         <View style={styles.masonryTextContainer}>
-                            <GlobalText text={selectedImage?.text} style={styles.modalText} />
+                            <GlobalText
+                                text={selectedImage?.text}
+                                style={styles.modalText}
+                            />
                         </View>
                     </View>
                 </TouchableWithoutFeedback>

@@ -1,35 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, View, Text, SafeAreaView, TouchableOpacity } from "react-native";
-import { connect } from "react-redux"
+import { FlatList, View, SafeAreaView } from "react-native";
+import { connect } from "react-redux";
 import Header from "../../Components/Common/Header";
 import SearchBar from "../../Components/Customs/Search";
-import styles from "./Styles";
 import Loader from "../../Components/Customs/Loader";
 import { ListItem } from "@rneui/themed";
-import { checkLogin, goBackHandler, navigateTo } from "../../Services/CommonMethods";
+import {
+    checkLogin,
+    goBackHandler,
+    navigateTo,
+} from "../../Services/CommonMethods";
 import { comnPost } from "../../Services/Api/CommonServices";
-import GlobalText from "../../Components/Customs/Text";
 import { setLoader } from "../../Reducers/CommonActions";
-import STRING from "../../Services/Constants/STRINGS";
 import { useTranslation } from "react-i18next";
 
 const CityPlaceSearch = ({ navigation, route, ...props }) => {
     const { t } = useTranslation();
 
     const [searchValue, setSearchValue] = useState("");
-    const [tableName, setTableName] = useState("places")
+    const [tableName, setTableName] = useState("places");
     const [placesList, setPlacesList] = useState([]);
     const [isCity, setIsCity] = useState(false);
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        props.setLoader(true)
-        const backHandler = goBackHandler(navigation)
-        checkLogin(navigation)
-        searchPlace("", t("TABLE.PLACES"))
+        props.setLoader(true);
+        const backHandler = goBackHandler(navigation);
+        checkLogin(navigation);
+        searchPlace("", t("TABLE.PLACES"));
         return () => {
-            backHandler.remove()
-        }
+            backHandler.remove();
+        };
     }, []);
 
     const searchPlace = (val, table) => {
@@ -37,37 +38,36 @@ const CityPlaceSearch = ({ navigation, route, ...props }) => {
         const data = {
             search: val,
             apitype: "dropdown",
-            global: 1
-        }
+            global: 1,
+        };
         // if (searchValue.length > 2) {
         comnPost("v2/sites", data)
             .then((res) => {
-                setPlacesList(res.data.data.data)
-                setIsLoading(false)
-                props.setLoader(false)
+                setPlacesList(res.data.data.data);
+                setIsLoading(false);
+                props.setLoader(false);
             })
             .catch((err) => {
-                setIsLoading(false)
-                props.setLoader(false)
+                setIsLoading(false);
+                props.setLoader(false);
             });
         // } else setPlacesList([])
     };
 
     const onChipClick = (val) => {
-        setIsCity(val)
-        let table = t("TABLE.CITIES")
+        setIsCity(val);
+        let table = t("TABLE.CITIES");
         if (!val) {
-            setTableName(t("TABLE.PLACES"))
-            table = t("TABLE.PLACES")
-        }
-        else setTableName(t("TABLE.CITIES"))
-        searchPlace(searchValue, table)
-    }
+            setTableName(t("TABLE.PLACES"));
+            table = t("TABLE.PLACES");
+        } else setTableName(t("TABLE.CITIES"));
+        searchPlace(searchValue, table);
+    };
 
     const onListItemClick = (id) => {
         if (isCity) navigateTo(navigation, t("SCREEN.CITY_DETAILS"), { id });
         else navigateTo(navigation, t("SCREEN.PLACE_DETAILS"), { id });
-    }
+    };
 
     const renderItem = ({ item }) => {
         return (
@@ -109,20 +109,19 @@ const CityPlaceSearch = ({ navigation, route, ...props }) => {
                 />
             </SafeAreaView>
         </View>
-    )
-}
+    );
+};
 
 const mapStateToProps = (state) => {
-    return {
-    };
+    return {};
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setLoader: data => {
-            dispatch(setLoader(data))
-        }
+        setLoader: (data) => {
+            dispatch(setLoader(data));
+        },
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CityPlaceSearch)
+export default connect(mapStateToProps, mapDispatchToProps)(CityPlaceSearch);

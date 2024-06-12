@@ -1,27 +1,30 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, ScrollView, Text, TouchableOpacity, Switch, SafeAreaView, ImageBackground, FlatList } from "react-native";
-import SmallCard from "../../Components/Customs/SmallCard";
+import { View, ScrollView, FlatList } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
-import { comnGet, comnPost, dataSync, saveToStorage } from "../../Services/Api/CommonServices";
+import {
+    comnPost,
+    dataSync,
+    saveToStorage,
+} from "../../Services/Api/CommonServices";
 import { connect } from "react-redux";
 import { setLoader } from "../../Reducers/CommonActions";
 import Loader from "../../Components/Customs/Loader";
 import styles from "../Styles";
 import Header from "../../Components/Common/Header";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { backPage, checkLogin, goBackHandler, navigateTo } from "../../Services/CommonMethods";
-import PlaceCard from "../../Components/Cards/PlaceCard";
-import CityCard from "../../Components/Cards/CityCard";
+import {
+    backPage,
+    checkLogin,
+    goBackHandler,
+    navigateTo,
+} from "../../Services/CommonMethods";
 import GlobalText from "../../Components/Customs/Text";
-import STRING from "../../Services/Constants/STRINGS";
 import NetInfo from "@react-native-community/netinfo";
 import CheckNet from "../../Components/Common/CheckNet";
 import ImageButton from "../../Components/Customs/Buttons/ImageButton";
 import SubCatCard from "../../Components/Cards/SubCatCard";
 import ImageButtonSkeleton from "../../Components/Customs/Buttons/ImageButtonSkeleton";
-import Path from "../../Services/Api/BaseUrl";
 import { useTranslation } from "react-i18next";
 
 const Categories = ({ route, navigation, ...props }) => {
@@ -31,75 +34,82 @@ const Categories = ({ route, navigation, ...props }) => {
     const [places, setPlaces] = useState([]);
     const [categories, setCategories] = useState([]);
     const [error, setError] = useState(null);
-    const [isEnabled, setIsEnabled] = useState(route.name == t("SCREEN.CATEGORIES"))
+    const [isEnabled, setIsEnabled] = useState(
+        route.name == t("SCREEN.CATEGORIES")
+    );
     const [isLandingDataFetched, setIsLandingDataFetched] = useState(false);
-    const [nextPage, setNextPage] = useState(1)
-    const [offline, setOffline] = useState(false)
+    const [nextPage, setNextPage] = useState(1);
+    const [offline, setOffline] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedSubCategory, setSelectedSubCategory] = useState([]);
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const backHandler = goBackHandler(navigation)
-        checkLogin(navigation)
+        const backHandler = goBackHandler(navigation);
+        checkLogin(navigation);
         setIsLoading(true);
 
-        const unsubscribe = NetInfo.addEventListener(state => {
-            setOffline(false)
+        const unsubscribe = NetInfo.addEventListener((state) => {
+            setOffline(false);
 
-            dataSync(t("STORAGE.CATEGORIES_RESPONSE"), getCategories())
-                .then(resp => {
-                    let res = JSON.parse(resp)
+            dataSync(t("STORAGE.CATEGORIES_RESPONSE"), getCategories()).then(
+                (resp) => {
+                    let res = JSON.parse(resp);
                     if (res.data && res.data.data) {
                         setCategories(res.data.data.data);
                     } else if (resp) {
-                        setOffline(true)
+                        setOffline(true);
                     }
-                })
+                }
+            );
         });
 
         return () => {
-            backHandler.remove()
+            backHandler.remove();
             unsubscribe();
-        }
+        };
     }, []);
 
     const getCategories = () => {
-        setIsLoading(true)
+        setIsLoading(true);
         let data = {
             parent_list: "1",
             // parent_id: 1,
-            per_page: "2"
+            per_page: "2",
         };
         comnPost("v2/listcategories", data, navigation)
             .then((res) => {
                 if (res && res.data.data)
-                    saveToStorage(t("STORAGE.CATEGORIES_RESPONSE"), JSON.stringify(res))
+                    saveToStorage(
+                        t("STORAGE.CATEGORIES_RESPONSE"),
+                        JSON.stringify(res)
+                    );
                 setCategories(res.data.data.data);
-                setSelectedCategory(res.data.data.data[0].name)
-                setSelectedSubCategory(res.data.data.data[0].sub_categories)
+                setSelectedCategory(res.data.data.data[0].name);
+                setSelectedSubCategory(res.data.data.data[0].sub_categories);
                 // setSelectedSubCategory(res.data.data.data[0].sub_categories)
                 setIsLoading(false);
             })
             .catch((error) => {
                 setIsLoading(false);
             });
-    }
+    };
 
     const handleCategoryPress = (category) => {
         setSelectedCategory(category.name);
-        setSelectedSubCategory(categories.find((item) => item.name === category.name).sub_categories)
+        setSelectedSubCategory(
+            categories.find((item) => item.name === category.name)
+                .sub_categories
+        );
     };
 
     const renderItem = ({ item }) => {
-        return (
-            <SubCatCard data={item} onClick={() => goToSubCats(item)} />
-        )
-    }
+        return <SubCatCard data={item} onClick={() => goToSubCats(item)} />;
+    };
 
     const goToSubCats = (subCat) => {
-        navigateTo(navigation, t("SCREEN.CITY_LIST"), { subCat })
-    }
+        navigateTo(navigation, t("SCREEN.CITY_LIST"), { subCat });
+    };
 
     return (
         <View style={{ flex: 1, justifyContent: "flex-start" }}>
@@ -118,40 +128,51 @@ const Categories = ({ route, navigation, ...props }) => {
             />
             <View style={styles.horizontalCategoriesScroll}>
                 <ScrollView horizontal style={styles.categoriesButtonScroll}>
-                    {
-                        isLoading ?
-                            <>
-                                <ImageButtonSkeleton />
-                                <ImageButtonSkeleton />
-                                <ImageButtonSkeleton />
-                                <ImageButtonSkeleton />
-                                <ImageButtonSkeleton />
-                            </>
-                            :
-                            categories.map((category) => (
-                                <ImageButton
-                                    key={category.id}
-                                    icon={"bus"}
-                                    onPress={() => handleCategoryPress(category)}
-                                    isSelected={selectedCategory === category.name}
-                                    image={category.icon}
-                                    imageButtonCircle={styles.categoriesCircleButton}
-                                    buttonIcon={styles.catIconStyle}
-                                    text={
-                                        <GlobalText text={category.name} style={styles.categoryButtonText} />
-                                    }
-                                />
-                            ))}
+                    {isLoading ? (
+                        <>
+                            <ImageButtonSkeleton />
+                            <ImageButtonSkeleton />
+                            <ImageButtonSkeleton />
+                            <ImageButtonSkeleton />
+                            <ImageButtonSkeleton />
+                        </>
+                    ) : (
+                        categories.map((category) => (
+                            <ImageButton
+                                key={category.id}
+                                icon={"bus"}
+                                onPress={() => handleCategoryPress(category)}
+                                isSelected={selectedCategory === category.name}
+                                image={category.icon}
+                                imageButtonCircle={
+                                    styles.categoriesCircleButton
+                                }
+                                buttonIcon={styles.catIconStyle}
+                                text={
+                                    <GlobalText
+                                        text={category.name}
+                                        style={styles.categoryButtonText}
+                                    />
+                                }
+                            />
+                        ))
+                    )}
                 </ScrollView>
             </View>
 
             <View style={styles.subCatContainer}>
                 <View>
-                    <GlobalText text={t("HEADER.CLASSIFICATIONS")} style={styles.subCatHeader} />
+                    <GlobalText
+                        text={t("HEADER.CLASSIFICATIONS")}
+                        style={styles.subCatHeader}
+                    />
                 </View>
                 <View style={styles.subCatView}>
                     <View style={styles.verticalNameContainer}>
-                        <GlobalText text={selectedCategory} style={styles.verticalName} />
+                        <GlobalText
+                            text={selectedCategory}
+                            style={styles.verticalName}
+                        />
                     </View>
                     <View style={styles.subCatCardsContainer}>
                         <FlatList

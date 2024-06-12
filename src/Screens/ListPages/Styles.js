@@ -8,29 +8,28 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap: "wrap",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
     },
-    stopsCard: {
-    },
+    stopsCard: {},
     clickChip: {
         paddingVertical: 8,
         paddingHorizontal: 15,
         marginHorizontal: 10,
         marginVertical: 5,
-        borderRadius: DIMENSIONS.borderRadiusSmall
+        borderRadius: DIMENSIONS.borderRadiusSmall,
     },
     chipEnabled: {
-        backgroundColor: COLOR.blueL
+        backgroundColor: COLOR.blueL,
     },
     chipDisabled: {
-        backgroundColor: COLOR.grey
+        backgroundColor: COLOR.grey,
     },
     chipTitle: {
-        color: COLOR.white
+        color: COLOR.white,
     },
     flexRow: {
         flexDirection: "row",
-        marginBottom: 10
+        marginBottom: 10,
     },
     container: {
         flex: 1,
@@ -51,18 +50,18 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        minWidth: DIMENSIONS.bannerWidth - 100
+        minWidth: DIMENSIONS.bannerWidth - 100,
     },
     listItemMid: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        minWidth: DIMENSIONS.bannerWidth - 85
+        minWidth: DIMENSIONS.bannerWidth - 85,
     },
     horizontalCityScroll: {
         minHeight: DIMENSIONS.iconXXL,
         marginTop: -10,
-        marginBottom: 10
+        marginBottom: 10,
     },
     citiesButtonScroll: {
         flexDirection: "row",
@@ -71,11 +70,11 @@ const styles = StyleSheet.create({
         borderRadius: DIMENSIONS.borderRadiusLarge,
     },
     cityButtonText: {
-        fontSize: DIMENSIONS.textSizeSmall
+        fontSize: DIMENSIONS.textSizeSmall,
     },
     toggleView: {
         height: DIMENSIONS.bannerHeight - 50,
-        marginBottom: 10
+        marginBottom: 10,
     },
     overlay: {
         ...StyleSheet.absoluteFillObject,
@@ -91,18 +90,18 @@ const styles = StyleSheet.create({
         position: "absolute",
         alignSelf: "center",
         justifyContent: "center",
-        textAlign: "center"
+        textAlign: "center",
     },
     lineVert: {
         borderWidth: 1,
         borderColor: COLOR.white,
-        marginHorizontal: 20
+        marginHorizontal: 20,
     },
     whiteText: {
         color: COLOR.white,
         textAlign: "center",
         fontWeight: "bold",
-        fontSize: DIMENSIONS.headerTextSize
+        fontSize: DIMENSIONS.headerTextSize,
     },
     buttonSkeleton: {
         width: DIMENSIONS.bannerWidth / 2,
@@ -110,7 +109,7 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         borderRadius: DIMENSIONS.borderRadiusXS,
         alignSelf: "flex-end",
-        marginRight: 20
+        marginRight: 20,
     },
     buttonView: {
         alignItems: "center",
@@ -120,15 +119,15 @@ const styles = StyleSheet.create({
         backgroundColor: COLOR.transparent,
         elevation: 0,
         alignSelf: "flex-end",
-        justifyContent: "flex-end"
+        justifyContent: "flex-end",
     },
     titleStyle: {
         color: COLOR.themeBlue,
-        textAlign: "right"
+        textAlign: "right",
     },
     boldText: {
         fontWeight: "bold",
-        fontSize: 16
+        fontSize: 16,
     },
     placesCard: {
         width: DIMENSIONS.halfWidth - 30,
@@ -140,7 +139,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         elevation: 5,
         alignSelf: "stretch",
-        marginHorizontal: 10
+        marginHorizontal: 10,
     },
     flexAroundSkeleton: {
         flexDirection: "row",
@@ -154,13 +153,13 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         width: DIMENSIONS.bannerWidth,
-        marginVertical: 10
+        marginVertical: 10,
     },
     sectionTitle: {
         fontWeight: "bold",
         fontSize: DIMENSIONS.headerTextSize,
         color: COLOR.black,
     },
-})
+});
 
 export default styles;

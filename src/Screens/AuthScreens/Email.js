@@ -1,9 +1,14 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { View, Text, TouchableOpacity, BackHandler, Image, ImageBackground, KeyboardAvoidingView } from "react-native";
+import {
+    View,
+    TouchableOpacity,
+    BackHandler,
+    ImageBackground,
+    KeyboardAvoidingView,
+} from "react-native";
 import TextField from "../../Components/Customs/TextField";
 import { EmailField } from "../../Services/Constants/FIELDS";
-import Header from "../../Components/Common/Header";
 import TextButton from "../../Components/Customs/Buttons/TextButton";
 import styles from "./Styles";
 import { comnPost } from "../../Services/Api/CommonServices";
@@ -11,18 +16,11 @@ import { connect } from "react-redux";
 import { saveAccess_token, setLoader } from "../../Reducers/CommonActions";
 import Loader from "../../Components/Customs/Loader";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import FontIcons from "react-native-vector-icons/FontAwesome5";
 import COLOR from "../../Services/Constants/COLORS";
-import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import { navigateTo } from "../../Services/CommonMethods";
 import GlobalText from "../../Components/Customs/Text";
-import SQLite from "react-native-sqlite-storage"
+import SQLite from "react-native-sqlite-storage";
 import Popup from "../../Components/Common/Popup";
-import STRING from "../../Services/Constants/STRINGS";
-import AppLogo from "../../Assets/Images/tourKokan.png";
-import EmailPassword from "./LoginComponents/EmailPassword";
-import LoginChoice from "./LoginComponents/LoginChoice";
-import EmailOtp from "./LoginComponents/EmailOtp";
 import Feather from "react-native-vector-icons/Feather";
 import { CommonActions } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
@@ -39,13 +37,16 @@ const Email = ({ navigation, route, ...props }) => {
     const [isOtp, setIsOtp] = useState(route.params?.isOtp || false);
     const [isPassword, setIsPassword] = useState(false);
     const [isOtpSent, setIsOtpSent] = useState(false);
-    const [isButtonDisabled, setIsButtonDisabled] = useState(true)
-    const [showPassword, setShowPassword] = useState(false)
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         // openDB()
         // createUserTable();
-        const backHandler = BackHandler.addEventListener(t("EVENT.HARDWARE_BACK_PRESS"), () => navigateTo(navigation, t("SCREEN.AUTH_SCREEN")));
+        const backHandler = BackHandler.addEventListener(
+            t("EVENT.HARDWARE_BACK_PRESS"),
+            () => navigateTo(navigation, t("SCREEN.AUTH_SCREEN"))
+        );
         return () => {
             backHandler.remove();
             setIsAlert(false);
@@ -54,13 +55,16 @@ const Email = ({ navigation, route, ...props }) => {
     }, []);
 
     const openDB = () => {
-        const db = SQLite.openDatabase({ name: "mydb.db", createFromLocation: "~mydata.db" });
+        const db = SQLite.openDatabase({
+            name: "mydb.db",
+            createFromLocation: "~mydata.db",
+        });
         if (db) {
             // Database initialization successful, proceed with queries
         } else {
             console.error("Failed to initialize the database.");
         }
-    }
+    };
 
     const createUserTable = () => {
         db.transaction((tx) => {
@@ -68,7 +72,7 @@ const Email = ({ navigation, route, ...props }) => {
                 "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT)"
             );
         });
-    }
+    };
 
     const createUser = () => {
         db.transaction((tx) => {
@@ -84,23 +88,19 @@ const Email = ({ navigation, route, ...props }) => {
                 }
             );
         });
-    }
+    };
 
     const getUserData = () => {
         db.transaction((tx) => {
-            tx.executeSql(
-                "SELECT * FROM users",
-                [],
-                (tx, results) => {
-                    const len = results.rows.length;
-                    for (let i = 0; i < len; i++) {
-                        const { id, name, email } = results.rows.item(i);
-                        console.log(`User ${id}: ${name} (${email})`);
-                    }
+            tx.executeSql("SELECT * FROM users", [], (tx, results) => {
+                const len = results.rows.length;
+                for (let i = 0; i < len; i++) {
+                    const { id, name, email } = results.rows.item(i);
+                    console.log(`User ${id}: ${name} (${email})`);
                 }
-            );
+            });
         });
-    }
+    };
 
     const setValue = (val, isVal, index) => {
         switch (index) {
@@ -109,11 +109,11 @@ const Email = ({ navigation, route, ...props }) => {
                 break;
             case 1:
                 setPassword(val);
-                setOtp(val)
+                setOtp(val);
                 break;
         }
-        if ((val !== "" || val !== null) && isVal) setIsButtonDisabled(false)
-        else setIsButtonDisabled(true)
+        if ((val !== "" || val !== null) && isVal) setIsButtonDisabled(false);
+        else setIsButtonDisabled(true);
     };
 
     const getValue = (i) => {
@@ -127,25 +127,26 @@ const Email = ({ navigation, route, ...props }) => {
 
     const closePopup = () => {
         if (isSuccess) {
-            AsyncStorage.setItem(t("STORAGE.IS_FIRST_TIME"), JSON.stringify(true))
+            AsyncStorage.setItem(
+                t("STORAGE.IS_FIRST_TIME"),
+                JSON.stringify(true)
+            );
             navigation.dispatch(
                 CommonActions.reset({
                     index: 0,
-                    routes: [
-                        { name: t("SCREEN.HOME") },
-                    ],
+                    routes: [{ name: t("SCREEN.HOME") }],
                 })
             );
         }
-        setIsAlert(false)
-    }
+        setIsAlert(false);
+    };
 
     const signUpScreen = () => {
         navigateTo(navigation, t("SCREEN.SIGN_UP"));
     };
 
     const generateOtp = () => {
-        props.setLoader(true)
+        props.setLoader(true);
         const data = {
             email,
         };
@@ -153,29 +154,36 @@ const Email = ({ navigation, route, ...props }) => {
             .then((res) => {
                 if (res.data?.success) {
                     props.setLoader(false);
-                    navigateTo(navigation, t("SCREEN.VERIFY_OTP"), { email })
+                    navigateTo(navigation, t("SCREEN.VERIFY_OTP"), { email });
                 } else {
                     setIsAlert(true);
-                    setIsSuccess(false)
-                    setAlertMessage(res.data?.message.email ? res.data?.message.email : res.data?.message);
+                    setIsSuccess(false);
+                    setAlertMessage(
+                        res.data?.message.email
+                            ? res.data?.message.email
+                            : res.data?.message
+                    );
                     props.setLoader(false);
                 }
             })
             .catch((err) => {
                 setIsAlert(true);
-                setIsSuccess(false)
+                setIsSuccess(false);
                 setAlertMessage(t("ALERT.WENT_WRONG"));
                 props.setLoader(false);
             });
-    }
+    };
 
     const selectPassword = () => {
-        navigateTo(navigation, t("SCREEN.PASSWORD_LOGIN"), { email })
-    }
+        navigateTo(navigation, t("SCREEN.PASSWORD_LOGIN"), { email });
+    };
 
     return (
         <View style={{ flex: 1, backgroundColor: COLOR.white }}>
-            <ImageBackground style={styles.loginImage} source={require("../../Assets/Images/Intro/login_background.png")} />
+            <ImageBackground
+                style={styles.loginImage}
+                source={require("../../Assets/Images/Intro/login_background.png")}
+            />
             {/* <Header
         name={""}
         startIcon={<View></View>}
@@ -206,23 +214,33 @@ const Email = ({ navigation, route, ...props }) => {
                             inputContainerStyle={styles.inputContainerStyle}
                             isSecure={field.isSecure}
                             rightIcon={
-                                field.type == `${t("TYPE.PASSWORD")}` &&
-                                <Feather
-                                    name={field.isSecure ? "eye" : "eye-off"}
-                                    size={24}
-                                    color={COLOR.themeBlue}
-                                    onPress={() => {
-                                        field.isSecure = !showPassword
-                                        setShowPassword(!showPassword)
-                                    }}
-                                    style={styles.eyeIcon}
-                                />
+                                field.type == `${t("TYPE.PASSWORD")}` && (
+                                    <Feather
+                                        name={
+                                            field.isSecure ? "eye" : "eye-off"
+                                        }
+                                        size={24}
+                                        color={COLOR.themeBlue}
+                                        onPress={() => {
+                                            field.isSecure = !showPassword;
+                                            setShowPassword(!showPassword);
+                                        }}
+                                        style={styles.eyeIcon}
+                                    />
+                                )
                             }
                         />
                     );
                 })}
-                <TouchableOpacity onPress={() => navigateTo(navigation, t("SCREEN.EMAIL_SIGN_IN"))}>
-                    <GlobalText text={t("BUTTON.LOGIN_WITH_PASSWORD")} style={styles.loginSubText} />
+                <TouchableOpacity
+                    onPress={() =>
+                        navigateTo(navigation, t("SCREEN.EMAIL_SIGN_IN"))
+                    }
+                >
+                    <GlobalText
+                        text={t("BUTTON.LOGIN_WITH_PASSWORD")}
+                        style={styles.loginSubText}
+                    />
                 </TouchableOpacity>
                 <View style={{ alignItems: "center" }}>
                     <TextButton
@@ -236,12 +254,17 @@ const Email = ({ navigation, route, ...props }) => {
                 <View style={styles.haveAcc}>
                     <GlobalText text={t("DONT_HAVE_ACC")} />
                     <TouchableOpacity onPress={() => signUpScreen()}>
-                        <GlobalText text={t("SIGN_UP")} style={{ fontWeight: "bold" }} />
+                        <GlobalText
+                            text={t("SIGN_UP")}
+                            style={{ fontWeight: "bold" }}
+                        />
                     </TouchableOpacity>
                 </View>
             </View>
-            <KeyboardAvoidingView behavior="height" style={{ flex: 1 }}>
-            </KeyboardAvoidingView>
+            <KeyboardAvoidingView
+                behavior="height"
+                style={{ flex: 1 }}
+            ></KeyboardAvoidingView>
             <Popup
                 message={alertMessage}
                 onPress={closePopup}

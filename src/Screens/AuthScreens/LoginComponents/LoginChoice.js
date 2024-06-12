@@ -1,20 +1,7 @@
-import React from 'react'
-import { Email, SignInFields } from '../../../Services/Constants/FIELDS';
-import { View } from 'react-native';
-import TextField from '../../../Components/Customs/TextField';
-import TextButton from '../../../Components/Customs/Buttons/TextButton';
-import Feather from "react-native-vector-icons/Feather";
-import styles from '../Styles';
-import STRING from '../../../Services/Constants/STRINGS';
-import COLOR from '../../../Services/Constants/COLORS';
-import DIMENSIONS from '../../../Services/Constants/DIMENSIONS';
-import GlobalText from '../../../Components/Customs/Text';
+import React from "react";
 
 const LoginChoice = ({ selectOtp, selectPassword }) => {
+    return <></>;
+};
 
-    return (
-        <></>
-    )
-}
-
-export default LoginChoice
+export default LoginChoice;

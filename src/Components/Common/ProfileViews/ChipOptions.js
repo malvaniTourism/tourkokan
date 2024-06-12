@@ -1,7 +1,6 @@
-import React from "react"
-import { View } from "react-native"
-import ProfileChip from "../ProfileChip"
-import STRING from "../../../Services/Constants/STRINGS"
+import React from "react";
+import { View } from "react-native";
+import ProfileChip from "../ProfileChip";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Feather from "react-native-vector-icons/Feather";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
@@ -9,14 +8,21 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import styles from "./Styles";
 import COLOR from "../../../Services/Constants/COLORS";
 import GlobalText from "../../Customs/Text";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
-const ChipOptions = ({ languageClick, locationClick, profileClick, settingsClick, logoutClick }) => {
+const ChipOptions = ({
+    languageClick,
+    locationClick,
+    profileClick,
+    settingsClick,
+    logoutClick,
+}) => {
     const { t } = useTranslation();
 
     return (
         <View>
-            <ProfileChip name={t("CHIPS.LANGUAGE")}
+            <ProfileChip
+                name={t("CHIPS.LANGUAGE")}
                 icon={
                     <View style={styles.chipIcon}>
                         <FontAwesome
@@ -27,9 +33,10 @@ const ChipOptions = ({ languageClick, locationClick, profileClick, settingsClick
                     </View>
                 }
                 clickChip={languageClick}
-                meta={<GlobalText text={t('LANGUAGE')} />}
+                meta={<GlobalText text={t("LANGUAGE")} />}
             />
-            <ProfileChip name={t("CHIPS.UPDATE_LOCATION")}
+            <ProfileChip
+                name={t("CHIPS.UPDATE_LOCATION")}
                 icon={
                     <View style={styles.chipIcon}>
                         <Ionicons
@@ -41,14 +48,11 @@ const ChipOptions = ({ languageClick, locationClick, profileClick, settingsClick
                 }
                 clickChip={locationClick}
             />
-            <ProfileChip name={t("CHIPS.UPDATE_PROFILE")}
+            <ProfileChip
+                name={t("CHIPS.UPDATE_PROFILE")}
                 icon={
                     <View style={styles.chipIcon}>
-                        <Feather
-                            name="user"
-                            size={20}
-                            color={COLOR.white}
-                        />
+                        <Feather name="user" size={20} color={COLOR.white} />
                     </View>
                 }
                 clickChip={profileClick}
@@ -65,7 +69,8 @@ const ChipOptions = ({ languageClick, locationClick, profileClick, settingsClick
                 }
                 clickChip={settingsClick}
             /> */}
-            <ProfileChip name={t("CHIPS.LOGOUT")}
+            <ProfileChip
+                name={t("CHIPS.LOGOUT")}
                 icon={
                     <View style={styles.chipIcon}>
                         <MaterialIcons
@@ -78,7 +83,7 @@ const ChipOptions = ({ languageClick, locationClick, profileClick, settingsClick
                 clickChip={logoutClick}
             />
         </View>
-    )
-}
+    );
+};
 
-export default ChipOptions
+export default ChipOptions;

@@ -5,7 +5,7 @@ const { StyleSheet } = require("react-native");
 
 const styles = StyleSheet.create({
     center: {
-        justifyContent: "center"
+        justifyContent: "center",
     },
     placeImageTitleView: {
         height: DIMENSIONS.detailsImage,
@@ -20,15 +20,15 @@ const styles = StyleSheet.create({
     cityHeader: {
         position: "absolute",
         backgroundColor: COLOR.transparent,
-        zIndex: 1
+        zIndex: 1,
     },
     placeImage: {
-        height: DIMENSIONS.screenHeight / 100 * 40,
+        height: (DIMENSIONS.screenHeight / 100) * 40,
         width: DIMENSIONS.screenWidth,
-        position: "absolute"
+        position: "absolute",
     },
     placeImageView: {
-        height: DIMENSIONS.screenHeight / 100 * 40,
+        height: (DIMENSIONS.screenHeight / 100) * 40,
     },
     cityLikeView: {
         backgroundColor: COLOR.grey,
@@ -42,14 +42,14 @@ const styles = StyleSheet.create({
         borderRadius: DIMENSIONS.borderRadiusLarge,
         marginHorizontal: 5,
         color: COLOR.greyDark,
-        fontWeight: "bold"
+        fontWeight: "bold",
     },
     cityStarView: {
         backgroundColor: COLOR.white,
         borderRadius: DIMENSIONS.borderRadius,
         justifyContent: "flex-start",
         alignItems: "center",
-        flexDirection: "row"
+        flexDirection: "row",
     },
     backIcon: {
         backgroundColor: COLOR.white,
@@ -59,13 +59,13 @@ const styles = StyleSheet.create({
     detailTitle: {
         fontSize: DIMENSIONS.headerTextSize,
         fontWeight: "bold",
-        textAlign: "left"
+        textAlign: "left",
     },
     detailSubTitle: {
         fontSize: DIMENSIONS.textSizeSmall,
         fontWeight: "bold",
         textAlign: "left",
-        color: COLOR.greyDark
+        color: COLOR.greyDark,
     },
     sectionView: {
         marginVertical: DIMENSIONS.sectionGap,
@@ -80,16 +80,16 @@ const styles = StyleSheet.create({
     locationPinText: {
         fontWeight: "bold",
         textAlign: "left",
-        color: COLOR.grey
+        color: COLOR.grey,
     },
     flexRow: {
         flexDirection: "row",
-        alignItems: "center"
+        alignItems: "center",
     },
     flexBetween: {
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
     },
     detailsTitleView: {
         flexDirection: "row",
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
         marginBottom: DIMENSIONS.sectionGap,
     },
     cityDescription: {
-        marginBottom: DIMENSIONS.sectionGap
+        marginBottom: DIMENSIONS.sectionGap,
     },
     buttonSkeleton: {
         width: DIMENSIONS.bannerWidth / 3,
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
         borderRadius: DIMENSIONS.borderRadiusXS,
         alignSelf: "flex-end",
         marginRight: 5,
-        marginTop: 15
+        marginTop: 15,
     },
     buttonView: {
         width: DIMENSIONS.screenWidth / 2,
@@ -122,27 +122,27 @@ const styles = StyleSheet.create({
         marginTop: 10,
         backgroundColor: COLOR.white,
         alignSelf: "flex-start",
-        elevation: 0
+        elevation: 0,
     },
     titleStyle: {
         color: COLOR.themeBlue,
         fontWeight: "400",
-        fontSize: DIMENSIONS.textSize
+        fontSize: DIMENSIONS.textSize,
     },
     viewMapButtonStyle: {
         backgroundColor: COLOR.themeBlue,
-        width: "auto"
+        width: "auto",
     },
     viewMapTitle: {
         color: COLOR.white,
         fontWeight: "200",
-        fontSize: DIMENSIONS.textSize
+        fontSize: DIMENSIONS.textSize,
     },
     sectionTitle: {
         fontWeight: "bold",
         fontSize: DIMENSIONS.headerTextSize,
         color: COLOR.cancelButton,
-        marginBottom: 20
+        marginBottom: 20,
     },
     placesCard: {
         width: DIMENSIONS.halfWidth - 30,
@@ -154,8 +154,8 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         elevation: 5,
         alignSelf: "stretch",
-        marginHorizontal: 10
+        marginHorizontal: 10,
     },
-})
+});
 
 export default styles;

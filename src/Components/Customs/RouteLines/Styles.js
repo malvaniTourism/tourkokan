@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     },
     icon: {
         left: -6,
-    }
-})
+    },
+});
 
 export default styles;

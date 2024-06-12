@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react"
-import { View, Text, ImageBackground, TouchableOpacity, Share } from "react-native"
-import styles from "./Styles"
+import React, { useEffect, useState } from "react";
+import { View, ImageBackground, TouchableOpacity, Share } from "react-native";
+import styles from "./Styles";
 import Path from "../../Services/Api/BaseUrl";
 import GlobalText from "../Customs/Text";
-import { navigateTo } from "../../Services/CommonMethods";
 import ComingSoon from "../Common/ComingSoon";
 import Octicons from "react-native-vector-icons/Octicons";
 import COLOR from "../../Services/Constants/COLORS";
@@ -11,38 +10,36 @@ import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import StarRating from "react-native-star-rating";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { comnPost } from "../../Services/Api/CommonServices";
-import STRING from "../../Services/Constants/STRINGS";
 import { useTranslation } from "react-i18next";
 
 const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
     const { t } = useTranslation();
 
-    const [isVisible, setIsVisible] = useState(false)
-    const [isFav, setIsFav] = useState(data?.is_favorite)
-    const [rating, setRating] = useState(data?.rating_avg_rate)
-    const [commentCount, setCommentCount] = useState(data?.comment_count || 0)
-    const [rate, setRate] = useState(data?.rate?.rate)
-    const [cardType, setCardType] = useState(data.category?.code)
+    const [isVisible, setIsVisible] = useState(false);
+    const [isFav, setIsFav] = useState(data?.is_favorite);
+    const [rating, setRating] = useState(data?.rating_avg_rate);
+    const [commentCount, setCommentCount] = useState(data?.comment_count || 0);
+    const [rate, setRate] = useState(data?.rate?.rate);
+    const [cardType, setCardType] = useState(data.category?.code);
 
     useEffect(() => {
         setRating(data?.rating_avg_rate);
-    }, [rate])
+    }, [rate]);
 
     const onHeartClick = async () => {
         let placeData = {
             user_id: await AsyncStorage.getItem(t("STORAGE.USER_ID")),
             favouritable_type: t("TABLE.SITE"),
-            favouritable_id: data.id
-        }
-        setIsFav(!isFav)
+            favouritable_id: data.id,
+        };
+        setIsFav(!isFav);
         comnPost("v2/addDeleteFavourite", placeData)
-            .then(res => {
+            .then((res) => {
                 props.setLoader(false);
-                reload()
+                reload();
             })
-            .catch(err => {
-            })
-    }
+            .catch((err) => {});
+    };
 
     const onShareClick = async () => {
         try {
@@ -65,52 +62,102 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
     };
 
     const onStarRatingPress = async (rate) => {
-        setRate(rate)
+        setRate(rate);
         const placeData = {
             user_id: await AsyncStorage.getItem(t("STORAGE.USER_ID")),
             rateable_type: t("TABLE.SITE"),
             rateable_id: data.id,
-            rate
-        }
-        comnPost('v2/addUpdateRating', placeData)
-            .then(res => {
+            rate,
+        };
+        comnPost("v2/addUpdateRating", placeData)
+            .then((res) => {
                 props.setLoader(false);
-                reload()
+                reload();
             })
-            .catch(err => {
-            })
-    }
+            .catch((err) => {});
+    };
 
     return (
-        <TouchableOpacity style={cardType == "city" ? styles.cityCard : styles.placeCard} onPress={() => onClick()}>
+        <TouchableOpacity
+            style={cardType == "city" ? styles.cityCard : styles.placeCard}
+            onPress={() => onClick()}
+        >
             <View style={styles.cityOverlay} />
-            {data.image ?
-                <ImageBackground source={{ uri: Path.FTP_PATH + data.image }} style={cardType == "city" ? styles.cityImage : styles.placeImage} imageStyle={styles.cityImageStyle} resizeMode="cover" />
-                :
-                <ImageBackground source={require("../../Assets/Images/nature.jpeg")} style={cardType == "city" ? styles.cityImage : styles.placeImage} imageStyle={styles.cityImageStyle} resizeMode="cover" />
-            }
+            {data.image ? (
+                <ImageBackground
+                    source={{ uri: Path.FTP_PATH + data.image }}
+                    style={
+                        cardType == "city"
+                            ? styles.cityImage
+                            : styles.placeImage
+                    }
+                    imageStyle={styles.cityImageStyle}
+                    resizeMode="cover"
+                />
+            ) : (
+                <ImageBackground
+                    source={require("../../Assets/Images/nature.jpeg")}
+                    style={
+                        cardType == "city"
+                            ? styles.cityImage
+                            : styles.placeImage
+                    }
+                    imageStyle={styles.cityImageStyle}
+                    resizeMode="cover"
+                />
+            )}
             <View style={{ alignItems: "flex-end" }}>
-                <TouchableOpacity style={styles.cityLikeView} onPress={() => onHeartClick()}>
-                    {
-                        isFav ?
-                            <Octicons name="heart-fill" color={COLOR.red} size={DIMENSIONS.iconSize} />
-                            :
-                            <Octicons name="heart" color={COLOR.black} size={DIMENSIONS.iconSize} />
-                    }
+                <TouchableOpacity
+                    style={styles.cityLikeView}
+                    onPress={() => onHeartClick()}
+                >
+                    {isFav ? (
+                        <Octicons
+                            name="heart-fill"
+                            color={COLOR.red}
+                            size={DIMENSIONS.iconSize}
+                        />
+                    ) : (
+                        <Octicons
+                            name="heart"
+                            color={COLOR.black}
+                            size={DIMENSIONS.iconSize}
+                        />
+                    )}
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.cityLikeView}>
-                    <GlobalText text={commentCount} style={styles.commentCount} />
-                    <Octicons name="comment" color={COLOR.black} size={DIMENSIONS.iconSize} />
+                    <GlobalText
+                        text={commentCount}
+                        style={styles.commentCount}
+                    />
+                    <Octicons
+                        name="comment"
+                        color={COLOR.black}
+                        size={DIMENSIONS.iconSize}
+                    />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.cityLikeView}>
-                    {rating > 0 &&
-                        <GlobalText text={rating.slice(0, 3)} style={styles.avgRating} />
-                    }
-                    <Octicons name="star" color={COLOR.yellow} size={DIMENSIONS.iconSize} />
+                    {rating > 0 && (
+                        <GlobalText
+                            text={rating.slice(0, 3)}
+                            style={styles.avgRating}
+                        />
+                    )}
+                    <Octicons
+                        name="star"
+                        color={COLOR.yellow}
+                        size={DIMENSIONS.iconSize}
+                    />
                 </TouchableOpacity>
             </View>
 
-            <View style={cardType == "city" ? styles.cityStarView : styles.placeStarView}>
+            <View
+                style={
+                    cardType == "city"
+                        ? styles.cityStarView
+                        : styles.placeStarView
+                }
+            >
                 <StarRating
                     disabled={false}
                     maxStars={5}
@@ -121,8 +168,19 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
                 />
             </View>
 
-            <View style={cardType == "city" ? styles.cityDetailsOverlay : styles.placeDetailsOverlay}>
-                <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+            <View
+                style={
+                    cardType == "city"
+                        ? styles.cityDetailsOverlay
+                        : styles.placeDetailsOverlay
+                }
+            >
+                <View
+                    style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                    }}
+                >
                     <GlobalText text={data.name} style={styles.cityName} />
                     <View>
                         <GlobalText text={data.latitude} />
@@ -130,13 +188,19 @@ const CityCard = ({ data, reload, navigation, addComment, onClick }) => {
                     </View>
                 </View>
                 <View>
-                    <GlobalText text={`${data.description != undefined ? data.description.slice(0, 80) + "..." : ""}`} />
+                    <GlobalText
+                        text={`${
+                            data.description != undefined
+                                ? data.description.slice(0, 80) + "..."
+                                : ""
+                        }`}
+                    />
                     <GlobalText text={data.tag_line} style={styles.boldText} />
                 </View>
             </View>
             <ComingSoon message={t("COMING_SOON")} visible={isVisible} />
         </TouchableOpacity>
-    )
-}
+    );
+};
 
-export default CityCard
+export default CityCard;

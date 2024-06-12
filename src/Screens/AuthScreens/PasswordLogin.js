@@ -1,9 +1,14 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { View, Text, TouchableOpacity, BackHandler, Image, ImageBackground } from "react-native";
+import {
+    View,
+    TouchableOpacity,
+    BackHandler,
+    Image,
+    ImageBackground,
+} from "react-native";
 import TextField from "../../Components/Customs/TextField";
-import { Email, SignInFields } from "../../Services/Constants/FIELDS";
-import Header from "../../Components/Common/Header";
+import { SignInFields } from "../../Services/Constants/FIELDS";
 import TextButton from "../../Components/Customs/Buttons/TextButton";
 import styles from "./Styles";
 import { comnPost } from "../../Services/Api/CommonServices";
@@ -11,18 +16,11 @@ import { connect } from "react-redux";
 import { saveAccess_token, setLoader } from "../../Reducers/CommonActions";
 import Loader from "../../Components/Customs/Loader";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import FontIcons from "react-native-vector-icons/FontAwesome5";
 import COLOR from "../../Services/Constants/COLORS";
-import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import { navigateTo } from "../../Services/CommonMethods";
 import GlobalText from "../../Components/Customs/Text";
-import SQLite from "react-native-sqlite-storage"
 import Popup from "../../Components/Common/Popup";
-import STRING from "../../Services/Constants/STRINGS";
 import AppLogo from "../../Assets/Images/tourKokan.png";
-import EmailPassword from "./LoginComponents/EmailPassword";
-import LoginChoice from "./LoginComponents/LoginChoice";
-import EmailOtp from "./LoginComponents/EmailOtp";
 import Feather from "react-native-vector-icons/Feather";
 import { CommonActions } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
@@ -35,13 +33,16 @@ const PasswordLogin = ({ navigation, route, ...props }) => {
     const [isAlert, setIsAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
     const [isSuccess, setIsSuccess] = useState(false);
-    const [isButtonDisabled, setIsButtonDisabled] = useState(true)
-    const [showPassword, setShowPassword] = useState(false)
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         // openDB()
         // createUserTable();
-        const backHandler = BackHandler.addEventListener(t("EVENT.HARDWARE_BACK_PRESS"), () => navigateTo(navigation, t("SCREEN.AUTH_SCREEN")));
+        const backHandler = BackHandler.addEventListener(
+            t("EVENT.HARDWARE_BACK_PRESS"),
+            () => navigateTo(navigation, t("SCREEN.AUTH_SCREEN"))
+        );
         return () => {
             backHandler.remove();
             setIsAlert(false);
@@ -56,7 +57,7 @@ const PasswordLogin = ({ navigation, route, ...props }) => {
                 break;
             case 1:
                 setPassword(val);
-                setIsButtonDisabled(false)
+                setIsButtonDisabled(false);
                 break;
         }
     };
@@ -72,23 +73,23 @@ const PasswordLogin = ({ navigation, route, ...props }) => {
 
     const closePopup = () => {
         if (isSuccess) {
-            AsyncStorage.setItem(t("STORAGE.IS_FIRST_TIME"), JSON.stringify(true))
+            AsyncStorage.setItem(
+                t("STORAGE.IS_FIRST_TIME"),
+                JSON.stringify(true)
+            );
             navigation.dispatch(
                 CommonActions.reset({
                     index: 0,
-                    routes: [
-                        { name: t("SCREEN.HOME") },
-                    ],
+                    routes: [{ name: t("SCREEN.HOME") }],
                 })
             );
         }
-        setIsAlert(false)
-    }
+        setIsAlert(false);
+    };
 
     const signUpScreen = () => {
         navigateTo(navigation, t("SCREEN.SIGN_UP"));
     };
-
 
     const login = () => {
         props.setLoader(true);
@@ -102,30 +103,43 @@ const PasswordLogin = ({ navigation, route, ...props }) => {
                 if (res.data.success) {
                     // setIsAlert(true);
                     // setAlertMessage(res.data.message);
-                    AsyncStorage.setItem(t("STORAGE.ACCESS_TOKEN"), res.data.data.access_token);
-                    AsyncStorage.setItem(t("STORAGE.USER_ID"), res.data.data.user.id);
+                    AsyncStorage.setItem(
+                        t("STORAGE.ACCESS_TOKEN"),
+                        res.data.data.access_token
+                    );
+                    AsyncStorage.setItem(
+                        t("STORAGE.USER_ID"),
+                        res.data.data.user.id
+                    );
                     props.saveAccess_token(res.data.data.access_token);
                     props.setLoader(false);
                     // setIsSuccess(true)
-                    AsyncStorage.setItem(t("STORAGE.IS_FIRST_TIME"), JSON.stringify(true))
+                    AsyncStorage.setItem(
+                        t("STORAGE.IS_FIRST_TIME"),
+                        JSON.stringify(true)
+                    );
                     navigation.dispatch(
                         CommonActions.reset({
                             index: 0,
-                            routes: [
-                                { name: t("SCREEN.HOME") },
-                            ],
+                            routes: [{ name: t("SCREEN.HOME") }],
                         })
                     );
                 } else {
                     setIsAlert(true);
-                    setAlertMessage(res.data.message.email ? res.data.message.email : res.data.message.password ? res.data.message.password : res.data.message);
+                    setAlertMessage(
+                        res.data.message.email
+                            ? res.data.message.email
+                            : res.data.message.password
+                            ? res.data.message.password
+                            : res.data.message
+                    );
                     props.setLoader(false);
-                    setIsSuccess(false)
+                    setIsSuccess(false);
                 }
             })
             .catch((err) => {
                 setIsAlert(true);
-                setIsSuccess(false)
+                setIsSuccess(false);
                 setAlertMessage(t("ALERT.WENT_WRONG"));
                 props.setLoader(false);
             });
@@ -133,7 +147,10 @@ const PasswordLogin = ({ navigation, route, ...props }) => {
 
     return (
         <View style={{ alignItems: "center" }}>
-            <ImageBackground style={styles.loginImage} source={require("../../Assets/Images/Intro/login_background.png")} />
+            <ImageBackground
+                style={styles.loginImage}
+                source={require("../../Assets/Images/Intro/login_background.png")}
+            />
             {/* <Header
         name={""}
         startIcon={<View></View>}
@@ -145,7 +162,9 @@ const PasswordLogin = ({ navigation, route, ...props }) => {
             </View>
 
             <Loader />
-            <View style={{ justifyContent: "center", padding: 10, marginTop: 70 }}>
+            <View
+                style={{ justifyContent: "center", padding: 10, marginTop: 70 }}
+            >
                 <GlobalText text={t("LOG_IN")} style={styles.loginText} />
                 {SignInFields.map((field, index) => {
                     return (
@@ -163,17 +182,20 @@ const PasswordLogin = ({ navigation, route, ...props }) => {
                             inputContainerStyle={styles.inputContainerStyle}
                             isSecure={field.isSecure}
                             rightIcon={
-                                field.type == `${t("TYPE.PASSWORD")}` &&
-                                <Feather
-                                    name={field.isSecure ? "eye" : "eye-off"}
-                                    size={24}
-                                    color={COLOR.themeBlue}
-                                    onPress={() => {
-                                        field.isSecure = !showPassword
-                                        setShowPassword(!showPassword)
-                                    }}
-                                    style={styles.eyeIcon}
-                                />
+                                field.type == `${t("TYPE.PASSWORD")}` && (
+                                    <Feather
+                                        name={
+                                            field.isSecure ? "eye" : "eye-off"
+                                        }
+                                        size={24}
+                                        color={COLOR.themeBlue}
+                                        onPress={() => {
+                                            field.isSecure = !showPassword;
+                                            setShowPassword(!showPassword);
+                                        }}
+                                        style={styles.eyeIcon}
+                                    />
+                                )
                             }
                         />
                     );

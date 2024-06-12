@@ -1,16 +1,25 @@
-import React from "react"
-import { FlatList, KeyboardAvoidingView, ScrollView, View } from "react-native"
+import React from "react";
+import { FlatList, KeyboardAvoidingView } from "react-native";
 import { ListItem } from "@rneui/themed";
 import styles from "./Styles";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 
-const SearchDropdown = ({ placesList, goToNext, setPlace, closeDropdown, style }) => {
-
+const SearchDropdown = ({
+    placesList,
+    goToNext,
+    setPlace,
+    closeDropdown,
+    style,
+}) => {
     const renderItem = ({ item }) => {
         return (
-            <ListItem nestedScrollEnabled bottomDivider onPress={() => setPlace(item)}>
+            <ListItem
+                nestedScrollEnabled
+                bottomDivider
+                onPress={() => setPlace(item)}
+            >
                 <ListItem.Content>
                     <ListItem.Title>{item.name}</ListItem.Title>
                 </ListItem.Content>
@@ -19,7 +28,11 @@ const SearchDropdown = ({ placesList, goToNext, setPlace, closeDropdown, style }
     };
 
     return (
-        <KeyboardAvoidingView behavior="height" nestedScrollEnabled style={[styles.searchDropView, style]}>
+        <KeyboardAvoidingView
+            behavior="height"
+            nestedScrollEnabled
+            style={[styles.searchDropView, style]}
+        >
             <Ionicons
                 style={styles.dropCloseIcon}
                 name="close-circle"
@@ -36,7 +49,7 @@ const SearchDropdown = ({ placesList, goToNext, setPlace, closeDropdown, style }
                 style={{ marginBottom: 20 }}
             />
         </KeyboardAvoidingView>
-    )
-}
+    );
+};
 
-export default SearchDropdown
+export default SearchDropdown;

@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         borderRadius: DIMENSIONS.borderRadius,
-        marginHorizontal: 10
+        marginHorizontal: 10,
     },
     dropdown: {
         width: DIMENSIONS.bannerWidth,
@@ -19,18 +19,18 @@ const styles = StyleSheet.create({
         borderColor: COLOR.themeBlue,
         borderRadius: DIMENSIONS.borderRadiusXS,
         marginTop: 15,
-        paddingLeft: 10
+        paddingLeft: 10,
     },
     selectedTextStyle: {
-        color: COLOR.black
+        color: COLOR.black,
     },
     itemTextStyle: {
-        color: COLOR.black
+        color: COLOR.black,
     },
     dropdownText: {
         color: COLOR.black,
         fontSize: DIMENSIONS.textSize,
-        textAlign: "center"
+        textAlign: "center",
     },
     dropdownIcon: {
         width: 30,
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         borderRadius: DIMENSIONS.borderRadiusXS,
         alignSelf: "flex-end",
         marginTop: 200,
-        marginRight: 20
+        marginRight: 20,
     },
     profileButtonStyle: {
         width: DIMENSIONS.bannerWidth / 3,
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
         borderRadius: DIMENSIONS.borderRadiusXS,
         alignSelf: "flex-end",
         marginTop: 130,
-        marginRight: 20
+        marginRight: 20,
     },
     buttonTitleStyle: {
         color: COLOR.white,
@@ -60,16 +60,16 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         paddingLeft: 45,
         borderRadius: DIMENSIONS.borderRadiusXS,
-        borderColor: COLOR.themeBlue
+        borderColor: COLOR.themeBlue,
     },
     profileContainerStyle: {
         borderColor: COLOR.transparent,
-        marginBottom: 20
+        marginBottom: 20,
     },
     leftIcon: {
-        position: 'absolute',
+        position: "absolute",
         left: 5,
-        top: '70%',
+        top: "70%",
         transform: [{ translateY: -12 }],
     },
 });

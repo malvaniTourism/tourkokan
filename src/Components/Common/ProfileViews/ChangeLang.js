@@ -1,47 +1,46 @@
-import React, { useEffect, useState } from 'react'
-import { View } from 'react-native'
-import GlobalText from '../../Customs/Text'
-import STRING from '../../../Services/Constants/STRINGS'
-import ProfileChip from '../ProfileChip'
+import React, { useEffect, useState } from "react";
+import { View } from "react-native";
+import GlobalText from "../../Customs/Text";
 import { Dropdown } from "react-native-element-dropdown";
-import styles from './Styles'
-import TextButton from '../../Customs/Buttons/TextButton'
-import { useTranslation } from 'react-i18next';
-import { comnPost } from '../../../Services/Api/CommonServices'
+import styles from "./Styles";
+import TextButton from "../../Customs/Buttons/TextButton";
+import { useTranslation } from "react-i18next";
+import { comnPost } from "../../../Services/Api/CommonServices";
 
 const ChangeLang = ({ refreshOption, setLoader }) => {
     const { t, i18n } = useTranslation();
 
-    const [list, setList] = useState(
-        [{ label: 'English', value: 'en' },
-        { label: 'मराठी', value: 'mr' },]
-    )
+    const [list, setList] = useState([
+        { label: "English", value: "en" },
+        { label: "मराठी", value: "mr" },
+    ]);
     const [language, setLanguage] = useState(null);
     const [isFocus, setIsFocus] = useState(false);
 
     useEffect(() => {
-        setLanguage(t("LANG"))
-    }, [])
+        setLanguage(t("LANG"));
+    }, []);
 
     const saveLang = () => {
-        setLoader(true)
+        setLoader(true);
         let data = {
-            language
-        }
+            language,
+        };
         comnPost("v2/updateProfile", data)
-            .then(res => {
-            })
-            .catch(err => {
-            })
+            .then((res) => {})
+            .catch((err) => {});
         i18n.changeLanguage(language);
-        refreshOption()
-    }
+        refreshOption();
+    };
 
     return (
         <View>
-            <GlobalText text={t("CHIPS.CHANGE_LANGUAGE")} style={{ textAlign: "left" }} />
+            <GlobalText
+                text={t("CHIPS.CHANGE_LANGUAGE")}
+                style={{ textAlign: "left" }}
+            />
             <Dropdown
-                style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+                style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
                 placeholderStyle={styles.placeholderStyle}
                 selectedTextStyle={styles.selectedTextStyle}
                 inputSearchStyle={styles.inputSearchStyle}
@@ -52,11 +51,11 @@ const ChangeLang = ({ refreshOption, setLoader }) => {
                 maxHeight={300}
                 labelField="label"
                 valueField="value"
-                placeholder={!isFocus ? 'Select item' : '...'}
+                placeholder={!isFocus ? "Select item" : "..."}
                 value={language}
                 onFocus={() => setIsFocus(true)}
                 onBlur={() => setIsFocus(false)}
-                onChange={item => {
+                onChange={(item) => {
                     setLanguage(item.value);
                     setIsFocus(false);
                 }}
@@ -68,7 +67,7 @@ const ChangeLang = ({ refreshOption, setLoader }) => {
                 onPress={saveLang}
             />
         </View>
-    )
-}
+    );
+};
 
-export default ChangeLang
+export default ChangeLang;

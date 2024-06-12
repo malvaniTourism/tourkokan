@@ -1,9 +1,9 @@
-import React from 'react'
-import { TouchableOpacity, View } from 'react-native'
-import styles from './Styles'
+import React from "react";
+import { TouchableOpacity, View } from "react-native";
+import styles from "./Styles";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import COLOR from '../../Services/Constants/COLORS';
-import GlobalText from '../Customs/Text';
+import COLOR from "../../Services/Constants/COLORS";
+import GlobalText from "../Customs/Text";
 
 const ProfileChip = ({ clickChip, icon, name, meta }) => {
     return (
@@ -21,7 +21,7 @@ const ProfileChip = ({ clickChip, icon, name, meta }) => {
                 />
             </View>
         </TouchableOpacity>
-    )
-}
+    );
+};
 
-export default ProfileChip
+export default ProfileChip;

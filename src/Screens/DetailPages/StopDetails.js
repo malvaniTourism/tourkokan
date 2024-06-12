@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { View, ScrollView, Text } from "react-native";
-import SmallCard from "../../Components/Customs/SmallCard";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
-import { comnGet } from "../../Services/Api/CommonServices";
 import { connect } from "react-redux";
 import { setLoader } from "../../Reducers/CommonActions";
 import Loader from "../../Components/Customs/Loader";
 import Header from "../../Components/Common/Header";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { backPage, checkLogin, goBackHandler } from "../../Services/CommonMethods";
+import {
+    backPage,
+    checkLogin,
+    goBackHandler,
+} from "../../Services/CommonMethods";
 import GlobalText from "../../Components/Customs/Text";
 
 const StopDetails = ({ navigation, route, ...props }) => {
@@ -18,13 +19,13 @@ const StopDetails = ({ navigation, route, ...props }) => {
     const [error, setError] = useState(null); // State to store error message
 
     useEffect(() => {
-        const backHandler = goBackHandler(navigation)
-        checkLogin(navigation)
+        const backHandler = goBackHandler(navigation);
+        checkLogin(navigation);
         props.setLoader(true);
-        getDetails()
+        getDetails();
         return () => {
-            backHandler.remove()
-        }
+            backHandler.remove();
+        };
     }, []);
 
     const getDetails = () => {
@@ -37,7 +38,7 @@ const StopDetails = ({ navigation, route, ...props }) => {
                 setError(error.message); // Update error state with error message
                 props.setLoader(false);
             });
-    }
+    };
 
     return (
         <ScrollView>

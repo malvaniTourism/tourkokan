@@ -1,18 +1,23 @@
-import React from 'react'
-import { View } from 'react-native'
-import WebView from 'react-native-webview'
-import { useTranslation } from 'react-i18next'
-import styles from './Styles'
-import DIMENSIONS from '../../Services/Constants/DIMENSIONS'
-import TextButton from '../Customs/Buttons/TextButton'
+import React from "react";
+import { View } from "react-native";
+import WebView from "react-native-webview";
+import { useTranslation } from "react-i18next";
+import styles from "./Styles";
+import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
+import TextButton from "../Customs/Buttons/TextButton";
 
 const PrivacyPolicy = ({ cancelClick, acceptClick }) => {
-    const { t } = useTranslation()
+    const { t } = useTranslation();
 
     return (
-        <View style={{ height: DIMENSIONS.screenHeight - 300, width: DIMENSIONS.bannerWidth }}>
+        <View
+            style={{
+                height: DIMENSIONS.screenHeight - 300,
+                width: DIMENSIONS.bannerWidth,
+            }}
+        >
             <WebView
-                source={{ uri: 'https://dev.tourkokan.com/terms/true' }}
+                source={{ uri: "https://dev.tourkokan.com/terms/true" }}
                 style={{ marginBottom: 10 }}
             />
             <View style={styles.spaceBetween}>
@@ -30,7 +35,7 @@ const PrivacyPolicy = ({ cancelClick, acceptClick }) => {
                 />
             </View>
         </View>
-    )
-}
+    );
+};
 
-export default PrivacyPolicy
+export default PrivacyPolicy;

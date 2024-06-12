@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react";
 import { Animated } from "react-native";
 import AnimatedLoader from "react-native-animated-loader";
 import styles from "./Styles";
 import COLOR from "../../Services/Constants/COLORS";
 import GlobalText from "./Text";
-import STRING from "../../Services/Constants/STRINGS";
 import { useTranslation } from "react-i18next";
 
 const MyAnimatedLoader = ({ isVisible }) => {
     const { t } = useTranslation();
 
-    const [fadeAnim, setFadeAnim] = useState(new Animated.Value(1))
-    const [isAnimated, setIsAnimated] = useState(isVisible)
+    const [fadeAnim, setFadeAnim] = useState(new Animated.Value(1));
+    const [isAnimated, setIsAnimated] = useState(isVisible);
 
     useEffect(() => {
         if (isAnimated) {
@@ -20,7 +19,7 @@ const MyAnimatedLoader = ({ isVisible }) => {
                 duration: 500,
                 useNativeDriver: true,
             }).start(() => {
-                setIsAnimated(false)
+                setIsAnimated(false);
             });
         } else {
             Animated.timing(fadeAnim, {
@@ -29,7 +28,7 @@ const MyAnimatedLoader = ({ isVisible }) => {
                 useNativeDriver: true,
             }).start();
         }
-    }, [])
+    }, []);
 
     return (
         <Animated.View style={{ opacity: fadeAnim }}>
@@ -43,7 +42,7 @@ const MyAnimatedLoader = ({ isVisible }) => {
                 <GlobalText text={t("LOADER_TEXT")} style={styles.loaderText} />
             </AnimatedLoader>
         </Animated.View>
-    )
-}
+    );
+};
 
-export default MyAnimatedLoader
+export default MyAnimatedLoader;

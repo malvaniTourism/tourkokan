@@ -4,7 +4,7 @@ import COLOR from "../Services/Constants/COLORS";
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: COLOR.white
+        backgroundColor: COLOR.white,
     },
     homeSearchBar: {
         // marginTop: -15,
@@ -13,15 +13,15 @@ const styles = StyleSheet.create({
         zIndex: 1,
         position: "absolute",
         top: 240,
-        width: DIMENSIONS.bannerWidth
+        width: DIMENSIONS.bannerWidth,
     },
     sectionView: {
         alignItems: "center",
         marginTop: 25,
-        zIndex: 10 
+        zIndex: 10,
     },
     routeHeadCard: {
-        marginVertical: 10
+        marginVertical: 10,
     },
     stopsSectionView: {
         margin: DIMENSIONS.sectionGap,
@@ -31,15 +31,15 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: COLOR.headingColor,
         borderRadius: DIMENSIONS.borderRadiusSmall,
-        backgroundColor: COLOR.yellowLight
+        backgroundColor: COLOR.yellowLight,
     },
     stopsCard: {
         width: DIMENSIONS.screenWidth / 2 - 45,
-        shadowColor: COLOR.headingColor2
+        shadowColor: COLOR.headingColor2,
     },
     routesCard: {
         width: DIMENSIONS.bannerWidth - 30,
-        shadowColor: COLOR.headingColor2
+        shadowColor: COLOR.headingColor2,
     },
     placesList: {
         flexDirection: "row",
@@ -54,12 +54,12 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap: "wrap",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
     },
     contactButtonStyle: {
         backgroundColor: COLOR.themeBlue,
         width: "auto",
-        paddingVertical: 13
+        paddingVertical: 13,
     },
     contactButtonContainer: {
         // marginTop: 15,
@@ -69,28 +69,28 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginLeft: 10,
         marginBottom: -10,
-        fontWeight: 500
+        fontWeight: 500,
     },
     containerStyle: {
         borderWidth: 1,
         padding: 10,
         borderColor: COLOR.themeBlue,
         borderRadius: DIMENSIONS.borderRadiusXS,
-        marginVertical: 7
+        marginVertical: 7,
     },
     inputContainerStyle: {
         borderColor: COLOR.transparent,
-        marginBottom: 10
+        marginBottom: 10,
     },
     profileContainerStyle: {
         borderColor: COLOR.transparent,
-        marginBottom: 20
+        marginBottom: 20,
     },
     titleStyle: {
-        color: COLOR.themeBlue
+        color: COLOR.themeBlue,
     },
     locButtonTitle: {
-        color: COLOR.white
+        color: COLOR.white,
     },
     buttonSkeleton: {
         width: DIMENSIONS.bannerWidth / 2,
@@ -111,12 +111,12 @@ const styles = StyleSheet.create({
         height: DIMENSIONS.bannerWidth - 90,
         marginTop: -75,
         borderRadius: DIMENSIONS.borderRadius,
-        padding: 3
+        padding: 3,
     },
     profileImage: {
         // aspectRatio: 1,
         height: DIMENSIONS.bannerWidth - 90,
-        resizeMode: "contain"
+        resizeMode: "contain",
         // width: "100%",
     },
     handPointer: {
@@ -125,33 +125,33 @@ const styles = StyleSheet.create({
         position: "absolute",
         justifyContent: "center",
         textAlign: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     boldText: {
         fontWeight: "bold",
-        fontSize: 16
+        fontSize: 16,
     },
     profileDetails: {
         padding: 15,
-        alignItems: "center"
+        alignItems: "center",
     },
     flexRow: {
         flexDirection: "row",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
     },
     flexAround: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
         width: DIMENSIONS.bannerWidth,
-        marginVertical: -20
+        marginVertical: -20,
     },
     flexAroundSkeleton: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
         width: DIMENSIONS.bannerWidth,
-        marginVertical: 10
+        marginVertical: 10,
     },
     prjImgContainer: {
         marginBottom: 20,
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
         height: DIMENSIONS.bannerHeight,
     },
     categoryBackImageStyle: {
-        opacity: 0.7
+        opacity: 0.7,
     },
     overlay: {
         ...StyleSheet.absoluteFillObject,
@@ -174,18 +174,18 @@ const styles = StyleSheet.create({
         position: "absolute",
         alignSelf: "center",
         justifyContent: "center",
-        textAlign: "center"
+        textAlign: "center",
     },
     catTitle: {
         color: COLOR.white,
         fontWeight: "bold",
         fontSize: DIMENSIONS.headerTextSize,
-        textAlign: "center"
+        textAlign: "center",
     },
     catSubTitle: {
         color: COLOR.white,
         fontSize: DIMENSIONS.subtitleTextSize,
-        textAlign: "center"
+        textAlign: "center",
     },
     pricingView: {
         flex: 1,
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     },
     profileEdit: {
         left: 80,
-        top: -30
+        top: -30,
     },
     pricingOptionTitle: {
         fontSize: DIMENSIONS.largeText,
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
     },
     chipContainer: {
         alignItems: "center",
-        marginTop: DIMENSIONS.sectionGap
+        marginTop: DIMENSIONS.sectionGap,
     },
     coverPhoto: {
         width: "100%",
@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
     profileContainer: {
         alignItems: "center",
         zIndex: 10,
-        marginTop: -15
+        marginTop: -15,
     },
     profilePhoto: {
         width: DIMENSIONS.detailsImage,
@@ -280,22 +280,22 @@ const styles = StyleSheet.create({
         width: DIMENSIONS.halfWidth - 20,
     },
     editButtonStyle: {
-        width: DIMENSIONS.halfWidth - 20
+        width: DIMENSIONS.halfWidth - 20,
     },
     editSeeMoreStyle: {
         borderRadius: 0,
         borderTopLeftRadius: DIMENSIONS.borderRadius,
-        borderBottomLeftRadius: DIMENSIONS.borderRadius
+        borderBottomLeftRadius: DIMENSIONS.borderRadius,
     },
     updateSeeMoreStyle: {
         borderRadius: 0,
         borderTopRightRadius: DIMENSIONS.borderRadius,
-        borderBottomRightRadius: DIMENSIONS.borderRadius
+        borderBottomRightRadius: DIMENSIONS.borderRadius,
     },
     seeMoreContainer: {
         alignSelf: "flex-end",
         width: DIMENSIONS.halfWidth / 2,
-        marginRight: 25
+        marginRight: 25,
     },
     seeButtonStyle: {
         width: DIMENSIONS.halfWidth / 2,
@@ -313,7 +313,7 @@ const styles = StyleSheet.create({
     },
     citiesButtonTitleStyle: {
         color: COLOR.themeBlue,
-        textAlign: "right"
+        textAlign: "right",
     },
     containerHome: {
         flex: 1,
@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
         padding: 10,
         textAlign: "center",
         fontWeight: "bold",
-        fontSize: DIMENSIONS.headerTextSize
+        fontSize: DIMENSIONS.headerTextSize,
     },
     roleDropDown: {
         borderWidth: 1,
@@ -364,17 +364,17 @@ const styles = StyleSheet.create({
         elevation: 0,
         width: DIMENSIONS.halfWidth,
         justifyContent: "flex-end",
-        alignItems: "flex-end"
+        alignItems: "flex-end",
     },
     profileButtonStyle: {
         backgroundColor: COLOR.themeBlue,
         width: "auto",
-        paddingVertical: 13
+        paddingVertical: 13,
     },
     horizontalCategoriesScroll: {
         minHeight: DIMENSIONS.iconXXL,
         marginTop: -10,
-        marginBottom: 10
+        marginBottom: 10,
     },
     categoriesButtonScroll: {
         flexDirection: "row",
@@ -383,7 +383,7 @@ const styles = StyleSheet.create({
         borderRadius: DIMENSIONS.borderRadiusLarge,
     },
     categoryButtonText: {
-        fontSize: DIMENSIONS.textSizeSmall
+        fontSize: DIMENSIONS.textSizeSmall,
     },
     subCatContainer: {
         minHeight: DIMENSIONS.screenHeight,
@@ -396,30 +396,30 @@ const styles = StyleSheet.create({
         margin: 15,
         fontWeight: "bold",
         color: COLOR.labelActiveColor,
-        fontSize: DIMENSIONS.headerTextSize
+        fontSize: DIMENSIONS.headerTextSize,
     },
     subCatView: {
         flex: 1,
         flexDirection: "row",
-        marginBottom: 300
+        marginBottom: 300,
     },
     verticalNameContainer: {
         height: DIMENSIONS.screenHeight,
         flex: 1,
     },
     verticalName: {
-        transform: [{ rotate: '270deg' }],
+        transform: [{ rotate: "270deg" }],
         fontWeight: "bold",
         color: COLOR.labelActiveColor,
         fontSize: DIMENSIONS.xlText,
         letterSpacing: 7,
         width: DIMENSIONS.screenHeight / 3,
         left: -DIMENSIONS.screenWidth / 4,
-        top: DIMENSIONS.screenHeight / 4
+        top: DIMENSIONS.screenHeight / 4,
     },
     subCatCardsContainer: {
         flex: 3,
-        overflow: "scroll"
+        overflow: "scroll",
     },
     routesSearchPanelView: {
         alignItems: "center",
@@ -430,7 +430,7 @@ const styles = StyleSheet.create({
         height: DIMENSIONS.screenHeight,
         alignItems: "flex-start",
         justifyContent: "flex-start",
-        flex: 1
+        flex: 1,
     },
     title: {
         fontSize: DIMENSIONS.xlText,
@@ -450,48 +450,48 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         alignSelf: "center",
-        top: -15
+        top: -15,
     },
     image: {
         height: DIMENSIONS.screenHeight,
         width: DIMENSIONS.screenWidth,
         resizeMode: "contain",
         flex: 4,
-        top: -60
+        top: -60,
     },
     text: {
         color: COLOR.black,
         alignSelf: "center",
         fontWeight: "bold",
         top: -200,
-        fontSize: DIMENSIONS.subtitleTextSize
+        fontSize: DIMENSIONS.subtitleTextSize,
     },
     loadingContainer: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
         backgroundColor: COLOR.themeComicBlueULight,
     },
     eyeIcon: {
         position: "absolute",
-        left: -40
+        left: -40,
     },
     buttonCircle: {
         width: 40,
         height: 40,
         backgroundColor: COLOR.themeBlue,
         borderRadius: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
     },
     catIconStyle: {
         height: DIMENSIONS.iconXXL - 20,
         width: DIMENSIONS.iconXXL - 20,
         borderRadius: DIMENSIONS.borderRadiusLarge,
-        resizeMode: "cover"
+        resizeMode: "cover",
     },
     buttonTitle: {
-        color: COLOR.white
+        color: COLOR.white,
     },
     searchButtonStyle: {
         height: 50,
@@ -500,7 +500,7 @@ const styles = StyleSheet.create({
         borderRadius: DIMENSIONS.borderRadiusXS,
         alignSelf: "flex-end",
         marginTop: -DIMENSIONS.bannerHeight + -80,
-        marginRight: 20
+        marginRight: 20,
     },
     buttonTitleStyle: {
         color: COLOR.white,
@@ -513,20 +513,20 @@ const styles = StyleSheet.create({
         borderRadius: DIMENSIONS.borderRadiusXS,
         alignSelf: "flex-start",
         elevation: 0,
-        marginLeft: 10
+        marginLeft: 10,
     },
     attachmentTitleStyle: {
         color: COLOR.themeBlue,
     },
     advStyle: {
-        color: COLOR.red
+        color: COLOR.red,
     },
     callButton: {
         width: 30,
         backgroundColor: COLOR.white,
         elevation: 0,
-        marginRight: 10
-    }
+        marginRight: 10,
+    },
 });
 
 export default styles;

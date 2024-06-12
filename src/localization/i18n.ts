@@ -1,5 +1,5 @@
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
 import { en, mr } from "./translations";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -8,7 +8,7 @@ const STORE_LANGUAGE_KEY = "settings.lang";
 const languageDetectorPlugin = {
     type: "languageDetector",
     async: true,
-    init: () => { },
+    init: () => {},
     detect: async function (callback: (lang: string) => void) {
         try {
             // get stored language from Async storage
@@ -30,7 +30,7 @@ const languageDetectorPlugin = {
         try {
             //save a user's language choice in Async storage
             await AsyncStorage.setItem(STORE_LANGUAGE_KEY, language);
-        } catch (error) { }
+        } catch (error) {}
     },
 };
 const resources = {
@@ -42,13 +42,15 @@ const resources = {
     },
 };
 
-i18n.use(initReactI18next).use(languageDetectorPlugin).init({
-    resources,
-    compatibilityJSON: 'v3',
-    // fallback language is set to english
-    fallbackLng: "en",
-    interpolation: {
-        escapeValue: false,
-    },
-});
+i18n.use(initReactI18next)
+    .use(languageDetectorPlugin)
+    .init({
+        resources,
+        compatibilityJSON: "v3",
+        // fallback language is set to english
+        fallbackLng: "en",
+        interpolation: {
+            escapeValue: false,
+        },
+    });
 export default i18n;

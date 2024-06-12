@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react"
-import { View, Text } from "react-native"
-import NetInfo from "@react-native-community/netinfo";
+import React, { useState } from "react";
+import { View } from "react-native";
 import ComingSoon from "./ComingSoon";
-import STRING from "../../Services/Constants/STRINGS";
 import { useTranslation } from "react-i18next";
 
 const CheckNet = ({ isOff }) => {
@@ -14,7 +12,7 @@ const CheckNet = ({ isOff }) => {
         <View>
             <ComingSoon message={t("NO_INTERNET")} visible={isOff} />
         </View>
-    )
-}
+    );
+};
 
-export default CheckNet
+export default CheckNet;

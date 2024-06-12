@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, View, Text, SafeAreaView } from "react-native";
-import { ListItem } from "@rneui/themed";
+import { View } from "react-native";
 import Header from "../Components/Common/Header";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import Feather from "react-native-vector-icons/Feather";
 import COLOR from "../Services/Constants/COLORS";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
-import RouteLine from "../Components/Customs/RouteLines/RouteLine";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { backPage, checkLogin, goBackHandler, navigateTo } from "../Services/CommonMethods";
+import { backPage, checkLogin, goBackHandler } from "../Services/CommonMethods";
 import { ContactUsFields } from "../Services/Constants/FIELDS";
 import TextField from "../Components/Customs/TextField";
 import TextButton from "../Components/Customs/Buttons/TextButton";
@@ -18,174 +15,194 @@ import Popup from "../Components/Common/Popup";
 import Loader from "../Components/Customs/Loader";
 import { setLoader } from "../Reducers/CommonActions";
 import { connect } from "react-redux";
-import STRING from "../Services/Constants/STRINGS";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 import GlobalText from "../Components/Customs/Text";
-import DocumentPicker from 'react-native-document-picker';
+import DocumentPicker from "react-native-document-picker";
 
 const ContactUs = ({ navigation, route, ...props }) => {
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [message, setMessage] = useState("");
-  const [alertMessage, setAlertMessage] = useState("");
-  const [isAlert, setIsAlert] = useState(false);
-  const [selectedFile, setSelectedFile] = useState(null);
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [message, setMessage] = useState("");
+    const [alertMessage, setAlertMessage] = useState("");
+    const [isAlert, setIsAlert] = useState(false);
+    const [selectedFile, setSelectedFile] = useState(null);
 
-  useEffect(async () => {
-    setEmail(await AsyncStorage.getItem(t("STORAGE.USER_EMAIL")))
-    const backHandler = goBackHandler(navigation)
-    checkLogin(navigation)
-    return () => {
-      backHandler.remove()
-    }
-  }, []);
+    useEffect(async () => {
+        setEmail(await AsyncStorage.getItem(t("STORAGE.USER_EMAIL")));
+        const backHandler = goBackHandler(navigation);
+        checkLogin(navigation);
+        return () => {
+            backHandler.remove();
+        };
+    }, []);
 
-  const setValue = (val, isVal, index) => {
-    switch (index) {
-      case 0:
-        setEmail(val);
-        break;
-      case 1:
-        setPhone(val);
-        break;
-      case 2:
-        setMessage(val);
-        break;
-    }
-  };
-
-  const getValue = (i) => {
-    switch (i) {
-      case 0:
-        return email;
-      case 1:
-        return phone;
-      case 2:
-        return message;
-    }
-  };
-
-  const submit = async () => {
-    props.setLoader(true);
-    let data = {
-      user_id: await AsyncStorage.getItem(t("STORAGE.USER_ID")),
-      name: await AsyncStorage.getItem(t("STORAGE.USER_NAME")),
-      email,
-      phone,
-      message
-    }
-
-    comnPost("v2/addQuery", data)
-      .then(res => {
-        setIsAlert(true);
-        setAlertMessage(res.data.message.email ? res.data.message.email : res.data.message.phone ? res.data.message.phone : res.data.message.message ? res.data.message.message : res.data.message);
-        props.setLoader(false);
-        setPhone("")
-        setMessage("")
-      })
-      .catch(err => {
-        setIsAlert(true);
-        setAlertMessage(t("ALERT.FAILED"));
-        props.setLoader(false);
-      })
-  }
-
-  const closePopup = () => {
-    setIsAlert(false)
-  }
-
-  const selectFile = async () => {
-    try {
-      const res = await DocumentPicker.pick({
-        type: [DocumentPicker.types.allFiles], // Allow all types of files
-      });
-      setSelectedFile(res);
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-        console.log('User cancelled file picker');
-      } else {
-        console.log('Unknown Error: ', err);
-        throw err;
-      }
-    }
-  };
-
-  return (
-    <View style={{ backgroundColor: COLOR.white }}>
-      <Header
-        name={t("HEADER.CONTACT_US")}
-        goBack={() => backPage(navigation)}
-        startIcon={
-          <Ionicons
-            name="chevron-back-outline"
-            size={24}
-            onPress={() => backPage(navigation)}
-            color={COLOR.black}
-          />
+    const setValue = (val, isVal, index) => {
+        switch (index) {
+            case 0:
+                setEmail(val);
+                break;
+            case 1:
+                setPhone(val);
+                break;
+            case 2:
+                setMessage(val);
+                break;
         }
-        endIcon={
-          <></>
+    };
+
+    const getValue = (i) => {
+        switch (i) {
+            case 0:
+                return email;
+            case 1:
+                return phone;
+            case 2:
+                return message;
         }
-      />
-      <Loader />
-      <GlobalText text={t("CONNECT")} style={{ textAlign: "left", marginLeft: 20, fontSize: DIMENSIONS.headerTextSize }} />
-      <View style={{ alignItems: "center", height: DIMENSIONS.screenHeight, backgroundColor: COLOR.white }}>
-        {ContactUsFields.map((field, index) => {
-          return (
-            <View>
-              <GlobalText text={field.placeholder} style={styles.fieldTitle} />
-              <TextField
-                name={field.name}
-                label={field.name}
-                placeholder={field.placeholder}
-                fieldType={field.type}
-                length={field.length}
-                required={field.required}
-                disabled={index == 0}
-                value={getValue(index)}
-                setChild={(v, i) => setValue(v, i, index)}
-                style={styles.containerStyle}
-                inputContainerStyle={styles.inputContainerStyle}
-                multiline={field.multiline}
-              />
-            </View>
-          );
-        })}
-        {/* <TextButton
+    };
+
+    const submit = async () => {
+        props.setLoader(true);
+        let data = {
+            user_id: await AsyncStorage.getItem(t("STORAGE.USER_ID")),
+            name: await AsyncStorage.getItem(t("STORAGE.USER_NAME")),
+            email,
+            phone,
+            message,
+        };
+
+        comnPost("v2/addQuery", data)
+            .then((res) => {
+                setIsAlert(true);
+                setAlertMessage(
+                    res.data.message.email
+                        ? res.data.message.email
+                        : res.data.message.phone
+                        ? res.data.message.phone
+                        : res.data.message.message
+                        ? res.data.message.message
+                        : res.data.message
+                );
+                props.setLoader(false);
+                setPhone("");
+                setMessage("");
+            })
+            .catch((err) => {
+                setIsAlert(true);
+                setAlertMessage(t("ALERT.FAILED"));
+                props.setLoader(false);
+            });
+    };
+
+    const closePopup = () => {
+        setIsAlert(false);
+    };
+
+    const selectFile = async () => {
+        try {
+            const res = await DocumentPicker.pick({
+                type: [DocumentPicker.types.allFiles], // Allow all types of files
+            });
+            setSelectedFile(res);
+        } catch (err) {
+            if (DocumentPicker.isCancel(err)) {
+                console.log("User cancelled file picker");
+            } else {
+                console.log("Unknown Error: ", err);
+                throw err;
+            }
+        }
+    };
+
+    return (
+        <View style={{ backgroundColor: COLOR.white }}>
+            <Header
+                name={t("HEADER.CONTACT_US")}
+                goBack={() => backPage(navigation)}
+                startIcon={
+                    <Ionicons
+                        name="chevron-back-outline"
+                        size={24}
+                        onPress={() => backPage(navigation)}
+                        color={COLOR.black}
+                    />
+                }
+                endIcon={<></>}
+            />
+            <Loader />
+            <GlobalText
+                text={t("CONNECT")}
+                style={{
+                    textAlign: "left",
+                    marginLeft: 20,
+                    fontSize: DIMENSIONS.headerTextSize,
+                }}
+            />
+            <View
+                style={{
+                    alignItems: "center",
+                    height: DIMENSIONS.screenHeight,
+                    backgroundColor: COLOR.white,
+                }}
+            >
+                {ContactUsFields.map((field, index) => {
+                    return (
+                        <View>
+                            <GlobalText
+                                text={field.placeholder}
+                                style={styles.fieldTitle}
+                            />
+                            <TextField
+                                name={field.name}
+                                label={field.name}
+                                placeholder={field.placeholder}
+                                fieldType={field.type}
+                                length={field.length}
+                                required={field.required}
+                                disabled={index == 0}
+                                value={getValue(index)}
+                                setChild={(v, i) => setValue(v, i, index)}
+                                style={styles.containerStyle}
+                                inputContainerStyle={styles.inputContainerStyle}
+                                multiline={field.multiline}
+                            />
+                        </View>
+                    );
+                })}
+                {/* <TextButton
           title={t("BUTTON.ATTACHMENT")}
           buttonView={styles.attachmentButtonStyle}
           titleStyle={styles.attachmentTitleStyle}
           onPress={selectFile}
         /> */}
-      </View>
-      <TextButton
-        title={t("BUTTON.SEND")}
-        buttonView={styles.searchButtonStyle}
-        titleStyle={styles.buttonTitleStyle}
-        onPress={submit}
-      />
-      <Popup
-        message={alertMessage}
-        onPress={closePopup}
-        visible={isAlert}
-      />
-    </View>
-  );
+            </View>
+            <TextButton
+                title={t("BUTTON.SEND")}
+                buttonView={styles.searchButtonStyle}
+                titleStyle={styles.buttonTitleStyle}
+                onPress={submit}
+            />
+            <Popup
+                message={alertMessage}
+                onPress={closePopup}
+                visible={isAlert}
+            />
+        </View>
+    );
 };
 
 const mapStateToProps = (state) => {
-  return {
-  };
+    return {};
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    setLoader: (data) => {
-      dispatch(setLoader(data));
-    },
-  };
+    return {
+        setLoader: (data) => {
+            dispatch(setLoader(data));
+        },
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactUs);

@@ -6,17 +6,17 @@ import DIMENSIONS from "../../../Services/Constants/DIMENSIONS";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 const RouteLineFirst = () => {
-  return (
-    <View>
-      <View style={styles.routeLineFirst}></View>
-      <MaterialIcons
-        name="my-location"
-        color={COLOR.themeBlue}
-        size={DIMENSIONS.iconBig}
-        style={styles.icon}
-      />
-    </View>
-  );
+    return (
+        <View>
+            <View style={styles.routeLineFirst}></View>
+            <MaterialIcons
+                name="my-location"
+                color={COLOR.themeBlue}
+                size={DIMENSIONS.iconBig}
+                style={styles.icon}
+            />
+        </View>
+    );
 };
 
 export default RouteLineFirst;

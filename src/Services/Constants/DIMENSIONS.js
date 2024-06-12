@@ -39,8 +39,8 @@ const DIMENSIONS = {
     borderRadiusXS: 10,
     borderRadiusXXS: 5,
 
-    headerHeight: sh / 100 * 6,
-    headerSpace: (sh / 100 * 6) * 2.5,
+    headerHeight: (sh / 100) * 6,
+    headerSpace: (sh / 100) * 6 * 2.5,
 
     xxxlText: sw / 13,
     xxlText: sw / 15,
@@ -59,8 +59,7 @@ const DIMENSIONS = {
     detailsImage: 150,
 
     mobileLength: 10,
-    fieldLength: 50
-
+    fieldLength: 50,
 };
 
 export default DIMENSIONS;

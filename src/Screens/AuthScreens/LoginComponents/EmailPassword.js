@@ -1,14 +1,13 @@
-import React, { useState } from 'react'
-import { SignInFields } from '../../../Services/Constants/FIELDS';
-import { TouchableOpacity, View } from 'react-native';
-import TextField from '../../../Components/Customs/TextField';
-import TextButton from '../../../Components/Customs/Buttons/TextButton';
+import React, { useState } from "react";
+import { SignInFields } from "../../../Services/Constants/FIELDS";
+import { TouchableOpacity, View } from "react-native";
+import TextField from "../../../Components/Customs/TextField";
+import TextButton from "../../../Components/Customs/Buttons/TextButton";
 import Feather from "react-native-vector-icons/Feather";
-import styles from '../Styles';
-import STRING from '../../../Services/Constants/STRINGS';
-import COLOR from '../../../Services/Constants/COLORS';
-import GlobalText from '../../../Components/Customs/Text';
-import { useTranslation } from 'react-i18next';
+import styles from "../Styles";
+import COLOR from "../../../Services/Constants/COLORS";
+import GlobalText from "../../../Components/Customs/Text";
+import { useTranslation } from "react-i18next";
 
 const EmailPassword = ({ setValue, getValue, Login, changeChoice }) => {
     const { t } = useTranslation();
@@ -36,17 +35,18 @@ const EmailPassword = ({ setValue, getValue, Login, changeChoice }) => {
                         inputContainerStyle={styles.inputContainerStyle}
                         isSecure={field.isSecure}
                         rightIcon={
-                            field.type == `${t("TYPE.PASSWORD")}` &&
-                            <Feather
-                                name={field.isSecure ? "eye" : "eye-off"}
-                                size={24}
-                                color={COLOR.themeBlue}
-                                onPress={() => {
-                                    field.isSecure = !showPassword
-                                    setShowPassword(!showPassword)
-                                }}
-                                style={styles.eyeIcon}
-                            />
+                            field.type == `${t("TYPE.PASSWORD")}` && (
+                                <Feather
+                                    name={field.isSecure ? "eye" : "eye-off"}
+                                    size={24}
+                                    color={COLOR.themeBlue}
+                                    onPress={() => {
+                                        field.isSecure = !showPassword;
+                                        setShowPassword(!showPassword);
+                                    }}
+                                    style={styles.eyeIcon}
+                                />
+                            )
                         }
                     />
                 );
@@ -62,7 +62,7 @@ const EmailPassword = ({ setValue, getValue, Login, changeChoice }) => {
                 onPress={() => Login()}
             />
         </View>
-    )
-}
+    );
+};
 
-export default EmailPassword
+export default EmailPassword;

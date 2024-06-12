@@ -4,13 +4,20 @@ import styles from "./Styles";
 import { Skeleton } from "@rneui/themed";
 
 const RoutesSearchPanelSkeleton = () => {
-
-  return (
-    <View>
-      <Skeleton animation="pulse" variant="text" style={styles.smallFieldsViewSkeleton} />
-      <Skeleton animation="pulse" variant="text" style={styles.searchButtonSkeleton} />
-    </View>
-  );
+    return (
+        <View>
+            <Skeleton
+                animation="pulse"
+                variant="text"
+                style={styles.smallFieldsViewSkeleton}
+            />
+            <Skeleton
+                animation="pulse"
+                variant="text"
+                style={styles.searchButtonSkeleton}
+            />
+        </View>
+    );
 };
 
 export default RoutesSearchPanelSkeleton;
