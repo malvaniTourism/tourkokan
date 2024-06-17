@@ -108,13 +108,13 @@ const CityDetails = ({ navigation, route, ...props }) => {
     };
 
     const onHeartClick = async () => {
-        // setLoader(true)
+        props.setLoader(true);
+        setIsFav(!isFav);
         let placeData = {
             user_id: await AsyncStorage.getItem(t("STORAGE.USER_ID")),
             favouritable_type: t("TABLE.SITES"),
             favouritable_id: city.id,
         };
-        setIsFav(!isFav);
         comnPost("v2/addDeleteFavourite", placeData)
             .then((res) => {
                 props.setLoader(false);
@@ -126,6 +126,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
 
     const onStarRatingPress = async (rate) => {
         setRating(rating);
+        props.setLoader(true);
         const placeData = {
             user_id: await AsyncStorage.getItem(t("STORAGE.USER_ID")),
             rateable_type: t("TABLE.SITE"),

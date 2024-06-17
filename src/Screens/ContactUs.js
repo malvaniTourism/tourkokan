@@ -137,6 +137,7 @@ const ContactUs = ({ navigation, route, ...props }) => {
                 style={{
                     textAlign: "left",
                     marginLeft: 20,
+                    marginVertical: 10,
                     fontSize: DIMENSIONS.headerTextSize,
                 }}
             />

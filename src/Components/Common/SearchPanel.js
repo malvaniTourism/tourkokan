@@ -15,6 +15,7 @@ import { setLoader } from "../../Reducers/CommonActions";
 import GlobalText from "../Customs/Text";
 import SearchDropdown from "./SearchDropdown";
 import { useTranslation } from "react-i18next";
+import STRING from "../../Services/Constants/STRINGS";
 
 const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
     const { t } = useTranslation();
@@ -137,7 +138,7 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
     };
 
     const setPlace = (place) => {
-        if (fieldType == t("LABEL.SOURCE")) {
+        if (fieldType == STRING.LABEL.SOURCE) {
             setSource(place);
         } else {
             setDestination(place);
@@ -152,13 +153,14 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
     };
 
     const pressed = (type) => {
-        searchPlace();
+        searchPlace(searchValue);
+        console.log('-- -- ' ,type);
         setFieldType(type);
     };
 
     const closeDropdown = () => {
         setPlacesList([]);
-        if (fieldType == t("LABEL.SOURCE")) {
+        if (fieldType == STRING.LABEL.SOURCE) {
             setSource({ name: "" });
         } else {
             setDestination({ name: "" });

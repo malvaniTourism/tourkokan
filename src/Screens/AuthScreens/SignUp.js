@@ -270,7 +270,17 @@ const SignUp = ({ navigation, ...props }) => {
 
     const closePopup = () => {
         if (alertMessage[0].includes(t("TAKEN")) || isSuccess) {
-            navigateTo(navigation, t("SCREEN.VERIFY_OTP"), { email });
+            const data = {
+                email,
+            };
+            comnPost("v2/auth/sendOtp", data)
+                .then((res) => {
+                    if (res.data?.success) {
+                        navigateTo(navigation, t("SCREEN.VERIFY_OTP"), { email });
+                    }
+                })
+                .catch((err) => {
+                });
         }
         setIsAlert(false);
     };
@@ -312,6 +322,7 @@ const SignUp = ({ navigation, ...props }) => {
                 const currentLongitude = position.coords.longitude;
                 setCurrentLatitude(currentLatitude);
                 setCurrentLongitude(currentLongitude);
+                setShowPrivacy(false);
                 Register(currentLatitude, currentLongitude);
                 props.setLoader(false);
                 setFetchingText("");

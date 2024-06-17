@@ -175,7 +175,7 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
                     />
                 )}
             </View>
-            <SafeAreaView style={{ paddingBottom: 180 }}>
+            <SafeAreaView style={{ paddingBottom: 180, minHeight: DIMENSIONS.screenHeight }}>
                 {isFirstTime && isLoading ? (
                     <>
                         <RouteHeadCardSkeleton />

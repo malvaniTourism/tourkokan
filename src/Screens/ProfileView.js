@@ -102,6 +102,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
     };
 
     const requestLocationPermission = async () => {
+        console.log('called');
         if (Platform.OS === "ios") {
             getOneTimeLocation();
             subscribeLocation();
@@ -114,7 +115,9 @@ const ProfileView = ({ navigation, route, ...props }) => {
                         message: t("NEEDS_TO_ACCESS"),
                     }
                 );
+                console.log('granted - ', granted);
                 if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                    console.log('11');
                     //To Check, If Permission is granted
                     getOneTimeLocation();
                     subscribeLocation();
@@ -145,6 +148,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
                 //Setting state Longitude to re re-render the Longitude Text
                 setCurrentLatitude(currentLatitude);
                 //Setting state Latitude to re re-render the Longitude Text
+                console.log('setCurrentLatitude =  = ', currentLatitude,  '   -   ', currentLongitude);
             },
             (error) => {
                 setLocationStatus(error.message);
@@ -166,6 +170,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
                 //Setting state Longitude to re re-render the Longitude Text
                 setCurrentLatitude(currentLatitude);
                 //Setting state Latitude to re re-render the Longitude Text
+                console.log('setCurrentLatitude 1 =  = ', currentLatitude,  '   -   ', currentLongitude);
             },
             (error) => {
                 setLocationStatus(error.message);

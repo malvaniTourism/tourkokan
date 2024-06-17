@@ -21,6 +21,7 @@ import { navigateTo } from "../../Services/CommonMethods";
 import GlobalText from "../../Components/Customs/Text";
 import Popup from "../../Components/Common/Popup";
 import { useTranslation } from "react-i18next";
+import { CommonActions } from "@react-navigation/native";
 
 const VerifyOTP = ({ navigation, route, ...props }) => {
     const { t } = useTranslation();
@@ -36,7 +37,7 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
-        resend();
+        // resend();
         const backHandler = BackHandler.addEventListener(
             t("EVENT.HARDWARE_BACK_PRESS"),
             () => navigateTo(navigation, t("SCREEN.AUTH_SCREEN"))
@@ -104,6 +105,7 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
                 }
             })
             .catch((err) => {
+                console.log('err - - - - ', err);
                 setIsAlert(true);
                 setIsSuccess(false);
                 setAlertMessage(t("ALERT.WENT_WRONG"));

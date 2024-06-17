@@ -141,7 +141,7 @@ export const ProfileFields = [
 
 export const SrcDest = [
     {
-        name: t("LABEL.SOURCE"),
+        name: STRING.LABEL.SOURCE,
         placeholder: t("LABEL.SOURCE"),
         type: t("TYPE.TEXT"),
         length: DIMENSIONS.fieldLength,
@@ -149,7 +149,7 @@ export const SrcDest = [
         disabled: false,
     },
     {
-        name: t("LABEL.DESTINATION"),
+        name: STRING.LABEL.DESTINATION,
         placeholder: t("LABEL.DESTINATION"),
         type: t("TYPE.TEXT"),
         length: DIMENSIONS.fieldLength,
