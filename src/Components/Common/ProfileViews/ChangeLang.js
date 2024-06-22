@@ -6,6 +6,7 @@ import styles from "./Styles";
 import TextButton from "../../Customs/Buttons/TextButton";
 import { useTranslation } from "react-i18next";
 import { comnPost } from "../../../Services/Api/CommonServices";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ChangeLang = ({ refreshOption, setLoader }) => {
     const { t, i18n } = useTranslation();
@@ -27,7 +28,9 @@ const ChangeLang = ({ refreshOption, setLoader }) => {
             language,
         };
         comnPost("v2/updateProfile", data)
-            .then((res) => {})
+            .then((res) => {
+                AsyncStorage.setItem("isUpdated", "true");
+            })
             .catch((err) => {});
         i18n.changeLanguage(language);
         refreshOption();

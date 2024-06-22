@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
     View,
     ScrollView,
@@ -36,6 +36,8 @@ import TopComponentSkeleton from "../Components/Common/TopComponentSkeleton";
 import CityCardSmall from "../Components/Cards/CityCardSmall";
 import CityCardSmallSkeleton from "../Components/Cards/CityCardSmallSkeleton";
 import { useTranslation } from "react-i18next";
+import { useFocusEffect } from "@react-navigation/native";
+import BannerSkeleton from "../Components/Customs/BannerSkeleton";
 
 const HomeScreen = ({ navigation, route, ...props }) => {
     const { t } = useTranslation();
@@ -78,10 +80,11 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         },
     ]);
     const [bannerObject, setBannerObject] = useState([]);
-    const [currentCity, setCurrentCity] = useState(t("CITY.DEVGAD"));
+    const [currentCity, setCurrentCity] = useState(t("CITY.SINDHUDURG"));
     const [profilePhoto, setProfilePhoto] = useState("");
 
     useEffect(() => {
+        AsyncStorage.setItem("isUpdated", "false");
         const backHandler = BackHandler.addEventListener(
             t("EVENT.HARDWARE_BACK_PRESS"),
             () => exitApp()
@@ -153,6 +156,14 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         };
     }, [props.access_token]);
 
+    useFocusEffect(
+        React.useCallback(async () => {
+            if ((await AsyncStorage.getItem("isUpdated")) == "true") {
+                callLandingPageAPI();
+            }
+        })
+    );
+
     const saveToken = async () => {
         props.saveAccess_token(
             await AsyncStorage.getItem(t("STORAGE.ACCESS_TOKEN"))
@@ -206,6 +217,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                 props.setLoader(false);
                 setError(error.message);
             });
+        AsyncStorage.setItem("isUpdated", "false");
     };
 
     const getUserProfile = () => {
@@ -293,7 +305,9 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                     <></>
                     : */}
             <View style={{ flex: 1, alignItems: "center" }}>
-                {bannerObject[0] ? (
+                {isLoading ? (
+                    <BannerSkeleton />
+                ) : bannerObject[0] ? (
                     <Banner bannerImages={bannerObject} />
                 ) : (
                     <Banner bannerImages={bannerImages} />

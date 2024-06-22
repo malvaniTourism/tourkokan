@@ -8,6 +8,7 @@ import GlobalText from "../Customs/Text";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Path from "../../Services/Api/BaseUrl";
 import SearchDropdown from "./SearchDropdown";
+import { useTranslation } from "react-i18next";
 
 StatusBar.setBarStyle("dark-content");
 
@@ -20,7 +21,22 @@ const TopComponent = ({
     cities,
     setCurrentCity,
 }) => {
+    const { t } = useTranslation();
+
     const [showCities, setShowCities] = useState(false);
+    const [sindhudurg, setSindh] = useState({
+        category: null,
+        comment_count: 0,
+        icon: null,
+        id: 0,
+        image: "public/assets/site/Devgad_bg.jpg",
+        is_favorite: 0,
+        logo: null,
+        name: t("CITY.SINDHUDURG"),
+        photos_count: 0,
+        rating_avg_rate: "3.7500",
+        tag_line: t("CITY.SINDHUDURG"),
+    });
 
     const openDrawer = () => {
         navigation.openDrawer();
@@ -92,7 +108,7 @@ const TopComponent = ({
             {showCities && (
                 <View>
                     <SearchDropdown
-                        placesList={cities}
+                        placesList={[sindhudurg, ...cities]}
                         style={styles.citiesDropdown}
                         setPlace={(v) => setCity(v)}
                         closeDropdown={() => toggleCityDropdown()}

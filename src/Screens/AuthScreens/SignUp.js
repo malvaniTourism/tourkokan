@@ -276,11 +276,12 @@ const SignUp = ({ navigation, ...props }) => {
             comnPost("v2/auth/sendOtp", data)
                 .then((res) => {
                     if (res.data?.success) {
-                        navigateTo(navigation, t("SCREEN.VERIFY_OTP"), { email });
+                        navigateTo(navigation, t("SCREEN.VERIFY_OTP"), {
+                            email,
+                        });
                     }
                 })
-                .catch((err) => {
-                });
+                .catch((err) => {});
         }
         setIsAlert(false);
     };

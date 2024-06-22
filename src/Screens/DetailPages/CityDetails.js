@@ -117,6 +117,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
         };
         comnPost("v2/addDeleteFavourite", placeData)
             .then((res) => {
+                AsyncStorage.setItem("isUpdated", "true");
                 props.setLoader(false);
                 // getDetails()
                 reload();
@@ -135,6 +136,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
         };
         comnPost("v2/addUpdateRating", placeData)
             .then((res) => {
+                AsyncStorage.setItem("isUpdated", "true");
                 props.setLoader(false);
                 // getDetails()
                 reload();

@@ -30,6 +30,7 @@ const PlaceCard = ({ data, reload }) => {
         setIsFav(!isFav);
         comnPost("v2/addDeleteFavourite", cityData)
             .then((res) => {
+                AsyncStorage.setItem("isUpdated", "true");
                 reload();
             })
             .catch((err) => {});
@@ -45,6 +46,7 @@ const PlaceCard = ({ data, reload }) => {
         };
         comnPost("v2/addUpdateRating", placeData)
             .then((res) => {
+                AsyncStorage.setItem("isUpdated", "true");
                 reload();
             })
             .catch((err) => {});

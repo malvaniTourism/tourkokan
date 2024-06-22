@@ -8,6 +8,7 @@ import Feather from "react-native-vector-icons/Feather";
 import { useTranslation } from "react-i18next";
 import { comnPost } from "../../../Services/Api/CommonServices";
 import Popup from "../Popup";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const UpdateProfile = ({
     user,
@@ -53,6 +54,7 @@ const UpdateProfile = ({
         comnPost("v2/updateProfile", data)
             .then((res) => {
                 if (res.data.success) {
+                    AsyncStorage.setItem("isUpdated", "true");
                     refreshOption();
                 } else {
                     setIsAlert(true);

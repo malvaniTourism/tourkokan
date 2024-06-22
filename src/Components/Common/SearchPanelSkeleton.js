@@ -14,6 +14,11 @@ const SearchPanelSkeleton = () => {
             <Skeleton
                 animation="pulse"
                 variant="text"
+                style={styles.fieldsViewSkeleton}
+            />
+            <Skeleton
+                animation="pulse"
+                variant="text"
                 style={styles.searchButtonSkeleton}
             />
         </View>

@@ -146,6 +146,7 @@ const STRING = {
         SITE: "Site",
     },
     CITY: {
+        SINDHUDURG: "Sindhudurg",
         DEVGAD: "Devgad",
         KANKAVLI: "Kankavli",
         MAHARASHTRA: "Maharashtra",
@@ -202,6 +203,7 @@ const STRING = {
         EMAIL: "mail",
         MOBILE_NO: "phone-call",
     },
+    POLICY: {},
 
     PRESS_BACK: "Press back again to exit",
     OTP_VERIFICATION: "OTP Verification",

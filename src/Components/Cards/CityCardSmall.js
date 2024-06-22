@@ -35,6 +35,7 @@ const CityCardSmall = ({ data, reload, navigation, addComment, onClick }) => {
         setIsFav(!isFav);
         comnPost("v2/addDeleteFavourite", placeData)
             .then((res) => {
+                AsyncStorage.setItem("isUpdated", "true");
                 props.setLoader(false);
                 reload();
             })
@@ -71,6 +72,7 @@ const CityCardSmall = ({ data, reload, navigation, addComment, onClick }) => {
         };
         comnPost("v2/addUpdateRating", placeData)
             .then((res) => {
+                AsyncStorage.setItem("isUpdated", "true");
                 reload();
             })
             .catch((err) => {});

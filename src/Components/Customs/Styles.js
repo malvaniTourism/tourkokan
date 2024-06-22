@@ -180,6 +180,11 @@ const styles = StyleSheet.create({
     modalText: {
         color: COLOR.black,
     },
+    fieldsViewSkeleton: {
+        height: DIMENSIONS.bannerHeight,
+        width: DIMENSIONS.bannerWidth,
+        borderRadius: DIMENSIONS.borderRadius,
+    },
 });
 
 export default styles;

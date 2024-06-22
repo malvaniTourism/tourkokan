@@ -31,6 +31,7 @@ import NetInfo from "@react-native-community/netinfo";
 import CheckNet from "../Components/Common/CheckNet";
 import Feather from "react-native-vector-icons/Feather";
 import { useTranslation } from "react-i18next";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Profile = ({ navigation, ...props }) => {
     const { t } = useTranslation();
@@ -171,6 +172,7 @@ const Profile = ({ navigation, ...props }) => {
 
         comnPost("v2/updateProfile", data)
             .then((res) => {
+                AsyncStorage.setItem("isUpdated", "true");
                 setIsAlert(true);
                 setAlertMessage(res.data.message);
                 props.setLoader(false);

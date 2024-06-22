@@ -154,7 +154,7 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
 
     const pressed = (type) => {
         searchPlace(searchValue);
-        console.log('-- -- ' ,type);
+        console.log("-- -- ", type);
         setFieldType(type);
     };
 

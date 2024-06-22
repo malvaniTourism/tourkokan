@@ -62,9 +62,10 @@ const styles = StyleSheet.create({
         flexDirection: "row",
     },
     fieldsViewSkeleton: {
-        height: DIMENSIONS.bannerHeight,
+        height: DIMENSIONS.bannerHeight / 2 - 30,
         width: DIMENSIONS.bannerWidth,
         borderRadius: DIMENSIONS.borderRadius,
+        marginTop: 10,
     },
     smallFieldsViewSkeleton: {
         height: DIMENSIONS.bannerHeight / 2,
@@ -365,6 +366,54 @@ const styles = StyleSheet.create({
     },
     map: {
         ...StyleSheet.absoluteFillObject,
+    },
+    container: {
+        flex: 1,
+        padding: 20,
+        backgroundColor: "#fff",
+        textAlign: "justify",
+        marginBottom: 20,
+    },
+    textContainer: {
+        textAlign: "justify",
+        marginBottom: 20,
+    },
+    heading: {
+        fontSize: DIMENSIONS.headerTextSize,
+        fontWeight: "bold",
+        marginBottom: 10,
+        textAlign: "justify",
+    },
+    subheading: {
+        fontSize: DIMENSIONS.subtitleTextSize,
+        fontWeight: "bold",
+        marginTop: 20,
+        marginBottom: 10,
+        textAlign: "justify",
+    },
+    paragraph: {
+        fontSize: DIMENSIONS.textSize,
+        marginBottom: 10,
+        textAlign: "justify",
+    },
+    list: {
+        paddingLeft: 20,
+        textAlign: "justify",
+        fontSize: DIMENSIONS.textSize,
+    },
+    listItem: {
+        fontSize: 16,
+        marginBottom: 10,
+        textAlign: "justify",
+        fontSize: DIMENSIONS.textSize,
+    },
+    link: {
+        color: "blue",
+        textDecorationLine: "underline",
+        textAlign: "justify",
+        fontSize: DIMENSIONS.textSize,
+        marginTop: -10,
+        marginBottom: 10,
     },
     privacyButtons: {
         width: DIMENSIONS.halfWidth - 80,
