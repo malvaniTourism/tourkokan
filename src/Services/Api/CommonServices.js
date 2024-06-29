@@ -17,7 +17,7 @@ export const comnGet = async (url, apiToken, navigation) => {
         .catch((err) => {
             if (err.response.status == 401) {
                 AsyncStorage.clear();
-                navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN);
+                navigateTo(navigation, STRING.SCREEN.LANG_SELECTION);
             }
             return err;
         });
@@ -39,7 +39,7 @@ export const comnPost = async (url, data, navigation) => {
         .catch((err) => {
             if (err.response?.status == 401) {
                 AsyncStorage.clear();
-                navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN);
+                navigateTo(navigation, STRING.SCREEN.LANG_SELECTION);
             }
             return err;
         });
@@ -61,7 +61,7 @@ export const comnPut = async (url, data, navigation) => {
         .catch((err) => {
             if (err.response.status == 401) {
                 AsyncStorage.clear();
-                navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN);
+                navigateTo(navigation, STRING.SCREEN.LANG_SELECTION);
             }
             return err;
         });
@@ -83,7 +83,7 @@ export const ComnDel = async (url, data, navigation) => {
         .catch((err) => {
             if (err.response.status == 401) {
                 AsyncStorage.clear();
-                navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN);
+                navigateTo(navigation, STRING.SCREEN.LANG_SELECTION);
             }
             return err;
         });
@@ -121,15 +121,15 @@ export const removeFromStorage = async (name) => {
 };
 
 export const dataSync = async (name, callBack) => {
-    // if (await isOffline()) {
-    //   console.log("name, ", await getFromStorage(name));
-    //   if (await getFromStorage(name)) {
-    //     return await getFromStorage(name)
-    //   } else {
-    //     return await isOffline()
-    //   }
-    // } else {
-    //   callBack()
-    // }
-    callBack();
+    if (await isOffline()) {
+        console.log("name, ", await getFromStorage(name)[0]);
+        if (await getFromStorage(name)) {
+            return await getFromStorage(name);
+        } else {
+            return await isOffline();
+        }
+    } else {
+        callBack();
+    }
+    // callBack();
 };

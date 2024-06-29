@@ -69,6 +69,7 @@
         "ROUTES": "Routes",
         "PLACES": "Places",
         "MAP": "Map",
+        "LANG_SELECTION": "LangSelection",
         "AUTH_SCREEN": "AuthScreen",
         "LOGIN": "Login",
         "SIGN_UP": "SignUp",
@@ -88,7 +89,8 @@
         "PLACE_DETAILS": "PlaceDetails",
         "PROJECT_DETAILS": "ProjectDetails",
         "STOP_DETAILS": "StopDetails",
-        "CITY_DETAILS": "CityDetails"
+        "CITY_DETAILS": "CityDetails",
+        "GALLERY": "Gallery"
     },
     "STORAGE": {
         "ACCESS_TOKEN": "access_token",
@@ -104,7 +106,8 @@
         "PLACES_RESPONSE": "placesResponse",
         "ROUTES_RESPONSE": "routesResponse",
         "EXPLORE_CITIES_RESPONSE": "exploreCitiesResponse",
-        "CATEGORIES_RESPONSE": "categoriesResponse"
+        "CATEGORIES_RESPONSE": "categoriesResponse",
+        "EMERGENCY": "Emergency"
     },
     "HEADER": {
         "BUS_TIMINGS": "बसच्या वेळा",
@@ -195,7 +198,8 @@
         "UPDATE_PROFILE": "प्रोफाइल अपडेट करा",
         "SETTINGS": "सेटिंग्ज",
         "LOGOUT": "लॉगआउट",
-        "CHANGE_LANGUAGE": "भाषा बदला"
+        "CHANGE_LANGUAGE": "भाषा बदला",
+        "SELECT_LANGUAGE": "भाषा निवडा"
     },
     "ICON": {
         "NAME": "user",

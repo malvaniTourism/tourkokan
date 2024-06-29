@@ -40,7 +40,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import BannerSkeleton from "../Components/Customs/BannerSkeleton";
 
 const HomeScreen = ({ navigation, route, ...props }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const refRBSheet = useRef();
 
     const [searchValue, setSearchValue] = useState("");
@@ -80,10 +80,13 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         },
     ]);
     const [bannerObject, setBannerObject] = useState([]);
-    const [currentCity, setCurrentCity] = useState(t("CITY.SINDHUDURG"));
+    const [currentCity, setCurrentCity] = useState(null);
     const [profilePhoto, setProfilePhoto] = useState("");
+    const [sindhudurg, setSindh] = useState({});
 
     useEffect(() => {
+        setIsLoading(true);
+        props.setLoader(true);
         AsyncStorage.setItem("isUpdated", "false");
         const backHandler = BackHandler.addEventListener(
             t("EVENT.HARDWARE_BACK_PRESS"),
@@ -114,11 +117,11 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                         // setPlace_category(res.data.data.place_category);
                         // setPlaces(res.data.data.places);
                     } else if (resp) {
-                        setOffline(true);
                         setIsFetching(false);
                         setIsLoading(false);
                     }
                     props.setLoader(false);
+                    setIsLoading(false);
                 }
             );
 
@@ -128,6 +131,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                     if (res.data && res.data.data) {
                         setCities(res.data.data.cities);
                         setRoutes(res.data.data.routes);
+                        setBannerObject(res.data.data.banners);
                         setIsFetching(false);
                         setIsLoading(false);
                         // setCategories(res.data.data.categories);
@@ -172,11 +176,16 @@ const HomeScreen = ({ navigation, route, ...props }) => {
             (await AsyncStorage.getItem(t("STORAGE.ACCESS_TOKEN"))) == null ||
             (await AsyncStorage.getItem(t("STORAGE.ACCESS_TOKEN"))) == ""
         ) {
-            navigateTo(navigation, t("SCREEN.AUTH_SCREEN"));
+            navigateTo(navigation, t("SCREEN.LANG_SELECTION"));
         }
     };
 
     const callLandingPageAPI = async (site_id) => {
+        setCurrentCity(t("CITY.SINDHUDURG"));
+        setSindh({
+            id: 0,
+            name: t("CITY.SINDHUDURG"),
+        });
         let data = {
             site_id,
         };
@@ -191,6 +200,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                         t("STORAGE.LANDING_RESPONSE"),
                         JSON.stringify(res)
                     );
+                i18n.changeLanguage(res.data.language);
                 setCities(res.data.data.cities);
                 setRoutes(res.data.data.routes);
                 setBannerObject(res.data.data.banners);
@@ -264,8 +274,8 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         refRBSheet.current.close();
     };
 
-    const getCityDetails = (id) => {
-        navigateTo(navigation, t("SCREEN.CITY_DETAILS"), { id });
+    const getCityDetails = (city) => {
+        navigateTo(navigation, t("SCREEN.CITY_DETAILS"), { city });
     };
 
     const openProfile = () => {
@@ -284,11 +294,12 @@ const HomeScreen = ({ navigation, route, ...props }) => {
             stickyHeaderIndices={[0]}
             style={{ backgroundColor: COLOR.white }}
         >
+            <CheckNet isOff={offline} />
             {isLoading ? (
                 <TopComponentSkeleton />
             ) : (
                 <TopComponent
-                    cities={cities}
+                    cities={[sindhudurg, ...cities]}
                     currentCity={currentCity}
                     setCurrentCity={(v) => onCitySelect(v)}
                     navigation={navigation}
@@ -297,7 +308,6 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                     profilePhoto={profilePhoto}
                 />
             )}
-            <CheckNet isOff={offline} />
             {/* <MyAnimatedLoader isVisible={isLoading} /> */}
             {/* {
                 isLoading ?
@@ -427,7 +437,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                         callLandingPageAPI();
                                     }}
                                     navigation={navigation}
-                                    onClick={() => getCityDetails(city.id)}
+                                    onClick={() => getCityDetails(city)}
                                 />
                             ))
                         )}

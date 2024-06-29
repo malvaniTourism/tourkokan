@@ -184,6 +184,7 @@ const styles = StyleSheet.create({
         height: DIMENSIONS.bannerHeight,
         width: DIMENSIONS.bannerWidth,
         borderRadius: DIMENSIONS.borderRadius,
+        marginTop: 10,
     },
 });
 

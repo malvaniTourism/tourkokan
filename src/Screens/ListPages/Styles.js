@@ -160,6 +160,26 @@ const styles = StyleSheet.create({
         fontSize: DIMENSIONS.headerTextSize,
         color: COLOR.black,
     },
+    cityListView: {
+        borderTopColor: COLOR.grey,
+        borderTopWidth: 1,
+        width: DIMENSIONS.screenWidth,
+        padding: 20,
+    },
+    cityListName: {
+        fontWeight: "bold",
+    },
+    imageGridBoxContainer: {
+        flex: 1,
+        margin: 1,
+    },
+    imageGridBox: {
+        width: "100%",
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "transparent",
+    },
 });
 
 export default styles;

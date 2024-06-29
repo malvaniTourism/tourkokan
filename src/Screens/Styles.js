@@ -527,6 +527,16 @@ const styles = StyleSheet.create({
         elevation: 0,
         marginRight: 10,
     },
+    mapContainer: {
+        ...StyleSheet.absoluteFillObject,
+        height: DIMENSIONS.screenHeight,
+        width: DIMENSIONS.screenWidth,
+        justifyContent: "flex-end",
+        alignItems: "center",
+    },
+    map: {
+        ...StyleSheet.absoluteFillObject,
+    },
 });
 
 export default styles;

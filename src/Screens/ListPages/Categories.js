@@ -45,6 +45,7 @@ const Categories = ({ route, navigation, ...props }) => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        props.setLoader(true);
         const backHandler = goBackHandler(navigation);
         checkLogin(navigation);
         setIsLoading(true);
@@ -57,9 +58,14 @@ const Categories = ({ route, navigation, ...props }) => {
                     let res = JSON.parse(resp);
                     if (res.data && res.data.data) {
                         setCategories(res.data.data.data);
+                        setSelectedCategory(res.data.data.data[0].name);
+                        setSelectedSubCategory(
+                            res.data.data.data[0].sub_categories
+                        );
                     } else if (resp) {
                         setOffline(true);
                     }
+                    props.setLoader(false);
                 }
             );
         });
@@ -89,9 +95,11 @@ const Categories = ({ route, navigation, ...props }) => {
                 setSelectedSubCategory(res.data.data.data[0].sub_categories);
                 // setSelectedSubCategory(res.data.data.data[0].sub_categories)
                 setIsLoading(false);
+                props.setLoader(false);
             })
             .catch((error) => {
                 setIsLoading(false);
+                props.setLoader(false);
             });
     };
 

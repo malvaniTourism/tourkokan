@@ -1,33 +1,33 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { View, Image } from "react-native";
+import { ResponsiveGrid } from "react-native-flexible-grid";
+import styles from "./Styles";
+import Path from "../../Services/Api/BaseUrl";
 import MasonryGrid from "../../Components/Customs/MasonryGrid";
 import { comnPost, dataSync } from "../../Services/Api/CommonServices";
-import { View } from "react-native";
 import Loader from "../../Components/Customs/Loader";
+import { checkLogin, goBackHandler } from "../../Services/CommonMethods";
+import CheckNet from "../../Components/Common/CheckNet";
+import NetInfo from "@react-native-community/netinfo";
+import { connect } from "react-redux";
 import {
     setDestination,
     setLoader,
     setSource,
 } from "../../Reducers/CommonActions";
-import { connect } from "react-redux";
 import Header from "../../Components/Common/Header";
-import { checkLogin, goBackHandler } from "../../Services/CommonMethods";
-import CheckNet from "../../Components/Common/CheckNet";
-import NetInfo from "@react-native-community/netinfo";
 import Search from "../../Components/Customs/Search";
-import styles from "./Styles";
+import { useTranslation } from "react-i18next";
 
 const ExploreGrid = ({ route, navigation, ...props }) => {
-    const [citiesData, setCitiesData] = useState([]);
+    const { t } = useTranslation();
+    let idCounter = useRef(0);
+
+    const [gallery, setGallery] = useState([]);
     const [offline, setOffline] = useState(false);
     const [searchValue, setSearchValue] = useState("");
     const [placesList, setPlacesList] = useState([]);
     const [nextPage, setNextPage] = useState(2);
-
-    // route.params.cities
-
-    useEffect(() => {
-        getData("");
-    }, []);
 
     useEffect(() => {
         const backHandler = goBackHandler(navigation);
@@ -48,7 +48,7 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
                 (resp) => {
                     let res = JSON.parse(resp);
                     if (res.data && res.data.data) {
-                        setCitiesData(res.data.data.data);
+                        setGallery(res.data.data.data);
                     } else if (resp) {
                         setOffline(true);
                     }
@@ -70,12 +70,13 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
             // category: "city",
             global: 1,
             search: v,
+            per_page: 20,
         };
-        comnPost(`v2/sites`, data)
+        comnPost(`v2/getGallery`, data)
             .then((res) => {
                 if (res.data.success) {
                     props.setLoader(false);
-                    setCitiesData(res.data.data.data);
+                    setGallery(res.data.data.data);
                 } else {
                     props.setLoader(false);
                 }
@@ -85,21 +86,21 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
             });
     };
 
-    const getScrollData = (v, page) => {
+    const getScrollData = () => {
         props.setLoader(true);
-        setSearchValue(v);
         let data = {
             apitype: "list",
             // category: "city",
             global: 1,
-            search: v,
+            search: searchValue,
+            per_page: 10,
         };
-        comnPost(`v2/sites?page=${page}`, data)
+        comnPost(`v2/getGallery?page=${nextPage}`, data)
             .then((res) => {
                 if (res.data.success) {
                     props.setLoader(false);
                     let nextUrl = res.data.data.next_page_url;
-                    setCitiesData([...citiesData, ...res.data.data.data]);
+                    setGallery([...gallery, ...res.data.data.data]);
                     setNextPage(nextUrl[nextUrl.length - 1]);
                 } else {
                     props.setLoader(false);
@@ -110,9 +111,79 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
             });
     };
 
+    // const getData = () => {
+    //     const originalData = [
+    //         {
+    //             imageUrl: 'https://picsum.photos/200/300?random=1',
+    //         },
+    //         {
+    //             imageUrl: 'https://picsum.photos/200/300?random=2',
+    //         },
+    //         {
+    //             imageUrl: 'https://picsum.photos/200/300?random=3',
+    //             widthRatio: 1,
+    //             heightRatio: 2,
+    //         },
+    //         {
+    //             imageUrl: 'https://picsum.photos/200/300?random=4',
+    //         },
+    //         {
+    //             imageUrl: 'https://picsum.photos/200/300?random=5',
+    //         },
+    //         {
+    //             imageUrl: 'https://picsum.photos/200/300?random=6',
+
+    //             widthRatio: 1,
+    //             heightRatio: 2,
+    //         },
+    //         {
+    //             imageUrl: 'https://picsum.photos/200/300?random=7',
+
+    //             widthRatio: 2,
+    //             heightRatio: 2,
+    //         },
+    //         {
+    //             imageUrl: 'https://picsum.photos/200/300?random=8',
+    //         },
+    //         {
+    //             imageUrl: 'https://picsum.photos/200/300?random=9',
+    //         },
+    //         {
+    //             imageUrl: 'https://picsum.photos/200/300?random=10',
+    //         },
+    //     ];
+
+    //     let clonedData = [];
+
+    //     for (let i = 0; i < 5; i++) {
+    //         const newData = originalData.map((item) => ({
+    //             ...item,
+    //             id: ++idCounter.current,
+    //         }));
+    //         clonedData = [...clonedData, ...newData];
+    //     }
+
+    //     return clonedData;
+    // };
+
+    const renderItem = ({ item }) => {
+        return (
+            <View style={styles.imageGridBoxContainer}>
+                <Image
+                    source={{ uri: Path.FTP_PATH + item.path }}
+                    style={styles.imageGridBox}
+                    resizeMode="cover"
+                />
+            </View>
+        );
+    };
+
     return (
-        <View>
-            <Loader />
+        <View
+            style={{
+                flex: 1,
+            }}
+        >
             <CheckNet isOff={offline} />
             <Header
                 Component={
@@ -124,10 +195,27 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
                     />
                 }
             />
-            <MasonryGrid
-                data={citiesData}
-                loadMore={() => getScrollData("", nextPage)}
+            <ResponsiveGrid
+                maxItemsPerColumn={3}
+                data={gallery}
+                renderItem={renderItem}
+                showScrollIndicator={false}
+                onEndReached={getScrollData}
+                onEndReachedThreshold={0.1}
+                style={{
+                    padding: 5,
+                    marginBottom: 70,
+                }}
+                keyExtractor={(item) => item.id.toString()}
             />
+
+            <View
+                style={{
+                    position: "absolute",
+                    width: "100%",
+                    bottom: 0,
+                }}
+            ></View>
         </View>
     );
 };

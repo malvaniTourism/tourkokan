@@ -47,6 +47,7 @@ const Explore = ({ route, navigation, ...props }) => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        props.setLoader(true);
         const backHandler = goBackHandler(navigation);
         checkLogin(navigation);
         setIsLoading(true);

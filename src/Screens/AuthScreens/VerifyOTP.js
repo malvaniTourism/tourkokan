@@ -105,7 +105,6 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
                 }
             })
             .catch((err) => {
-                console.log("err - - - - ", err);
                 setIsAlert(true);
                 setIsSuccess(false);
                 setAlertMessage(t("ALERT.WENT_WRONG"));

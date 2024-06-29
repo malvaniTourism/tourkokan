@@ -34,6 +34,7 @@ const SearchList = ({ navigation, route, ...props }) => {
     const [nextUrl, setNextUrl] = useState(1);
 
     useEffect(() => {
+        props.setLoader(true);
         const backHandler = goBackHandler(navigation);
         checkLogin(navigation);
         // searchRoute();

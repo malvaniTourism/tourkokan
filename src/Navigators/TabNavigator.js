@@ -4,12 +4,14 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../Screens/HomeScreen";
 import MapScreen from "../Screens/MapScreen";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import Fontisto from "react-native-vector-icons/Fontisto";
 import COLOR from "../Services/Constants/COLORS";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
 import Explore from "../Screens/ListPages/Explore";
 import Categories from "../Screens/ListPages/Categories";
 import AllRoutesSearch from "../Screens/ListPages/AllRoutesSearch";
 import { useTranslation } from "react-i18next";
+import ExploreGrid from "../Screens/ListPages/ExploreGrid";
 
 const Tab = createBottomTabNavigator();
 
@@ -42,14 +44,14 @@ const TabNavigator = () => {
             />
 
             <Tab.Screen
-                name={t("SCREEN.CITIES")}
-                component={Explore}
+                name={t("SCREEN.GALLERY")}
+                component={ExploreGrid}
                 options={{
-                    pageName: `${t("SCREEN.EXPLORE")}`,
-                    tabBarLabel: `${t("SCREEN.CITIES")}`,
+                    pageName: `${t("SCREEN.GALLERY")}`,
+                    tabBarLabel: `${t("SCREEN.GALLERY")}`,
                     tabBarIcon: ({ color, size }) => (
-                        <Ionicons
-                            name="location-outline"
+                        <Fontisto
+                            name="photograph"
                             color={COLOR.black}
                             size={DIMENSIONS.iconSize}
                         />

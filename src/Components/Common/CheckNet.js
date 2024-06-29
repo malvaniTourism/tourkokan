@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import ComingSoon from "./ComingSoon";
 import { useTranslation } from "react-i18next";
@@ -6,11 +6,15 @@ import { useTranslation } from "react-i18next";
 const CheckNet = ({ isOff }) => {
     const { t } = useTranslation();
 
-    const [isOffline, setIsConnected] = useState(isOff);
+    const [isConnected, setIsConnected] = useState(isOff);
 
     return (
         <View>
-            <ComingSoon message={t("NO_INTERNET")} visible={isOff} />
+            <ComingSoon
+                message={t("NO_INTERNET")}
+                visible={isConnected}
+                toggleOverlay={() => setIsConnected(false)}
+            />
         </View>
     );
 };

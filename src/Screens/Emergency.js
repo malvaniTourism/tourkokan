@@ -8,24 +8,50 @@ import COLOR from "../Services/Constants/COLORS";
 import { backPage, checkLogin, goBackHandler } from "../Services/CommonMethods";
 import TextButton from "../Components/Customs/Buttons/TextButton";
 import styles from "./Styles";
-import { comnPost } from "../Services/Api/CommonServices";
+import { comnPost, dataSync } from "../Services/Api/CommonServices";
 import Loader from "../Components/Customs/Loader";
 import { setLoader } from "../Reducers/CommonActions";
 import { connect } from "react-redux";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useTranslation } from "react-i18next";
+import CheckNet from "../Components/Common/CheckNet";
+import NetInfo from "@react-native-community/netinfo";
 
 const Emergency = ({ navigation, route, ...props }) => {
     const { t } = useTranslation();
 
     const [data, setData] = useState([]);
+    const [offline, setOffline] = useState(false);
 
     useEffect(() => {
         const backHandler = goBackHandler(navigation);
         checkLogin(navigation);
-        getData();
+        props.setLoader(true);
+
+        if (props.access_token) {
+            if (!isLandingDataFetched && props.access_token) {
+                setIsLandingDataFetched(true); // Mark the data as fetched
+            }
+            props.setLoader(false);
+        }
+
+        const unsubscribe = NetInfo.addEventListener((state) => {
+            setOffline(false);
+
+            dataSync(t("STORAGE.EMERGENCY"), getData()).then((resp) => {
+                let res = JSON.parse(resp);
+                if (res.data && res.data.data) {
+                    setData(res.data.data.data);
+                } else if (resp) {
+                    setOffline(true);
+                }
+            });
+            props.setLoader(false);
+        });
+
         return () => {
             backHandler.remove();
+            unsubscribe();
         };
     }, []);
 
@@ -110,6 +136,7 @@ const Emergency = ({ navigation, route, ...props }) => {
                 endIcon={<></>}
             />
             <Loader />
+            <CheckNet isOff={offline} />
             <ScrollView>
                 <FlatList
                     keyExtractor={(item) => item.id}

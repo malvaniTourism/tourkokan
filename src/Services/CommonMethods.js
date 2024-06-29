@@ -25,7 +25,7 @@ export const checkLogin = async (navigation) => {
         (await AsyncStorage.getItem(STRING.STORAGE.ACCESS_TOKEN)) == null ||
         (await AsyncStorage.getItem(STRING.STORAGE.ACCESS_TOKEN)) == ""
     ) {
-        navigateTo(navigation, STRING.SCREEN.AUTH_SCREEN);
+        navigateTo(navigation, STRING.SCREEN.LANG_SELECTION);
     }
 };
 

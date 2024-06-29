@@ -68,7 +68,6 @@ const SignUp = ({ navigation, ...props }) => {
         { label: "English", value: "en" },
         { label: "मराठी", value: "mr" },
     ]);
-    const [language, setLanguage] = useState(null);
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
     const [isPrivacyChecked, setIsPrivacyChecked] = useState(false);
     const [showPrivacy, setShowPrivacy] = useState(false);
@@ -233,7 +232,7 @@ const SignUp = ({ navigation, ...props }) => {
             profile_picture: uploadImage,
             latitude: lat.toString(),
             longitude: long.toString(),
-            language,
+            language: t("LANG"),
         };
         comnPost("v2/auth/register", data)
             .then((res) => {
@@ -242,7 +241,6 @@ const SignUp = ({ navigation, ...props }) => {
                     setIsSuccess(true);
                     setIsAlert(true);
                     setAlertMessage(res.data.message);
-                    i18n.changeLanguage(language);
                 } else {
                     props.setLoader(false);
                     setAlertMessage(
@@ -438,24 +436,6 @@ const SignUp = ({ navigation, ...props }) => {
                             />
                         );
                     })}
-                    <Dropdown
-                        style={[styles.dropdown]}
-                        placeholderStyle={styles.itemTextStyle}
-                        selectedTextStyle={styles.selectedTextStyle}
-                        inputSearchStyle={styles.inputSearchStyle}
-                        itemTextStyle={styles.itemTextStyle}
-                        dropdownTextStyle={styles.dropdownText}
-                        iconStyle={styles.dropdownIcon}
-                        data={list}
-                        maxHeight={300}
-                        labelField="label"
-                        valueField="value"
-                        placeholder={"Select item"}
-                        value={language}
-                        onChange={(item) => {
-                            setLanguage(item.value);
-                        }}
-                    />
                     {notValid ? (
                         <GlobalText
                             text={t("PLEASE_FILL")}

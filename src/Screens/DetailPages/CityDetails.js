@@ -20,6 +20,7 @@ import {
     backPage,
     checkLogin,
     goBackHandler,
+    navigateTo,
 } from "../../Services/CommonMethods";
 import GlobalText from "../../Components/Customs/Text";
 import styles from "./Styles";
@@ -43,7 +44,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
 
     const [city, setCity] = useState([]); // State to store city
     const [error, setError] = useState(null); // State to store error message
-    const [cityId, setCityId] = useState(route.params.id);
+    const [cityId, setCityId] = useState(route.params.city.id);
     const [isFav, setIsFav] = useState(false);
     const [rating, setRating] = useState(0);
     const [commentCount, setCommentCount] = useState(0);
@@ -56,11 +57,21 @@ const CityDetails = ({ navigation, route, ...props }) => {
         const backHandler = goBackHandler(navigation);
         checkLogin(navigation);
         setLoader(true);
-        getDetails();
+        setCityDetails();
         return () => {
             backHandler.remove();
         };
     }, [cityId]);
+
+    const setCityDetails = () => {
+        setLoader(true);
+        setCity(route.params.city);
+        setIsFav(route.params.city.is_favorite);
+        setRating(route.params.city.rating_avg_rate);
+        setCommentCount(route.params.city.comment_count);
+        setLocationMap(route.params.city.latitude, route.params.city.longitude);
+        setLoader(false);
+    };
 
     const getDetails = (place) => {
         setLoader(true);
@@ -70,7 +81,6 @@ const CityDetails = ({ navigation, route, ...props }) => {
         comnPost(`v2/getSite`, data)
             .then((res) => {
                 if (res.data.success) {
-                    console.log("res.data.data --  ", res.data.data);
                     setCity(res.data.data);
                     setIsFav(res.data.data.is_favorite);
                     setRating(res.data.data.rating_avg_rate);
@@ -218,6 +228,12 @@ const CityDetails = ({ navigation, route, ...props }) => {
                 <GlobalText text={item.name} />
             </View>
         );
+    };
+
+    const seeMore = () => {
+        navigateTo(navigation, t("SCREEN.CITY_LIST"), {
+            parent_id: city.id,
+        });
     };
 
     return (
@@ -397,7 +413,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
                         )}
 
                         <View style={styles.sectionView}>
-                            {initialRegion.latitude ? (
+                            {initialRegion && initialRegion.latitude ? (
                                 <MapContainer
                                     initialRegion={initialRegion}
                                     currentLatitude={currentLatitude}
@@ -408,29 +424,77 @@ const CityDetails = ({ navigation, route, ...props }) => {
                             )}
                         </View>
 
-                        <View style={styles.sectionView}>
-                            <GlobalText
-                                text={t("SCREEN.PLACES")}
-                                style={styles.sectionTitle}
-                            />
-                            <ScrollView showsHorizontalScrollIndicator={false}>
-                                {isLoading ? (
-                                    <>
-                                        <CityCardSkeleton />
-                                        <CityCardSkeleton />
-                                        <CityCardSkeleton />
-                                    </>
-                                ) : (
-                                    <View>
-                                        <FlatList
-                                            keyExtractor={(item) => item.id}
-                                            data={city.sites}
-                                            renderItem={renderItem}
-                                            numColumns={2}
-                                        />
-                                    </View>
-                                )}
-                            </ScrollView>
+                        <View
+                            style={{
+                                paddingBottom: 10,
+                                flexDirection: "row",
+                                justifyContent: "center",
+                            }}
+                        >
+                            {isLoading ? (
+                                <View style={styles.flexAroundSkeleton}>
+                                    <Skeleton
+                                        animation="pulse"
+                                        variant="text"
+                                        style={{ width: 100, height: 30 }}
+                                    />
+                                    <Skeleton
+                                        animation="pulse"
+                                        variant="text"
+                                        style={{ width: 100, height: 30 }}
+                                    />
+                                </View>
+                            ) : (
+                                <View style={styles.flexAround}>
+                                    <GlobalText
+                                        text={t("VILLAGES")}
+                                        style={styles.sectionTitle}
+                                    />
+                                    <TextButton
+                                        title={t("BUTTON.SEE_MORE")}
+                                        buttonView={styles.villagesButtonView}
+                                        titleStyle={styles.villagesTitleStyle}
+                                        raised={false}
+                                        onPress={() => seeMore()}
+                                    />
+                                </View>
+                            )}
+                        </View>
+                        <View
+                            style={{
+                                alignItems: "center",
+                            }}
+                        >
+                            {isLoading ? (
+                                <View>
+                                    <FlatList
+                                        keyExtractor={(item) => item.id}
+                                        data={city.sites}
+                                        renderItem={() => (
+                                            <CityCardSkeleton
+                                                type={t("HEADER.PLACE")}
+                                            />
+                                        )}
+                                        numColumns={2}
+                                    />
+                                </View>
+                            ) : city.sites[0] ? (
+                                <View>
+                                    <FlatList
+                                        keyExtractor={(item) => item.id}
+                                        data={city.sites}
+                                        renderItem={renderItem}
+                                        numColumns={2}
+                                    />
+                                </View>
+                            ) : (
+                                <View style={{ marginTop: 20 }}>
+                                    <GlobalText
+                                        text={t("ADDED")}
+                                        style={styles.boldText}
+                                    />
+                                </View>
+                            )}
                         </View>
                     </View>
                 </View>

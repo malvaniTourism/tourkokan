@@ -24,19 +24,6 @@ const TopComponent = ({
     const { t } = useTranslation();
 
     const [showCities, setShowCities] = useState(false);
-    const [sindhudurg, setSindh] = useState({
-        category: null,
-        comment_count: 0,
-        icon: null,
-        id: 0,
-        image: "public/assets/site/Devgad_bg.jpg",
-        is_favorite: 0,
-        logo: null,
-        name: t("CITY.SINDHUDURG"),
-        photos_count: 0,
-        rating_avg_rate: "3.7500",
-        tag_line: t("CITY.SINDHUDURG"),
-    });
 
     const openDrawer = () => {
         navigation.openDrawer();
@@ -108,7 +95,7 @@ const TopComponent = ({
             {showCities && (
                 <View>
                     <SearchDropdown
-                        placesList={[sindhudurg, ...cities]}
+                        placesList={cities}
                         style={styles.citiesDropdown}
                         setPlace={(v) => setCity(v)}
                         closeDropdown={() => toggleCityDropdown()}

@@ -248,6 +248,16 @@ const styles = StyleSheet.create({
         width: 30,
         height: 30,
     },
+    langButtonStyle: {
+        width: DIMENSIONS.bannerWidth / 3,
+        backgroundColor: COLOR.themeBlue,
+        borderRadius: DIMENSIONS.borderRadiusXS,
+        marginTop: 20,
+    },
+    buttonTitleStyle: {
+        color: COLOR.white,
+        fontWeight: "bold",
+    },
 });
 
 export default styles;

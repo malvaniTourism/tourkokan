@@ -156,6 +156,39 @@ const styles = StyleSheet.create({
         alignSelf: "stretch",
         marginHorizontal: 10,
     },
+    flexAroundSkeleton: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        width: DIMENSIONS.bannerWidth,
+        marginVertical: 20,
+    },
+    flexAround: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        width: DIMENSIONS.bannerWidth,
+        marginVertical: 10,
+    },
+    sectionTitle: {
+        fontWeight: "bold",
+        fontSize: DIMENSIONS.headerTextSize,
+        color: COLOR.black,
+    },
+    villagesButtonView: {
+        alignItems: "center",
+        flexDirection: "row",
+        margin: 10,
+        width: DIMENSIONS.bannerWidth / 2,
+        backgroundColor: COLOR.transparent,
+        elevation: 0,
+        alignSelf: "flex-end",
+        justifyContent: "flex-end",
+    },
+    villagesTitleStyle: {
+        color: COLOR.themeBlue,
+        textAlign: "right",
+    },
 });
 
 export default styles;

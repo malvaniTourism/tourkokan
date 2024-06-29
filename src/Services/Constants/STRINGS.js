@@ -65,6 +65,7 @@ const STRING = {
         PLACES: "Places",
         MAP: "Map",
 
+        LANG_SELECTION: "LangSelection",
         AUTH_SCREEN: "AuthScreen",
         LOGIN: "Login",
         SIGN_UP: "SignUp",
@@ -89,6 +90,7 @@ const STRING = {
         PROJECT_DETAILS: "ProjectDetails",
         STOP_DETAILS: "StopDetails",
         CITY_DETAILS: "CityDetails",
+        GALLERY: "Gallery",
     },
     STORAGE: {
         ACCESS_TOKEN: "access_token",
@@ -105,6 +107,7 @@ const STRING = {
         ROUTES_RESPONSE: "routesResponse",
         EXPLORE_CITIES_RESPONSE: "exploreCitiesResponse",
         CATEGORIES_RESPONSE: "categoriesResponse",
+        EMERGENCY: "Emergency",
     },
     HEADER: {
         BUS_TIMINGS: "Bus Timings",
@@ -197,6 +200,7 @@ const STRING = {
         SETTINGS: "Settings",
         LOGOUT: "Logout",
         CHANGE_LANGUAGE: "Change Language",
+        SELECT_LANGUAGE: "Select Language",
     },
     ICON: {
         NAME: "user",

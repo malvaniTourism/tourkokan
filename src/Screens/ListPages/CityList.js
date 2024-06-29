@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, FlatList } from "react-native";
+import { View, FlatList, TouchableOpacity } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
@@ -23,6 +23,7 @@ import NetInfo from "@react-native-community/netinfo";
 import CheckNet from "../../Components/Common/CheckNet";
 import GlobalText from "../../Components/Customs/Text";
 import { useTranslation } from "react-i18next";
+import styles from "./Styles";
 
 const CityList = ({ navigation, route, ...props }) => {
     const { t } = useTranslation();
@@ -32,7 +33,7 @@ const CityList = ({ navigation, route, ...props }) => {
     const [error, setError] = useState(null); // State to store error message
     const [isLandingDataFetched, setIsLandingDataFetched] = useState(false);
     const [offline, setOffline] = useState(false);
-    const [page, setPage] = useState(1);
+    const [nextPage, setNextPage] = useState(2);
 
     useEffect(() => {
         const backHandler = goBackHandler(navigation);
@@ -75,16 +76,39 @@ const CityList = ({ navigation, route, ...props }) => {
             parent_id: route?.params?.parent_id,
             category: route?.params?.subCat?.code || "other",
         };
-        comnPost(`v2/sites?page=${page}`, data, navigation)
+        comnPost(`v2/sites`, data, navigation)
             .then((res) => {
                 if (res && res.data.data)
                     saveToStorage(
                         t("STORAGE.CITIES_RESPONSE"),
                         JSON.stringify(res)
                     );
-                setCities([...cities, res.data.data.data]); // Update cities state with response data
+                setCities(res.data.data.data); // Update cities state with response data
+                props.setLoader(false);
+            })
+            .catch((error) => {
+                props.setLoader(false);
+                setError(error.message); // Update error state with error message
+            });
+    };
+
+    const getCitiesScroll = () => {
+        props.setLoader(true);
+        let data = {
+            apitype: "list",
+            parent_id: route?.params?.parent_id,
+            category: route?.params?.subCat?.code || "other",
+        };
+        comnPost(`v2/sites?page=${nextPage}`, data, navigation)
+            .then((res) => {
+                if (res && res.data.data)
+                    saveToStorage(
+                        t("STORAGE.CITIES_RESPONSE"),
+                        JSON.stringify(res)
+                    );
                 let nextUrl = res.data.data.next_page_url;
-                setPage(nextUrl[nextUrl.length - 1]);
+                setNextPage(nextUrl[nextUrl.length - 1]);
+                setCities([...cities, ...res.data.data.data]); // Update cities state with response data
                 props.setLoader(false);
             })
             .catch((error) => {
@@ -98,12 +122,18 @@ const CityList = ({ navigation, route, ...props }) => {
     };
 
     const renderItem = ({ item }) => (
-        <CityCard
-            data={item}
-            navigation={navigation}
-            reload={() => getCities()}
+        // <CityCard
+        //     data={item}
+        //     navigation={navigation}
+        //     reload={() => getCities()}
+        //     onClick={() => getCityDetails(item.id)}
+        // />
+        <TouchableOpacity
             onClick={() => getCityDetails(item.id)}
-        />
+            style={styles.cityListView}
+        >
+            <GlobalText style={styles.cityListName} text={item.name} />
+        </TouchableOpacity>
     );
 
     return (
@@ -124,11 +154,11 @@ const CityList = ({ navigation, route, ...props }) => {
             {cities[0] ? (
                 <View style={{ alignItems: "center", marginBottom: 150 }}>
                     <FlatList
-                        data={cities[0]}
+                        data={cities}
                         numColumns={1}
                         keyExtractor={(item) => item.id?.toString()}
                         renderItem={renderItem}
-                        onEndReached={() => getCities()}
+                        onEndReached={() => getCitiesScroll()}
                         onEndReachedThreshold={0.5}
                     />
                 </View>

@@ -56,6 +56,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
     const [uploadImage, setUploadImage] = useState(null);
 
     useEffect(() => {
+        props.setLoader(true);
         const backHandler = BackHandler.addEventListener(
             t("EVENT.HARDWARE_BACK_PRESS"),
             () => backPress()
@@ -77,6 +78,11 @@ const ProfileView = ({ navigation, route, ...props }) => {
                     let res = JSON.parse(resp);
                     if (res.data && res.data.data) {
                         setProfile(res.data.data);
+                        setOption(0);
+                        setLocationMap(
+                            res.data.data.addresses[0].latitude,
+                            res.data.data.addresses[0].longitude
+                        );
                     } else if (resp) {
                         setOffline(true);
                     }
@@ -102,7 +108,6 @@ const ProfileView = ({ navigation, route, ...props }) => {
     };
 
     const requestLocationPermission = async () => {
-        console.log("called");
         if (Platform.OS === "ios") {
             getOneTimeLocation();
             subscribeLocation();
@@ -115,9 +120,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
                         message: t("NEEDS_TO_ACCESS"),
                     }
                 );
-                console.log("granted - ", granted);
                 if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                    console.log("11");
                     //To Check, If Permission is granted
                     getOneTimeLocation();
                     subscribeLocation();

@@ -1,161 +1,146 @@
-import React, { useEffect, useState } from "react";
-import { View, StyleSheet } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { View } from "react-native";
+import MapView, { Marker } from "react-native-maps";
+import styles from "./Styles";
+import { comnPost, dataSync } from "../Services/Api/CommonServices";
+import { connect } from "react-redux";
+import { setLoader } from "../Reducers/CommonActions";
+import Loader from "../Components/Customs/Loader";
 import { checkLogin, goBackHandler } from "../Services/CommonMethods";
-import { Dimensions } from "react-native";
-import MapView, { Marker, Polygon } from "react-native-maps";
-import Geolocation from "react-native-geolocation-service";
-import COLOR from "../Services/Constants/COLORS";
+import NetInfo from "@react-native-community/netinfo";
 import { useTranslation } from "react-i18next";
+import CheckNet from "../Components/Common/CheckNet";
 
-const screenWidth = Dimensions.get("window").width;
-const districtCoordinates = [
-    // Replace these coordinates with the ones defining your district boundary
-    { latitude: 40.7128, longitude: -74.006 },
-    { latitude: 40.7128, longitude: -74.016 },
-    { latitude: 40.7228, longitude: -74.016 },
-    // Add more coordinates as needed to define the boundary polygon
-];
-
-const MapScreen = ({ navigation }) => {
+const MapScreen = ({ navigation, ...props }) => {
     const { t } = useTranslation();
+    const mapRef = useRef(null);
 
-    const districtCenter = { latitude: 16.349219, longitude: 73.559413 };
-    const [currentLocation, setCurrentLocation] = useState(null);
-
-    const [selectedPolygonId, setSelectedPolygonId] = useState(null);
-
-    const imageAspectRatio = 16 / 9; // Replace this with the actual aspect ratio of your images if they are not fixed
-    const imageHeight = screenWidth / imageAspectRatio;
+    const [cities, setCities] = useState([]);
+    const [offline, setOffline] = useState(false);
 
     useEffect(() => {
+        props.setLoader(true);
         const backHandler = goBackHandler(navigation);
         checkLogin(navigation);
-        Geolocation.getCurrentPosition(
-            (position) => {
-                const { latitude, longitude } = position.coords;
-                setCurrentLocation({ latitude, longitude });
-            },
-            (error) => {
-                console.log(t("ALERT.ERROR_CURRENT_LOCATION"), error);
-            },
-            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-        );
+
+        const unsubscribe = NetInfo.addEventListener((state) => {
+            setOffline(false);
+
+            dataSync(t("STORAGE.CITIES_RESPONSE"), getCities()).then((resp) => {
+                let res = JSON.parse(resp);
+                if (res.data && res.data.data) {
+                    setCities(res.data.data.data);
+                    if (mapRef.current) {
+                        const coordinates = res.data.data.data.map((marker) => {
+                            return {
+                                latitude: parseFloat(marker.latitude),
+                                longitude: parseFloat(marker.longitude),
+                            };
+                        });
+                        mapRef.current.fitToCoordinates(coordinates, {
+                            edgePadding: {
+                                top: 40,
+                                right: 40,
+                                bottom: 40,
+                                left: 40,
+                            },
+                            animated: true,
+                        });
+                    }
+                } else if (resp) {
+                    setOffline(true);
+                }
+                props.setLoader(false);
+            });
+        });
+
         return () => {
             backHandler.remove();
+            unsubscribe();
         };
     }, []);
 
-    const handlePolygonPress = (event) => {
-        // When a polygon is pressed, update the state with its id (if you have multiple polygons)
-        const { id } = event.nativeEvent;
-        setSelectedPolygonId(id);
-        // You can perform any other action you want when a polygon is pressed
+    const getCities = () => {
+        props.setLoader(true);
+        let data = {
+            apitype: "list",
+            category: "City",
+        };
+        comnPost(`v2/sites`, data, navigation)
+            .then(async (res) => {
+                if (res && res.data.data) setCities(res.data.data.data);
+                props.setLoader(false);
+                if (mapRef.current) {
+                    const coordinates = res.data.data.data.map((marker) => {
+                        return {
+                            latitude: parseFloat(marker.latitude),
+                            longitude: parseFloat(marker.longitude),
+                        };
+                    });
+                    mapRef.current.fitToCoordinates(coordinates, {
+                        edgePadding: {
+                            top: 40,
+                            right: 40,
+                            bottom: 40,
+                            left: 40,
+                        },
+                        animated: true,
+                    });
+                }
+            })
+            .catch((error) => {
+                props.setLoader(false);
+            });
     };
-    // const images = [
-    //   {
-    //     url:
-    //       "https://1.bp.blogspot.com/-zptGfC-a3qI/UXVesv5E2-I/AAAAAAAABBE/HjTocA5xnWE/s1600/Map.jpg",
-    //     width: screenWidth,
-    //     height: imageHeight,
-    //   }
-    // ];
 
-    const initialRegion = {
-        latitude: currentLocation?.latitude || 40.7128,
-        longitude: currentLocation?.longitude || -74.006,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-    };
     return (
-        // <SafeAreaView style={{ flex: 1 }}>
-        //    <View style={styles.container}>
-        //     <ImageViewer
-        //       imageUrls={images}
-        //       renderIndicator={() => null}
-        //     />
-        //   </View>
-        // </SafeAreaView>
-
-        <View style={styles.container}>
-            <MapView style={styles.map} initialRegion={initialRegion}>
-                {/* Display the current location marker */}
-                {currentLocation && <Marker coordinate={currentLocation} />}
-
-                {/* Draw the district boundary polygon */}
-                <Polygon
-                    coordinates={districtCoordinates}
-                    strokeColor={COLOR.themeNaviBlue}
-                    fillColor={
-                        selectedPolygonId === "district1"
-                            ? COLOR.themeNaviBlue
-                            : COLOR.themeLightBlue
-                    }
-                    strokeWidth={2}
-                    tappable // Enable tappable to make the polygon respond to touch events
-                    onPress={handlePolygonPress} // Add the onPress event handler for the polygon
-                    id="district1" // You can give an id to the polygon for identification
-                />
-            </MapView>
-        </View>
+        <>
+            <Loader />
+            <CheckNet isOff={offline} />
+            {cities[0] && (
+                <View style={styles.mapContainer}>
+                    <MapView
+                        ref={mapRef}
+                        style={styles.map}
+                        initialRegion={{
+                            latitude: parseFloat(cities[3].latitude),
+                            longitude: parseFloat(cities[3].longitude),
+                            latitudeDelta: 0.7,
+                            longitudeDelta: 0.7,
+                        }}
+                        scrollEnabled={false}
+                        zoomEnabled={false}
+                    >
+                        {cities.map((marker) => (
+                            <Marker
+                                key={marker.id}
+                                coordinate={{
+                                    latitude: parseFloat(marker.latitude),
+                                    longitude: parseFloat(marker.longitude),
+                                }}
+                                title={marker.name}
+                                description={marker.name}
+                            />
+                        ))}
+                    </MapView>
+                </View>
+            )}
+        </>
     );
 };
 
-// const styles = StyleSheet.create({
-//   container: {
-//     backgroundColor: "#F5FCFF",
-//     flex: 1,
-//   },
-// });
+const mapStateToProps = (state) => {
+    return {
+        access_token: state.commonState.access_token,
+    };
+};
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    map: {
-        ...StyleSheet.absoluteFillObject,
-    },
-});
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setLoader: (data) => {
+            dispatch(setLoader(data));
+        },
+    };
+};
 
-export default MapScreen;
-
-// import React, { Component } from "react";
-// import { View } from "react-native";
-// import MapmyIndiaGL from "mapmyindia-map-react-native-beta";
-
-// MapmyIndiaGL.setMapSDKKey("b0919dc4a2edba9cb6814cf85ea53bca");//place your mapsdkKey
-// MapmyIndiaGL.setRestAPIKey("b0919dc4a2edba9cb6814cf85ea53bca");//your restApiKey
-// MapmyIndiaGL.setAtlasClientId("33OkryzDZsLDRr_vBZC8Op4OE18gLTV9WAD6xhJj1zBnECWgQ85iOF4tUM0tO870Rzpw_IUcLXWV_Epdm158DBh_RCThRWnP");//your atlasClientId key
-// MapmyIndiaGL.setAtlasClientSecret("lrFxI-iSEg-cyFWdzHkcE_uCn8M0kew8XxZDqd0W4rvbGCd3e5u_z6A2jreA68FkV9r8uoiFedVRSOGnIYJdFE8ibWq5aKPJd-sMj3s6I5Y="); //your atlasClientSecret key
-// MapmyIndiaGL.setAtlasGrantType("Map SDK Key");
-
-// const MapScreen = ({ navigation }) => {
-//   <View style={{ flex: 1 }}>
-//     <MapmyIndiaGL.MapView style={{ flex: 1 }} >
-//       <MapmyIndiaGL.Camera
-//         ref={c => (this.camera = c)}
-//         zoomLevel={12}
-//         minZoomLevel={4}
-//         maxZoomLevel={22}
-//         centerCoordinate={[77.231409, 28.6162]}
-//       />
-//     </MapmyIndiaGL.MapView>
-//   </View>
-// };
-
-// // const styles = StyleSheet.create({
-// //   container: {
-// //     backgroundColor: "#F5FCFF",
-// //     flex: 1,
-// //   },
-// // });
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//   },
-//   map: {
-//     ...StyleSheet.absoluteFillObject,
-//   },
-// });
-
-// export default MapScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(MapScreen);

@@ -8,6 +8,7 @@ import AllRoutesSearch from "../Screens/ListPages/AllRoutesSearch";
 import PasswordLogin from "../Screens/AuthScreens/PasswordLogin";
 import Email from "../Screens/AuthScreens/Email";
 import { useTranslation } from "react-i18next";
+import LangSelection from "../Screens/AuthScreens/LangSelection";
 
 const SignIn = lazy(() => import("../Screens/AuthScreens/SignIn"));
 const SignUp = lazy(() => import("../Screens/AuthScreens/SignUp"));
@@ -120,6 +121,10 @@ const StackNavigator = () => {
                         <Stack.Screen
                             name={t("SCREEN.BUS_TIMINGS")}
                             component={BusTimings}
+                        />
+                        <Stack.Screen
+                            name={t("SCREEN.LANG_SELECTION")}
+                            component={LangSelection}
                         />
                         <Stack.Screen
                             name={t("SCREEN.AUTH_SCREEN")}
