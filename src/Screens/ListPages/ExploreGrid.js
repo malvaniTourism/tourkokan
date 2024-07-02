@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { View, Image } from "react-native";
+import { View, Image, Modal, TouchableOpacity } from "react-native";
 import { ResponsiveGrid } from "react-native-flexible-grid";
 import styles from "./Styles";
 import Path from "../../Services/Api/BaseUrl";
@@ -26,35 +26,22 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
     const [gallery, setGallery] = useState([]);
     const [offline, setOffline] = useState(false);
     const [searchValue, setSearchValue] = useState("");
-    const [placesList, setPlacesList] = useState([]);
-    const [nextPage, setNextPage] = useState(2);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [lastPage, setLastPage] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [selectedImage, setSelectedImage] = useState(null);
 
     useEffect(() => {
         const backHandler = goBackHandler(navigation);
         checkLogin(navigation);
         props.setLoader(true);
 
-        if (props.access_token) {
-            if (!isLandingDataFetched && props.access_token) {
-                setIsLandingDataFetched(true); // Mark the data as fetched
-            }
-            props.setLoader(false);
-        }
-
         const unsubscribe = NetInfo.addEventListener((state) => {
-            setOffline(false);
-
-            dataSync(t("STORAGE.EXPLORE_CITIES_RESPONSE"), getData()).then(
-                (resp) => {
-                    let res = JSON.parse(resp);
-                    if (res.data && res.data.data) {
-                        setGallery(res.data.data.data);
-                    } else if (resp) {
-                        setOffline(true);
-                    }
-                }
-            );
-            props.setLoader(false);
+            setOffline(!state.isConnected);
+            if (state.isConnected) {
+                fetchData(1, true);
+            }
         });
 
         return () => {
@@ -63,135 +50,86 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
         };
     }, []);
 
-    const getData = (v) => {
-        setSearchValue(v);
+    useEffect(() => {
+        fetchData(1, true);
+    }, [searchValue]);
+
+    const fetchData = (page, reset = false) => {
+        setLoading(true);
         let data = {
             apitype: "list",
-            // category: "city",
             global: 1,
-            search: v,
+            search: searchValue,
             per_page: 20,
+            page: page,
         };
         comnPost(`v2/getGallery`, data)
             .then((res) => {
                 if (res.data.success) {
                     props.setLoader(false);
-                    setGallery(res.data.data.data);
+                    if (reset) {
+                        setGallery(res.data.data.data);
+                    } else {
+                        setGallery((prevGallery) => [...prevGallery, ...res.data.data.data]);
+                    }
+                    setCurrentPage(res.data.data.current_page);
+                    setLastPage(res.data.data.last_page);
                 } else {
                     props.setLoader(false);
                 }
+                setLoading(false);
             })
             .catch((err) => {
                 props.setLoader(false);
+                setLoading(false);
             });
+    };
+
+    const handleSearch = (v) => {
+        setSearchValue(v);
+        setCurrentPage(1);
     };
 
     const getScrollData = () => {
-        props.setLoader(true);
-        let data = {
-            apitype: "list",
-            // category: "city",
-            global: 1,
-            search: searchValue,
-            per_page: 10,
-        };
-        comnPost(`v2/getGallery?page=${nextPage}`, data)
-            .then((res) => {
-                if (res.data.success) {
-                    props.setLoader(false);
-                    let nextUrl = res.data.data.next_page_url;
-                    setGallery([...gallery, ...res.data.data.data]);
-                    setNextPage(nextUrl[nextUrl.length - 1]);
-                } else {
-                    props.setLoader(false);
-                }
-            })
-            .catch((err) => {
-                props.setLoader(false);
-            });
+        if (!loading && currentPage < lastPage) {
+            fetchData(currentPage + 1);
+        }
     };
 
-    // const getData = () => {
-    //     const originalData = [
-    //         {
-    //             imageUrl: 'https://picsum.photos/200/300?random=1',
-    //         },
-    //         {
-    //             imageUrl: 'https://picsum.photos/200/300?random=2',
-    //         },
-    //         {
-    //             imageUrl: 'https://picsum.photos/200/300?random=3',
-    //             widthRatio: 1,
-    //             heightRatio: 2,
-    //         },
-    //         {
-    //             imageUrl: 'https://picsum.photos/200/300?random=4',
-    //         },
-    //         {
-    //             imageUrl: 'https://picsum.photos/200/300?random=5',
-    //         },
-    //         {
-    //             imageUrl: 'https://picsum.photos/200/300?random=6',
+    const openModal = (image) => {
+        setSelectedImage(image);
+        setIsModalVisible(true);
+    };
 
-    //             widthRatio: 1,
-    //             heightRatio: 2,
-    //         },
-    //         {
-    //             imageUrl: 'https://picsum.photos/200/300?random=7',
-
-    //             widthRatio: 2,
-    //             heightRatio: 2,
-    //         },
-    //         {
-    //             imageUrl: 'https://picsum.photos/200/300?random=8',
-    //         },
-    //         {
-    //             imageUrl: 'https://picsum.photos/200/300?random=9',
-    //         },
-    //         {
-    //             imageUrl: 'https://picsum.photos/200/300?random=10',
-    //         },
-    //     ];
-
-    //     let clonedData = [];
-
-    //     for (let i = 0; i < 5; i++) {
-    //         const newData = originalData.map((item) => ({
-    //             ...item,
-    //             id: ++idCounter.current,
-    //         }));
-    //         clonedData = [...clonedData, ...newData];
-    //     }
-
-    //     return clonedData;
-    // };
+    const closeModal = () => {
+        setIsModalVisible(false);
+        setSelectedImage(null);
+    };
 
     const renderItem = ({ item }) => {
         return (
-            <View style={styles.imageGridBoxContainer}>
-                <Image
-                    source={{ uri: Path.FTP_PATH + item.path }}
-                    style={styles.imageGridBox}
-                    resizeMode="cover"
-                />
-            </View>
+            <TouchableOpacity onPress={() => openModal(Path.FTP_PATH + item.path)}>
+                <View style={styles.imageGridBoxContainer}>
+                    <Image
+                        source={{ uri: Path.FTP_PATH + item.path }}
+                        style={styles.imageGridBox}
+                        resizeMode="cover"
+                    />
+                </View>
+            </TouchableOpacity>
         );
     };
 
     return (
-        <View
-            style={{
-                flex: 1,
-            }}
-        >
+        <View style={{ flex: 1 }}>
             <CheckNet isOff={offline} />
             <Header
                 Component={
                     <Search
                         style={styles.homeSearchBar}
-                        placeholder={`Search`}
+                        placeholder={t("Search")}
                         value={searchValue}
-                        onChangeText={(v) => getData(v)}
+                        onChangeText={handleSearch}
                     />
                 }
             />
@@ -208,14 +146,25 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
                 }}
                 keyExtractor={(item) => item.id.toString()}
             />
-
-            <View
-                style={{
-                    position: "absolute",
-                    width: "100%",
-                    bottom: 0,
-                }}
-            ></View>
+            {loading && <Loader />}
+            <Modal
+                visible={isModalVisible}
+                transparent={true}
+                onRequestClose={closeModal}
+            >
+                <View style={styles.modalContainer}>
+                    <TouchableOpacity style={styles.modalBackground} onPress={closeModal}>
+                        <View style={styles.modalContent}>
+                            <Image
+                                source={{ uri: selectedImage }}
+                                style={styles.modalImage}
+                                resizeMode="contain"
+                            />
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </Modal>
+            <View style={{ position: "absolute", width: "100%", bottom: 0 }}></View>
         </View>
     );
 };

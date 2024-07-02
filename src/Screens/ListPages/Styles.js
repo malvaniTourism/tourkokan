@@ -180,6 +180,37 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: "transparent",
     },
+
+    imageGridBox: {
+        width: "100%",
+        height: 135,
+        borderRadius: 5,
+    },
+    
+    modalContainer: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+    },
+    modalBackground: {
+        width: "100%",
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    modalContent: {
+        width: "90%",
+        height: "80%",
+        backgroundColor: "white",
+        borderRadius: 10,
+        padding: 10,
+    },
+    modalImage: {
+        width: "100%",
+        height: "100%",
+        borderRadius: 10,
+    },
 });
 
 export default styles;
