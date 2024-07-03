@@ -222,7 +222,7 @@
     "RESEND": "OTP पुन्हा पाठवा",
     "SEND_OTP": "OTP पाठवा",
     "COMING_SOON": "लवकरच येत आहे...",
-    "NON_RESERVATION": "आरक्षण नाही",
+    "UN_RESERVED": "अनारक्षित",
     "STOPS": "स्थानक",
     "KM": "किमी",
     "LOCATION_ACCESS_REQUIRED": "स्थान प्रवेश आवश्यक",

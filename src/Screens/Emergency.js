@@ -1,27 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { FlatList, View, ScrollView, Linking } from "react-native";
+import React, { useEffect, useState, useRef } from "react";
+import { FlatList, View, Linking, ActivityIndicator } from "react-native";
 import { ListItem } from "@rneui/themed";
 import Header from "../Components/Common/Header";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Feather from "react-native-vector-icons/Feather";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import COLOR from "../Services/Constants/COLORS";
 import { backPage, checkLogin, goBackHandler } from "../Services/CommonMethods";
 import TextButton from "../Components/Customs/Buttons/TextButton";
 import styles from "./Styles";
-import { comnPost, dataSync } from "../Services/Api/CommonServices";
+import { comnPost, dataSync, saveToStorage } from "../Services/Api/CommonServices";
 import Loader from "../Components/Customs/Loader";
 import { setLoader } from "../Reducers/CommonActions";
 import { connect } from "react-redux";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useTranslation } from "react-i18next";
 import CheckNet from "../Components/Common/CheckNet";
 import NetInfo from "@react-native-community/netinfo";
 
 const Emergency = ({ navigation, route, ...props }) => {
     const { t } = useTranslation();
+    const isMounted = useRef(true);
 
     const [data, setData] = useState([]);
     const [offline, setOffline] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [nextPage, setNextPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true); // New state to track if there's more data
 
     useEffect(() => {
         const backHandler = goBackHandler(navigation);
@@ -29,46 +33,65 @@ const Emergency = ({ navigation, route, ...props }) => {
         props.setLoader(true);
 
         if (props.access_token) {
-            if (!isLandingDataFetched && props.access_token) {
-                setIsLandingDataFetched(true); // Mark the data as fetched
-            }
-            props.setLoader(false);
+            fetchData(1, true);
         }
 
         const unsubscribe = NetInfo.addEventListener((state) => {
-            setOffline(false);
-
-            dataSync(t("STORAGE.EMERGENCY"), getData()).then((resp) => {
-                let res = JSON.parse(resp);
-                if (res.data && res.data.data) {
-                    setData(res.data.data.data);
-                } else if (resp) {
-                    setOffline(true);
-                }
-            });
+            setOffline(!state.isConnected);
+            if (state.isConnected) {
+                dataSync(t("STORAGE.EMERGENCY"), fetchData(1, true)).then((resp) => {
+                    let res = JSON.parse(resp);
+                    if (res.data && res.data.data) {
+                        setData(res.data.data.data);
+                    }
+                });
+            }
             props.setLoader(false);
         });
 
         return () => {
             backHandler.remove();
             unsubscribe();
+            isMounted.current = false;
         };
     }, []);
 
-    const getData = () => {
-        props.setLoader(true);
+    const fetchData = (page, reset = false) => {
+        if (loading || !hasMore) return;
+
+        setLoading(true);
         let data = {
             apitype: "list",
             category: "emergency",
+            page: page,
         };
         comnPost("v2/sites", data)
             .then((res) => {
-                if (res && res.data.data) setData(res.data.data.data);
-                props.setLoader(false);
+                if (res && res.data.data) {
+                    if (reset) {
+                        setData(res.data.data.data);
+                    } else {
+                        setData((prevData) => [...prevData, ...res.data.data.data]);
+                    }
+                    setHasMore(!!res.data.data.next_page_url); // Check if there's more data
+                    setNextPage(page + 1);
+                    saveToStorage(t("STORAGE.EMERGENCY"), JSON.stringify(res));
+                }
+                if (isMounted.current) {
+                    setLoading(false);
+                }
             })
             .catch((error) => {
-                props.setLoader(false);
+                if (isMounted.current) {
+                    setLoading(false);
+                }
             });
+    };
+
+    const loadMoreData = () => {
+        if (!loading && hasMore) {
+            fetchData(nextPage);
+        }
     };
 
     const makeContact = (address, apptype) => {
@@ -120,8 +143,17 @@ const Emergency = ({ navigation, route, ...props }) => {
         );
     };
 
+    const renderFooter = () => {
+        if (!loading || !hasMore) return null;
+        return (
+            <View style={{ paddingVertical: 20 }}>
+                <ActivityIndicator size="small" color={COLOR.primary} />
+            </View>
+        );
+    };
+
     return (
-        <View>
+        <View style={{ flex: 1 }}>
             <Header
                 name={t("HEADER.EMERGENCY")}
                 goBack={() => backPage(navigation)}
@@ -137,16 +169,15 @@ const Emergency = ({ navigation, route, ...props }) => {
             />
             <Loader />
             <CheckNet isOff={offline} />
-            <ScrollView>
-                <FlatList
-                    keyExtractor={(item) => item.id}
-                    data={data}
-                    renderItem={renderItem}
-                    onEndReached={getData}
-                    onEndReachedThreshold={0.5}
-                    style={{ marginBottom: 30 }}
-                />
-            </ScrollView>
+            <FlatList
+                keyExtractor={(item) => item.id?.toString()}
+                data={data}
+                renderItem={renderItem}
+                onEndReached={loadMoreData}
+                onEndReachedThreshold={0.5}
+                ListFooterComponent={renderFooter}
+                style={{ marginBottom: 30 }}
+            />
         </View>
     );
 };

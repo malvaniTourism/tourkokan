@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, FlatList, TouchableOpacity } from "react-native";
+import { View, FlatList, TouchableOpacity, ActivityIndicator } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
@@ -33,34 +33,20 @@ const CityList = ({ navigation, route, ...props }) => {
     const [error, setError] = useState(null); // State to store error message
     const [isLandingDataFetched, setIsLandingDataFetched] = useState(false);
     const [offline, setOffline] = useState(false);
-    const [nextPage, setNextPage] = useState(2);
+    const [nextPage, setNextPage] = useState(1);
+    const [loading, setLoading] = useState(false);
+    const [lastPage, setLastPage] = useState(null);
 
     useEffect(() => {
         const backHandler = goBackHandler(navigation);
         checkLogin(navigation);
         props.setLoader(true);
 
-        if (props.access_token) {
-            if (!isLandingDataFetched && props.access_token) {
-                // getCities()
-                setIsLandingDataFetched(true); // Mark the data as fetched
-            }
-            props.setLoader(false);
-        }
-
         const unsubscribe = NetInfo.addEventListener((state) => {
-            setOffline(false);
-
-            dataSync(t("STORAGE.CITIES_RESPONSE"), getCities()).then((resp) => {
-                let res = JSON.parse(resp);
-                if (res.data && res.data.data) {
-                    setCities(res.data.data.data);
-                } else if (resp) {
-                    setOffline(true);
-                }
-                props.setLoader(false);
-            });
-            // removeFromStorage(t("STORAGE.LANDING_RESPONSE"))
+            setOffline(!state.isConnected);
+            if (state.isConnected) {
+                fetchCities(1, true);
+            }
         });
 
         return () => {
@@ -69,72 +55,73 @@ const CityList = ({ navigation, route, ...props }) => {
         };
     }, []);
 
-    const getCities = () => {
-        props.setLoader(true);
+    useEffect(() => {
+        fetchCities(1, true);
+    }, [route.params]);
+
+    const fetchCities = (page, reset = false) => {
+        setLoading(true);
         let data = {
             apitype: "list",
             parent_id: route?.params?.parent_id,
             category: route?.params?.subCat?.code || "other",
+            per_page: 20,
+            page: page,
         };
         comnPost(`v2/sites`, data, navigation)
             .then((res) => {
-                if (res && res.data.data)
+                if (res && res.data.data) {
+                    if (reset) {
+                        setCities(res.data.data.data);
+                    } else {
+                        setCities((prevCities) => [...prevCities, ...res.data.data.data]);
+                    }
+                    setNextPage(res.data.data.current_page + 1);
+                    setLastPage(res.data.data.last_page);
                     saveToStorage(
                         t("STORAGE.CITIES_RESPONSE"),
                         JSON.stringify(res)
                     );
-                setCities(res.data.data.data); // Update cities state with response data
+                }
+                setLoading(false);
                 props.setLoader(false);
             })
             .catch((error) => {
+                setLoading(false);
                 props.setLoader(false);
                 setError(error.message); // Update error state with error message
             });
     };
-
-    const getCitiesScroll = () => {
-        props.setLoader(true);
-        let data = {
-            apitype: "list",
-            parent_id: route?.params?.parent_id,
-            category: route?.params?.subCat?.code || "other",
-        };
-        comnPost(`v2/sites?page=${nextPage}`, data, navigation)
-            .then((res) => {
-                if (res && res.data.data)
-                    saveToStorage(
-                        t("STORAGE.CITIES_RESPONSE"),
-                        JSON.stringify(res)
-                    );
-                let nextUrl = res.data.data.next_page_url;
-                setNextPage(nextUrl[nextUrl.length - 1]);
-                setCities([...cities, ...res.data.data.data]); // Update cities state with response data
-                props.setLoader(false);
-            })
-            .catch((error) => {
-                props.setLoader(false);
-                setError(error.message); // Update error state with error message
-            });
-    };
+    
 
     const getCityDetails = (id) => {
         navigateTo(navigation, t("SCREEN.CITY_DETAILS"), { id });
     };
 
     const renderItem = ({ item }) => (
-        // <CityCard
-        //     data={item}
-        //     navigation={navigation}
-        //     reload={() => getCities()}
-        //     onClick={() => getCityDetails(item.id)}
-        // />
         <TouchableOpacity
-            onClick={() => getCityDetails(item.id)}
+            // onPress={() => getCityDetails(item.id)}
             style={styles.cityListView}
         >
             <GlobalText style={styles.cityListName} text={item.name} />
         </TouchableOpacity>
     );
+
+    const loadMoreCities = () => {
+        if (!loading && nextPage <= lastPage) {
+            fetchCities(nextPage);
+        }
+    };
+    
+    const renderFooter = () => {
+        if (!loading) return null;
+        return (
+            <View style={{ paddingVertical: 20 }}>
+                <ActivityIndicator size="small" color={COLOR.primary} />
+            </View>
+        );
+    };
+    
 
     return (
         <View style={{ backgroundColor: COLOR.white }}>
@@ -151,19 +138,22 @@ const CityList = ({ navigation, route, ...props }) => {
                     />
                 }
             />
-            {cities[0] ? (
+            {cities.length > 0 ? (
                 <View style={{ alignItems: "center", marginBottom: 150 }}>
                     <FlatList
                         data={cities}
                         numColumns={1}
                         keyExtractor={(item) => item.id?.toString()}
                         renderItem={renderItem}
-                        onEndReached={() => getCitiesScroll()}
+                        onEndReached={loadMoreCities}
                         onEndReachedThreshold={0.5}
+                        // ListFooterComponent={loading ? <Loader /> : null}
+                        ListFooterComponent={renderFooter}
+
                     />
                 </View>
             ) : (
-                <View style={{ height: DIMENSIONS.screenHeight }}>
+                <View style={{ height: DIMENSIONS.screenHeight, justifyContent: "center", alignItems: "center" }}>
                     <GlobalText text={t("NO_DATA")} />
                 </View>
             )}

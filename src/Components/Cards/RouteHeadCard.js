@@ -104,7 +104,7 @@ const RouteHeadCard = ({ data, cardClick, style }) => {
                                     size={DIMENSIONS.smallIcon}
                                     style={styles.routeCardIcons}
                                 />
-                                <GlobalText text={`${t("NON_RESERVATION")}`} />
+                                <GlobalText text={`${t("UN_RESERVED")}`} />
                             </View>
                         </View>
                     </View>

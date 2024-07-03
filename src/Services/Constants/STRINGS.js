@@ -223,7 +223,7 @@ const STRING = {
     RESEND: "Resend OTP",
     SEND_OTP: "Send OTP",
     COMING_SOON: "Coming Soon...",
-    NON_RESERVATION: "Non Reservation",
+    UN_RESERVED: "Un Reserved",
     STOPS: "Stops",
     KM: "km",
     LOCATION_ACCESS_REQUIRED: "Location Access Required",

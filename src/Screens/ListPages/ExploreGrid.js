@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { View, Image, Modal, TouchableOpacity } from "react-native";
+import { View, Image, Modal, TouchableOpacity, ActivityIndicator } from "react-native";
 import { ResponsiveGrid } from "react-native-flexible-grid";
 import styles from "./Styles";
 import Path from "../../Services/Api/BaseUrl";
-import MasonryGrid from "../../Components/Customs/MasonryGrid";
 import { comnPost, dataSync } from "../../Services/Api/CommonServices";
 import Loader from "../../Components/Customs/Loader";
 import { checkLogin, goBackHandler } from "../../Services/CommonMethods";
@@ -120,6 +119,15 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
         );
     };
 
+    const renderFooter = () => {
+        if (!loading) return null;
+        return (
+            <View style={{ paddingVertical: 20 }}>
+                <ActivityIndicator size="small" color={COLOR.primary} />
+            </View>
+        );
+    };
+
     return (
         <View style={{ flex: 1 }}>
             <CheckNet isOff={offline} />
@@ -145,8 +153,8 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
                     marginBottom: 70,
                 }}
                 keyExtractor={(item) => item.id.toString()}
+                ListFooterComponent={renderFooter}
             />
-            {loading && <Loader />}
             <Modal
                 visible={isModalVisible}
                 transparent={true}
@@ -164,7 +172,6 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
                     </TouchableOpacity>
                 </View>
             </Modal>
-            <View style={{ position: "absolute", width: "100%", bottom: 0 }}></View>
         </View>
     );
 };
