@@ -20,7 +20,7 @@ const LangSelection = ({ navigation }) => {
 
     const saveLang = () => {
         i18n.changeLanguage(language);
-        navigateTo(navigation, t("SCREEN.AUTH_SCREEN"));
+        navigateTo(navigation, t("SCREEN.EMAIL"));
     };
 
     return (

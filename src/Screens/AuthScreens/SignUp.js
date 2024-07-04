@@ -75,7 +75,7 @@ const SignUp = ({ navigation, ...props }) => {
     useEffect(() => {
         const backHandler = BackHandler.addEventListener(
             t("EVENT.HARDWARE_BACK_PRESS"),
-            () => navigateTo(navigation, t("SCREEN.AUTH_SCREEN"))
+            () => navigateTo(navigation, t("SCREEN.EMAIL"))
         );
         // getRoles()
         const keyboardDidShowListener = Keyboard.addListener(

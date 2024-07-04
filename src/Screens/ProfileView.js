@@ -238,7 +238,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
                 if (res.data.success) {
                     props.setLoader(false);
                     AsyncStorage.clear();
-                    navigateTo(navigation, t("SCREEN.AUTH_SCREEN"));
+                    navigateTo(navigation, t("SCREEN.LANG_SELECTION"));
                 }
             })
             .catch((error) => {

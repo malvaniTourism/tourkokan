@@ -455,9 +455,8 @@ const styles = StyleSheet.create({
     image: {
         height: DIMENSIONS.screenHeight,
         width: DIMENSIONS.screenWidth,
-        resizeMode: "contain",
-        flex: 4,
-        top: -60,
+        resizeMode: "cover",
+        flex: 1,
     },
     text: {
         color: COLOR.black,

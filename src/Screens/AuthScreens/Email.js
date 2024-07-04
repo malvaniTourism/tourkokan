@@ -45,7 +45,7 @@ const Email = ({ navigation, route, ...props }) => {
         // createUserTable();
         const backHandler = BackHandler.addEventListener(
             t("EVENT.HARDWARE_BACK_PRESS"),
-            () => navigateTo(navigation, t("SCREEN.AUTH_SCREEN"))
+            () => navigateTo(navigation, t("SCREEN.LANG_SELECTION"))
         );
         return () => {
             backHandler.remove();

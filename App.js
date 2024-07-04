@@ -82,10 +82,10 @@ export default function App() {
                 ]}
             >
                 {/* <GlobalText style={styles.title} text={item.title} /> */}
-                <Image
+                {/* <Image
                     source={require("./src/Assets/Images/Logos/black.png")}
                     style={styles.introLogo}
-                />
+                /> */}
                 <Image source={item.image} style={styles.image} />
                 {/* <GlobalText style={styles.text} text={item.text} /> */}
             </View>

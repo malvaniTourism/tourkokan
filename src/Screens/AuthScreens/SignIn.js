@@ -97,7 +97,7 @@ const SignIn = ({ navigation, ...props }) => {
     };
 
     const emailLogin = () => {
-        navigateTo(navigation, t("SCREEN.AUTH_SCREEN"));
+        navigateTo(navigation, t("SCREEN.LANG_SELECTION"));
     };
 
     return (

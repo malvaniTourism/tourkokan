@@ -40,7 +40,7 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
         // resend();
         const backHandler = BackHandler.addEventListener(
             t("EVENT.HARDWARE_BACK_PRESS"),
-            () => navigateTo(navigation, t("SCREEN.AUTH_SCREEN"))
+            () => navigateTo(navigation, t("SCREEN.EMAIL"))
         );
         // setInterval(() => timer(), 1000);
         startListeningForOtp();
