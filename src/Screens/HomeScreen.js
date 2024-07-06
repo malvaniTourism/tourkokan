@@ -5,6 +5,7 @@ import {
     LogBox,
     BackHandler,
     KeyboardAvoidingView,
+    RefreshControl,
 } from "react-native";
 import SearchPanel from "../Components/Common/SearchPanel";
 import TopComponent from "../Components/Common/TopComponent";
@@ -83,6 +84,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
     const [currentCity, setCurrentCity] = useState(null);
     const [profilePhoto, setProfilePhoto] = useState("");
     const [sindhudurg, setSindh] = useState({});
+    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
         setIsLoading(true);
@@ -160,6 +162,11 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         };
     }, [props.access_token]);
 
+    const onRefresh = () => {
+        setRefreshing(true);
+        callLandingPageAPI();
+    };
+
     useFocusEffect(
         React.useCallback(async () => {
             if ((await AsyncStorage.getItem("isUpdated")) == "true") {
@@ -207,6 +214,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                 setIsFetching(false);
                 setIsLoading(false);
                 props.setLoader(false);
+                setRefreshing(false);
                 // setCategories(res.data.data.categories);
                 // setProjects(res.data.data.projects);
                 // setStops(res.data.data.stops);
@@ -225,6 +233,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                 setIsFetching(false);
                 setIsLoading(false);
                 props.setLoader(false);
+                setRefreshing(false);
                 setError(error.message);
             });
         AsyncStorage.setItem("isUpdated", "false");
@@ -259,6 +268,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
     };
 
     const showMore = (page, subCat) => {
+        console.log(" - - - ", page, "  ", subCat);
         navigateTo(navigation, page, { from: t("SCREEN.HOME"), subCat });
     };
 
@@ -293,6 +303,9 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         <ScrollView
             stickyHeaderIndices={[0]}
             style={{ backgroundColor: COLOR.white }}
+            refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
         >
             <CheckNet isOff={offline} />
             {isLoading ? (
@@ -415,7 +428,9 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                 />
                                 <TextButton
                                     title={t("BUTTON.SEE_ALL")}
-                                    onPress={() => showMore(t("SCREEN.CITIES"))}
+                                    onPress={() =>
+                                        showMore(t("SCREEN.CITY_LIST"), "city")
+                                    }
                                     buttonView={styles.buttonView}
                                     titleStyle={styles.titleStyle}
                                 />

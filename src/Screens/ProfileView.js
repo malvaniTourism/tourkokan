@@ -4,6 +4,7 @@ import {
     BackHandler,
     PermissionsAndroid,
     Platform,
+    RefreshControl,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import Header from "../Components/Common/Header";
@@ -54,6 +55,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
     const [option, setOption] = useState(0);
     const [imageSource, setImageSource] = useState(null);
     const [uploadImage, setUploadImage] = useState(null);
+    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
         props.setLoader(true);
@@ -98,6 +100,11 @@ const ProfileView = ({ navigation, route, ...props }) => {
             unsubscribe();
         };
     }, [route]);
+
+    const onRefresh = () => {
+        setRefreshing(true);
+        getUserProfile();
+    };
 
     const backPress = () => {
         if (option == 0) {
@@ -224,10 +231,12 @@ const ProfileView = ({ navigation, route, ...props }) => {
                     res.data.data.addresses[0].longitude
                 );
                 props.setLoader(false);
+                setRefreshing(false);
             })
             .catch((error) => {
                 setError(error.message); // Update error state with error message
                 props.setLoader(false);
+                setRefreshing(false);
             });
     };
 
@@ -278,7 +287,13 @@ const ProfileView = ({ navigation, route, ...props }) => {
     };
 
     return (
-        <ScrollView style={styles.container} key={option}>
+        <ScrollView
+            style={styles.container}
+            key={option}
+            refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+        >
             <CheckNet isOff={offline} />
             <Header
                 // style={{ backgroundColor: "transparent", zIndex: 10 }}

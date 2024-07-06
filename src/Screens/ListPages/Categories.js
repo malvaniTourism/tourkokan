@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, ScrollView, FlatList } from "react-native";
+import { View, ScrollView, FlatList, RefreshControl } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
@@ -43,6 +43,7 @@ const Categories = ({ route, navigation, ...props }) => {
     const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedSubCategory, setSelectedSubCategory] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
         props.setLoader(true);
@@ -76,6 +77,11 @@ const Categories = ({ route, navigation, ...props }) => {
         };
     }, []);
 
+    const onRefresh = () => {
+        setRefreshing(true);
+        getCategories();
+    };
+
     const getCategories = () => {
         setIsLoading(true);
         let data = {
@@ -96,10 +102,12 @@ const Categories = ({ route, navigation, ...props }) => {
                 // setSelectedSubCategory(res.data.data.data[0].sub_categories)
                 setIsLoading(false);
                 props.setLoader(false);
+                setRefreshing(false);
             })
             .catch((error) => {
                 setIsLoading(false);
                 props.setLoader(false);
+                setRefreshing(false);
             });
     };
 
@@ -120,7 +128,12 @@ const Categories = ({ route, navigation, ...props }) => {
     };
 
     return (
-        <View style={{ flex: 1, justifyContent: "flex-start" }}>
+        <ScrollView
+            style={{ flex: 1 }}
+            refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+        >
             <Loader />
             <CheckNet isOff={offline} />
             <Header
@@ -192,7 +205,7 @@ const Categories = ({ route, navigation, ...props }) => {
                     </View>
                 </View>
             </View>
-        </View>
+        </ScrollView>
     );
 };
 

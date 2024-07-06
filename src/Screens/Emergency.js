@@ -1,5 +1,12 @@
-import React, { useEffect, useState, useRef } from "react";
-import { FlatList, View, Linking, ActivityIndicator } from "react-native";
+import React, { useEffect, useState, useRef, useCallback } from "react";
+import {
+    FlatList,
+    View,
+    Linking,
+    ActivityIndicator,
+    ScrollView,
+    RefreshControl,
+} from "react-native";
 import { ListItem } from "@rneui/themed";
 import Header from "../Components/Common/Header";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -9,13 +16,19 @@ import COLOR from "../Services/Constants/COLORS";
 import { backPage, checkLogin, goBackHandler } from "../Services/CommonMethods";
 import TextButton from "../Components/Customs/Buttons/TextButton";
 import styles from "./Styles";
-import { comnPost, dataSync, saveToStorage } from "../Services/Api/CommonServices";
+import {
+    comnPost,
+    dataSync,
+    saveToStorage,
+} from "../Services/Api/CommonServices";
 import Loader from "../Components/Customs/Loader";
 import { setLoader } from "../Reducers/CommonActions";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import CheckNet from "../Components/Common/CheckNet";
 import NetInfo from "@react-native-community/netinfo";
+import DIMENSIONS from "../Services/Constants/DIMENSIONS";
+import GlobalText from "../Components/Customs/Text";
 
 const Emergency = ({ navigation, route, ...props }) => {
     const { t } = useTranslation();
@@ -26,6 +39,7 @@ const Emergency = ({ navigation, route, ...props }) => {
     const [loading, setLoading] = useState(false);
     const [nextPage, setNextPage] = useState(1);
     const [hasMore, setHasMore] = useState(true); // New state to track if there's more data
+    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
         const backHandler = goBackHandler(navigation);
@@ -39,12 +53,14 @@ const Emergency = ({ navigation, route, ...props }) => {
         const unsubscribe = NetInfo.addEventListener((state) => {
             setOffline(!state.isConnected);
             if (state.isConnected) {
-                dataSync(t("STORAGE.EMERGENCY"), fetchData(1, true)).then((resp) => {
-                    let res = JSON.parse(resp);
-                    if (res.data && res.data.data) {
-                        setData(res.data.data.data);
+                dataSync(t("STORAGE.EMERGENCY"), fetchData(1, true)).then(
+                    (resp) => {
+                        let res = JSON.parse(resp);
+                        if (res.data && res.data.data) {
+                            setData(res.data.data.data);
+                        }
                     }
-                });
+                );
             }
             props.setLoader(false);
         });
@@ -56,8 +72,16 @@ const Emergency = ({ navigation, route, ...props }) => {
         };
     }, []);
 
+    const onRefresh = () => {
+        setRefreshing(true);
+        fetchData(1, true);
+    };
+
     const fetchData = (page, reset = false) => {
-        if (loading || !hasMore) return;
+        if (loading || !hasMore) {
+            setRefreshing(false);
+            return;
+        }
 
         setLoading(true);
         let data = {
@@ -71,7 +95,10 @@ const Emergency = ({ navigation, route, ...props }) => {
                     if (reset) {
                         setData(res.data.data.data);
                     } else {
-                        setData((prevData) => [...prevData, ...res.data.data.data]);
+                        setData((prevData) => [
+                            ...prevData,
+                            ...res.data.data.data,
+                        ]);
                     }
                     setHasMore(!!res.data.data.next_page_url); // Check if there's more data
                     setNextPage(page + 1);
@@ -80,10 +107,12 @@ const Emergency = ({ navigation, route, ...props }) => {
                 if (isMounted.current) {
                     setLoading(false);
                 }
+                setRefreshing(false);
             })
             .catch((error) => {
                 if (isMounted.current) {
                     setLoading(false);
+                    setRefreshing(false);
                 }
             });
     };
@@ -153,7 +182,12 @@ const Emergency = ({ navigation, route, ...props }) => {
     };
 
     return (
-        <View style={{ flex: 1 }}>
+        <ScrollView
+            style={{ flex: 1 }}
+            refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+        >
             <Header
                 name={t("HEADER.EMERGENCY")}
                 goBack={() => backPage(navigation)}
@@ -169,16 +203,31 @@ const Emergency = ({ navigation, route, ...props }) => {
             />
             <Loader />
             <CheckNet isOff={offline} />
-            <FlatList
-                keyExtractor={(item) => item.id?.toString()}
-                data={data}
-                renderItem={renderItem}
-                onEndReached={loadMoreData}
-                onEndReachedThreshold={0.5}
-                ListFooterComponent={renderFooter}
-                style={{ marginBottom: 30 }}
-            />
-        </View>
+            {data[0] ? (
+                <FlatList
+                    keyExtractor={(item) => item.id?.toString()}
+                    data={data}
+                    renderItem={renderItem}
+                    onEndReached={loadMoreData}
+                    onEndReachedThreshold={0.5}
+                    ListFooterComponent={renderFooter}
+                    style={{ marginBottom: 30 }}
+                />
+            ) : (
+                <View
+                    style={{
+                        height: DIMENSIONS.screenHeight,
+                        alignItems: "center",
+                        padding: 50,
+                    }}
+                >
+                    <GlobalText
+                        style={{ fontWeight: "bold" }}
+                        text={offline ? t("NO_INTERNET") : t("NO_DATA")}
+                    />
+                </View>
+            )}
+        </ScrollView>
     );
 };
 

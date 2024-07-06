@@ -1,5 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, FlatList, TouchableOpacity, ActivityIndicator } from "react-native";
+import {
+    View,
+    FlatList,
+    TouchableOpacity,
+    ActivityIndicator,
+    ScrollView,
+    RefreshControl,
+} from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import COLOR from "../../Services/Constants/COLORS";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
@@ -36,6 +43,7 @@ const CityList = ({ navigation, route, ...props }) => {
     const [nextPage, setNextPage] = useState(1);
     const [loading, setLoading] = useState(false);
     const [lastPage, setLastPage] = useState(null);
+    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
         const backHandler = goBackHandler(navigation);
@@ -59,6 +67,11 @@ const CityList = ({ navigation, route, ...props }) => {
         fetchCities(1, true);
     }, [route.params]);
 
+    const onRefresh = () => {
+        setRefreshing(true);
+        fetchCities(1, true);
+    };
+
     const fetchCities = (page, reset = false) => {
         setLoading(true);
         let data = {
@@ -74,7 +87,10 @@ const CityList = ({ navigation, route, ...props }) => {
                     if (reset) {
                         setCities(res.data.data.data);
                     } else {
-                        setCities((prevCities) => [...prevCities, ...res.data.data.data]);
+                        setCities((prevCities) => [
+                            ...prevCities,
+                            ...res.data.data.data,
+                        ]);
                     }
                     setNextPage(res.data.data.current_page + 1);
                     setLastPage(res.data.data.last_page);
@@ -85,14 +101,15 @@ const CityList = ({ navigation, route, ...props }) => {
                 }
                 setLoading(false);
                 props.setLoader(false);
+                setRefreshing(false);
             })
             .catch((error) => {
                 setLoading(false);
                 props.setLoader(false);
+                setRefreshing(false);
                 setError(error.message); // Update error state with error message
             });
     };
-    
 
     const getCityDetails = (id) => {
         navigateTo(navigation, t("SCREEN.CITY_DETAILS"), { id });
@@ -112,7 +129,7 @@ const CityList = ({ navigation, route, ...props }) => {
             fetchCities(nextPage);
         }
     };
-    
+
     const renderFooter = () => {
         if (!loading) return null;
         return (
@@ -121,10 +138,14 @@ const CityList = ({ navigation, route, ...props }) => {
             </View>
         );
     };
-    
 
     return (
-        <View style={{ backgroundColor: COLOR.white }}>
+        <ScrollView
+            style={{ backgroundColor: COLOR.white }}
+            refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+        >
             <CheckNet isOff={offline} />
             <Loader />
             <Header
@@ -149,15 +170,23 @@ const CityList = ({ navigation, route, ...props }) => {
                         onEndReachedThreshold={0.5}
                         // ListFooterComponent={loading ? <Loader /> : null}
                         ListFooterComponent={renderFooter}
-
                     />
                 </View>
             ) : (
-                <View style={{ height: DIMENSIONS.screenHeight, justifyContent: "center", alignItems: "center" }}>
-                    <GlobalText text={t("NO_DATA")} />
+                <View
+                    style={{
+                        height: DIMENSIONS.screenHeight,
+                        alignItems: "center",
+                        padding: 50,
+                    }}
+                >
+                    <GlobalText
+                        style={{ fontWeight: "bold" }}
+                        text={offline ? t("NO_INTERNET") : t("NO_DATA")}
+                    />
                 </View>
             )}
-        </View>
+        </ScrollView>
     );
 };
 

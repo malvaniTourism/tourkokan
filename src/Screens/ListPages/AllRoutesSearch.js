@@ -197,6 +197,7 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
                         onEndReached={() =>
                             searchRoute(source, destination, true)
                         }
+                        style={{ marginBottom: 40 }}
                         onEndReachedThreshold={0.5}
                         renderItem={({ item }) => (
                             <RouteHeadCard
@@ -207,7 +208,12 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
                         )}
                     />
                 ) : (
-                    <GlobalText text={t("NO_ROUTES")} />
+                    <View style={{ alignItems: "center", padding: 50 }}>
+                        <GlobalText
+                            style={{ fontWeight: "bold" }}
+                            text={offline ? t("NO_INTERNET") : t("NO_DATA")}
+                        />
+                    </View>
                 )}
             </SafeAreaView>
         </View>

@@ -1,5 +1,13 @@
 import { useEffect, useRef, useState } from "react";
-import { View, Image, Modal, TouchableOpacity, ActivityIndicator } from "react-native";
+import {
+    View,
+    Image,
+    Modal,
+    TouchableOpacity,
+    ActivityIndicator,
+    ScrollView,
+    RefreshControl,
+} from "react-native";
 import { ResponsiveGrid } from "react-native-flexible-grid";
 import styles from "./Styles";
 import Path from "../../Services/Api/BaseUrl";
@@ -17,6 +25,8 @@ import {
 import Header from "../../Components/Common/Header";
 import Search from "../../Components/Customs/Search";
 import { useTranslation } from "react-i18next";
+import GlobalText from "../../Components/Customs/Text";
+import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 
 const ExploreGrid = ({ route, navigation, ...props }) => {
     const { t } = useTranslation();
@@ -30,6 +40,7 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
     const [loading, setLoading] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
+    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
         const backHandler = goBackHandler(navigation);
@@ -48,6 +59,11 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
             unsubscribe();
         };
     }, []);
+
+    const onRefresh = () => {
+        setRefreshing(true);
+        fetchData(1, true);
+    };
 
     useEffect(() => {
         fetchData(1, true);
@@ -69,7 +85,10 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
                     if (reset) {
                         setGallery(res.data.data.data);
                     } else {
-                        setGallery((prevGallery) => [...prevGallery, ...res.data.data.data]);
+                        setGallery((prevGallery) => [
+                            ...prevGallery,
+                            ...res.data.data.data,
+                        ]);
                     }
                     setCurrentPage(res.data.data.current_page);
                     setLastPage(res.data.data.last_page);
@@ -77,10 +96,12 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
                     props.setLoader(false);
                 }
                 setLoading(false);
+                setRefreshing(false);
             })
             .catch((err) => {
                 props.setLoader(false);
                 setLoading(false);
+                setRefreshing(false);
             });
     };
 
@@ -107,7 +128,9 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
 
     const renderItem = ({ item }) => {
         return (
-            <TouchableOpacity onPress={() => openModal(Path.FTP_PATH + item.path)}>
+            <TouchableOpacity
+                onPress={() => openModal(Path.FTP_PATH + item.path)}
+            >
                 <View style={styles.imageGridBoxContainer}>
                     <Image
                         source={{ uri: Path.FTP_PATH + item.path }}
@@ -129,7 +152,12 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
     };
 
     return (
-        <View style={{ flex: 1 }}>
+        <ScrollView
+            style={{ flex: 1 }}
+            refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+        >
             <CheckNet isOff={offline} />
             <Header
                 Component={
@@ -141,27 +169,45 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
                     />
                 }
             />
-            <ResponsiveGrid
-                maxItemsPerColumn={3}
-                data={gallery}
-                renderItem={renderItem}
-                showScrollIndicator={false}
-                onEndReached={getScrollData}
-                onEndReachedThreshold={0.1}
-                style={{
-                    padding: 5,
-                    marginBottom: 70,
-                }}
-                keyExtractor={(item) => item.id.toString()}
-                ListFooterComponent={renderFooter}
-            />
+            {gallery[0] ? (
+                <ResponsiveGrid
+                    maxItemsPerColumn={3}
+                    data={gallery}
+                    renderItem={renderItem}
+                    showScrollIndicator={false}
+                    onEndReached={getScrollData}
+                    onEndReachedThreshold={0.1}
+                    style={{
+                        padding: 5,
+                        marginBottom: 70,
+                    }}
+                    keyExtractor={(item) => item.id.toString()}
+                    ListFooterComponent={renderFooter}
+                />
+            ) : (
+                <View
+                    style={{
+                        height: DIMENSIONS.screenHeight,
+                        alignItems: "center",
+                        padding: 50,
+                    }}
+                >
+                    <GlobalText
+                        style={{ fontWeight: "bold" }}
+                        text={offline ? t("NO_INTERNET") : t("NO_DATA")}
+                    />
+                </View>
+            )}
             <Modal
                 visible={isModalVisible}
                 transparent={true}
                 onRequestClose={closeModal}
             >
                 <View style={styles.modalContainer}>
-                    <TouchableOpacity style={styles.modalBackground} onPress={closeModal}>
+                    <TouchableOpacity
+                        style={styles.modalBackground}
+                        onPress={closeModal}
+                    >
                         <View style={styles.modalContent}>
                             <Image
                                 source={{ uri: selectedImage }}
@@ -172,7 +218,7 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
                     </TouchableOpacity>
                 </View>
             </Modal>
-        </View>
+        </ScrollView>
     );
 };
 

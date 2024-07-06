@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View } from "react-native";
+import { ScrollView, View, RefreshControl } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import styles from "./Styles";
 import { comnPost, dataSync } from "../Services/Api/CommonServices";
@@ -10,6 +10,8 @@ import { checkLogin, goBackHandler } from "../Services/CommonMethods";
 import NetInfo from "@react-native-community/netinfo";
 import { useTranslation } from "react-i18next";
 import CheckNet from "../Components/Common/CheckNet";
+import DIMENSIONS from "../Services/Constants/DIMENSIONS";
+import GlobalText from "../Components/Customs/Text";
 
 const MapScreen = ({ navigation, ...props }) => {
     const { t } = useTranslation();
@@ -17,6 +19,7 @@ const MapScreen = ({ navigation, ...props }) => {
 
     const [cities, setCities] = useState([]);
     const [offline, setOffline] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
         props.setLoader(true);
@@ -60,6 +63,11 @@ const MapScreen = ({ navigation, ...props }) => {
         };
     }, []);
 
+    const onRefresh = () => {
+        setRefreshing(true);
+        getCities();
+    };
+
     const getCities = () => {
         props.setLoader(true);
         let data = {
@@ -70,6 +78,7 @@ const MapScreen = ({ navigation, ...props }) => {
             .then(async (res) => {
                 if (res && res.data.data) setCities(res.data.data.data);
                 props.setLoader(false);
+                setRefreshing(false);
                 if (mapRef.current) {
                     const coordinates = res.data.data.data.map((marker) => {
                         return {
@@ -90,6 +99,7 @@ const MapScreen = ({ navigation, ...props }) => {
             })
             .catch((error) => {
                 props.setLoader(false);
+                setRefreshing(false);
             });
     };
 
@@ -97,33 +107,48 @@ const MapScreen = ({ navigation, ...props }) => {
         <>
             <Loader />
             <CheckNet isOff={offline} />
-            {cities[0] && (
-                <View style={styles.mapContainer}>
-                    <MapView
-                        ref={mapRef}
-                        style={styles.map}
-                        initialRegion={{
-                            latitude: parseFloat(cities[3].latitude),
-                            longitude: parseFloat(cities[3].longitude),
-                            latitudeDelta: 0.7,
-                            longitudeDelta: 0.7,
-                        }}
-                        scrollEnabled={false}
-                        zoomEnabled={false}
-                    >
-                        {cities.map((marker) => (
-                            <Marker
-                                key={marker.id}
-                                coordinate={{
-                                    latitude: parseFloat(marker.latitude),
-                                    longitude: parseFloat(marker.longitude),
-                                }}
-                                title={marker.name}
-                                description={marker.name}
-                            />
-                        ))}
-                    </MapView>
+            {offline ? (
+                <View
+                    style={{
+                        height: DIMENSIONS.screenHeight,
+                        alignItems: "center",
+                        padding: 50,
+                    }}
+                >
+                    <GlobalText
+                        style={{ fontWeight: "bold" }}
+                        text={offline ? t("NO_INTERNET") : t("NO_DATA")}
+                    />
                 </View>
+            ) : (
+                cities[0] && (
+                    <View style={styles.mapContainer}>
+                        <MapView
+                            ref={mapRef}
+                            style={styles.map}
+                            initialRegion={{
+                                latitude: parseFloat(cities[3].latitude),
+                                longitude: parseFloat(cities[3].longitude),
+                                latitudeDelta: 0.7,
+                                longitudeDelta: 0.7,
+                            }}
+                            scrollEnabled={false}
+                            zoomEnabled={false}
+                        >
+                            {cities.map((marker) => (
+                                <Marker
+                                    key={marker.id}
+                                    coordinate={{
+                                        latitude: parseFloat(marker.latitude),
+                                        longitude: parseFloat(marker.longitude),
+                                    }}
+                                    title={marker.name}
+                                    description={marker.name}
+                                />
+                            ))}
+                        </MapView>
+                    </View>
+                )
             )}
         </>
     );

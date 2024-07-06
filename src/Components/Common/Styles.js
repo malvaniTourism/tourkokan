@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     },
     topComponent: {
         width: DIMENSIONS.windowWidth,
-        zIndex: 10
+        zIndex: 10,
     },
     userIcon: {
         margin: 10,

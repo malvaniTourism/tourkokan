@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
         height: 135,
         borderRadius: 5,
     },
-    
+
     modalContainer: {
         flex: 1,
         justifyContent: "center",
