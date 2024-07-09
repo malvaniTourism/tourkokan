@@ -113,6 +113,15 @@ export const SignUpFields = [
         disabled: false,
         leftIcon: STRING.ICON.MOBILE_NO,
     },
+    {
+        name: STRING.LABEL.REFERRAL,
+        placeholder: STRING.LABEL.REFERRAL_CODE,
+        type: STRING.TYPE.TEXT,
+        length: DIMENSIONS.mobileLength,
+        required: false,
+        disabled: false,
+        leftIcon: STRING.ICON.HASH,
+    },
 ];
 
 export const ProfileFields = [

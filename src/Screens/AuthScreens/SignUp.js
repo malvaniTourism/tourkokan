@@ -37,6 +37,7 @@ const SignUp = ({ navigation, ...props }) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [mobile, setMobile] = useState("");
+    const [referral, setReferral] = useState("");
     const [password, setPassword] = useState("");
     const [cpassword, setCpassword] = useState("");
     const [role, setRole] = useState("");
@@ -58,6 +59,7 @@ const SignUp = ({ navigation, ...props }) => {
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [nameErr, setNameErr] = useState(false);
     const [emailErr, setEmailErr] = useState(false);
+    const [refErr, setRefErr] = useState(false);
     const [mobileErr, setMobileErr] = useState(false);
     const [passErr, setPassErr] = useState(false);
     const [cPassErr, setCPassErr] = useState(false);
@@ -156,14 +158,9 @@ const SignUp = ({ navigation, ...props }) => {
                 else setMobileErr(true);
                 break;
             case 3:
-                setPassword(val.trim());
-                if (isVal) setPassErr(false);
-                else setPassErr(true);
-                break;
-            case 4:
-                setCpassword(val.trim());
-                if (isVal) setCPassErr(false);
-                else setCPassErr(true);
+                setReferral(val.trim());
+                if (isVal) setRefErr(false);
+                else setRefErr(true);
                 break;
             default:
                 setRole(val);
@@ -180,9 +177,7 @@ const SignUp = ({ navigation, ...props }) => {
             case 2:
                 return mobile;
             case 3:
-                return password;
-            case 4:
-                return cpassword;
+                return referral;
             default:
                 return role;
         }
@@ -226,6 +221,7 @@ const SignUp = ({ navigation, ...props }) => {
             name: name,
             email: email,
             mobile: mobile,
+            referral_code: referral,
             // password: password,
             // password_confirmation: cpassword,
             // role_id: role.id,
@@ -248,6 +244,8 @@ const SignUp = ({ navigation, ...props }) => {
                             ? res.data.message.email
                             : res.data.message.mobile
                             ? res.data.message.mobile
+                            : res.data.message.referral_code
+                            ? res.data.message.referral_code
                             : res.data.message
                     );
                     setIsSuccess(false);

@@ -32,6 +32,7 @@ LogBox.ignoreLogs(["Warning: ...", "Possible Unhandled Promise Rejection"]);
 const Stack = createNativeStackNavigator();
 
 analytics().setAnalyticsCollectionEnabled(true);
+
 export default function App() {
     const [isFirstTime, setIsFirstTime] = useState(null); // Set initial state to null
     const [loading, setLoading] = useState(true); // Add loading state
@@ -54,21 +55,21 @@ export default function App() {
             key: 1,
             title: "Title 1",
             text: "Description.\nSay something cool",
-            image: require("./src/Assets/Images/Intro/Page-1.png"),
+            image: require("./src/Assets/Images/Intro/1-min.png"),
             backgroundColor: "#fff",
         },
         {
             key: 2,
             title: "Title 2",
             text: "Other cool stuff",
-            image: require("./src/Assets/Images/Intro/Page-2.png"),
+            image: require("./src/Assets/Images/Intro/2-min.png"),
             backgroundColor: "#fff",
         },
         {
             key: 3,
             title: "Title 3",
             text: "I'm already out of descriptions\n\nLorem ipsum bla bla bla",
-            image: require("./src/Assets/Images/Intro/Page-3.png"),
+            image: require("./src/Assets/Images/Intro/3-min.png"),
             backgroundColor: "#fff",
         },
     ];
@@ -87,6 +88,9 @@ export default function App() {
                     style={styles.introLogo}
                 /> */}
                 <Image source={item.image} style={styles.image} />
+                <View style={styles.appName}>
+                    <GlobalText text={STRING.APPNAME} style={styles.loginName} />
+                </View>
                 {/* <GlobalText style={styles.text} text={item.text} /> */}
             </View>
         );

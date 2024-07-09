@@ -179,6 +179,8 @@ const STRING = {
         PASSWORD: "Password",
         SET_PASSWORD: "Set Password",
         EMAIL: "Email",
+        REFERRAL: "Referral",
+        REFERRAL_CODE: "Referral Code",
         EMAIL_ID: "Email ID",
         NAME: "Name",
         OTP: "OTP",
@@ -206,6 +208,7 @@ const STRING = {
         NAME: "user",
         EMAIL: "mail",
         MOBILE_NO: "phone-call",
+        HASH: "hash",
     },
     POLICY: {},
 

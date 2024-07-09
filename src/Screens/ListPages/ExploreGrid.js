@@ -159,6 +159,7 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
             }
         >
             <CheckNet isOff={offline} />
+            <Loader />
             <Header
                 Component={
                     <Search

@@ -199,7 +199,8 @@
         "SETTINGS": "सेटिंग्ज",
         "LOGOUT": "लॉगआउट",
         "CHANGE_LANGUAGE": "भाषा बदला",
-        "SELECT_LANGUAGE": "भाषा निवडा"
+        "SELECT_LANGUAGE": "भाषा निवडा",
+        "REFERRAL_CODE": "रेफरल कोड"
     },
     "ICON": {
         "NAME": "user",

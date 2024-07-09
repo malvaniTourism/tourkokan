@@ -5,6 +5,7 @@ import {
     PermissionsAndroid,
     Platform,
     RefreshControl,
+    Share
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import Header from "../Components/Common/Header";
@@ -255,6 +256,26 @@ const ProfileView = ({ navigation, route, ...props }) => {
             });
     };
 
+    const referralClick = async () => {
+        try {
+            const deepLink = `awesomeapp://SignUp?code=${profile.uid}`;
+            const shareMessage = `Hey! Use my TourKokan referral code ${profile.uid} to get awesome discounts. Enjoy!`;
+            const shareUrl = deepLink;
+            const result = await Share.share({
+                message: shareMessage,
+                url: shareUrl,
+            });
+
+            if (result.action === Share.sharedAction) {
+                console.log("Content shared successfully");
+            } else if (result.action === Share.dismissedAction) {
+                console.log("Share dismissed");
+            }
+        } catch (error) {
+            console.error("Error sharing content:", error.message);
+        }
+    }
+
     const setHomeLocation = () => {
         // Update Location
         requestLocationPermission();
@@ -363,6 +384,8 @@ const ProfileView = ({ navigation, route, ...props }) => {
                             locationClick={() => setShowLocModal(true)}
                             profileClick={() => setOption(3)}
                             logoutClick={() => handleLogout()}
+                            referralClick={() => referralClick()}
+                            uid={profile.uid}
                         />
                     ) : option == 1 ? (
                         <ChangeLang
@@ -386,7 +409,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
                         <ProfileChipSkeleton />
                         <ProfileChipSkeleton />
                         <ProfileChipSkeleton />
-                        {/* <ProfileChipSkeleton /> */}
+                        <ProfileChipSkeleton />
                     </View>
                 )}
             </View>

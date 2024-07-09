@@ -428,9 +428,7 @@ const styles = StyleSheet.create({
     },
     slide: {
         height: DIMENSIONS.screenHeight,
-        alignItems: "flex-start",
-        justifyContent: "flex-start",
-        flex: 1,
+        width: DIMENSIONS.screenWidth,
     },
     title: {
         fontSize: DIMENSIONS.xlText,
@@ -455,8 +453,6 @@ const styles = StyleSheet.create({
     image: {
         height: DIMENSIONS.screenHeight,
         width: DIMENSIONS.screenWidth,
-        resizeMode: "cover",
-        flex: 1,
     },
     text: {
         color: COLOR.black,
@@ -535,6 +531,20 @@ const styles = StyleSheet.create({
     },
     map: {
         ...StyleSheet.absoluteFillObject,
+    },
+    appName: {
+        zIndex: 100,
+        position: "relative",
+        marginTop: -140,
+        height: 500,
+        backgroundColor: COLOR.white
+    },
+    loginName: {
+        textAlign: "center",
+        fontSize: DIMENSIONS.xxxlText,
+        fontWeight: "bold",
+        color: COLOR.black,
+        fontStyle: "italic",
     },
 });
 

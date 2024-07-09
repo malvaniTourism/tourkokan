@@ -9,6 +9,7 @@ import styles from "./Styles";
 import COLOR from "../../../Services/Constants/COLORS";
 import GlobalText from "../../Customs/Text";
 import { useTranslation } from "react-i18next";
+import CodeChip from "../CodeChip";
 
 const ChipOptions = ({
     languageClick,
@@ -16,6 +17,8 @@ const ChipOptions = ({
     profileClick,
     settingsClick,
     logoutClick,
+    referralClick,
+    uid
 }) => {
     const { t } = useTranslation();
 
@@ -81,6 +84,19 @@ const ChipOptions = ({
                     </View>
                 }
                 clickChip={logoutClick}
+            />
+            <CodeChip
+                name={uid}
+                icon={
+                    <View style={styles.chipIcon}>
+                        <Feather
+                            name="hash"
+                            size={20}
+                            color={COLOR.white}
+                        />
+                    </View>
+                }
+                clickChip={referralClick}
             />
         </View>
     );
