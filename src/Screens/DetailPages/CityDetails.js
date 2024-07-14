@@ -37,6 +37,7 @@ import { Skeleton } from "@rneui/themed";
 import MapContainer from "../../Components/Common/MapContainer";
 import MapSkeleton from "../../Components/Common/MapSkeleton";
 import { useTranslation } from "react-i18next";
+import GalleryView from "../../Components/Common/GalleryView";
 
 const CityDetails = ({ navigation, route, ...props }) => {
     const { t } = useTranslation();
@@ -263,6 +264,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
                                 style={styles.placeImage}
                             />
                         ) : city.image ? (
+                            // <GalleryView />
                             <ImageBackground
                                 source={{ uri: Path.FTP_PATH + city.image }}
                                 style={styles.placeImage}

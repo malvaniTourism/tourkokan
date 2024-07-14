@@ -112,9 +112,9 @@ const CityCardSmall = ({ data, reload, navigation, addComment, onClick }) => {
                 />
             )}
             <View style={{ alignItems: "flex-end" }}>
-                <TouchableOpacity
+                <View
                     style={styles.citySmallLikeView}
-                    onPress={() => onHeartClick()}
+                    // onPress={() => onHeartClick()}
                 >
                     {isFav ? (
                         <Octicons
@@ -129,7 +129,7 @@ const CityCardSmall = ({ data, reload, navigation, addComment, onClick }) => {
                             size={DIMENSIONS.iconSize}
                         />
                     )}
-                </TouchableOpacity>
+                </View>
                 <TouchableOpacity style={styles.citySmallLikeView}>
                     <GlobalText
                         text={commentCount}

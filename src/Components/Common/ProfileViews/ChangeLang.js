@@ -33,6 +33,7 @@ const ChangeLang = ({ refreshOption, setLoader }) => {
             })
             .catch((err) => {});
         i18n.changeLanguage(language);
+        AsyncStorage.setItem("isLangChanged", "true");
         refreshOption();
     };
 

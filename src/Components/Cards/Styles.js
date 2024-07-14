@@ -187,6 +187,14 @@ const styles = StyleSheet.create({
     subCatCard: {
         width: DIMENSIONS.iconCard,
         height: DIMENSIONS.iconCard,
+        padding: 10,
+        margin: 1,
+        backgroundColor: COLOR.white,
+        justifyContent: "center",
+    },
+    subCatCard1: {
+        width: DIMENSIONS.iconCard,
+        height: DIMENSIONS.iconCard,
         elevation: 10,
         margin: 10,
         padding: 10,

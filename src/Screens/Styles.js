@@ -387,9 +387,6 @@ const styles = StyleSheet.create({
     },
     subCatContainer: {
         minHeight: DIMENSIONS.screenHeight,
-        backgroundColor: COLOR.themeComicBlueULight,
-        borderTopRightRadius: DIMENSIONS.borderRadius,
-        borderTopLeftRadius: DIMENSIONS.borderRadius,
     },
     subCatHeader: {
         textAlign: "left",

@@ -39,6 +39,7 @@ import CityCardSmallSkeleton from "../Components/Cards/CityCardSmallSkeleton";
 import { useTranslation } from "react-i18next";
 import { useFocusEffect } from "@react-navigation/native";
 import BannerSkeleton from "../Components/Customs/BannerSkeleton";
+import Loader from "../Components/Customs/Loader";
 
 const HomeScreen = ({ navigation, route, ...props }) => {
     const { t, i18n } = useTranslation();
@@ -88,6 +89,11 @@ const HomeScreen = ({ navigation, route, ...props }) => {
 
     useEffect(() => {
         setIsLoading(true);
+        setSindh({
+            id: 0,
+            name: t("CITY.SINDHUDURG"),
+        });
+        setCurrentCity(t("CITY.SINDHUDURG"));
         props.setLoader(true);
         AsyncStorage.setItem("isUpdated", "false");
         const backHandler = BackHandler.addEventListener(
@@ -170,6 +176,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
     useFocusEffect(
         React.useCallback(async () => {
             if ((await AsyncStorage.getItem("isUpdated")) == "true") {
+                props.setLoader(true);
                 callLandingPageAPI();
             }
         })
@@ -188,11 +195,6 @@ const HomeScreen = ({ navigation, route, ...props }) => {
     };
 
     const callLandingPageAPI = async (site_id) => {
-        setCurrentCity(t("CITY.SINDHUDURG"));
-        setSindh({
-            id: 0,
-            name: t("CITY.SINDHUDURG"),
-        });
         let data = {
             site_id,
         };
@@ -268,7 +270,6 @@ const HomeScreen = ({ navigation, route, ...props }) => {
     };
 
     const showMore = (page, subCat) => {
-        console.log(" - - - ", page, "  ", subCat);
         navigateTo(navigation, page, { from: t("SCREEN.HOME"), subCat });
     };
 
@@ -322,11 +323,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                 />
             )}
             {/* <MyAnimatedLoader isVisible={isLoading} /> */}
-            {/* {
-                isLoading ?
-                    // <Loader />
-                    <></>
-                    : */}
+            <Loader />
             <View style={{ flex: 1, alignItems: "center" }}>
                 {isLoading ? (
                     <BannerSkeleton />

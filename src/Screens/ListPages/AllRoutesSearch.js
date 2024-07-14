@@ -27,6 +27,8 @@ import RoutesSearchPanel from "../../Components/Common/RoutesSearchPanel";
 import RoutesSearchPanelSkeleton from "../../Components/Common/RoutesSearchPanelSkeleton";
 import RouteHeadCardSkeleton from "../../Components/Cards/RouteHeadCardSkeleton";
 import { useTranslation } from "react-i18next";
+import { useFocusEffect } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const AllRoutesSearch = ({ navigation, route, ...props }) => {
     const { t } = useTranslation();
@@ -70,11 +72,20 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
         };
     }, []);
 
+    useFocusEffect(
+        React.useCallback(async () => {
+            if ((await AsyncStorage.getItem("isLangChanged")) == "true") {
+                searchRoute();
+            }
+        })
+    );
+
     const getRoutesList = (item) => {
         navigateTo(navigation, t("SCREEN.ROUTES_LIST"), { item });
     };
 
     const searchRoute = (a, b, isNext) => {
+        AsyncStorage.setItem("isLangChanged", "false");
         if (nextPage >= 1) {
             setIsLoading(true);
             props.setLoader(true);

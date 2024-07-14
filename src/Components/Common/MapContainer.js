@@ -6,7 +6,12 @@ import styles from "./Styles";
 const MapContainer = ({ initialRegion, currentLatitude, currentLongitude }) => {
     return (
         <View style={styles.profileMapView}>
-            <MapView style={styles.map} initialRegion={initialRegion}>
+            <MapView
+            style={styles.map}
+            initialRegion={initialRegion}
+            scrollEnabled={false}
+                            zoomEnabled={false}
+            >
                 <Marker
                     coordinate={{
                         latitude: currentLatitude,

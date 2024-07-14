@@ -186,6 +186,29 @@ const styles = StyleSheet.create({
         borderRadius: DIMENSIONS.borderRadius,
         marginTop: 10,
     },
+    accordHeader: {
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        backgroundColor: COLOR.white,
+        alignItems: "center",
+        justifyContent: "space-between",
+        flexDirection: "row",
+        marginBottom: 5,
+    },
+    accordHeaderText: {
+        fontSize: DIMENSIONS.headerTextSize,
+    },
+    accordContent: {
+        padding: 10,
+    },
+    catCardIcon: {
+        height: DIMENSIONS.iconX,
+        width: DIMENSIONS.iconX,
+        borderRadius: DIMENSIONS.borderRadiusLarge,
+        resizeMode: "cover",
+        borderColor: COLOR.grey,
+        borderWidth: .5
+    },
 });
 
 export default styles;

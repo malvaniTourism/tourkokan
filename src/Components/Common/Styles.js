@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
     },
     profileMapView: {
-        height: DIMENSIONS.bannerHeight / 2,
+        height: DIMENSIONS.bannerHeight - 30,
         width: DIMENSIONS.bannerWidth,
         marginVertical: 10,
         borderWidth: 1,

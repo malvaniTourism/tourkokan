@@ -26,7 +26,6 @@ import ImageButton from "../../Components/Customs/Buttons/ImageButton";
 import SubCatCard from "../../Components/Cards/SubCatCard";
 import ImageButtonSkeleton from "../../Components/Customs/Buttons/ImageButtonSkeleton";
 import { useTranslation } from "react-i18next";
-import Accordion from "../../Components/Customs/Accordian";
 
 const Categories = ({ route, navigation, ...props }) => {
     const { t } = useTranslation();
@@ -130,7 +129,7 @@ const Categories = ({ route, navigation, ...props }) => {
 
     return (
         <ScrollView
-            style={{ flex: 1, backgroundColor: COLOR.themeComicBlueULight }}
+            style={{ flex: 1 }}
             refreshControl={
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
@@ -148,7 +147,7 @@ const Categories = ({ route, navigation, ...props }) => {
                     />
                 }
             />
-            {/* <View style={styles.horizontalCategoriesScroll}>
+            <View style={styles.horizontalCategoriesScroll}>
                 <ScrollView horizontal style={styles.categoriesButtonScroll}>
                     {isLoading ? (
                         <>
@@ -180,10 +179,10 @@ const Categories = ({ route, navigation, ...props }) => {
                         ))
                     )}
                 </ScrollView>
-            </View> */}
+            </View>
 
             <View style={styles.subCatContainer}>
-                {/* <View>
+                <View>
                     <GlobalText
                         text={t("HEADER.CLASSIFICATIONS")}
                         style={styles.subCatHeader}
@@ -204,8 +203,7 @@ const Categories = ({ route, navigation, ...props }) => {
                             numColumns={2}
                         />
                     </View>
-                </View> */}
-                <Accordion data={categories} navigation={navigation} />
+                </View>
             </View>
         </ScrollView>
     );
