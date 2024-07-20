@@ -131,10 +131,12 @@ const CityDetails = ({ navigation, route, ...props }) => {
             .then((res) => {
                 AsyncStorage.setItem("isUpdated", "true");
                 props.setLoader(false);
-                console.log('esr - ', res.data);
+                console.log("esr - ", res.data);
                 // getDetails()
             })
-            .catch((err) => {console.log(err);});
+            .catch((err) => {
+                console.log(err);
+            });
     };
 
     const onStarRatingPress = async (rate) => {
@@ -265,11 +267,11 @@ const CityDetails = ({ navigation, route, ...props }) => {
                             />
                         ) : city?.gallery[0] ? (
                             <GalleryView images={city.gallery} />
+                        ) : (
                             // <ImageBackground
                             //     source={{ uri: Path.FTP_PATH + city.image }}
                             //     style={styles.placeImage}
                             // />
-                        ) : (
                             <ImageBackground
                                 source={require("../../Assets/Images/nature.jpeg")}
                                 style={styles.placeImage}

@@ -33,10 +33,10 @@ const CityCardSmall = ({ data, reload, navigation, addComment, onClick }) => {
             favouritable_id: data.id,
         };
         setIsFav(!isFav);
-        console.log('placeData - ', placeData);
+        console.log("placeData - ", placeData);
         comnPost("v2/addDeleteFavourite", placeData)
             .then((res) => {
-                console.log('res - ', res);
+                console.log("res - ", res);
                 AsyncStorage.setItem("isUpdated", "true");
                 reload();
             })

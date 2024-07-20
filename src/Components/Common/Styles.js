@@ -421,13 +421,13 @@ const styles = StyleSheet.create({
     },
     galleryContainer: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
     },
     mainImage: {
         width: DIMENSIONS.screenWidth,
         height: (DIMENSIONS.screenHeight / 100) * 40,
-        resizeMode: 'cover',
+        resizeMode: "cover",
     },
     thumbnailView: {
         position: "absolute",
@@ -435,7 +435,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         height: (DIMENSIONS.screenHeight / 100) * 40,
         bottom: 30,
-        maxWidth: DIMENSIONS.bannerWidth
+        maxWidth: DIMENSIONS.bannerWidth,
     },
     thumbnailList: {
         backgroundColor: COLOR.white,
@@ -446,7 +446,7 @@ const styles = StyleSheet.create({
         width: DIMENSIONS.iconX,
         height: DIMENSIONS.iconX,
         marginHorizontal: 5,
-        resizeMode: 'cover',
+        resizeMode: "cover",
     },
 });
 
