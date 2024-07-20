@@ -46,7 +46,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
     const [city, setCity] = useState([]); // State to store city
     const [error, setError] = useState(null); // State to store error message
     const [cityId, setCityId] = useState(route.params.city.id);
-    const [isFav, setIsFav] = useState(false);
+    const [isFav, setIsFav] = useState(route.params.city.is_favorite);
     const [rating, setRating] = useState(0);
     const [commentCount, setCommentCount] = useState(0);
     const [isLoading, setLoader] = useState(true);
@@ -123,17 +123,18 @@ const CityDetails = ({ navigation, route, ...props }) => {
         setIsFav(!isFav);
         let placeData = {
             user_id: await AsyncStorage.getItem(t("STORAGE.USER_ID")),
-            favouritable_type: t("TABLE.SITES"),
+            favouritable_type: t("TABLE.SITE"),
             favouritable_id: city.id,
         };
+        console.log(placeData);
         comnPost("v2/addDeleteFavourite", placeData)
             .then((res) => {
                 AsyncStorage.setItem("isUpdated", "true");
                 props.setLoader(false);
+                console.log('esr - ', res.data);
                 // getDetails()
-                reload();
             })
-            .catch((err) => {});
+            .catch((err) => {console.log(err);});
     };
 
     const onStarRatingPress = async (rate) => {
@@ -150,7 +151,6 @@ const CityDetails = ({ navigation, route, ...props }) => {
                 AsyncStorage.setItem("isUpdated", "true");
                 props.setLoader(false);
                 // getDetails()
-                reload();
             })
             .catch((err) => {});
     };
@@ -263,12 +263,12 @@ const CityDetails = ({ navigation, route, ...props }) => {
                                 variant="text"
                                 style={styles.placeImage}
                             />
-                        ) : city.image ? (
-                            // <GalleryView />
-                            <ImageBackground
-                                source={{ uri: Path.FTP_PATH + city.image }}
-                                style={styles.placeImage}
-                            />
+                        ) : city?.gallery[0] ? (
+                            <GalleryView images={city.gallery} />
+                            // <ImageBackground
+                            //     source={{ uri: Path.FTP_PATH + city.image }}
+                            //     style={styles.placeImage}
+                            // />
                         ) : (
                             <ImageBackground
                                 source={require("../../Assets/Images/nature.jpeg")}

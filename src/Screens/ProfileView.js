@@ -5,7 +5,7 @@ import {
     PermissionsAndroid,
     Platform,
     RefreshControl,
-    Share
+    Share,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import Header from "../Components/Common/Header";
@@ -40,6 +40,7 @@ import ProfileChipSkeleton from "../Components/Common/ProfileChipSkeleton";
 import MapContainer from "../Components/Common/MapContainer";
 import MapSkeleton from "../Components/Common/MapSkeleton";
 import { launchImageLibrary } from "react-native-image-picker";
+import Popup from "../Components/Common/Popup";
 
 const ProfileView = ({ navigation, route, ...props }) => {
     const { t, i18n } = useTranslation();
@@ -57,6 +58,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
     const [imageSource, setImageSource] = useState(null);
     const [uploadImage, setUploadImage] = useState(null);
     const [refreshing, setRefreshing] = useState(false);
+    const [isAlert, setIsAlert] = useState(false);
 
     useEffect(() => {
         props.setLoader(true);
@@ -274,7 +276,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
         } catch (error) {
             console.error("Error sharing content:", error.message);
         }
-    }
+    };
 
     const setHomeLocation = () => {
         // Update Location
@@ -383,7 +385,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
                             languageClick={() => setOption(1)}
                             locationClick={() => setShowLocModal(true)}
                             profileClick={() => setOption(3)}
-                            logoutClick={() => handleLogout()}
+                            logoutClick={() => setIsAlert(true)}
                             referralClick={() => referralClick()}
                             uid={profile.uid}
                         />
@@ -451,6 +453,33 @@ const ProfileView = ({ navigation, route, ...props }) => {
                                 color={COLOR.themeBlue}
                             />
                         }
+                    />
+                </View>
+            </Overlay>
+
+            <Overlay
+                style={styles.locationModal}
+                isVisible={isAlert}
+                onBackdropPress={() => setIsAlert(false)}
+            >
+                <GlobalText
+                    text={t("ALERT.LOGOUT_ALERT")}
+                    style={styles.locationModal}
+                />
+                <View style={styles.flexRow}>
+                    <TextButton
+                        title={t("BUTTON.NO")}
+                        buttonView={styles.logoutButtonStyle}
+                        titleStyle={styles.locButtonTitle}
+                        raised={false}
+                        onPress={() => setIsAlert(false)}
+                    />
+                    <TextButton
+                        title={t("BUTTON.YES")}
+                        buttonView={styles.logoutButtonStyle}
+                        titleStyle={styles.locButtonTitle}
+                        raised={false}
+                        onPress={handleLogout}
                     />
                 </View>
             </Overlay>

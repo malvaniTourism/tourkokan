@@ -6,6 +6,8 @@ const STRING = {
     WELCOME: "Welcome back to",
 
     BUTTON: {
+        YES: "Yes",
+        NO: "No",
         OK: "Ok",
         CANCEL: "Cancel",
         ACCEPT: "Accept",
@@ -139,6 +141,7 @@ const STRING = {
         LOADING: "Loading...",
         ERROR_CURRENT_LOCATION: "Error getting current location: ",
         FETCHING_TEXT: "We are getting your location please wait",
+        LOGOUT_ALERT: "Do you real want to Logout?",
     },
     TABLE: {
         CITY: "City",
@@ -216,7 +219,7 @@ const STRING = {
     OTP_VERIFICATION: "OTP Verification",
     WE_HAVE_SENT: "We have sent an OTP to verify your email.",
     SENT_TO: "Sent to ",
-    RESEND_WITHIN: "You can resend your OTP within (00:",
+    RESEND_WITHIN: "You can resend your OTP within (00:_)",
     DIDNT_RECEIVE: "Haven't received OTP yet? ",
     HAVE_ACC: "Already have an Account? ",
     TAKEN: "already been taken",
@@ -251,6 +254,8 @@ const STRING = {
     SET_LOCATION: "Set Your Primary Location",
     NO_INTERNET:
         "Please check your connectivity... Once data is synced you can use offline.",
+    NO_INTERNET_MAP:
+        "कृपया तुमची कनेक्टिव्हिटी तपासा... नकाशा लोड करण्यासाठी इंटरनेट कनेक्शन अनिवार्य आहे.",
     LOADER_TEXT: "Picking Up Your Data...",
     ADDED: "Places will be added soon...",
     NO_COMMENTS: "No comments yet",

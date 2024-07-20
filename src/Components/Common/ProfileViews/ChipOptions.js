@@ -18,7 +18,7 @@ const ChipOptions = ({
     settingsClick,
     logoutClick,
     referralClick,
-    uid
+    uid,
 }) => {
     const { t } = useTranslation();
 
@@ -86,14 +86,10 @@ const ChipOptions = ({
                 clickChip={logoutClick}
             />
             <CodeChip
-                name={uid}
+                name={`${t("CHIPS.REFERRAL_CODE")} - ${uid}`}
                 icon={
                     <View style={styles.chipIcon}>
-                        <Feather
-                            name="hash"
-                            size={20}
-                            color={COLOR.white}
-                        />
+                        <Feather name="hash" size={20} color={COLOR.white} />
                     </View>
                 }
                 clickChip={referralClick}

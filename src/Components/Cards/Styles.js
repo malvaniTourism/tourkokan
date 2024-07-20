@@ -191,6 +191,8 @@ const styles = StyleSheet.create({
         margin: 1,
         backgroundColor: COLOR.white,
         justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "row",
     },
     subCatCard1: {
         width: DIMENSIONS.iconCard,

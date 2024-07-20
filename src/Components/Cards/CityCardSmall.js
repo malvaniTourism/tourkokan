@@ -33,10 +33,11 @@ const CityCardSmall = ({ data, reload, navigation, addComment, onClick }) => {
             favouritable_id: data.id,
         };
         setIsFav(!isFav);
+        console.log('placeData - ', placeData);
         comnPost("v2/addDeleteFavourite", placeData)
             .then((res) => {
+                console.log('res - ', res);
                 AsyncStorage.setItem("isUpdated", "true");
-                props.setLoader(false);
                 reload();
             })
             .catch((err) => {});
@@ -112,9 +113,9 @@ const CityCardSmall = ({ data, reload, navigation, addComment, onClick }) => {
                 />
             )}
             <View style={{ alignItems: "flex-end" }}>
-                <View
+                <TouchableOpacity
                     style={styles.citySmallLikeView}
-                    // onPress={() => onHeartClick()}
+                    onPress={() => onHeartClick()}
                 >
                     {isFav ? (
                         <Octicons
@@ -129,7 +130,7 @@ const CityCardSmall = ({ data, reload, navigation, addComment, onClick }) => {
                             size={DIMENSIONS.iconSize}
                         />
                     )}
-                </View>
+                </TouchableOpacity>
                 <TouchableOpacity style={styles.citySmallLikeView}>
                     <GlobalText
                         text={commentCount}

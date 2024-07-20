@@ -239,7 +239,6 @@ const styles = StyleSheet.create({
     },
     chipContainer: {
         alignItems: "center",
-        marginTop: DIMENSIONS.sectionGap,
     },
     coverPhoto: {
         width: "100%",
@@ -507,6 +506,13 @@ const styles = StyleSheet.create({
         elevation: 0,
         marginLeft: 10,
     },
+    logoutButtonStyle: {
+        width: DIMENSIONS.bannerWidth / 2 - 30,
+        borderRadius: DIMENSIONS.borderRadiusXS,
+        alignSelf: "flex-start",
+        elevation: 10,
+        marginLeft: 10,
+    },
     attachmentTitleStyle: {
         color: COLOR.themeBlue,
     },
@@ -534,7 +540,7 @@ const styles = StyleSheet.create({
         position: "relative",
         marginTop: -140,
         height: 500,
-        backgroundColor: COLOR.white
+        backgroundColor: COLOR.white,
     },
     loginName: {
         textAlign: "center",

@@ -7,10 +7,10 @@ const MapContainer = ({ initialRegion, currentLatitude, currentLongitude }) => {
     return (
         <View style={styles.profileMapView}>
             <MapView
-            style={styles.map}
-            initialRegion={initialRegion}
-            scrollEnabled={false}
-                            zoomEnabled={false}
+                style={styles.map}
+                initialRegion={initialRegion}
+                scrollEnabled={false}
+                zoomEnabled={false}
             >
                 <Marker
                     coordinate={{

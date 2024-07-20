@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     },
     placeImageView: {
         height: (DIMENSIONS.screenHeight / 100) * 40,
+        marginTop: -16,
     },
     cityLikeView: {
         backgroundColor: COLOR.grey,

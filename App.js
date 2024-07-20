@@ -89,7 +89,10 @@ export default function App() {
                 /> */}
                 <Image source={item.image} style={styles.image} />
                 <View style={styles.appName}>
-                    <GlobalText text={STRING.APPNAME} style={styles.loginName} />
+                    <GlobalText
+                        text={STRING.APPNAME}
+                        style={styles.loginName}
+                    />
                 </View>
                 {/* <GlobalText style={styles.text} text={item.text} /> */}
             </View>
@@ -139,15 +142,18 @@ export default function App() {
     }
 
     return (
-        <AppIntroSlider
-            nextButtonTextColor={"#000"}
-            renderItem={renderItem}
-            data={slides}
-            onDone={onDone}
-            // renderNextButton={_renderNextButton}
-            activeDotColor={COLOR.themeBlue}
-            renderDoneButton={renderDoneButton}
-            renderNextButton={renderNextButton}
-        />
+        <>
+            <StatusBar backgroundColor={COLOR.loginImageBlue} />
+            <AppIntroSlider
+                nextButtonTextColor={"#000"}
+                renderItem={renderItem}
+                data={slides}
+                onDone={onDone}
+                // renderNextButton={_renderNextButton}
+                activeDotColor={COLOR.themeBlue}
+                renderDoneButton={renderDoneButton}
+                renderNextButton={renderNextButton}
+            />
+        </>
     );
 }

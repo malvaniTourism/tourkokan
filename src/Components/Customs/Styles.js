@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
         borderRadius: DIMENSIONS.borderRadiusLarge,
         resizeMode: "cover",
         borderColor: COLOR.grey,
-        borderWidth: .5
+        borderWidth: 0.5,
     },
 });
 

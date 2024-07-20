@@ -168,7 +168,8 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
 
     return (
         <KeyboardAvoidingView
-            behavior="padding"
+            enabled
+            behavior="position"
             style={{ marginVertical: 20, zIndex: 50 }}
         >
             <View style={styles.fieldsView}>

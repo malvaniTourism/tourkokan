@@ -176,6 +176,10 @@ const HomeScreen = ({ navigation, route, ...props }) => {
     useFocusEffect(
         React.useCallback(async () => {
             if ((await AsyncStorage.getItem("isUpdated")) == "true") {
+                setIsLoading(true);
+                setCities([]);
+                setRoutes([]);
+                setBannerObject([]);
                 props.setLoader(true);
                 callLandingPageAPI();
             }

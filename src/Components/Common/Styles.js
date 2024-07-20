@@ -419,6 +419,35 @@ const styles = StyleSheet.create({
     privacyButtons: {
         width: DIMENSIONS.halfWidth - 80,
     },
+    galleryContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    mainImage: {
+        width: DIMENSIONS.screenWidth,
+        height: (DIMENSIONS.screenHeight / 100) * 40,
+        resizeMode: 'cover',
+    },
+    thumbnailView: {
+        position: "absolute",
+        alignItems: "flex-end",
+        flexDirection: "row",
+        height: (DIMENSIONS.screenHeight / 100) * 40,
+        bottom: 30,
+        maxWidth: DIMENSIONS.bannerWidth
+    },
+    thumbnailList: {
+        backgroundColor: COLOR.white,
+        padding: 5,
+        borderRadius: DIMENSIONS.borderRadiusXXS,
+    },
+    thumbnail: {
+        width: DIMENSIONS.iconX,
+        height: DIMENSIONS.iconX,
+        marginHorizontal: 5,
+        resizeMode: 'cover',
+    },
 });
 
 export default styles;

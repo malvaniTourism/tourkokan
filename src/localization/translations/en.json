@@ -10,6 +10,8 @@
     "GOOGLE_API_KEY": "AIzaSyCUUzdHc1ccGZhOzia9NoPf8mf3Yv901ZQ",
     "WELCOME": "Welcome back to",
     "BUTTON": {
+        "YES": "Yes",
+        "NO": "No",
         "OK": "Ok",
         "CANCEL": "Cancel",
         "ACCEPT": "Accept",
@@ -136,7 +138,8 @@
         "ADDING_SOON": "We are adding new places inside this category soon..!",
         "LOADING": "Loading...",
         "ERROR_CURRENT_LOCATION": "Error getting current location: ",
-        "FETCHING_TEXT": "We are getting your location please wait"
+        "FETCHING_TEXT": "We are getting your location please wait",
+        "LOGOUT_ALERT": "Do you real want to Logout?"
     },
     "TABLE": {
         "CITY": "City",
@@ -211,7 +214,7 @@
     "OTP_VERIFICATION": "OTP Verification",
     "WE_HAVE_SENT": "We have sent an OTP to verify your email.",
     "SENT_TO": "Sent to ",
-    "RESEND_WITHIN": "You can resend your OTP within (00:",
+    "RESEND_WITHIN": "You can resend your OTP within (00:_)",
     "DIDNT_RECEIVE": "Haven't received OTP yet? ",
     "HAVE_ACC": "Already have an Account? ",
     "TAKEN": "already been taken",
@@ -244,6 +247,7 @@
     "NO_ROUTES": "No Routes Available",
     "SET_LOCATION": "Set Your Primary Location",
     "NO_INTERNET": "Please check your connectivity... Once data is synced you can use offline.",
+    "NO_INTERNET_MAP": "Please check your connectivity... Internet connection is mandatory to load Map.",
     "LOADER_TEXT": "Picking Up Your Data...",
     "ADDED": "Places will be added soon...",
     "NO_COMMENTS": "No comments yet",
