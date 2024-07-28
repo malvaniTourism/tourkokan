@@ -33,10 +33,7 @@ const Accordion = ({ data, navigation }) => {
                     },
                 ]}
             >
-                <Image
-                    source={{ uri: Path.FTP_PATH + item.icon }}
-                    style={styles.catCardIcon}
-                />
+                <Image source={{ uri: item.icon }} style={styles.catCardIcon} />
                 <GlobalText style={styles.accordHeaderText} text={item.name} />
                 <Ionicons
                     name="chevron-down"

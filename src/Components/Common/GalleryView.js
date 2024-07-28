@@ -3,9 +3,9 @@ import { View, FlatList, Image, TouchableOpacity } from "react-native";
 import ImageViewing from "react-native-image-viewing";
 import styles from "./Styles";
 import Path from "../../Services/Api/BaseUrl";
+import FastImage from "react-native-fast-image";
 
 const ImageViewer = ({ images }) => {
-    console.log("images -  ", images);
     const [selectedImage, setSelectedImage] = useState(images[0]);
     const [isVisible, setIsVisible] = useState(false);
 
@@ -25,9 +25,14 @@ const ImageViewer = ({ images }) => {
 
     return (
         <View style={styles.galleryContainer}>
-            <Image
-                source={{ uri: Path.FTP_PATH + selectedImage.path }}
+            <FastImage
                 style={styles.mainImage}
+                source={{
+                    uri: Path.FTP_PATH + selectedImage.path,
+                    headers: { Authorization: "someAuthToken" },
+                    priority: FastImage.priority.normal,
+                }}
+                // resizeMode={FastImage.resizeMode.contain}
             />
             <View style={styles.thumbnailView}>
                 <FlatList

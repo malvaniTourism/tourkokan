@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { KeyboardAvoidingView, View } from "react-native";
+import { KeyboardAvoidingView, ScrollView, View } from "react-native";
 import { SrcDest } from "../../Services/Constants/FIELDS";
 import TextButton from "../Customs/Buttons/TextButton";
 import TextField from "../Customs/TextField";
@@ -240,13 +240,13 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
                 raised={false}
                 onPress={gotoRoutes}
             />
-            <KeyboardAvoidingView
-                behavior="height"
+            <ScrollView
                 style={{
                     position: "absolute",
                     width: DIMENSIONS.bannerWidth,
                     top: 160,
                 }}
+                nestedScrollEnabled={true}
             >
                 {placesList[0] && (
                     <SearchDropdown
@@ -256,7 +256,7 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
                         closeDropdown={() => closeDropdown()}
                     />
                 )}
-            </KeyboardAvoidingView>
+            </ScrollView>
         </KeyboardAvoidingView>
     );
 };

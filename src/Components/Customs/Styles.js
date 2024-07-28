@@ -200,6 +200,7 @@ const styles = StyleSheet.create({
     },
     accordContent: {
         padding: 10,
+        alignItems: "center",
     },
     catCardIcon: {
         height: DIMENSIONS.iconX,

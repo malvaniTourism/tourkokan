@@ -9,6 +9,7 @@ import PasswordLogin from "../Screens/AuthScreens/PasswordLogin";
 import Email from "../Screens/AuthScreens/Email";
 import { useTranslation } from "react-i18next";
 import LangSelection from "../Screens/AuthScreens/LangSelection";
+import ContactUs from "../Screens/ContactUs";
 
 const SignIn = lazy(() => import("../Screens/AuthScreens/SignIn"));
 const SignUp = lazy(() => import("../Screens/AuthScreens/SignUp"));
@@ -22,6 +23,7 @@ const Explore = lazy(() => import("../Screens/ListPages/Explore"));
 const Categories = lazy(() => import("../Screens/ListPages/Categories"));
 const ExploreGrid = lazy(() => import("../Screens/ListPages/ExploreGrid"));
 const ProjectList = lazy(() => import("../Screens/ListPages/ProjectList"));
+const QueriesList = lazy(() => import("../Screens/ListPages/QueriesList"));
 const CityPlaceSearch = lazy(() =>
     import("../Screens/ListPages/CityPlaceSearch")
 );
@@ -173,6 +175,14 @@ const StackNavigator = () => {
                         <Stack.Screen
                             name={t("SCREEN.PROJECT_LIST")}
                             component={ProjectList}
+                        />
+                        <Stack.Screen
+                            name={t("SCREEN.QUERIES_LIST")}
+                            component={QueriesList}
+                        />
+                        <Stack.Screen
+                            name={t("SCREEN.CONTACT_US")}
+                            component={ContactUs}
                         />
                         <Stack.Screen
                             name={t("SCREEN.STOP_LIST")}

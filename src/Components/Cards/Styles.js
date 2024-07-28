@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLOR.white,
         justifyContent: "center",
         alignItems: "center",
-        flexDirection: "row",
+        flexDirection: "column",
     },
     subCatCard1: {
         width: DIMENSIONS.iconCard,
@@ -219,6 +219,7 @@ const styles = StyleSheet.create({
         ...StyleSheet.absoluteFillObject,
         // backgroundColor: COLOR.black,
         borderRadius: DIMENSIONS.borderRadius,
+        height: DIMENSIONS.bannerWidth / 1.19,
     },
     cityLikeView: {
         backgroundColor: COLOR.white,

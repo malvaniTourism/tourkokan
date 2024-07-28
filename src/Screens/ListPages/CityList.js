@@ -74,13 +74,23 @@ const CityList = ({ navigation, route, ...props }) => {
 
     const fetchCities = (page, reset = false) => {
         setLoading(true);
-        let data = {
-            apitype: "list",
-            parent_id: route?.params?.parent_id,
-            category: route?.params?.subCat?.code || "other",
-            per_page: 20,
-            page: page,
-        };
+        let data = {};
+        if (route?.params?.subCat) {
+            data = {
+                apitype: "list",
+                parent_id: route?.params?.parent_id,
+                category: route?.params?.subCat || "",
+                per_page: 20,
+                page: page,
+            };
+        } else {
+            data = {
+                apitype: "list",
+                parent_id: route?.params?.parent_id,
+                per_page: 20,
+                page: page,
+            };
+        }
         comnPost(`v2/sites`, data, navigation)
             .then((res) => {
                 if (res && res.data.data) {

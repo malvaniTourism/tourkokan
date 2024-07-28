@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginLeft: 10,
         marginBottom: -10,
-        fontWeight: 500,
+        fontWeight: "500",
     },
     containerStyle: {
         borderWidth: 1,
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
     profileContainer: {
         alignItems: "center",
         zIndex: 10,
-        marginTop: -15,
+        marginTop: -30,
     },
     profilePhoto: {
         width: DIMENSIONS.detailsImage,
@@ -490,7 +490,6 @@ const styles = StyleSheet.create({
         backgroundColor: COLOR.themeBlue,
         borderRadius: DIMENSIONS.borderRadiusXS,
         alignSelf: "flex-end",
-        marginTop: -DIMENSIONS.bannerHeight + -80,
         marginRight: 20,
     },
     buttonTitleStyle: {
@@ -548,6 +547,12 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: COLOR.black,
         fontStyle: "italic",
+    },
+    coinsView: {
+        marginBottom: -20,
+        marginLeft: DIMENSIONS.bannerWidth - 60,
+        alignItems: "center",
+        justifyContent: "center",
     },
 });
 

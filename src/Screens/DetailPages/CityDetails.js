@@ -121,17 +121,16 @@ const CityDetails = ({ navigation, route, ...props }) => {
     const onHeartClick = async () => {
         props.setLoader(true);
         setIsFav(!isFav);
+        route.params.city.is_favorite = !isFav;
         let placeData = {
             user_id: await AsyncStorage.getItem(t("STORAGE.USER_ID")),
             favouritable_type: t("TABLE.SITE"),
             favouritable_id: city.id,
         };
-        console.log(placeData);
         comnPost("v2/addDeleteFavourite", placeData)
             .then((res) => {
                 AsyncStorage.setItem("isUpdated", "true");
                 props.setLoader(false);
-                console.log("esr - ", res.data);
                 // getDetails()
             })
             .catch((err) => {

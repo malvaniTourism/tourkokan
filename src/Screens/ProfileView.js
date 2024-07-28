@@ -41,6 +41,8 @@ import MapContainer from "../Components/Common/MapContainer";
 import MapSkeleton from "../Components/Common/MapSkeleton";
 import { launchImageLibrary } from "react-native-image-picker";
 import Popup from "../Components/Common/Popup";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import DIMENSIONS from "../Services/Constants/DIMENSIONS";
 
 const ProfileView = ({ navigation, route, ...props }) => {
     const { t, i18n } = useTranslation();
@@ -161,12 +163,6 @@ const ProfileView = ({ navigation, route, ...props }) => {
                 //Setting state Longitude to re re-render the Longitude Text
                 setCurrentLatitude(currentLatitude);
                 //Setting state Latitude to re re-render the Longitude Text
-                console.log(
-                    "setCurrentLatitude =  = ",
-                    currentLatitude,
-                    "   -   ",
-                    currentLongitude
-                );
             },
             (error) => {
                 setLocationStatus(error.message);
@@ -188,12 +184,6 @@ const ProfileView = ({ navigation, route, ...props }) => {
                 //Setting state Longitude to re re-render the Longitude Text
                 setCurrentLatitude(currentLatitude);
                 //Setting state Latitude to re re-render the Longitude Text
-                console.log(
-                    "setCurrentLatitude 1 =  = ",
-                    currentLatitude,
-                    "   -   ",
-                    currentLongitude
-                );
             },
             (error) => {
                 setLocationStatus(error.message);
@@ -333,6 +323,14 @@ const ProfileView = ({ navigation, route, ...props }) => {
             <Loader />
 
             <View style={styles.profileContainer}>
+                <View style={styles.coinsView}>
+                    <FontAwesome5
+                        name="coins"
+                        color={COLOR.yellow}
+                        size={DIMENSIONS.iconSize}
+                    />
+                    <GlobalText text={profile.wallets_sum_amount} />
+                </View>
                 {imageSource ? (
                     <Image
                         source={{ uri: imageSource }}

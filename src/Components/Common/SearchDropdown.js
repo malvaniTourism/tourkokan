@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, KeyboardAvoidingView } from "react-native";
+import { FlatList, KeyboardAvoidingView, ScrollView } from "react-native";
 import { ListItem } from "@rneui/themed";
 import styles from "./Styles";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -15,11 +15,7 @@ const SearchDropdown = ({
 }) => {
     const renderItem = ({ item }) => {
         return (
-            <ListItem
-                nestedScrollEnabled
-                bottomDivider
-                onPress={() => setPlace(item)}
-            >
+            <ListItem bottomDivider onPress={() => setPlace(item)}>
                 <ListItem.Content>
                     <ListItem.Title>{item.name}</ListItem.Title>
                 </ListItem.Content>
@@ -28,7 +24,7 @@ const SearchDropdown = ({
     };
 
     return (
-        <KeyboardAvoidingView
+        <ScrollView
             behavior="height"
             nestedScrollEnabled
             style={[styles.searchDropView, style]}
@@ -46,9 +42,9 @@ const SearchDropdown = ({
                 renderItem={renderItem}
                 // onEndReached={goToNext}
                 nestedScrollEnabled
-                style={{ marginBottom: 20 }}
+                style={{ marginBottom: 20, overflow: "scroll", height: 330 }}
             />
-        </KeyboardAvoidingView>
+        </ScrollView>
     );
 };
 

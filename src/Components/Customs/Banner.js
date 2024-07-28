@@ -4,6 +4,7 @@ import Carousel from "react-native-reanimated-carousel";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import styles from "./Styles";
 import Path from "../../Services/Api/BaseUrl";
+import FastImage from "react-native-fast-image";
 
 class AnimationStyle extends Component {
     state = {
@@ -56,12 +57,22 @@ const Banner = ({ style, bannerImages }) => {
                 scrollAnimationDuration={3000}
                 // onSnapToItem={(index) => console.log("current index:", index)}
                 renderItem={({ index }) => (
-                    <AnimationStyle
+                    <FastImage
+                        style={styles.bannerImage}
                         source={{
                             uri: `${Path.FTP_PATH}${bannerImages[index].image}`,
+                            headers: { Authorization: "someAuthToken" },
+                            priority: FastImage.priority.normal,
                         }}
-                        style={styles.bannerImage}
-                    ></AnimationStyle>
+                        // resizeMode={FastImage.resizeMode.contain}
+                    />
+                    // <AnimationStyle
+                    //     source={{
+                    //         uri: `${Path.FTP_PATH}${bannerImages[index].image}`,
+                    //     }}
+                    //     style={styles.bannerImage}
+                    // >
+                    // </AnimationStyle>
                 )}
             />
         </View>

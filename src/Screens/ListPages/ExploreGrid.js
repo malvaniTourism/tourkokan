@@ -27,6 +27,7 @@ import Search from "../../Components/Customs/Search";
 import { useTranslation } from "react-i18next";
 import GlobalText from "../../Components/Customs/Text";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
+import ExploreGridSkeleton from "./ExploreGridSkeleton";
 
 const ExploreGrid = ({ route, navigation, ...props }) => {
     const { t } = useTranslation();
@@ -45,8 +46,7 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
     useEffect(() => {
         const backHandler = goBackHandler(navigation);
         checkLogin(navigation);
-        props.setLoader(true);
-
+        setLoading(true);
         const unsubscribe = NetInfo.addEventListener((state) => {
             setOffline(!state.isConnected);
             if (state.isConnected) {
@@ -143,12 +143,12 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
     };
 
     const renderFooter = () => {
-        if (!loading) return null;
-        return (
-            <View style={{ paddingVertical: 20 }}>
-                <ActivityIndicator size="small" color={COLOR.primary} />
-            </View>
-        );
+        // if (!loading) return null;
+        // return (
+        //     <View style={{ paddingVertical: 20 }}>
+        //         <ActivityIndicator size="small" color={COLOR.primary} />
+        //     </View>
+        // );
     };
 
     return (
@@ -159,7 +159,7 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
             }
         >
             <CheckNet isOff={offline} />
-            <Loader />
+            {/* <Loader /> */}
             <Header
                 Component={
                     <Search
@@ -170,7 +170,9 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
                     />
                 }
             />
-            {gallery[0] ? (
+            {loading ? (
+                <ExploreGridSkeleton />
+            ) : gallery[0] ? (
                 <ResponsiveGrid
                     maxItemsPerColumn={3}
                     data={gallery}

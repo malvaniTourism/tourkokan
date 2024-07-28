@@ -4,6 +4,7 @@ import TabNavigator from "./TabNavigator";
 import ContactUs from "../Screens/ContactUs";
 import Emergency from "../Screens/Emergency";
 import { useTranslation } from "react-i18next";
+import QueriesList from "../Screens/ListPages/QueriesList";
 
 const Drawer = createDrawerNavigator();
 
@@ -17,7 +18,7 @@ const DrawerNavigator = () => {
             <Drawer.Screen name={t("SCREEN.EMERGENCY")} component={Emergency} />
             <Drawer.Screen
                 name={t("SCREEN.CONTACT_US")}
-                component={ContactUs}
+                component={QueriesList}
             />
             {/* <Drawer.Screen name={t("SCREEN.WEATHER")} component={Weather} /> */}
         </Drawer.Navigator>

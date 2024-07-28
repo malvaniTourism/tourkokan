@@ -86,6 +86,7 @@ const STRING = {
         ROUTES_LIST: "RoutesList",
         CITY_LIST: "CityList",
         PROJECT_LIST: "ProjectList",
+        QUERIES_LIST: "QueriesList",
         STOP_LIST: "StopList",
 
         PLACE_DETAILS: "PlaceDetails",

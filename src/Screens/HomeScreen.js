@@ -6,6 +6,8 @@ import {
     BackHandler,
     KeyboardAvoidingView,
     RefreshControl,
+    Keyboard,
+    Platform,
 } from "react-native";
 import SearchPanel from "../Components/Common/SearchPanel";
 import TopComponent from "../Components/Common/TopComponent";
@@ -40,6 +42,8 @@ import { useTranslation } from "react-i18next";
 import { useFocusEffect } from "@react-navigation/native";
 import BannerSkeleton from "../Components/Customs/BannerSkeleton";
 import Loader from "../Components/Customs/Loader";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import DIMENSIONS from "../Services/Constants/DIMENSIONS";
 
 const HomeScreen = ({ navigation, route, ...props }) => {
     const { t, i18n } = useTranslation();
@@ -86,6 +90,27 @@ const HomeScreen = ({ navigation, route, ...props }) => {
     const [profilePhoto, setProfilePhoto] = useState("");
     const [sindhudurg, setSindh] = useState({});
     const [refreshing, setRefreshing] = useState(false);
+    const [keyboardOffset, setKeyboardOffset] = useState(0);
+
+    useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener(
+            "keyboardDidShow",
+            (event) => {
+                setKeyboardOffset(event.endCoordinates.height);
+            }
+        );
+        const keyboardDidHideListener = Keyboard.addListener(
+            "keyboardDidHide",
+            () => {
+                setKeyboardOffset(0);
+            }
+        );
+
+        return () => {
+            keyboardDidShowListener.remove();
+            keyboardDidHideListener.remove();
+        };
+    }, []);
 
     useEffect(() => {
         setIsLoading(true);
@@ -213,6 +238,10 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                         t("STORAGE.LANDING_RESPONSE"),
                         JSON.stringify(res)
                     );
+                saveToStorage(
+                    t("STORAGE.CATEGORIES_RESPONSE"),
+                    JSON.stringify(res.data.data.categories)
+                );
                 i18n.changeLanguage(res.data.language);
                 setCities(res.data.data.cities);
                 setRoutes(res.data.data.routes);
@@ -305,7 +334,9 @@ const HomeScreen = ({ navigation, route, ...props }) => {
     };
 
     return (
-        <ScrollView
+        <KeyboardAwareScrollView
+            extraHeight={DIMENSIONS.halfHeight}
+            enableOnAndroid={true}
             stickyHeaderIndices={[0]}
             style={{ backgroundColor: COLOR.white }}
             refreshControl={
@@ -346,7 +377,11 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                 />
                             );
                         })} */}
-                <KeyboardAvoidingView style={{ marginTop: 25, zIndex: 10 }}>
+                <KeyboardAvoidingView
+                    style={{ marginTop: 25, zIndex: 10 }}
+                    behavior={Platform.OS === "ios" ? "padding" : "height"}
+                    keyboardVerticalOffset={keyboardOffset}
+                >
                     {isLoading ? (
                         <SearchPanelSkeleton />
                     ) : (
@@ -498,7 +533,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                 openLocationSheet={() => openLocationSheet()}
                 closeLocationSheet={() => closeLocationSheet()}
             />
-        </ScrollView>
+        </KeyboardAwareScrollView>
     );
 };
 

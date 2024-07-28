@@ -57,6 +57,7 @@
         "REQUEST_PAID_ADVERTISEMENT": "Request Paid Advertisement",
         "CONTACT_US": "Contact Us",
         "EMERGENCY": "Emergency",
+        "QUERIES": "Queries",
         "WEATHER": "Weather",
         "PROFILE": "Profile",
         "PROFILE_VIEW": "ProfileView",
@@ -86,6 +87,7 @@
         "ALL_ROUTES_SEARCH": "AllRoutesSearch",
         "CITY_LIST": "CityList",
         "PROJECT_LIST": "ProjectList",
+        "QUERIES_LIST": "QueriesList",
         "STOP_LIST": "StopList",
         "PLACE_DETAILS": "PlaceDetails",
         "PROJECT_DETAILS": "ProjectDetails",
@@ -108,12 +110,14 @@
         "ROUTES_RESPONSE": "routesResponse",
         "EXPLORE_CITIES_RESPONSE": "exploreCitiesResponse",
         "CATEGORIES_RESPONSE": "categoriesResponse",
-        "EMERGENCY": "Emergency"
+        "EMERGENCY": "Emergency",
+        "QUERIES": "Queries"
     },
     "HEADER": {
         "BUS_TIMINGS": "Bus Timings",
         "CONTACT_US": "Contact Us",
         "EMERGENCY": "Emergency",
+        "QUERIES": "Queries",
         "PRICING": "Pricing",
         "VERIFY_OTP": "Verify OTP",
         "CITY": "City",

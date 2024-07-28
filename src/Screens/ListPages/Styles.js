@@ -211,6 +211,12 @@ const styles = StyleSheet.create({
         height: "100%",
         borderRadius: 10,
     },
+    imageGridBoxSkeleton: {
+        width: DIMENSIONS.screenWidth / 3 - 6,
+        height: DIMENSIONS.screenWidth / 3 - 6,
+        borderRadius: 5,
+        margin: 1,
+    },
 });
 
 export default styles;

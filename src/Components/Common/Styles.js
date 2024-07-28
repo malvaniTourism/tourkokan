@@ -222,6 +222,7 @@ const styles = StyleSheet.create({
         borderColor: COLOR.themeBlue,
         backgroundColor: COLOR.cardBackground,
         height: 400,
+        overflow: "scroll",
     },
     dropCloseIcon: {
         alignSelf: "flex-end",

@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLOR.themeBlue,
         borderRadius: DIMENSIONS.borderRadiusXS,
         alignSelf: "flex-end",
-        marginTop: 200,
+        marginTop: 10,
         marginRight: 20,
     },
     profileButtonStyle: {
@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
         backgroundColor: COLOR.themeBlue,
         borderRadius: DIMENSIONS.borderRadiusXS,
         alignSelf: "flex-end",
-        marginTop: 130,
         marginRight: 20,
     },
     buttonTitleStyle: {

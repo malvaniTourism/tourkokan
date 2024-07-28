@@ -19,7 +19,7 @@ import { useTranslation } from "react-i18next";
 import GlobalText from "../Components/Customs/Text";
 import DocumentPicker from "react-native-document-picker";
 
-const ContactUs = ({ navigation, route, ...props }) => {
+const ContactUs = ({ navigation, route, setStep, ...props }) => {
     const { t } = useTranslation();
 
     const [email, setEmail] = useState("");
@@ -98,6 +98,7 @@ const ContactUs = ({ navigation, route, ...props }) => {
 
     const closePopup = () => {
         setIsAlert(false);
+        setStep(0);
     };
 
     const selectFile = async () => {
@@ -118,34 +119,12 @@ const ContactUs = ({ navigation, route, ...props }) => {
 
     return (
         <View style={{ backgroundColor: COLOR.white }}>
-            <Header
-                name={t("HEADER.CONTACT_US")}
-                goBack={() => backPage(navigation)}
-                startIcon={
-                    <Ionicons
-                        name="chevron-back-outline"
-                        size={24}
-                        onPress={() => backPage(navigation)}
-                        color={COLOR.black}
-                    />
-                }
-                endIcon={<></>}
-            />
-            <Loader />
-            <GlobalText
-                text={t("CONNECT")}
-                style={{
-                    textAlign: "left",
-                    marginLeft: 20,
-                    marginVertical: 10,
-                    fontSize: DIMENSIONS.headerTextSize,
-                }}
-            />
             <View
                 style={{
                     alignItems: "center",
                     height: DIMENSIONS.screenHeight,
                     backgroundColor: COLOR.white,
+                    marginTop: -19,
                 }}
             >
                 {ContactUsFields.map((field, index) => {
@@ -172,19 +151,13 @@ const ContactUs = ({ navigation, route, ...props }) => {
                         </View>
                     );
                 })}
-                {/* <TextButton
-          title={t("BUTTON.ATTACHMENT")}
-          buttonView={styles.attachmentButtonStyle}
-          titleStyle={styles.attachmentTitleStyle}
-          onPress={selectFile}
-        /> */}
+                <TextButton
+                    title={t("BUTTON.SEND")}
+                    buttonView={styles.searchButtonStyle}
+                    titleStyle={styles.buttonTitleStyle}
+                    onPress={submit}
+                />
             </View>
-            <TextButton
-                title={t("BUTTON.SEND")}
-                buttonView={styles.searchButtonStyle}
-                titleStyle={styles.buttonTitleStyle}
-                onPress={submit}
-            />
             <Popup
                 message={alertMessage}
                 onPress={closePopup}

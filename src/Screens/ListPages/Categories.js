@@ -6,6 +6,7 @@ import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import {
     comnPost,
     dataSync,
+    getFromStorage,
     saveToStorage,
 } from "../../Services/Api/CommonServices";
 import { connect } from "react-redux";
@@ -57,13 +58,10 @@ const Categories = ({ route, navigation, ...props }) => {
 
             dataSync(t("STORAGE.CATEGORIES_RESPONSE"), getCategories()).then(
                 (resp) => {
-                    let res = JSON.parse(resp);
-                    if (res.data && res.data.data) {
-                        setCategories(res.data.data.data);
-                        setSelectedCategory(res.data.data.data[0].name);
-                        setSelectedSubCategory(
-                            res.data.data.data[0].sub_categories
-                        );
+                    if (resp) {
+                        setCategories(cats);
+                        setSelectedCategory(cats[0].name);
+                        setSelectedSubCategory(cats[0].sub_categories);
                     } else if (resp) {
                         setOffline(true);
                     }
@@ -83,33 +81,18 @@ const Categories = ({ route, navigation, ...props }) => {
         getCategories();
     };
 
-    const getCategories = () => {
+    const getCategories = async () => {
         setIsLoading(true);
-        let data = {
-            parent_list: "1",
-            // parent_id: 1,
-            per_page: "2",
-        };
-        comnPost("v2/listcategories", data, navigation)
-            .then((res) => {
-                if (res && res.data.data)
-                    saveToStorage(
-                        t("STORAGE.CATEGORIES_RESPONSE"),
-                        JSON.stringify(res)
-                    );
-                setCategories(res.data.data.data);
-                setSelectedCategory(res.data.data.data[0].name);
-                setSelectedSubCategory(res.data.data.data[0].sub_categories);
-                // setSelectedSubCategory(res.data.data.data[0].sub_categories)
-                setIsLoading(false);
-                props.setLoader(false);
-                setRefreshing(false);
-            })
-            .catch((error) => {
-                setIsLoading(false);
-                props.setLoader(false);
-                setRefreshing(false);
-            });
+        let cat = await getFromStorage(t("STORAGE.CATEGORIES_RESPONSE"));
+        let cats = JSON.parse(cat);
+        setCategories(cats);
+        setSelectedCategory(cats[0].name);
+        setSelectedSubCategory(cats[0].sub_categories);
+        // setSelectedSubCategory(cats[0].sub_categories)
+        setIsLoading(false);
+        props.setLoader(false);
+        setRefreshing(false);
+        return cats;
     };
 
     const handleCategoryPress = (category) => {
