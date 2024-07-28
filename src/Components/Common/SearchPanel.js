@@ -254,6 +254,7 @@ const SearchPanel = ({ navigation, from, onSwap, ...props }) => {
                         goToNext={goToNext}
                         setPlace={setPlace}
                         closeDropdown={() => closeDropdown()}
+                        height={330}
                     />
                 )}
             </ScrollView>

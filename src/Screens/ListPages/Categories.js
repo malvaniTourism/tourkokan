@@ -112,14 +112,7 @@ const Categories = ({ route, navigation, ...props }) => {
     };
 
     return (
-        <ScrollView
-            style={{ flex: 1, backgroundColor: COLOR.themeComicBlueULight }}
-            refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-        >
-            <Loader />
-            <CheckNet isOff={offline} />
+        <>
             <Header
                 name={t("SCREEN.CATEGORIES")}
                 startIcon={
@@ -131,7 +124,22 @@ const Categories = ({ route, navigation, ...props }) => {
                     />
                 }
             />
-            {/* <View style={styles.horizontalCategoriesScroll}>
+            <ScrollView
+                style={{
+                    flex: 1,
+                    backgroundColor: COLOR.themeComicBlueULight,
+                    marginTop: -20,
+                }}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
+            >
+                <Loader />
+                <CheckNet isOff={offline} />
+                {/* <View style={styles.horizontalCategoriesScroll}>
                 <ScrollView horizontal style={styles.categoriesButtonScroll}>
                     {isLoading ? (
                         <>
@@ -165,8 +173,8 @@ const Categories = ({ route, navigation, ...props }) => {
                 </ScrollView>
             </View> */}
 
-            <View style={styles.subCatContainer}>
-                {/* <View>
+                <View style={styles.subCatContainer}>
+                    {/* <View>
                     <GlobalText
                         text={t("HEADER.CLASSIFICATIONS")}
                         style={styles.subCatHeader}
@@ -188,9 +196,10 @@ const Categories = ({ route, navigation, ...props }) => {
                         />
                     </View>
                 </View> */}
-                <Accordion data={categories} navigation={navigation} />
-            </View>
-        </ScrollView>
+                    <Accordion data={categories} navigation={navigation} />
+                </View>
+            </ScrollView>
+        </>
     );
 };
 

@@ -206,7 +206,8 @@
         "LOGOUT": "Logout",
         "CHANGE_LANGUAGE": "Change Language",
         "SELECT_LANGUAGE": "Select Language",
-        "REFERRAL_CODE": "Referral Code"
+        "REFERRAL_CODE": "Referral Code",
+        "REFER_EARN": "Refer & Earn"
     },
     "ICON": {
         "NAME": "user",

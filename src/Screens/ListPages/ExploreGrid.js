@@ -152,14 +152,7 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
     };
 
     return (
-        <ScrollView
-            style={{ flex: 1 }}
-            refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-        >
-            <CheckNet isOff={offline} />
-            {/* <Loader /> */}
+        <>
             <Header
                 Component={
                     <Search
@@ -170,58 +163,70 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
                     />
                 }
             />
-            {loading ? (
-                <ExploreGridSkeleton />
-            ) : gallery[0] ? (
-                <ResponsiveGrid
-                    maxItemsPerColumn={3}
-                    data={gallery}
-                    renderItem={renderItem}
-                    showScrollIndicator={false}
-                    onEndReached={getScrollData}
-                    onEndReachedThreshold={0.1}
-                    style={{
-                        padding: 5,
-                        marginBottom: 70,
-                    }}
-                    keyExtractor={(item) => item.id.toString()}
-                    ListFooterComponent={renderFooter}
-                />
-            ) : (
-                <View
-                    style={{
-                        height: DIMENSIONS.screenHeight,
-                        alignItems: "center",
-                        padding: 50,
-                    }}
-                >
-                    <GlobalText
-                        style={{ fontWeight: "bold" }}
-                        text={offline ? t("NO_INTERNET") : t("NO_DATA")}
+            <ScrollView
+                style={{ flex: 1 }}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
                     />
-                </View>
-            )}
-            <Modal
-                visible={isModalVisible}
-                transparent={true}
-                onRequestClose={closeModal}
+                }
             >
-                <View style={styles.modalContainer}>
-                    <TouchableOpacity
-                        style={styles.modalBackground}
-                        onPress={closeModal}
+                <CheckNet isOff={offline} />
+                {/* <Loader /> */}
+                {loading ? (
+                    <ExploreGridSkeleton />
+                ) : gallery[0] ? (
+                    <ResponsiveGrid
+                        maxItemsPerColumn={3}
+                        data={gallery}
+                        renderItem={renderItem}
+                        showScrollIndicator={false}
+                        onEndReached={getScrollData}
+                        onEndReachedThreshold={0.1}
+                        style={{
+                            padding: 5,
+                            marginBottom: 70,
+                        }}
+                        keyExtractor={(item) => item.id.toString()}
+                        ListFooterComponent={renderFooter}
+                    />
+                ) : (
+                    <View
+                        style={{
+                            height: DIMENSIONS.screenHeight,
+                            alignItems: "center",
+                            padding: 50,
+                        }}
                     >
-                        <View style={styles.modalContent}>
-                            <Image
-                                source={{ uri: selectedImage }}
-                                style={styles.modalImage}
-                                resizeMode="contain"
-                            />
-                        </View>
-                    </TouchableOpacity>
-                </View>
-            </Modal>
-        </ScrollView>
+                        <GlobalText
+                            style={{ fontWeight: "bold" }}
+                            text={offline ? t("NO_INTERNET") : t("NO_DATA")}
+                        />
+                    </View>
+                )}
+                <Modal
+                    visible={isModalVisible}
+                    transparent={true}
+                    onRequestClose={closeModal}
+                >
+                    <View style={styles.modalContainer}>
+                        <TouchableOpacity
+                            style={styles.modalBackground}
+                            onPress={closeModal}
+                        >
+                            <View style={styles.modalContent}>
+                                <Image
+                                    source={{ uri: selectedImage }}
+                                    style={styles.modalImage}
+                                    resizeMode="contain"
+                                />
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                </Modal>
+            </ScrollView>
+        </>
     );
 };
 

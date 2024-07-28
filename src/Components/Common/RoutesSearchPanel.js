@@ -232,7 +232,13 @@ const RoutesSearchPanel = ({
                 raised={false}
                 onPress={gotoRoutes}
             />
-            <View style={{ position: "relative" }}>
+            <View
+                style={{
+                    position: "relative",
+                    marginTop: -50,
+                    marginBottom: 50,
+                }}
+            >
                 {placesList[0] && (
                     <SearchDropdown
                         placesList={placesList}

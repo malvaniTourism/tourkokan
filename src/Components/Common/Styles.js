@@ -8,6 +8,10 @@ const styles = StyleSheet.create({
         height: DIMENSIONS.headerHeight,
     },
     topComponent: {
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1000,
         width: DIMENSIONS.windowWidth,
         zIndex: 10,
     },
@@ -132,7 +136,9 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
     headerMain: {
-        // flex: 1,
+        top: 0,
+        left: 0,
+        right: 0,
         height: DIMENSIONS.headerHeight,
         width: DIMENSIONS.screenWidth,
         backgroundColor: COLOR.white,
@@ -221,7 +227,7 @@ const styles = StyleSheet.create({
         borderRadius: DIMENSIONS.borderRadiusSmall,
         borderColor: COLOR.themeBlue,
         backgroundColor: COLOR.cardBackground,
-        height: 400,
+        height: DIMENSIONS.screenWidth,
         overflow: "scroll",
     },
     dropCloseIcon: {

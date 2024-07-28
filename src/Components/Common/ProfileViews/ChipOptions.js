@@ -86,7 +86,7 @@ const ChipOptions = ({
                 clickChip={logoutClick}
             />
             <CodeChip
-                name={`${t("CHIPS.REFERRAL_CODE")} - ${uid}`}
+                name={t("CHIPS.REFER_EARN")}
                 icon={
                     <View style={styles.chipIcon}>
                         <Feather name="hash" size={20} color={COLOR.white} />

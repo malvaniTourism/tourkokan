@@ -334,16 +334,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
     };
 
     return (
-        <KeyboardAwareScrollView
-            extraHeight={DIMENSIONS.halfHeight}
-            enableOnAndroid={true}
-            stickyHeaderIndices={[0]}
-            style={{ backgroundColor: COLOR.white }}
-            refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-        >
-            <CheckNet isOff={offline} />
+        <>
             {isLoading ? (
                 <TopComponentSkeleton />
             ) : (
@@ -357,17 +348,30 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                     profilePhoto={profilePhoto}
                 />
             )}
-            {/* <MyAnimatedLoader isVisible={isLoading} /> */}
-            <Loader />
-            <View style={{ flex: 1, alignItems: "center" }}>
-                {isLoading ? (
-                    <BannerSkeleton />
-                ) : bannerObject[0] ? (
-                    <Banner bannerImages={bannerObject} />
-                ) : (
-                    <Banner bannerImages={bannerImages} />
-                )}
-                {/* {CityName.map((field, index) => {
+            <KeyboardAwareScrollView
+                extraHeight={DIMENSIONS.halfHeight}
+                enableOnAndroid={true}
+                stickyHeaderIndices={[0]}
+                style={{ backgroundColor: COLOR.white }}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
+            >
+                <CheckNet isOff={offline} />
+                {/* <MyAnimatedLoader isVisible={isLoading} /> */}
+                <Loader />
+                <View style={{ flex: 1, alignItems: "center" }}>
+                    {isLoading ? (
+                        <BannerSkeleton />
+                    ) : bannerObject[0] ? (
+                        <Banner bannerImages={bannerObject} />
+                    ) : (
+                        <Banner bannerImages={bannerImages} />
+                    )}
+                    {/* {CityName.map((field, index) => {
                             return (
                                 <SearchBar
                                     style={styles.homeSearchBar}
@@ -377,79 +381,127 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                 />
                             );
                         })} */}
-                <KeyboardAvoidingView
-                    style={{ marginTop: 25, zIndex: 10 }}
-                    behavior={Platform.OS === "ios" ? "padding" : "height"}
-                    keyboardVerticalOffset={keyboardOffset}
-                >
-                    {isLoading ? (
-                        <SearchPanelSkeleton />
-                    ) : (
-                        <SearchPanel
-                            route={route}
-                            navigation={navigation}
-                            from={t("SCREEN.HOME")}
-                        />
-                    )}
-                </KeyboardAvoidingView>
-                <View style={styles.headerContainer}>
-                    <View>
+                    <KeyboardAvoidingView
+                        style={{ marginTop: 25, zIndex: 10 }}
+                        behavior={Platform.OS === "ios" ? "padding" : "height"}
+                        keyboardVerticalOffset={keyboardOffset}
+                    >
                         {isLoading ? (
-                            <View style={styles.flexAroundSkeleton}>
-                                <Skeleton
-                                    animation="pulse"
-                                    variant="text"
-                                    style={{ width: 100, height: 30 }}
-                                />
-                                <Skeleton
-                                    animation="pulse"
-                                    variant="text"
-                                    style={{ width: 100, height: 30 }}
-                                />
-                            </View>
+                            <SearchPanelSkeleton />
                         ) : (
-                            <View style={styles.flexAround}>
-                                <GlobalText
-                                    text={t("ROUTES")}
-                                    style={styles.sectionTitle}
-                                />
-                                <TextButton
-                                    title={t("BUTTON.SEE_ALL")}
-                                    onPress={() =>
-                                        showMore(t("SCREEN.ALL_ROUTES_SEARCH"))
-                                    }
-                                    buttonView={styles.buttonView}
-                                    titleStyle={styles.titleStyle}
-                                />
-                            </View>
+                            <SearchPanel
+                                route={route}
+                                navigation={navigation}
+                                from={t("SCREEN.HOME")}
+                            />
                         )}
+                    </KeyboardAvoidingView>
+                    <View style={styles.headerContainer}>
+                        <View>
+                            {isLoading ? (
+                                <View style={styles.flexAroundSkeleton}>
+                                    <Skeleton
+                                        animation="pulse"
+                                        variant="text"
+                                        style={{ width: 100, height: 30 }}
+                                    />
+                                    <Skeleton
+                                        animation="pulse"
+                                        variant="text"
+                                        style={{ width: 100, height: 30 }}
+                                    />
+                                </View>
+                            ) : (
+                                <View style={styles.flexAround}>
+                                    <GlobalText
+                                        text={t("ROUTES")}
+                                        style={styles.sectionTitle}
+                                    />
+                                    <TextButton
+                                        title={t("BUTTON.SEE_ALL")}
+                                        onPress={() =>
+                                            showMore(
+                                                t("SCREEN.ALL_ROUTES_SEARCH")
+                                            )
+                                        }
+                                        buttonView={styles.buttonView}
+                                        titleStyle={styles.titleStyle}
+                                    />
+                                </View>
+                            )}
+                        </View>
+                        <View style={styles.cardsWrap}>
+                            {isLoading ? (
+                                <>
+                                    <RouteHeadCardSkeleton />
+                                    <RouteHeadCardSkeleton />
+                                    <RouteHeadCardSkeleton />
+                                </>
+                            ) : (
+                                routes.map(
+                                    (route, index) =>
+                                        route && (
+                                            <RouteHeadCard
+                                                data={route}
+                                                bus={"Hirkani"}
+                                                cardClick={() =>
+                                                    getRoutesList(route)
+                                                }
+                                            />
+                                        )
+                                )
+                            )}
+                        </View>
                     </View>
-                    <View style={styles.cardsWrap}>
-                        {isLoading ? (
-                            <>
-                                <RouteHeadCardSkeleton />
-                                <RouteHeadCardSkeleton />
-                                <RouteHeadCardSkeleton />
-                            </>
-                        ) : (
-                            routes.map(
-                                (route, index) =>
-                                    route && (
-                                        <RouteHeadCard
-                                            data={route}
-                                            bus={"Hirkani"}
-                                            cardClick={() =>
-                                                getRoutesList(route)
-                                            }
-                                        />
-                                    )
-                            )
-                        )}
-                    </View>
-                </View>
 
-                <View style={styles.sectionView}>
-                    <View style={{ marginTop: 20 }}>
+                    <View style={styles.sectionView}>
+                        <View style={{ marginTop: 20 }}>
+                            {isLoading ? (
+                                <Skeleton
+                                    animation="pulse"
+                                    variant="text"
+                                    style={styles.buttonSkeleton}
+                                />
+                            ) : (
+                                <View style={styles.flexAround}>
+                                    <GlobalText
+                                        text={t("CITIES")}
+                                        style={styles.sectionTitle}
+                                    />
+                                    <TextButton
+                                        title={t("BUTTON.SEE_ALL")}
+                                        onPress={() =>
+                                            showMore(
+                                                t("SCREEN.CITY_LIST"),
+                                                "city"
+                                            )
+                                        }
+                                        buttonView={styles.buttonView}
+                                        titleStyle={styles.titleStyle}
+                                    />
+                                </View>
+                            )}
+                        </View>
+                        <ScrollView horizontal style={{ marginLeft: 5 }}>
+                            {isLoading ? (
+                                <>
+                                    <CityCardSmallSkeleton />
+                                    <CityCardSmallSkeleton />
+                                    <CityCardSmallSkeleton />
+                                </>
+                            ) : (
+                                cities.map((city, index) => (
+                                    <CityCardSmall
+                                        data={city}
+                                        reload={() => {
+                                            callLandingPageAPI();
+                                        }}
+                                        navigation={navigation}
+                                        onClick={() => getCityDetails(city)}
+                                    />
+                                ))
+                            )}
+                        </ScrollView>
                         {isLoading ? (
                             <Skeleton
                                 animation="pulse"
@@ -457,83 +509,41 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                                 style={styles.buttonSkeleton}
                             />
                         ) : (
-                            <View style={styles.flexAround}>
-                                <GlobalText
-                                    text={t("CITIES")}
-                                    style={styles.sectionTitle}
-                                />
-                                <TextButton
-                                    title={t("BUTTON.SEE_ALL")}
-                                    onPress={() =>
-                                        showMore(t("SCREEN.CITY_LIST"), "city")
-                                    }
-                                    buttonView={styles.buttonView}
-                                    titleStyle={styles.titleStyle}
-                                />
-                            </View>
+                            <TextButton
+                                title={t("BUTTON.SEE_MORE")}
+                                onPress={() =>
+                                    showMore(t("SCREEN.CITY_LIST"), "city")
+                                }
+                                containerStyle={styles.showMore}
+                                buttonView={styles.buttonView}
+                                buttonStyle={styles.buttonStyle}
+                                titleStyle={styles.titleStyle}
+                                endIcon={
+                                    <Feather
+                                        name="chevrons-right"
+                                        size={24}
+                                        color={COLOR.themeBlue}
+                                    />
+                                }
+                            />
                         )}
                     </View>
-                    <ScrollView horizontal style={{ marginLeft: 5 }}>
-                        {isLoading ? (
-                            <>
-                                <CityCardSmallSkeleton />
-                                <CityCardSmallSkeleton />
-                                <CityCardSmallSkeleton />
-                            </>
-                        ) : (
-                            cities.map((city, index) => (
-                                <CityCardSmall
-                                    data={city}
-                                    reload={() => {
-                                        callLandingPageAPI();
-                                    }}
-                                    navigation={navigation}
-                                    onClick={() => getCityDetails(city)}
-                                />
-                            ))
-                        )}
-                    </ScrollView>
-                    {isLoading ? (
-                        <Skeleton
-                            animation="pulse"
-                            variant="text"
-                            style={styles.buttonSkeleton}
-                        />
-                    ) : (
-                        <TextButton
-                            title={t("BUTTON.SEE_MORE")}
-                            onPress={() =>
-                                showMore(t("SCREEN.CITY_LIST"), "city")
-                            }
-                            containerStyle={styles.showMore}
-                            buttonView={styles.buttonView}
-                            buttonStyle={styles.buttonStyle}
-                            titleStyle={styles.titleStyle}
-                            endIcon={
-                                <Feather
-                                    name="chevrons-right"
-                                    size={24}
-                                    color={COLOR.themeBlue}
-                                />
-                            }
-                        />
-                    )}
                 </View>
-            </View>
-            <BottomSheet
-                refRBSheet={refRBSheet}
-                height={300}
-                Component={
-                    <LocationSheet
-                        setCurrentCity={(name) => setCurrentCity(name)}
-                        openLocationSheet={() => openLocationSheet()}
-                        closeLocationSheet={() => closeLocationSheet()}
-                    />
-                }
-                openLocationSheet={() => openLocationSheet()}
-                closeLocationSheet={() => closeLocationSheet()}
-            />
-        </KeyboardAwareScrollView>
+                <BottomSheet
+                    refRBSheet={refRBSheet}
+                    height={300}
+                    Component={
+                        <LocationSheet
+                            setCurrentCity={(name) => setCurrentCity(name)}
+                            openLocationSheet={() => openLocationSheet()}
+                            closeLocationSheet={() => closeLocationSheet()}
+                        />
+                    }
+                    openLocationSheet={() => openLocationSheet()}
+                    closeLocationSheet={() => closeLocationSheet()}
+                />
+            </KeyboardAwareScrollView>
+        </>
     );
 };
 

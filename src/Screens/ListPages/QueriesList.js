@@ -96,7 +96,7 @@ const QueriesList = ({ navigation, route, ...props }) => {
         //     setRefreshing(false);
         //     return;
         // }
-
+        props.setLoader(true);
         setLoading(true);
         comnPost("v2/getQueries")
             .then((res) => {
@@ -112,16 +112,19 @@ const QueriesList = ({ navigation, route, ...props }) => {
                     setHasMore(!!res.data.data.next_page_url); // Check if there's more data
                     setNextPage(page + 1);
                     saveToStorage(t("STORAGE.QUERIES"), JSON.stringify(res));
+                    props.setLoader(false);
                 }
                 if (isMounted.current) {
                     setLoading(false);
                 }
                 setRefreshing(false);
+                props.setLoader(false);
             })
             .catch((error) => {
                 if (isMounted.current) {
                     setLoading(false);
                     setRefreshing(false);
+                    props.setLoader(false);
                 }
             });
     };
@@ -129,14 +132,6 @@ const QueriesList = ({ navigation, route, ...props }) => {
     const loadMoreData = () => {
         if (!loading && hasMore) {
             fetchData(nextPage);
-        }
-    };
-
-    const makeContact = (address, apptype) => {
-        const value = address[0][apptype];
-        if (value && typeof value === "string") {
-            const prefix = apptype === "phone" ? "tel" : "mailto";
-            Linking.openURL(`${prefix}:${value}`);
         }
     };
 
@@ -192,12 +187,7 @@ const QueriesList = ({ navigation, route, ...props }) => {
     };
 
     return (
-        <ScrollView
-            style={{ flex: 1 }}
-            refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-        >
+        <>
             <Header
                 name={t("HEADER.CONTACT_US")}
                 goBack={() => backPage(navigation)}
@@ -217,37 +207,47 @@ const QueriesList = ({ navigation, route, ...props }) => {
                     )
                 }
             />
-            <Loader />
-            <CheckNet isOff={offline} />
-            {step == 0 ? (
-                data[0] ? (
-                    <FlatList
-                        keyExtractor={(item) => item.id?.toString()}
-                        data={data}
-                        renderItem={renderItem}
-                        onEndReached={loadMoreData}
-                        onEndReachedThreshold={0.5}
-                        ListFooterComponent={renderFooter}
-                        style={{ marginBottom: 30, marginTop: -19 }}
+            <ScrollView
+                style={{ flex: 1 }}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
                     />
-                ) : (
-                    <View
-                        style={{
-                            height: DIMENSIONS.screenHeight,
-                            alignItems: "center",
-                            padding: 50,
-                        }}
-                    >
-                        <GlobalText
-                            style={{ fontWeight: "bold" }}
-                            text={offline ? t("NO_INTERNET") : t("NO_DATA")}
+                }
+            >
+                <Loader />
+                <CheckNet isOff={offline} />
+                {step == 0 ? (
+                    data[0] ? (
+                        <FlatList
+                            keyExtractor={(item) => item.id?.toString()}
+                            data={data}
+                            renderItem={renderItem}
+                            onEndReached={loadMoreData}
+                            onEndReachedThreshold={0.5}
+                            ListFooterComponent={renderFooter}
+                            style={{ marginBottom: 30, marginTop: -19 }}
                         />
-                    </View>
-                )
-            ) : (
-                <ContactUs setStep={setStep} />
-            )}
-        </ScrollView>
+                    ) : (
+                        <View
+                            style={{
+                                height: DIMENSIONS.screenHeight,
+                                alignItems: "center",
+                                padding: 50,
+                            }}
+                        >
+                            <GlobalText
+                                style={{ fontWeight: "bold" }}
+                                text={offline ? t("NO_INTERNET") : t("NO_DATA")}
+                            />
+                        </View>
+                    )
+                ) : (
+                    <ContactUs setStep={setStep} />
+                )}
+            </ScrollView>
+        </>
     );
 };
 

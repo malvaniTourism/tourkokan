@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../Screens/HomeScreen";
 import MapScreen from "../Screens/MapScreen";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import COLOR from "../Services/Constants/COLORS";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
@@ -80,8 +81,8 @@ const TabNavigator = () => {
                     pageName: `${t("SCREEN.CATEGORIES")}`,
                     tabBarLabel: `${t("SCREEN.CATEGORIES")}`,
                     tabBarIcon: ({ color, size }) => (
-                        <Ionicons
-                            name="md-person-circle-sharp"
+                        <MaterialIcons
+                            name="category"
                             color={COLOR.black}
                             size={DIMENSIONS.iconSize}
                         />

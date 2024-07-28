@@ -12,6 +12,7 @@ const SearchDropdown = ({
     setPlace,
     closeDropdown,
     style,
+    height,
 }) => {
     const renderItem = ({ item }) => {
         return (
@@ -42,7 +43,7 @@ const SearchDropdown = ({
                 renderItem={renderItem}
                 // onEndReached={goToNext}
                 nestedScrollEnabled
-                style={{ marginBottom: 20, overflow: "scroll", height: 330 }}
+                style={{ marginBottom: 20, overflow: "scroll", height }}
             />
         </ScrollView>
     );

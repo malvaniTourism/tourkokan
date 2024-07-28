@@ -99,6 +99,7 @@ const TopComponent = ({
                         style={styles.citiesDropdown}
                         setPlace={(v) => setCity(v)}
                         closeDropdown={() => toggleCityDropdown()}
+                        height={500}
                     />
                 </View>
             )}

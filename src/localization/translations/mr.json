@@ -207,7 +207,8 @@
         "LOGOUT": "लॉगआउट",
         "CHANGE_LANGUAGE": "भाषा बदला",
         "SELECT_LANGUAGE": "भाषा निवडा",
-        "REFERRAL_CODE": "रेफरल कोड"
+        "REFERRAL_CODE": "रेफरल कोड",
+        "REFER_EARN": "संदर्भ घ्या आणि कमवा"
     },
     "ICON": {
         "NAME": "user",

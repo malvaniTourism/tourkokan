@@ -239,8 +239,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
     };
 
     return (
-        <ScrollView style={{ backgroundColor: "#fff" }}>
-            <Loader />
+        <>
             <Header
                 name={""}
                 startIcon={
@@ -254,272 +253,286 @@ const CityDetails = ({ navigation, route, ...props }) => {
                 }
                 style={styles.cityHeader}
             />
+            <ScrollView style={{ backgroundColor: "#fff" }}>
+                <Loader />
 
-            {city && (
-                <View>
-                    <View style={styles.placeImageView}>
-                        {isLoading ? (
-                            <Skeleton
-                                animation="pulse"
-                                variant="text"
-                                style={styles.placeImage}
-                            />
-                        ) : city?.gallery[0] ? (
-                            <GalleryView images={city.gallery} />
-                        ) : (
-                            // <ImageBackground
-                            //     source={{ uri: Path.FTP_PATH + city.image }}
-                            //     style={styles.placeImage}
-                            // />
-                            <ImageBackground
-                                source={require("../../Assets/Images/nature.jpeg")}
-                                style={styles.placeImage}
-                                imageStyle={styles.cityImageStyle}
-                                resizeMode="cover"
-                            />
-                        )}
-                    </View>
-                    <View style={{ padding: 10 }}>
-                        {isLoading ? (
-                            <>
+                {city && (
+                    <View>
+                        <View style={styles.placeImageView}>
+                            {isLoading ? (
                                 <Skeleton
                                     animation="pulse"
                                     variant="text"
-                                    style={{ width: 130, height: 20 }}
+                                    style={styles.placeImage}
                                 />
-                                <Skeleton
-                                    animation="pulse"
-                                    variant="text"
-                                    style={{ marginTop: 5, width: 190 }}
+                            ) : city?.gallery[0] ? (
+                                <GalleryView images={city.gallery} />
+                            ) : (
+                                // <ImageBackground
+                                //     source={{ uri: Path.FTP_PATH + city.image }}
+                                //     style={styles.placeImage}
+                                // />
+                                <ImageBackground
+                                    source={require("../../Assets/Images/nature.jpeg")}
+                                    style={styles.placeImage}
+                                    imageStyle={styles.cityImageStyle}
+                                    resizeMode="cover"
                                 />
-                            </>
-                        ) : (
-                            <View>
-                                <View style={styles.flexBetween}>
-                                    <View style={styles.flexRow}>
-                                        <MaterialIcons
-                                            name="location-pin"
-                                            color={COLOR.themeBlue}
-                                            size={DIMENSIONS.iconSize}
-                                        />
-                                        <GlobalText
-                                            text={city.name}
-                                            style={styles.detailTitle}
-                                        />
+                            )}
+                        </View>
+                        <View style={{ padding: 10 }}>
+                            {isLoading ? (
+                                <>
+                                    <Skeleton
+                                        animation="pulse"
+                                        variant="text"
+                                        style={{ width: 130, height: 20 }}
+                                    />
+                                    <Skeleton
+                                        animation="pulse"
+                                        variant="text"
+                                        style={{ marginTop: 5, width: 190 }}
+                                    />
+                                </>
+                            ) : (
+                                <View>
+                                    <View style={styles.flexBetween}>
+                                        <View style={styles.flexRow}>
+                                            <MaterialIcons
+                                                name="location-pin"
+                                                color={COLOR.themeBlue}
+                                                size={DIMENSIONS.iconSize}
+                                            />
+                                            <GlobalText
+                                                text={city.name}
+                                                style={styles.detailTitle}
+                                            />
+                                        </View>
+                                        <TouchableOpacity
+                                            style={styles.cityLikeView}
+                                            onPress={() => onHeartClick()}
+                                        >
+                                            {isFav ? (
+                                                <Octicons
+                                                    name="heart-fill"
+                                                    color={COLOR.red}
+                                                    size={DIMENSIONS.iconSize}
+                                                />
+                                            ) : (
+                                                <Octicons
+                                                    name="heart"
+                                                    color={COLOR.black}
+                                                    size={DIMENSIONS.iconSize}
+                                                />
+                                            )}
+                                        </TouchableOpacity>
                                     </View>
-                                    <TouchableOpacity
-                                        style={styles.cityLikeView}
-                                        onPress={() => onHeartClick()}
-                                    >
-                                        {isFav ? (
-                                            <Octicons
-                                                name="heart-fill"
-                                                color={COLOR.red}
-                                                size={DIMENSIONS.iconSize}
-                                            />
-                                        ) : (
-                                            <Octicons
-                                                name="heart"
-                                                color={COLOR.black}
-                                                size={DIMENSIONS.iconSize}
-                                            />
-                                        )}
-                                    </TouchableOpacity>
+                                    <GlobalText
+                                        text={city.tag_line}
+                                        style={styles.detailSubTitle}
+                                    />
                                 </View>
-                                <GlobalText
-                                    text={city.tag_line}
-                                    style={styles.detailSubTitle}
-                                />
-                            </View>
-                        )}
+                            )}
 
-                        <View style={styles.detailsTitleView}>
-                            <View>
+                            <View style={styles.detailsTitleView}>
+                                <View>
+                                    {isLoading ? (
+                                        <>
+                                            <Skeleton
+                                                animation="pulse"
+                                                variant="text"
+                                                style={{
+                                                    marginTop: 12,
+                                                    width: 100,
+                                                }}
+                                            />
+                                        </>
+                                    ) : (
+                                        <>
+                                            <View style={styles.cityStarView}>
+                                                <StarRating
+                                                    disabled={false}
+                                                    maxStars={5}
+                                                    rating={rating}
+                                                    selectedStar={(rating) =>
+                                                        onStarRatingPress(
+                                                            rating
+                                                        )
+                                                    }
+                                                    starSize={14}
+                                                    starStyle={styles.starStyle}
+                                                    halfStarEnabled
+                                                    emptyStarColor={COLOR.grey}
+                                                />
+                                                {rating > 0 && (
+                                                    <GlobalText
+                                                        text={rating.slice(
+                                                            0,
+                                                            3
+                                                        )}
+                                                        style={styles.avgRating}
+                                                    />
+                                                )}
+                                                <GlobalText
+                                                    text={`( ${commentCount} Reviews )`}
+                                                />
+                                            </View>
+                                        </>
+                                    )}
+                                </View>
+                            </View>
+
+                            {isLoading ? (
+                                <>
+                                    <Skeleton
+                                        animation="pulse"
+                                        variant="text"
+                                        style={{ width: 300 }}
+                                    />
+                                    <Skeleton
+                                        animation="pulse"
+                                        variant="text"
+                                        style={{ marginTop: 5, width: 320 }}
+                                    />
+                                    <Skeleton
+                                        animation="pulse"
+                                        variant="text"
+                                        style={{ marginTop: 5, width: 200 }}
+                                    />
+                                    <Skeleton
+                                        animation="pulse"
+                                        variant="text"
+                                        style={{ marginTop: 5, width: 300 }}
+                                    />
+                                    <Skeleton
+                                        animation="pulse"
+                                        variant="text"
+                                        style={{ marginTop: 5, width: 250 }}
+                                    />
+                                </>
+                            ) : (
+                                <ReadMore
+                                    numberOfLines={5}
+                                    renderTruncatedFooter={
+                                        renderTruncatedFooter
+                                    }
+                                    renderRevealedFooter={renderRevealedFooter}
+                                    onReady={handleTextReady}
+                                >
+                                    <GlobalText text={city.description} />
+                                </ReadMore>
+                            )}
+
+                            <View style={styles.sectionView}>
+                                {initialRegion && initialRegion.latitude ? (
+                                    <MapContainer
+                                        initialRegion={initialRegion}
+                                        currentLatitude={currentLatitude}
+                                        currentLongitude={currentLongitude}
+                                    />
+                                ) : (
+                                    <MapSkeleton />
+                                )}
+                            </View>
+
+                            <View
+                                style={{
+                                    paddingBottom: 10,
+                                    flexDirection: "row",
+                                    justifyContent: "center",
+                                }}
+                            >
                                 {isLoading ? (
-                                    <>
+                                    <View style={styles.flexAroundSkeleton}>
                                         <Skeleton
                                             animation="pulse"
                                             variant="text"
-                                            style={{
-                                                marginTop: 12,
-                                                width: 100,
-                                            }}
+                                            style={{ width: 100, height: 30 }}
                                         />
-                                    </>
+                                        <Skeleton
+                                            animation="pulse"
+                                            variant="text"
+                                            style={{ width: 100, height: 30 }}
+                                        />
+                                    </View>
                                 ) : (
-                                    <>
-                                        <View style={styles.cityStarView}>
-                                            <StarRating
-                                                disabled={false}
-                                                maxStars={5}
-                                                rating={rating}
-                                                selectedStar={(rating) =>
-                                                    onStarRatingPress(rating)
-                                                }
-                                                starSize={14}
-                                                starStyle={styles.starStyle}
-                                                halfStarEnabled
-                                                emptyStarColor={COLOR.grey}
-                                            />
-                                            {rating > 0 && (
-                                                <GlobalText
-                                                    text={rating.slice(0, 3)}
-                                                    style={styles.avgRating}
+                                    <View style={styles.flexAround}>
+                                        <GlobalText
+                                            text={t("VILLAGES")}
+                                            style={styles.sectionTitle}
+                                        />
+                                        <TextButton
+                                            title={t("BUTTON.SEE_MORE")}
+                                            buttonView={
+                                                styles.villagesButtonView
+                                            }
+                                            titleStyle={
+                                                styles.villagesTitleStyle
+                                            }
+                                            raised={false}
+                                            onPress={() => seeMore()}
+                                        />
+                                    </View>
+                                )}
+                            </View>
+                            <View
+                                style={{
+                                    alignItems: "center",
+                                }}
+                            >
+                                {isLoading ? (
+                                    <View>
+                                        <FlatList
+                                            keyExtractor={(item) => item.id}
+                                            data={city.sites}
+                                            renderItem={() => (
+                                                <CityCardSkeleton
+                                                    type={t("HEADER.PLACE")}
                                                 />
                                             )}
-                                            <GlobalText
-                                                text={`( ${commentCount} Reviews )`}
-                                            />
-                                        </View>
-                                    </>
+                                            numColumns={2}
+                                        />
+                                    </View>
+                                ) : city.sites[0] ? (
+                                    <View>
+                                        <FlatList
+                                            keyExtractor={(item) => item.id}
+                                            data={city.sites}
+                                            renderItem={renderItem}
+                                            numColumns={2}
+                                        />
+                                    </View>
+                                ) : (
+                                    <View style={{ marginTop: 20 }}>
+                                        <GlobalText
+                                            text={t("ADDED")}
+                                            style={styles.boldText}
+                                        />
+                                    </View>
                                 )}
                             </View>
                         </View>
-
-                        {isLoading ? (
-                            <>
-                                <Skeleton
-                                    animation="pulse"
-                                    variant="text"
-                                    style={{ width: 300 }}
-                                />
-                                <Skeleton
-                                    animation="pulse"
-                                    variant="text"
-                                    style={{ marginTop: 5, width: 320 }}
-                                />
-                                <Skeleton
-                                    animation="pulse"
-                                    variant="text"
-                                    style={{ marginTop: 5, width: 200 }}
-                                />
-                                <Skeleton
-                                    animation="pulse"
-                                    variant="text"
-                                    style={{ marginTop: 5, width: 300 }}
-                                />
-                                <Skeleton
-                                    animation="pulse"
-                                    variant="text"
-                                    style={{ marginTop: 5, width: 250 }}
-                                />
-                            </>
-                        ) : (
-                            <ReadMore
-                                numberOfLines={5}
-                                renderTruncatedFooter={renderTruncatedFooter}
-                                renderRevealedFooter={renderRevealedFooter}
-                                onReady={handleTextReady}
-                            >
-                                <GlobalText text={city.description} />
-                            </ReadMore>
-                        )}
-
-                        <View style={styles.sectionView}>
-                            {initialRegion && initialRegion.latitude ? (
-                                <MapContainer
-                                    initialRegion={initialRegion}
-                                    currentLatitude={currentLatitude}
-                                    currentLongitude={currentLongitude}
-                                />
-                            ) : (
-                                <MapSkeleton />
-                            )}
-                        </View>
-
-                        <View
-                            style={{
-                                paddingBottom: 10,
-                                flexDirection: "row",
-                                justifyContent: "center",
-                            }}
-                        >
-                            {isLoading ? (
-                                <View style={styles.flexAroundSkeleton}>
-                                    <Skeleton
-                                        animation="pulse"
-                                        variant="text"
-                                        style={{ width: 100, height: 30 }}
-                                    />
-                                    <Skeleton
-                                        animation="pulse"
-                                        variant="text"
-                                        style={{ width: 100, height: 30 }}
-                                    />
-                                </View>
-                            ) : (
-                                <View style={styles.flexAround}>
-                                    <GlobalText
-                                        text={t("VILLAGES")}
-                                        style={styles.sectionTitle}
-                                    />
-                                    <TextButton
-                                        title={t("BUTTON.SEE_MORE")}
-                                        buttonView={styles.villagesButtonView}
-                                        titleStyle={styles.villagesTitleStyle}
-                                        raised={false}
-                                        onPress={() => seeMore()}
-                                    />
-                                </View>
-                            )}
-                        </View>
-                        <View
-                            style={{
-                                alignItems: "center",
-                            }}
-                        >
-                            {isLoading ? (
-                                <View>
-                                    <FlatList
-                                        keyExtractor={(item) => item.id}
-                                        data={city.sites}
-                                        renderItem={() => (
-                                            <CityCardSkeleton
-                                                type={t("HEADER.PLACE")}
-                                            />
-                                        )}
-                                        numColumns={2}
-                                    />
-                                </View>
-                            ) : city.sites[0] ? (
-                                <View>
-                                    <FlatList
-                                        keyExtractor={(item) => item.id}
-                                        data={city.sites}
-                                        renderItem={renderItem}
-                                        numColumns={2}
-                                    />
-                                </View>
-                            ) : (
-                                <View style={{ marginTop: 20 }}>
-                                    <GlobalText
-                                        text={t("ADDED")}
-                                        style={styles.boldText}
-                                    />
-                                </View>
-                            )}
-                        </View>
                     </View>
-                </View>
-            )}
-            <BottomSheet
-                refRBSheet={refRBSheet}
-                height={DIMENSIONS.halfHeight + 50}
-                Component={
-                    <CommentsSheet
-                        key={city.comment?.length}
-                        commentable_type={t("TABLE.SITE")}
-                        commentable_id={city.id}
-                        reload={() => getDetails()}
-                        setLoader={(v) => setLoader(v)}
-                        openCommentsSheet={() => openCommentsSheet()}
-                        closeCommentsSheet={() => closeCommentsSheet()}
-                    />
-                }
-                openCommentsSheet={() => openCommentsSheet()}
-                closeCommentsSheet={() => closeCommentsSheet()}
-            />
-        </ScrollView>
+                )}
+                <BottomSheet
+                    refRBSheet={refRBSheet}
+                    height={DIMENSIONS.halfHeight + 50}
+                    Component={
+                        <CommentsSheet
+                            key={city.comment?.length}
+                            commentable_type={t("TABLE.SITE")}
+                            commentable_id={city.id}
+                            reload={() => getDetails()}
+                            setLoader={(v) => setLoader(v)}
+                            openCommentsSheet={() => openCommentsSheet()}
+                            closeCommentsSheet={() => closeCommentsSheet()}
+                        />
+                    }
+                    openCommentsSheet={() => openCommentsSheet()}
+                    closeCommentsSheet={() => closeCommentsSheet()}
+                />
+            </ScrollView>
+        </>
     );
 };
 

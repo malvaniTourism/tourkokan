@@ -150,14 +150,7 @@ const CityList = ({ navigation, route, ...props }) => {
     };
 
     return (
-        <ScrollView
-            style={{ backgroundColor: COLOR.white }}
-            refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-        >
-            <CheckNet isOff={offline} />
-            <Loader />
+        <>
             <Header
                 name={route?.params?.subCat?.name || t("HEADER.CITIES")}
                 startIcon={
@@ -169,34 +162,46 @@ const CityList = ({ navigation, route, ...props }) => {
                     />
                 }
             />
-            {cities.length > 0 ? (
-                <View style={{ alignItems: "center", marginBottom: 150 }}>
-                    <FlatList
-                        data={cities}
-                        numColumns={1}
-                        keyExtractor={(item) => item.id?.toString()}
-                        renderItem={renderItem}
-                        onEndReached={loadMoreCities}
-                        onEndReachedThreshold={0.5}
-                        // ListFooterComponent={loading ? <Loader /> : null}
-                        ListFooterComponent={renderFooter}
+            <ScrollView
+                style={{ backgroundColor: COLOR.white }}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
                     />
-                </View>
-            ) : (
-                <View
-                    style={{
-                        height: DIMENSIONS.screenHeight,
-                        alignItems: "center",
-                        padding: 50,
-                    }}
-                >
-                    <GlobalText
-                        style={{ fontWeight: "bold" }}
-                        text={offline ? t("NO_INTERNET") : t("NO_DATA")}
-                    />
-                </View>
-            )}
-        </ScrollView>
+                }
+            >
+                <CheckNet isOff={offline} />
+                <Loader />
+                {cities.length > 0 ? (
+                    <View style={{ alignItems: "center", marginBottom: 150 }}>
+                        <FlatList
+                            data={cities}
+                            numColumns={1}
+                            keyExtractor={(item) => item.id?.toString()}
+                            renderItem={renderItem}
+                            onEndReached={loadMoreCities}
+                            onEndReachedThreshold={0.5}
+                            // ListFooterComponent={loading ? <Loader /> : null}
+                            ListFooterComponent={renderFooter}
+                        />
+                    </View>
+                ) : (
+                    <View
+                        style={{
+                            height: DIMENSIONS.screenHeight,
+                            alignItems: "center",
+                            padding: 50,
+                        }}
+                    >
+                        <GlobalText
+                            style={{ fontWeight: "bold" }}
+                            text={offline ? t("NO_INTERNET") : t("NO_DATA")}
+                        />
+                    </View>
+                )}
+            </ScrollView>
+        </>
     );
 };
 

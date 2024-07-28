@@ -78,6 +78,7 @@ const Emergency = ({ navigation, route, ...props }) => {
     };
 
     const fetchData = (page, reset = false) => {
+        props.setLoader(true);
         if (loading || !hasMore) {
             setRefreshing(false);
             return;
@@ -103,16 +104,19 @@ const Emergency = ({ navigation, route, ...props }) => {
                     setHasMore(!!res.data.data.next_page_url); // Check if there's more data
                     setNextPage(page + 1);
                     saveToStorage(t("STORAGE.EMERGENCY"), JSON.stringify(res));
+                    props.setLoader(false);
                 }
                 if (isMounted.current) {
                     setLoading(false);
                 }
                 setRefreshing(false);
+                props.setLoader(false);
             })
             .catch((error) => {
                 if (isMounted.current) {
                     setLoading(false);
                     setRefreshing(false);
+                    props.setLoader(false);
                 }
             });
     };
@@ -182,12 +186,7 @@ const Emergency = ({ navigation, route, ...props }) => {
     };
 
     return (
-        <ScrollView
-            style={{ flex: 1 }}
-            refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-        >
+        <>
             <Header
                 name={t("HEADER.EMERGENCY")}
                 goBack={() => backPage(navigation)}
@@ -201,33 +200,43 @@ const Emergency = ({ navigation, route, ...props }) => {
                 }
                 endIcon={<></>}
             />
-            <Loader />
-            <CheckNet isOff={offline} />
-            {data[0] ? (
-                <FlatList
-                    keyExtractor={(item) => item.id?.toString()}
-                    data={data}
-                    renderItem={renderItem}
-                    onEndReached={loadMoreData}
-                    onEndReachedThreshold={0.5}
-                    ListFooterComponent={renderFooter}
-                    style={{ marginBottom: 30 }}
-                />
-            ) : (
-                <View
-                    style={{
-                        height: DIMENSIONS.screenHeight,
-                        alignItems: "center",
-                        padding: 50,
-                    }}
-                >
-                    <GlobalText
-                        style={{ fontWeight: "bold" }}
-                        text={offline ? t("NO_INTERNET") : t("NO_DATA")}
+            <ScrollView
+                style={{ flex: 1 }}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
                     />
-                </View>
-            )}
-        </ScrollView>
+                }
+            >
+                <Loader />
+                <CheckNet isOff={offline} />
+                {data[0] ? (
+                    <FlatList
+                        keyExtractor={(item) => item.id?.toString()}
+                        data={data}
+                        renderItem={renderItem}
+                        onEndReached={loadMoreData}
+                        onEndReachedThreshold={0.5}
+                        ListFooterComponent={renderFooter}
+                        style={{ marginBottom: 30, marginTop: -19 }}
+                    />
+                ) : (
+                    <View
+                        style={{
+                            height: DIMENSIONS.screenHeight,
+                            alignItems: "center",
+                            padding: 50,
+                        }}
+                    >
+                        <GlobalText
+                            style={{ fontWeight: "bold" }}
+                            text={offline ? t("NO_INTERNET") : t("NO_DATA")}
+                        />
+                    </View>
+                )}
+            </ScrollView>
+        </>
     );
 };
 
