@@ -138,7 +138,9 @@ const Emergency = ({ navigation, route, ...props }) => {
     const renderItem = ({ item }) => {
         return (
             <ListItem bottomDivider>
-                <ListItem.Content style={{ flexDirection: "row" }}>
+                <ListItem.Content
+                    style={{ flexDirection: "row", alignItems: "center" }}
+                >
                     <ListItem.Title>{item.name}</ListItem.Title>
                     <ListItem.Content
                         style={{
@@ -201,7 +203,7 @@ const Emergency = ({ navigation, route, ...props }) => {
                 endIcon={<></>}
             />
             <ScrollView
-                style={{ flex: 1 }}
+                style={{ flex: 1, marginTop: -19 }}
                 refreshControl={
                     <RefreshControl
                         refreshing={refreshing}
@@ -219,7 +221,7 @@ const Emergency = ({ navigation, route, ...props }) => {
                         onEndReached={loadMoreData}
                         onEndReachedThreshold={0.5}
                         ListFooterComponent={renderFooter}
-                        style={{ marginBottom: 30, marginTop: -19 }}
+                        style={{ marginBottom: 30 }}
                     />
                 ) : (
                     <View

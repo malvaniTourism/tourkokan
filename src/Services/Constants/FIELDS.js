@@ -218,7 +218,7 @@ export const ContactUsFields = [
         name: STRING.LABEL.MESSAGE,
         placeholder: STRING.LABEL.MESSAGE,
         type: STRING.TYPE.TEXT,
-        length: DIMENSIONS.fieldLength,
+        length: DIMENSIONS.queryLength,
         required: true,
         disabled: false,
         multiline: true,

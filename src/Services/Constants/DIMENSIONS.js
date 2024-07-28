@@ -60,6 +60,7 @@ const DIMENSIONS = {
 
     mobileLength: 10,
     fieldLength: 50,
+    queryLength: 500,
 };
 
 export default DIMENSIONS;

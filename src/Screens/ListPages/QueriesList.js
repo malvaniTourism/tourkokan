@@ -208,7 +208,7 @@ const QueriesList = ({ navigation, route, ...props }) => {
                 }
             />
             <ScrollView
-                style={{ flex: 1 }}
+                style={{ flex: 1, marginTop: -19 }}
                 refreshControl={
                     <RefreshControl
                         refreshing={refreshing}
@@ -227,7 +227,7 @@ const QueriesList = ({ navigation, route, ...props }) => {
                             onEndReached={loadMoreData}
                             onEndReachedThreshold={0.5}
                             ListFooterComponent={renderFooter}
-                            style={{ marginBottom: 30, marginTop: -19 }}
+                            style={{ marginBottom: 30 }}
                         />
                     ) : (
                         <View

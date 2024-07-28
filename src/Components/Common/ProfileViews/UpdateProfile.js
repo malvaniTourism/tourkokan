@@ -46,11 +46,19 @@ const UpdateProfile = ({
 
     const save = () => {
         setLoader(true);
-        let data = {
-            email,
-            mobile,
-            profile_picture: uploadImage,
-        };
+        let data = {};
+        if (mobile) {
+            data = {
+                email,
+                mobile,
+                profile_picture: uploadImage,
+            };
+        } else {
+            data = {
+                email,
+                profile_picture: uploadImage,
+            };
+        }
         comnPost("v2/updateProfile", data)
             .then((res) => {
                 if (res.data.success) {
