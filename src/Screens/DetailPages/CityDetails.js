@@ -139,7 +139,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
     };
 
     const onStarRatingPress = async (rate) => {
-        setRating(rating);
+        setRating(rate);
         props.setLoader(true);
         const placeData = {
             user_id: await AsyncStorage.getItem(t("STORAGE.USER_ID")),
@@ -366,10 +366,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
                                                 />
                                                 {rating > 0 && (
                                                     <GlobalText
-                                                        text={rating.slice(
-                                                            0,
-                                                            3
-                                                        )}
+                                                        text={rating}
                                                         style={styles.avgRating}
                                                     />
                                                 )}

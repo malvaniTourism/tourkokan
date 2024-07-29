@@ -325,7 +325,7 @@ const styles = StyleSheet.create({
     },
     citySmallImage: {
         width: DIMENSIONS.bannerWidth / 2,
-        height: DIMENSIONS.bannerHeight + 90,
+        minHeight: DIMENSIONS.bannerHeight + 190,
         position: "absolute",
     },
     citySmallDetailsOverlay: {

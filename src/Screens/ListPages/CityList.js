@@ -163,7 +163,7 @@ const CityList = ({ navigation, route, ...props }) => {
                 }
             />
             <ScrollView
-                style={{ backgroundColor: COLOR.white }}
+                style={{ backgroundColor: COLOR.white, marginTop: -19 }}
                 refreshControl={
                     <RefreshControl
                         refreshing={refreshing}
