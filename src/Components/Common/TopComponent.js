@@ -9,6 +9,9 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Path from "../../Services/Api/BaseUrl";
 import SearchDropdown from "./SearchDropdown";
 import { useTranslation } from "react-i18next";
+import { Switch } from "@rneui/themed";
+import { connect } from "react-redux";
+import { setLoader, setMode } from "../../Reducers/CommonActions";
 
 StatusBar.setBarStyle("dark-content");
 
@@ -20,10 +23,13 @@ const TopComponent = ({
     profilePhoto,
     cities,
     setCurrentCity,
+    ...props
 }) => {
     const { t } = useTranslation();
+    // const { SettingsModule } = NativeModules;
 
     const [showCities, setShowCities] = useState(false);
+    const [isOnline, setIsOnline] = useState(true)
 
     const openDrawer = () => {
         navigation.openDrawer();
@@ -42,6 +48,21 @@ const TopComponent = ({
         setCurrentCity(v);
     };
 
+    const changeMode = () => {
+        // if (!isOnline) {
+        //     openMobileDataSettings();
+        //     setIsOnline(!isOnline)
+        // props.setMode(!isOnline)
+        // } else {
+            setIsOnline(!isOnline)
+        props.setMode(!isOnline)
+        // }
+    }
+
+    // const openMobileDataSettings = () => {
+    //     SettingsModule.openMobileDataSettings();
+    //   };
+
     return (
         <View style={styles.topComponent}>
             <StatusBar backgroundColor={COLOR.white} />
@@ -51,7 +72,7 @@ const TopComponent = ({
                         name="menu"
                         color={COLOR.black}
                         size={DIMENSIONS.userIconSize}
-                        style={{ marginRight: 20 }}
+                        style={{ marginRight: 10 }}
                         onPress={() => openDrawer()}
                     />
                     <TouchableOpacity
@@ -74,6 +95,10 @@ const TopComponent = ({
                             size={DIMENSIONS.iconMedium}
                         />
                     </TouchableOpacity>
+                </View>
+                <View style={{flexDirection: "row", alignItems: "center"}}>
+                    <GlobalText text={props.mode ? t("BUTTON.ONLINE") : t("BUTTON.OFFLINE")} style={{fontSize: DIMENSIONS.textSizeSmall}} />
+                    <Switch thumbColor={props.mode ? COLOR.green : COLOR.red} trackColor={{ false: COLOR.lightRed, true: COLOR.lightGreen }} onChange={() => changeMode()} value={props.mode} />
                 </View>
                 <TouchableOpacity
                     onPress={() => openProfile()}
@@ -107,4 +132,22 @@ const TopComponent = ({
     );
 };
 
-export default TopComponent;
+const mapStateToProps = (state) => {
+    return {
+        access_token: state.commonState.access_token,
+        mode: state.commonState.mode,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setLoader: (data) => {
+            dispatch(setLoader(data));
+        },
+        setMode: (data) => {
+            dispatch(setMode(data));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TopComponent);

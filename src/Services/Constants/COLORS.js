@@ -2,6 +2,7 @@ const COLOR = {
     themeBlue: "#5893D8",
 
     loginImageBlue: "#1370b6",
+    loginImageBlueLight: "#5aaeed",
     logoBlue: "#154170",
     logoDarkBlue: "#103a59",
     logoLightBlue: "#0b7ebc",
@@ -34,10 +35,11 @@ const COLOR = {
     greyDark: "#888",
     greySolid: "#666",
 
-    lightGreen: "#26AE60",
+    lightGreen: "#8cf5b8",
     green: "#28a745",
     yellow: "#fec465",
     red: "#eb5757",
+    lightRed: "#f7a8a8",
     blueL: "#17a2b8",
 
     yellowLight: "#ffe3b5",

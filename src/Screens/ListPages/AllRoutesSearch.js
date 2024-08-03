@@ -8,9 +8,10 @@ import { connect } from "react-redux";
 import {
     comnPost,
     dataSync,
+    getFromStorage,
     saveToStorage,
 } from "../../Services/Api/CommonServices";
-import { setLoader } from "../../Reducers/CommonActions";
+import { setLoader, setMode } from "../../Reducers/CommonActions";
 import Loader from "../../Components/Customs/Loader";
 import {
     backPage,
@@ -29,6 +30,7 @@ import RouteHeadCardSkeleton from "../../Components/Cards/RouteHeadCardSkeleton"
 import { useTranslation } from "react-i18next";
 import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ComingSoon from "../../Components/Common/ComingSoon";
 
 const AllRoutesSearch = ({ navigation, route, ...props }) => {
     const { t } = useTranslation();
@@ -41,6 +43,8 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
     const [destination, setDestination] = useState(route?.params?.destination);
     const [isFirstTime, setIsFirstTime] = useState(true);
     const [isLoading, setIsLoading] = useState(true);
+    const [lastPage, setLastPage] = useState(null);
+    const [showOffline, setShowOffline] = useState(false);
 
     useEffect(() => {
         props.setLoader(true);
@@ -48,14 +52,15 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
         checkLogin(navigation);
         // searchRoute();
 
-        const unsubscribe = NetInfo.addEventListener((state) => {
-            setOffline(false);
+        const unsubscribe = NetInfo.addEventListener(async (state) => {
+            console.log(state.isConnected);
+            props.setMode(state.isConnected);
 
             dataSync(t("STORAGE.ROUTES_RESPONSE"), searchRoute()).then(
                 (resp) => {
                     let res = JSON.parse(resp);
-                    if (res.data && res.data.data) {
-                        setList(res.data.data.data);
+                    if (res) {
+                        setList(res);
                     } else if (resp) {
                         setOffline(true);
                     }
@@ -110,7 +115,8 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
                         nextPage !== myNextUrl[myNextUrl.length - 1] && isNext
                             ? setList([...list, ...res.data.data.data])
                             : setList([...res.data.data.data]);
-                        setNextPage(myNextUrl[myNextUrl.length - 1]);
+                        setNextPage(res.data.data.current_page + 1);
+                        setLastPage(res.data.data.last_page);
                         setIsLoading(false);
                         setIsFirstTime(false);
                         props.setLoader(false);
@@ -125,6 +131,14 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
                     setIsFirstTime(false);
                     props.setLoader(false);
                 });
+        }
+    };
+
+    const loadMoreRoutes = () => {
+        if (!props.mode) {
+            setShowOffline(true)
+        }else if (!isLoading && nextPage <= lastPage) {
+            searchRoute(source, destination, true);
         }
     };
 
@@ -206,7 +220,7 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
                         keyExtractor={(item) => item.id}
                         data={list}
                         onEndReached={() =>
-                            searchRoute(source, destination, true)
+                            loadMoreRoutes()
                         }
                         style={{ marginBottom: 40 }}
                         onEndReachedThreshold={0.5}
@@ -227,12 +241,19 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
                     </View>
                 )}
             </SafeAreaView>
+            <ComingSoon
+                message={t("GET_MORE_DATA")}
+                visible={showOffline}
+                toggleOverlay={() => setShowOffline(false)}
+            />
         </View>
     );
 };
 
 const mapStateToProps = (state) => {
-    return {};
+    return {
+        mode: state.commonState.mode,
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -240,6 +261,9 @@ const mapDispatchToProps = (dispatch) => {
         setLoader: (data) => {
             dispatch(setLoader(data));
         },
+        setMode: (data) => {
+            dispatch(setMode(data));
+        }
     };
 };
 

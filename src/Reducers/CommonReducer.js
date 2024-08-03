@@ -3,6 +3,7 @@ import {
     SaveLoginUser,
     SetDestination,
     SetLoader,
+    SetMode,
     SetSource,
 } from "./Types";
 
@@ -12,6 +13,7 @@ const initialState = {
     isLoading: false,
     source: {},
     destination: {},
+    mode: true,
 };
 
 const commonReducer = (state = initialState, action) => {
@@ -41,6 +43,12 @@ const commonReducer = (state = initialState, action) => {
                 ...state,
                 destination: action.payload,
             };
+        case SetMode: {
+            return {
+                ...state,
+                mode: action.payload,
+            }
+        }
         default:
             return state;
     }

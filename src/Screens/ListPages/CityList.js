@@ -18,7 +18,7 @@ import {
 import { connect } from "react-redux";
 import Loader from "../../Components/Customs/Loader";
 import Header from "../../Components/Common/Header";
-import { setLoader } from "../../Reducers/CommonActions";
+import { setLoader, setMode } from "../../Reducers/CommonActions";
 import {
     backPage,
     checkLogin,
@@ -44,6 +44,7 @@ const CityList = ({ navigation, route, ...props }) => {
     const [loading, setLoading] = useState(false);
     const [lastPage, setLastPage] = useState(null);
     const [refreshing, setRefreshing] = useState(false);
+    const [showOffline, setShowOffline] = useState(false);
 
     useEffect(() => {
         const backHandler = goBackHandler(navigation);
@@ -51,10 +52,21 @@ const CityList = ({ navigation, route, ...props }) => {
         props.setLoader(true);
 
         const unsubscribe = NetInfo.addEventListener((state) => {
+            props.setMode(state.isConnected);
             setOffline(!state.isConnected);
-            if (state.isConnected) {
-                fetchCities(1, true);
-            }
+
+            dataSync(t("STORAGE.CITIES_RESPONSE"), fetchCities()).then(
+                (resp) => {
+                    let res = JSON.parse(resp);
+                    if (res.data && res.data.data) {
+                        setCities(res.data.data.data);
+                    } else if (resp) {
+                        setOffline(true);
+                    }
+                    setLoading(false);
+                    props.setLoader(false);
+                }
+            );
         });
 
         return () => {
@@ -135,7 +147,11 @@ const CityList = ({ navigation, route, ...props }) => {
     );
 
     const loadMoreCities = () => {
-        if (!loading && nextPage <= lastPage) {
+        console.log('mo - - ', props.mode);
+        
+        if (!props.mode) {
+            setShowOffline(true)
+        }else if (!loading && nextPage <= lastPage) {
             fetchCities(nextPage);
         }
     };
@@ -171,7 +187,7 @@ const CityList = ({ navigation, route, ...props }) => {
                     />
                 }
             >
-                <CheckNet isOff={offline} />
+                <CheckNet isOff={showOffline || offline} />
                 <Loader />
                 {cities.length > 0 ? (
                     <View style={{ alignItems: "center", marginBottom: 150 }}>
@@ -208,6 +224,7 @@ const CityList = ({ navigation, route, ...props }) => {
 const mapStateToProps = (state) => {
     return {
         access_token: state.commonState.access_token,
+        mode: state.comnState.mode,
     };
 };
 
@@ -216,6 +233,9 @@ const mapDispatchToProps = (dispatch) => {
         setLoader: (data) => {
             dispatch(setLoader(data));
         },
+        setMode: (data) => {
+            dispatch(setMode(data));
+        }
     };
 };
 

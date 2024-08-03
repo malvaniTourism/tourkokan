@@ -4,6 +4,7 @@ import {
     SetDestination,
     SetLoader,
     SetSource,
+    SetMode,
 } from "./Types";
 
 const saveLoginUser = (data) => {
@@ -41,10 +42,18 @@ const setDestination = (data) => {
     };
 };
 
+const setMode = (data) => {
+    return {
+        type: SetMode,
+        payload: data,
+    }
+}
+
 export {
     saveLoginUser,
     saveAccess_token,
     setLoader,
     setSource,
     setDestination,
+    setMode,
 };

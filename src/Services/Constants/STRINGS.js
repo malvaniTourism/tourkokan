@@ -45,6 +45,8 @@ const STRING = {
         SEND: "Send",
         SAVE: "Save",
         ATTACHMENT: "+ Upload Attachment",
+        ONLINE: "Online",
+        OFFLINE: "Offline",
     },
     SCREEN: {
         ROOT: "Root",
@@ -253,10 +255,12 @@ const STRING = {
     ETD: "ETD: ",
     NO_ROUTES: "No Routes Available",
     SET_LOCATION: "Set Your Primary Location",
+    NETWORK: "Network Error",
     NO_INTERNET:
         "Please check your connectivity... Once data is synced you can use offline.",
     NO_INTERNET_MAP:
-        "कृपया तुमची कनेक्टिव्हिटी तपासा... नकाशा लोड करण्यासाठी इंटरनेट कनेक्शन अनिवार्य आहे.",
+        "Please check your connectivity... Internet connection is mandatory to load Map.",
+    GET_MORE_DATA: "Please connect to internet to get more data.",
     LOADER_TEXT: "Picking Up Your Data...",
     ADDED: "Places will be added soon...",
     NO_COMMENTS: "No comments yet",

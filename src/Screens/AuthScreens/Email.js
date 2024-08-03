@@ -152,6 +152,8 @@ const Email = ({ navigation, route, ...props }) => {
         };
         comnPost("v2/auth/sendOtp", data)
             .then((res) => {
+                console.log('--', res);
+                
                 if (res.data?.success) {
                     props.setLoader(false);
                     navigateTo(navigation, t("SCREEN.VERIFY_OTP"), { email });
@@ -162,11 +164,15 @@ const Email = ({ navigation, route, ...props }) => {
                         res.data?.message.email
                             ? res.data?.message.email
                             : res.data?.message
+                            ? res.data?.message
+                            : t("NETWORK")
                     );
                     props.setLoader(false);
                 }
             })
             .catch((err) => {
+                console.log('- - -', err);
+                
                 setIsAlert(true);
                 setIsSuccess(false);
                 setAlertMessage(t("ALERT.WENT_WRONG"));

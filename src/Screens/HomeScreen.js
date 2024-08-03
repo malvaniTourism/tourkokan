@@ -21,7 +21,7 @@ import {
     saveToStorage,
 } from "../Services/Api/CommonServices";
 import { connect } from "react-redux";
-import { saveAccess_token, setLoader } from "../Reducers/CommonActions";
+import { saveAccess_token, setLoader, setMode } from "../Reducers/CommonActions";
 import SplashScreen from "react-native-splash-screen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TextButton from "../Components/Customs/Buttons/TextButton";
@@ -136,7 +136,8 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         saveToken();
         SplashScreen.hide();
         const unsubscribe = NetInfo.addEventListener((state) => {
-            setOffline(false);
+            props.setMode(state.isConnected);
+            setOffline(!state.isConnected);
 
             dataSync(t("STORAGE.PROFILE_RESPONSE"), getUserProfile()).then(
                 (resp) => {
@@ -241,6 +242,14 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                 saveToStorage(
                     t("STORAGE.CATEGORIES_RESPONSE"),
                     JSON.stringify(res.data.data.categories)
+                );
+                saveToStorage(
+                    t("STORAGE.ROUTES_RESPONSE"),
+                    JSON.stringify(res.data.data.routes)
+                );
+                saveToStorage(
+                    t("STORAGE.CITIES_RESPONSE"),
+                    JSON.stringify(res.data.data.cities)
                 );
                 i18n.changeLanguage(res.data.language);
                 setCities(res.data.data.cities);
@@ -550,6 +559,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
 const mapStateToProps = (state) => {
     return {
         access_token: state.commonState.access_token,
+        mode: state.commonState.mode,
     };
 };
 
@@ -561,6 +571,9 @@ const mapDispatchToProps = (dispatch) => {
         setLoader: (data) => {
             dispatch(setLoader(data));
         },
+        setMode: (data) => {
+            dispatch(setMode(data));
+        }
     };
 };
 

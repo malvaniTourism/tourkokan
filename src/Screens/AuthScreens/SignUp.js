@@ -247,6 +247,8 @@ const SignUp = ({ navigation, ...props }) => {
                             : res.data.message.referral_code
                             ? res.data.message.referral_code
                             : res.data.message
+                            ? res.data.message
+                            : t("NETWORK")
                     );
                     setIsSuccess(false);
                     setIsAlert(true);
