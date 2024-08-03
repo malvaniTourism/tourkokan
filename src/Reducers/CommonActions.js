@@ -46,8 +46,8 @@ const setMode = (data) => {
     return {
         type: SetMode,
         payload: data,
-    }
-}
+    };
+};
 
 export {
     saveLoginUser,

@@ -21,7 +21,11 @@ import {
     saveToStorage,
 } from "../Services/Api/CommonServices";
 import { connect } from "react-redux";
-import { saveAccess_token, setLoader, setMode } from "../Reducers/CommonActions";
+import {
+    saveAccess_token,
+    setLoader,
+    setMode,
+} from "../Reducers/CommonActions";
 import SplashScreen from "react-native-splash-screen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TextButton from "../Components/Customs/Buttons/TextButton";
@@ -33,7 +37,7 @@ import RouteHeadCard from "../Components/Cards/RouteHeadCard";
 import CheckNet from "../Components/Common/CheckNet";
 import NetInfo from "@react-native-community/netinfo";
 import RouteHeadCardSkeleton from "../Components/Cards/RouteHeadCardSkeleton";
-import { Skeleton } from "@rneui/themed";
+import { Overlay, Skeleton } from "@rneui/themed";
 import SearchPanelSkeleton from "../Components/Common/SearchPanelSkeleton";
 import TopComponentSkeleton from "../Components/Common/TopComponentSkeleton";
 import CityCardSmall from "../Components/Cards/CityCardSmall";
@@ -44,6 +48,7 @@ import BannerSkeleton from "../Components/Customs/BannerSkeleton";
 import Loader from "../Components/Customs/Loader";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
+import ComingSoon from "../Components/Common/ComingSoon";
 
 const HomeScreen = ({ navigation, route, ...props }) => {
     const { t, i18n } = useTranslation();
@@ -91,6 +96,8 @@ const HomeScreen = ({ navigation, route, ...props }) => {
     const [sindhudurg, setSindh] = useState({});
     const [refreshing, setRefreshing] = useState(false);
     const [keyboardOffset, setKeyboardOffset] = useState(0);
+    const [modePopup, setModePopup] = useState(false);
+    const [showOffline, setShowOffline] = useState(false);
 
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener(
@@ -136,7 +143,6 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         saveToken();
         SplashScreen.hide();
         const unsubscribe = NetInfo.addEventListener((state) => {
-            props.setMode(state.isConnected);
             setOffline(!state.isConnected);
 
             dataSync(t("STORAGE.PROFILE_RESPONSE"), getUserProfile()).then(
@@ -186,10 +192,10 @@ const HomeScreen = ({ navigation, route, ...props }) => {
 
         return () => {
             backHandler.remove();
-            AsyncStorage.setItem(
-                t("STORAGE.IS_FIRST_TIME"),
-                JSON.stringify(false)
-            );
+            // AsyncStorage.setItem(
+            //     t("STORAGE.IS_FIRST_TIME"),
+            //     JSON.stringify(false)
+            // );
             unsubscribe();
         };
     }, [props.access_token]);
@@ -267,6 +273,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
 
                 if (isFirstTime == "true") {
                     // refRBSheet.current.open()
+                    setModePopup(true);
                     AsyncStorage.setItem(
                         t("STORAGE.IS_FIRST_TIME"),
                         JSON.stringify(false)
@@ -340,6 +347,17 @@ const HomeScreen = ({ navigation, route, ...props }) => {
     const onCitySelect = (city) => {
         setCurrentCity(city.name);
         callLandingPageAPI(city.id);
+    };
+
+    const onlineClick = () => {
+        props.setMode(true);
+        setModePopup(false);
+    };
+
+    const offlineClick = () => {
+        props.setMode(false);
+        setModePopup(false);
+        setShowOffline(true);
     };
 
     return (
@@ -551,6 +569,38 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                     openLocationSheet={() => openLocationSheet()}
                     closeLocationSheet={() => closeLocationSheet()}
                 />
+
+                <Overlay
+                    style={styles.locationModal}
+                    isVisible={modePopup}
+                    onBackdropPress={() => setModePopup(false)}
+                >
+                    <GlobalText
+                        text={t("ALERT.MODE_CHOICE")}
+                        style={styles.locationModal}
+                    />
+                    <View style={styles.flexRow}>
+                        <TextButton
+                            title={t("BUTTON.OFFLINE")}
+                            buttonView={styles.logoutButtonStyle}
+                            titleStyle={styles.locButtonTitle}
+                            raised={false}
+                            onPress={() => offlineClick()}
+                        />
+                        <TextButton
+                            title={t("BUTTON.ONLINE")}
+                            buttonView={styles.logoutButtonStyle}
+                            titleStyle={styles.locButtonTitle}
+                            raised={false}
+                            onPress={() => onlineClick()}
+                        />
+                    </View>
+                </Overlay>
+                <ComingSoon
+                    message={t("OFFLINE_MODE")}
+                    visible={showOffline}
+                    toggleOverlay={() => setShowOffline(false)}
+                />
             </KeyboardAwareScrollView>
         </>
     );
@@ -573,7 +623,7 @@ const mapDispatchToProps = (dispatch) => {
         },
         setMode: (data) => {
             dispatch(setMode(data));
-        }
+        },
     };
 };
 

@@ -29,7 +29,7 @@ const TopComponent = ({
     // const { SettingsModule } = NativeModules;
 
     const [showCities, setShowCities] = useState(false);
-    const [isOnline, setIsOnline] = useState(true)
+    const [isOnline, setIsOnline] = useState(true);
 
     const openDrawer = () => {
         navigation.openDrawer();
@@ -49,15 +49,9 @@ const TopComponent = ({
     };
 
     const changeMode = () => {
-        // if (!isOnline) {
-        //     openMobileDataSettings();
-        //     setIsOnline(!isOnline)
-        // props.setMode(!isOnline)
-        // } else {
-            setIsOnline(!isOnline)
-        props.setMode(!isOnline)
-        // }
-    }
+        setIsOnline(!isOnline);
+        props.setMode(!isOnline);
+    };
 
     // const openMobileDataSettings = () => {
     //     SettingsModule.openMobileDataSettings();
@@ -96,9 +90,24 @@ const TopComponent = ({
                         />
                     </TouchableOpacity>
                 </View>
-                <View style={{flexDirection: "row", alignItems: "center"}}>
-                    <GlobalText text={props.mode ? t("BUTTON.ONLINE") : t("BUTTON.OFFLINE")} style={{fontSize: DIMENSIONS.textSizeSmall}} />
-                    <Switch thumbColor={props.mode ? COLOR.green : COLOR.red} trackColor={{ false: COLOR.lightRed, true: COLOR.lightGreen }} onChange={() => changeMode()} value={props.mode} />
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <GlobalText
+                        text={
+                            props.mode
+                                ? t("BUTTON.ONLINE")
+                                : t("BUTTON.OFFLINE")
+                        }
+                        style={{ fontSize: DIMENSIONS.textSizeSmall }}
+                    />
+                    <Switch
+                        thumbColor={props.mode ? COLOR.green : COLOR.red}
+                        trackColor={{
+                            false: COLOR.lightRed,
+                            true: COLOR.lightGreen,
+                        }}
+                        onChange={() => changeMode()}
+                        value={props.mode}
+                    />
                 </View>
                 <TouchableOpacity
                     onPress={() => openProfile()}
@@ -146,7 +155,7 @@ const mapDispatchToProps = (dispatch) => {
         },
         setMode: (data) => {
             dispatch(setMode(data));
-        }
+        },
     };
 };
 

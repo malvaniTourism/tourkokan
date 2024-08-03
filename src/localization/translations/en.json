@@ -145,7 +145,8 @@
         "LOADING": "Loading...",
         "ERROR_CURRENT_LOCATION": "Error getting current location: ",
         "FETCHING_TEXT": "We are getting your location please wait",
-        "LOGOUT_ALERT": "Do you real want to Logout?"
+        "LOGOUT_ALERT": "Do you real want to Logout?",
+        "MODE_CHOICE": "Would you like to use app in Online or Offline mode?"
     },
     "TABLE": {
         "CITY": "City",
@@ -257,6 +258,7 @@
     "NO_INTERNET": "Please check your connectivity... Once data is synced you can use offline.",
     "NO_INTERNET_MAP": "Please check your connectivity... Internet connection is mandatory to load Map.",
     "GET_MORE_DATA": "Please connect to internet to get more data.",
+    "OFFLINE_MODE": "To use app in Offline mode, you will need a network connection untill data gets downloded.",
     "LOADER_TEXT": "Picking Up Your Data...",
     "ADDED": "Places will be added soon...",
     "NO_COMMENTS": "No comments yet",

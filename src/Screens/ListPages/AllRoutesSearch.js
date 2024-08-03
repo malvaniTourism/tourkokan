@@ -53,21 +53,20 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
         // searchRoute();
 
         const unsubscribe = NetInfo.addEventListener(async (state) => {
-            console.log(state.isConnected);
-            props.setMode(state.isConnected);
-
-            dataSync(t("STORAGE.ROUTES_RESPONSE"), searchRoute()).then(
-                (resp) => {
-                    let res = JSON.parse(resp);
-                    if (res) {
-                        setList(res);
-                    } else if (resp) {
-                        setOffline(true);
-                    }
-                    setIsLoading(false);
-                    props.setLoader(false);
+            dataSync(
+                t("STORAGE.ROUTES_RESPONSE"),
+                searchRoute(),
+                props.mode
+            ).then((resp) => {
+                let res = JSON.parse(resp);
+                if (res) {
+                    setList(res);
+                } else if (resp) {
+                    setOffline(true);
                 }
-            );
+                setIsLoading(false);
+                props.setLoader(false);
+            });
             // removeFromStorage(t("STORAGE.LANDING_RESPONSE"))
         });
 
@@ -136,8 +135,8 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
 
     const loadMoreRoutes = () => {
         if (!props.mode) {
-            setShowOffline(true)
-        }else if (!isLoading && nextPage <= lastPage) {
+            setShowOffline(true);
+        } else if (!isLoading && nextPage <= lastPage) {
             searchRoute(source, destination, true);
         }
     };
@@ -219,9 +218,7 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
                     <FlatList
                         keyExtractor={(item) => item.id}
                         data={list}
-                        onEndReached={() =>
-                            loadMoreRoutes()
-                        }
+                        onEndReached={() => loadMoreRoutes()}
                         style={{ marginBottom: 40 }}
                         onEndReachedThreshold={0.5}
                         renderItem={({ item }) => (
@@ -263,7 +260,7 @@ const mapDispatchToProps = (dispatch) => {
         },
         setMode: (data) => {
             dispatch(setMode(data));
-        }
+        },
     };
 };
 

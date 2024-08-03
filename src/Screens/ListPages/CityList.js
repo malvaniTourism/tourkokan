@@ -52,7 +52,6 @@ const CityList = ({ navigation, route, ...props }) => {
         props.setLoader(true);
 
         const unsubscribe = NetInfo.addEventListener((state) => {
-            props.setMode(state.isConnected);
             setOffline(!state.isConnected);
 
             dataSync(t("STORAGE.CITIES_RESPONSE"), fetchCities()).then(
@@ -147,11 +146,9 @@ const CityList = ({ navigation, route, ...props }) => {
     );
 
     const loadMoreCities = () => {
-        console.log('mo - - ', props.mode);
-        
         if (!props.mode) {
-            setShowOffline(true)
-        }else if (!loading && nextPage <= lastPage) {
+            setShowOffline(true);
+        } else if (!loading && nextPage <= lastPage) {
             fetchCities(nextPage);
         }
     };
@@ -235,7 +232,7 @@ const mapDispatchToProps = (dispatch) => {
         },
         setMode: (data) => {
             dispatch(setMode(data));
-        }
+        },
     };
 };
 
