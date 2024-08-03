@@ -1,17 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
     View,
-    Image,
-    Modal,
     TouchableOpacity,
     ActivityIndicator,
     ScrollView,
     RefreshControl,
+    Dimensions,
 } from "react-native";
 import { ResponsiveGrid } from "react-native-flexible-grid";
+import FastImage from "react-native-fast-image";
+import ImageViewing from "react-native-image-viewing";
 import styles from "./Styles";
 import Path from "../../Services/Api/BaseUrl";
-import { comnPost, dataSync } from "../../Services/Api/CommonServices";
+import { comnPost } from "../../Services/Api/CommonServices";
 import Loader from "../../Components/Customs/Loader";
 import { checkLogin, goBackHandler } from "../../Services/CommonMethods";
 import CheckNet from "../../Components/Common/CheckNet";
@@ -29,15 +30,15 @@ import GlobalText from "../../Components/Customs/Text";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import ExploreGridSkeleton from "./ExploreGridSkeleton";
 
+const { height: screenHeight } = Dimensions.get('window');
+
 const ExploreGrid = ({ route, navigation, ...props }) => {
     const { t } = useTranslation();
-    let idCounter = useRef(0);
-
     const [gallery, setGallery] = useState([]);
     const [offline, setOffline] = useState(false);
     const [searchValue, setSearchValue] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
-    const [lastPage, setLastPage] = useState(null);
+    const [lastPage, setLastPage] = useState(1);
     const [loading, setLoading] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
@@ -47,6 +48,7 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
         const backHandler = goBackHandler(navigation);
         checkLogin(navigation);
         setLoading(true);
+
         const unsubscribe = NetInfo.addEventListener((state) => {
             setOffline(!state.isConnected);
             if (state.isConnected) {
@@ -60,18 +62,15 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
         };
     }, []);
 
-    const onRefresh = () => {
-        setRefreshing(true);
-        fetchData(1, true);
-    };
-
     useEffect(() => {
         fetchData(1, true);
     }, [searchValue]);
 
     const fetchData = (page, reset = false) => {
+        if (loading || (page > currentPage && page > lastPage)) return;
+
         setLoading(true);
-        let data = {
+        const data = {
             apitype: "list",
             global: 1,
             search: searchValue,
@@ -82,18 +81,20 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
             .then((res) => {
                 if (res.data.success) {
                     props.setLoader(false);
+                    const newGallery = res.data.data.data;
                     if (reset) {
-                        setGallery(res.data.data.data);
+                        setGallery(newGallery);
                     } else {
-                        setGallery((prevGallery) => [
+                        setGallery(prevGallery => [
                             ...prevGallery,
-                            ...res.data.data.data,
+                            ...newGallery,
                         ]);
                     }
                     setCurrentPage(res.data.data.current_page);
                     setLastPage(res.data.data.last_page);
-                } else {
-                    props.setLoader(false);
+                    FastImage.preload(newGallery.map(image => ({
+                        uri: Path.FTP_PATH + image.path
+                    })));
                 }
                 setLoading(false);
                 setRefreshing(false);
@@ -105,51 +106,64 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
             });
     };
 
-    const handleSearch = (v) => {
-        setSearchValue(v);
-        setCurrentPage(1);
+    const onRefresh = () => {
+        setRefreshing(true);
+        fetchData(1, true);
     };
 
-    const getScrollData = () => {
-        if (!loading && currentPage < lastPage) {
+    const handleSearch = (value) => {
+        setSearchValue(value);
+        setCurrentPage(1);
+        setLastPage(1);
+    };
+
+    const handleScroll = (event) => {
+        const contentHeight = event.nativeEvent.contentSize.height;
+        const offsetY = event.nativeEvent.contentOffset.y;
+        const scrollHeight = event.nativeEvent.layoutMeasurement.height;
+
+        if (contentHeight - (scrollHeight + offsetY) < 100 && !loading && currentPage < lastPage) {
             fetchData(currentPage + 1);
         }
     };
 
-    const openModal = (image) => {
+    const openImageViewer = (image) => {
         setSelectedImage(image);
         setIsModalVisible(true);
     };
 
-    const closeModal = () => {
+    const closeImageViewer = () => {
         setIsModalVisible(false);
         setSelectedImage(null);
     };
 
-    const renderItem = ({ item }) => {
-        return (
-            <TouchableOpacity
-                onPress={() => openModal(Path.FTP_PATH + item.path)}
-            >
-                <View style={styles.imageGridBoxContainer}>
-                    <Image
-                        source={{ uri: Path.FTP_PATH + item.path }}
-                        style={styles.imageGridBox}
-                        resizeMode="cover"
-                    />
-                </View>
-            </TouchableOpacity>
-        );
-    };
+    const renderItem = ({ item }) => (
+        <TouchableOpacity
+            onPress={() => openImageViewer(item)}
+            activeOpacity={0.7} // Improved touch responsiveness
+        >
+            <View style={styles.imageGridBoxContainer}>
+                <FastImage
+                    source={{ uri: Path.FTP_PATH + item.path }}
+                    style={styles.imageGridBox}
+                    resizeMode={FastImage.resizeMode.cover}
+                />
+            </View>
+        </TouchableOpacity>
+    );
 
     const renderFooter = () => {
-        // if (!loading) return null;
-        // return (
-        //     <View style={{ paddingVertical: 20 }}>
-        //         <ActivityIndicator size="small" color={COLOR.primary} />
-        //     </View>
-        // );
+        if (loading && gallery.length) {
+            return (
+                <View style={{ paddingVertical: 20 }}>
+                    <ActivityIndicator size="small" color="#0000ff" />
+                </View>
+            );
+        }
+        return null;
     };
+
+    const imageIndex = gallery.findIndex(img => img.id === selectedImage?.id);
 
     return (
         <>
@@ -171,30 +185,26 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
                         onRefresh={onRefresh}
                     />
                 }
+                onScroll={handleScroll}
+                scrollEventThrottle={16}
             >
                 <CheckNet isOff={offline} />
-                {/* <Loader /> */}
-                {loading ? (
+                {loading && !gallery.length ? (
                     <ExploreGridSkeleton />
-                ) : gallery[0] ? (
+                ) : gallery.length ? (
                     <ResponsiveGrid
                         maxItemsPerColumn={3}
                         data={gallery}
                         renderItem={renderItem}
                         showScrollIndicator={false}
-                        onEndReached={getScrollData}
-                        onEndReachedThreshold={0.1}
-                        style={{
-                            padding: 5,
-                            marginBottom: 70,
-                        }}
+                        style={{ padding: 5, marginBottom: 70 }}
                         keyExtractor={(item) => item.id.toString()}
                         ListFooterComponent={renderFooter}
                     />
                 ) : (
                     <View
                         style={{
-                            height: DIMENSIONS.screenHeight,
+                            height: screenHeight,
                             alignItems: "center",
                             padding: 50,
                         }}
@@ -205,49 +215,27 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
                         />
                     </View>
                 )}
-                <Modal
-                    visible={isModalVisible}
-                    transparent={true}
-                    onRequestClose={closeModal}
-                >
-                    <View style={styles.modalContainer}>
-                        <TouchableOpacity
-                            style={styles.modalBackground}
-                            onPress={closeModal}
-                        >
-                            <View style={styles.modalContent}>
-                                <Image
-                                    source={{ uri: selectedImage }}
-                                    style={styles.modalImage}
-                                    resizeMode="contain"
-                                />
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                </Modal>
+                {selectedImage && (
+                    <ImageViewing
+                        images={gallery.map(image => ({ uri: Path.FTP_PATH + image.path }))}
+                        imageIndex={imageIndex}
+                        visible={isModalVisible}
+                        onRequestClose={closeImageViewer}
+                    />
+                )}
             </ScrollView>
         </>
     );
 };
 
-const mapStateToProps = (state) => {
-    return {
-        source: state.commonState.source,
-    };
-};
+const mapStateToProps = (state) => ({
+    source: state.commonState.source,
+});
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        setSource: (data) => {
-            dispatch(setSource(data));
-        },
-        setDestination: (data) => {
-            dispatch(setDestination(data));
-        },
-        setLoader: (data) => {
-            dispatch(setLoader(data));
-        },
-    };
-};
+const mapDispatchToProps = (dispatch) => ({
+    setSource: (data) => dispatch(setSource(data)),
+    setDestination: (data) => dispatch(setDestination(data)),
+    setLoader: (data) => dispatch(setLoader(data)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExploreGrid);
