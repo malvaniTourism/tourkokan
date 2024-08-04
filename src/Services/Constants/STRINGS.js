@@ -113,6 +113,8 @@ const STRING = {
         EXPLORE_CITIES_RESPONSE: "exploreCitiesResponse",
         CATEGORIES_RESPONSE: "categoriesResponse",
         EMERGENCY: "Emergency",
+        QUERIES: "Queries",
+        GALLERY: "Gallery",
     },
     HEADER: {
         BUS_TIMINGS: "Bus Timings",

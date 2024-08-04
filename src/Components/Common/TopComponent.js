@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StatusBar, View, TouchableOpacity, Image } from "react-native";
 import styles from "./Styles";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -30,6 +30,12 @@ const TopComponent = ({
 
     const [showCities, setShowCities] = useState(false);
     const [isOnline, setIsOnline] = useState(true);
+
+    useEffect(async () => {
+        let mode = await AsyncStorage.getItem("mode");
+        setIsOnline(mode);
+        props.setMode(mode);
+    }, []);
 
     const openDrawer = () => {
         navigation.openDrawer();

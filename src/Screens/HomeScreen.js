@@ -136,7 +136,6 @@ const HomeScreen = ({ navigation, route, ...props }) => {
             if (!isLandingDataFetched && props.access_token) {
                 // callLandingPageAPI();
                 setIsLandingDataFetched(true);
-                getUserProfile();
             }
         }
         LogBox.ignoreAllLogs();
@@ -144,26 +143,6 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         SplashScreen.hide();
         const unsubscribe = NetInfo.addEventListener((state) => {
             setOffline(!state.isConnected);
-
-            dataSync(t("STORAGE.PROFILE_RESPONSE"), getUserProfile()).then(
-                (resp) => {
-                    let res = JSON.parse(resp);
-                    if (res.data && res.data.data) {
-                        setIsFetching(false);
-                        setIsLoading(false);
-                        // setCategories(res.data.data.categories);
-                        // setProjects(res.data.data.projects);
-                        // setStops(res.data.data.stops);
-                        // setPlace_category(res.data.data.place_category);
-                        // setPlaces(res.data.data.places);
-                    } else if (resp) {
-                        setIsFetching(false);
-                        setIsLoading(false);
-                    }
-                    props.setLoader(false);
-                    setIsLoading(false);
-                }
-            );
 
             dataSync(t("STORAGE.LANDING_RESPONSE"), callLandingPageAPI()).then(
                 (resp) => {
@@ -240,37 +219,22 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         );
         comnPost("v2/landingpage", data, navigation)
             .then((res) => {
-                if (res && res.data.data)
-                    saveToStorage(
-                        t("STORAGE.LANDING_RESPONSE"),
-                        JSON.stringify(res)
-                    );
-                saveToStorage(
-                    t("STORAGE.CATEGORIES_RESPONSE"),
-                    JSON.stringify(res.data.data.categories)
-                );
-                saveToStorage(
-                    t("STORAGE.ROUTES_RESPONSE"),
-                    JSON.stringify(res.data.data.routes)
-                );
-                saveToStorage(
-                    t("STORAGE.CITIES_RESPONSE"),
-                    JSON.stringify(res.data.data.cities)
-                );
-                i18n.changeLanguage(res.data.language);
-                setCities(res.data.data.cities);
-                setRoutes(res.data.data.routes);
-                setBannerObject(res.data.data.banners);
-                setIsFetching(false);
-                setIsLoading(false);
-                props.setLoader(false);
-                setRefreshing(false);
-                // setCategories(res.data.data.categories);
-                // setProjects(res.data.data.projects);
-                // setStops(res.data.data.stops);
-                // setPlace_category(res.data.data.place_category);
-                // setPlaces(res.data.data.places);
-
+                if (res && res.data.data) {
+                    setOfflineData(res);
+                    i18n.changeLanguage(res.data.language);
+                    setCities(res.data.data.cities);
+                    setRoutes(res.data.data.routes);
+                    setBannerObject(res.data.data.banners);
+                    setIsFetching(false);
+                    setIsLoading(false);
+                    props.setLoader(false);
+                    setRefreshing(false);
+                    // setCategories(res.data.data.categories);
+                    // setProjects(res.data.data.projects);
+                    // setStops(res.data.data.stops);
+                    // setPlace_category(res.data.data.place_category);
+                    // setPlaces(res.data.data.places);
+                }
                 if (isFirstTime == "true") {
                     // refRBSheet.current.open()
                     setModePopup(true);
@@ -290,28 +254,31 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         AsyncStorage.setItem("isUpdated", "false");
     };
 
-    const getUserProfile = () => {
-        comnPost("v2/user-profile", props.access_token, navigation)
-            .then((res) => {
-                props.setLoader(false);
-                setProfilePhoto(res.data.data.profile_picture);
-                AsyncStorage.setItem(
-                    t("STORAGE.USER_NAME"),
-                    res.data.data.name
-                );
-                AsyncStorage.setItem(
-                    t("STORAGE.USER_ID"),
-                    JSON.stringify(res.data.data.id)
-                );
-                AsyncStorage.setItem(
-                    t("STORAGE.USER_EMAIL"),
-                    res.data.data.email
-                );
-            })
-            .catch((error) => {
-                setError(error.message);
-                props.setLoader(false);
-            });
+    const setOfflineData = (res) => {
+        let resp = res.data.data;
+        saveToStorage(t("STORAGE.LANDING_RESPONSE"), JSON.stringify(res));
+        saveToStorage(
+            t("STORAGE.CATEGORIES_RESPONSE"),
+            JSON.stringify(resp.categories)
+        );
+        saveToStorage(
+            t("STORAGE.ROUTES_RESPONSE"),
+            JSON.stringify(resp.routes)
+        );
+        saveToStorage(
+            t("STORAGE.CITIES_RESPONSE"),
+            JSON.stringify(resp.cities)
+        );
+        saveToStorage(t("STORAGE.EMERGENCY"), JSON.stringify(resp.queries));
+        saveToStorage(t("STORAGE.GALLERY"), JSON.stringify(resp.gallery));
+        saveToStorage(t("STORAGE.PROFILE_RESPONSE"), JSON.stringify(resp.user));
+        setProfilePhoto(resp.user.profile_picture);
+        AsyncStorage.setItem(t("STORAGE.USER_NAME"), resp.user.name);
+        AsyncStorage.setItem(
+            t("STORAGE.USER_ID"),
+            JSON.stringify(resp.user.id)
+        );
+        AsyncStorage.setItem(t("STORAGE.USER_EMAIL"), resp.user.email);
     };
 
     const getRoutesList = (item) => {

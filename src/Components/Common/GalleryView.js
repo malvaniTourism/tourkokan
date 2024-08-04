@@ -11,7 +11,9 @@ const ImageViewer = ({ images }) => {
 
     useEffect(() => {
         // Preload images for faster loading
-        FastImage.preload(images.map(image => ({ uri: Path.FTP_PATH + image.path })));
+        FastImage.preload(
+            images.map((image) => ({ uri: Path.FTP_PATH + image.path }))
+        );
     }, [images]);
 
     const openImageViewer = (image) => {

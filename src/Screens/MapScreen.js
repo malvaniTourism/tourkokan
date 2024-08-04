@@ -31,10 +31,10 @@ const MapScreen = ({ navigation, ...props }) => {
 
             dataSync(t("STORAGE.CITIES_RESPONSE"), getCities()).then((resp) => {
                 let res = JSON.parse(resp);
-                if (res.data && res.data.data) {
-                    setCities(res.data.data.data);
+                if (res) {
+                    setCities(res);
                     if (mapRef.current) {
-                        const coordinates = res.data.data.data.map((marker) => {
+                        const coordinates = res.map((marker) => {
                             return {
                                 latitude: parseFloat(marker.latitude),
                                 longitude: parseFloat(marker.longitude),

@@ -52,16 +52,14 @@ const Emergency = ({ navigation, route, ...props }) => {
 
         const unsubscribe = NetInfo.addEventListener((state) => {
             setOffline(!state.isConnected);
-            if (state.isConnected) {
-                dataSync(t("STORAGE.EMERGENCY"), fetchData(1, true)).then(
-                    (resp) => {
-                        let res = JSON.parse(resp);
-                        if (res.data && res.data.data) {
-                            setData(res.data.data.data);
-                        }
+            dataSync(t("STORAGE.EMERGENCY"), fetchData(1, true)).then(
+                (resp) => {
+                    let res = JSON.parse(resp);
+                    if (res) {
+                        setData(res);
                     }
-                );
-            }
+                }
+            );
             props.setLoader(false);
         });
 

@@ -12,7 +12,11 @@ import FastImage from "react-native-fast-image";
 import ImageViewing from "react-native-image-viewing";
 import styles from "./Styles";
 import Path from "../../Services/Api/BaseUrl";
-import { comnPost } from "../../Services/Api/CommonServices";
+import {
+    comnPost,
+    dataSync,
+    saveToStorage,
+} from "../../Services/Api/CommonServices";
 import Loader from "../../Components/Customs/Loader";
 import { checkLogin, goBackHandler } from "../../Services/CommonMethods";
 import CheckNet from "../../Components/Common/CheckNet";
@@ -30,7 +34,7 @@ import GlobalText from "../../Components/Customs/Text";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import ExploreGridSkeleton from "./ExploreGridSkeleton";
 
-const { height: screenHeight } = Dimensions.get('window');
+const { height: screenHeight } = Dimensions.get("window");
 
 const ExploreGrid = ({ route, navigation, ...props }) => {
     const { t } = useTranslation();
@@ -51,9 +55,20 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
 
         const unsubscribe = NetInfo.addEventListener((state) => {
             setOffline(!state.isConnected);
-            if (state.isConnected) {
-                fetchData(1, true);
-            }
+            dataSync(t("STORAGE.GALLERY"), fetchData(1, true)).then((resp) => {
+                let res = JSON.parse(resp);
+                if (res) {
+                    const newGallery = res;
+                    setGallery(newGallery);
+                    FastImage.preload(
+                        newGallery.map((image) => ({
+                            uri: Path.FTP_PATH + image.path,
+                        }))
+                    );
+                }
+                props.setLoader(false);
+                setLoading(false);
+            });
         });
 
         return () => {
@@ -84,17 +99,23 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
                     const newGallery = res.data.data.data;
                     if (reset) {
                         setGallery(newGallery);
+                        saveToStorage(
+                            t("STORAGE.GALLERY"),
+                            JSON.stringify(newGallery)
+                        );
                     } else {
-                        setGallery(prevGallery => [
+                        setGallery((prevGallery) => [
                             ...prevGallery,
                             ...newGallery,
                         ]);
                     }
                     setCurrentPage(res.data.data.current_page);
                     setLastPage(res.data.data.last_page);
-                    FastImage.preload(newGallery.map(image => ({
-                        uri: Path.FTP_PATH + image.path
-                    })));
+                    FastImage.preload(
+                        newGallery.map((image) => ({
+                            uri: Path.FTP_PATH + image.path,
+                        }))
+                    );
                 }
                 setLoading(false);
                 setRefreshing(false);
@@ -122,7 +143,11 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
         const offsetY = event.nativeEvent.contentOffset.y;
         const scrollHeight = event.nativeEvent.layoutMeasurement.height;
 
-        if (contentHeight - (scrollHeight + offsetY) < 100 && !loading && currentPage < lastPage) {
+        if (
+            contentHeight - (scrollHeight + offsetY) < 100 &&
+            !loading &&
+            currentPage < lastPage
+        ) {
             fetchData(currentPage + 1);
         }
     };
@@ -163,7 +188,7 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
         return null;
     };
 
-    const imageIndex = gallery.findIndex(img => img.id === selectedImage?.id);
+    const imageIndex = gallery.findIndex((img) => img.id === selectedImage?.id);
 
     return (
         <>
@@ -217,7 +242,9 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
                 )}
                 {selectedImage && (
                     <ImageViewing
-                        images={gallery.map(image => ({ uri: Path.FTP_PATH + image.path }))}
+                        images={gallery.map((image) => ({
+                            uri: Path.FTP_PATH + image.path,
+                        }))}
                         imageIndex={imageIndex}
                         visible={isModalVisible}
                         onRequestClose={closeImageViewer}

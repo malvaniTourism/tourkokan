@@ -54,11 +54,11 @@ const CityList = ({ navigation, route, ...props }) => {
         const unsubscribe = NetInfo.addEventListener((state) => {
             setOffline(!state.isConnected);
 
-            dataSync(t("STORAGE.CITIES_RESPONSE"), fetchCities()).then(
+            dataSync(t("STORAGE.CITIES_RESPONSE"), fetchCities(1, true)).then(
                 (resp) => {
                     let res = JSON.parse(resp);
-                    if (res.data && res.data.data) {
-                        setCities(res.data.data.data);
+                    if (res) {
+                        setCities(res);
                     } else if (resp) {
                         setOffline(true);
                     }
@@ -83,7 +83,7 @@ const CityList = ({ navigation, route, ...props }) => {
         fetchCities(1, true);
     };
 
-    const fetchCities = (page, reset = false) => {
+    const fetchCities = (page, reset) => {
         setLoading(true);
         let data = {};
         if (route?.params?.subCat) {
@@ -149,7 +149,7 @@ const CityList = ({ navigation, route, ...props }) => {
         if (!props.mode) {
             setShowOffline(true);
         } else if (!loading && nextPage <= lastPage) {
-            fetchCities(nextPage);
+            fetchCities(nextPage, false);
         }
     };
 
@@ -221,7 +221,7 @@ const CityList = ({ navigation, route, ...props }) => {
 const mapStateToProps = (state) => {
     return {
         access_token: state.commonState.access_token,
-        mode: state.comnState.mode,
+        mode: state.commonState.mode,
     };
 };
 
