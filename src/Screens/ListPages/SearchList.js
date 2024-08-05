@@ -42,17 +42,19 @@ const SearchList = ({ navigation, route, ...props }) => {
         const unsubscribe = NetInfo.addEventListener((state) => {
             setOffline(false);
 
-            dataSync(t("STORAGE.ROUTES_RESPONSE"), searchRoute()).then(
-                (resp) => {
-                    let res = JSON.parse(resp);
-                    if (res.data && res.data.data) {
-                        setList(res.data.data.data);
-                    } else if (resp) {
-                        setOffline(true);
-                    }
-                    props.setLoader(false);
+            dataSync(
+                t("STORAGE.ROUTES_RESPONSE"),
+                searchRoute(),
+                props.mode
+            ).then((resp) => {
+                let res = JSON.parse(resp);
+                if (res.data && res.data.data) {
+                    setList(res.data.data.data);
+                } else if (resp) {
+                    setOffline(true);
                 }
-            );
+                props.setLoader(false);
+            });
             // removeFromStorage(t("STORAGE.LANDING_RESPONSE"))
         });
 
@@ -167,6 +169,7 @@ const mapStateToProps = (state) => {
     return {
         source: state.commonState.source,
         destination: state.commonState.destination,
+        mode: state.commonState.mode,
     };
 };
 

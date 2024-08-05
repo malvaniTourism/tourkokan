@@ -31,6 +31,7 @@ import CheckNet from "../../Components/Common/CheckNet";
 import GlobalText from "../../Components/Customs/Text";
 import { useTranslation } from "react-i18next";
 import styles from "./Styles";
+import ComingSoon from "../../Components/Common/ComingSoon";
 
 const CityList = ({ navigation, route, ...props }) => {
     const { t } = useTranslation();
@@ -45,27 +46,31 @@ const CityList = ({ navigation, route, ...props }) => {
     const [lastPage, setLastPage] = useState(null);
     const [refreshing, setRefreshing] = useState(false);
     const [showOffline, setShowOffline] = useState(false);
+    const [showOnlineMode, setShowOnlineMode] = useState(false);
 
     useEffect(() => {
         const backHandler = goBackHandler(navigation);
         checkLogin(navigation);
         props.setLoader(true);
+        setCities([]);
 
         const unsubscribe = NetInfo.addEventListener((state) => {
             setOffline(!state.isConnected);
 
-            dataSync(t("STORAGE.CITIES_RESPONSE"), fetchCities(1, true)).then(
-                (resp) => {
-                    let res = JSON.parse(resp);
-                    if (res) {
-                        setCities(res);
-                    } else if (resp) {
-                        setOffline(true);
-                    }
-                    setLoading(false);
-                    props.setLoader(false);
+            dataSync(
+                t("STORAGE.CITIES_RESPONSE"),
+                fetchCities(1, true),
+                props.mode
+            ).then((resp) => {
+                let res = JSON.parse(resp);
+                if (res) {
+                    setCities(res);
+                } else if (resp) {
+                    setOffline(true);
                 }
-            );
+                setLoading(false);
+                props.setLoader(false);
+            });
         });
 
         return () => {
@@ -80,7 +85,12 @@ const CityList = ({ navigation, route, ...props }) => {
 
     const onRefresh = () => {
         setRefreshing(true);
-        fetchCities(1, true);
+        if (props.mode) {
+            fetchCities(1, true);
+        } else {
+            setShowOnlineMode(true);
+            setRefreshing(false);
+        }
     };
 
     const fetchCities = (page, reset) => {
@@ -213,6 +223,11 @@ const CityList = ({ navigation, route, ...props }) => {
                         />
                     </View>
                 )}
+                <ComingSoon
+                    message={t("ONLINE_MODE")}
+                    visible={showOnlineMode}
+                    toggleOverlay={() => setShowOnlineMode(false)}
+                />
             </ScrollView>
         </>
     );

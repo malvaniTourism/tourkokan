@@ -26,6 +26,7 @@ import ImageButton from "../../Components/Customs/Buttons/ImageButton";
 import SubCatCard from "../../Components/Cards/SubCatCard";
 import ImageButtonSkeleton from "../../Components/Customs/Buttons/ImageButtonSkeleton";
 import { useTranslation } from "react-i18next";
+import ComingSoon from "../../Components/Common/ComingSoon";
 
 const Categories = ({ route, navigation, ...props }) => {
     const { t } = useTranslation();
@@ -44,6 +45,7 @@ const Categories = ({ route, navigation, ...props }) => {
     const [selectedSubCategory, setSelectedSubCategory] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
+    const [showOnlineMode, setShowOnlineMode] = useState(false);
 
     useEffect(() => {
         props.setLoader(true);
@@ -54,21 +56,23 @@ const Categories = ({ route, navigation, ...props }) => {
         const unsubscribe = NetInfo.addEventListener((state) => {
             setOffline(false);
 
-            dataSync(t("STORAGE.CATEGORIES_RESPONSE"), getCategories()).then(
-                (resp) => {
-                    let res = JSON.parse(resp);
-                    if (res.data && res.data.data) {
-                        setCategories(res.data.data.data);
-                        setSelectedCategory(res.data.data.data[0].name);
-                        setSelectedSubCategory(
-                            res.data.data.data[0].sub_categories
-                        );
-                    } else if (resp) {
-                        setOffline(true);
-                    }
-                    props.setLoader(false);
+            dataSync(
+                t("STORAGE.CATEGORIES_RESPONSE"),
+                getCategories(),
+                props.mode
+            ).then((resp) => {
+                let res = JSON.parse(resp);
+                if (res.data && res.data.data) {
+                    setCategories(res.data.data.data);
+                    setSelectedCategory(res.data.data.data[0].name);
+                    setSelectedSubCategory(
+                        res.data.data.data[0].sub_categories
+                    );
+                } else if (resp) {
+                    setOffline(true);
                 }
-            );
+                props.setLoader(false);
+            });
         });
 
         return () => {
@@ -79,7 +83,12 @@ const Categories = ({ route, navigation, ...props }) => {
 
     const onRefresh = () => {
         setRefreshing(true);
-        getCategories();
+        if (props.mode) {
+            getCategories();
+        } else {
+            setShowOnlineMode(true);
+            setRefreshing(false);
+        }
     };
 
     const getCategories = () => {
@@ -205,6 +214,11 @@ const Categories = ({ route, navigation, ...props }) => {
                     </View>
                 </View>
             </View>
+            <ComingSoon
+                message={t("ONLINE_MODE")}
+                visible={showOnlineMode}
+                toggleOverlay={() => setShowOnlineMode(false)}
+            />
         </ScrollView>
     );
 };
@@ -212,6 +226,7 @@ const Categories = ({ route, navigation, ...props }) => {
 const mapStateToProps = (state) => {
     return {
         access_token: state.commonState.access_token,
+        mode: state.commonState.mode,
     };
 };
 

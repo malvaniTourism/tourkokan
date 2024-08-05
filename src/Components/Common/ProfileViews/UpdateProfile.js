@@ -9,6 +9,8 @@ import { useTranslation } from "react-i18next";
 import { comnPost } from "../../../Services/Api/CommonServices";
 import Popup from "../Popup";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { connect } from "react-redux";
+import ComingSoon from "../ComingSoon";
 
 const UpdateProfile = ({
     user,
@@ -16,6 +18,7 @@ const UpdateProfile = ({
     uploadImage,
     refreshOption,
     setLoader,
+    ...props
 }) => {
     const { t } = useTranslation();
 
@@ -23,6 +26,7 @@ const UpdateProfile = ({
     const [mobile, setMobile] = useState(phone);
     const [isAlert, setIsAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
+    const [showOnlineMode, setShowOnlineMode] = useState(false);
 
     const setValue = (val, isVal, index) => {
         switch (index) {
@@ -45,44 +49,48 @@ const UpdateProfile = ({
     };
 
     const save = () => {
-        setLoader(true);
-        let data = {};
-        if (mobile) {
-            data = {
-                email,
-                mobile,
-                profile_picture: uploadImage,
-            };
-        } else {
-            data = {
-                email,
-                profile_picture: uploadImage,
-            };
-        }
-        comnPost("v2/updateProfile", data)
-            .then((res) => {
-                if (res.data.success) {
-                    AsyncStorage.setItem("isUpdated", "true");
-                    refreshOption();
-                } else {
+        if (props.mode) {
+            setLoader(true);
+            let data = {};
+            if (mobile) {
+                data = {
+                    email,
+                    mobile,
+                    profile_picture: uploadImage,
+                };
+            } else {
+                data = {
+                    email,
+                    profile_picture: uploadImage,
+                };
+            }
+            comnPost("v2/updateProfile", data)
+                .then((res) => {
+                    if (res.data.success) {
+                        AsyncStorage.setItem("isUpdated", "true");
+                        refreshOption();
+                    } else {
+                        setIsAlert(true);
+                        setAlertMessage(
+                            res.data.message.email
+                                ? res.data.message.email
+                                : res.data.message.mobile
+                                ? res.data.message.mobile
+                                : res.data?.message
+                                ? res.data?.message
+                                : t("NETWORK")
+                        );
+                        setLoader(false);
+                    }
+                })
+                .catch((err) => {
                     setIsAlert(true);
-                    setAlertMessage(
-                        res.data.message.email
-                            ? res.data.message.email
-                            : res.data.message.mobile
-                            ? res.data.message.mobile
-                            : res.data?.message
-                            ? res.data?.message
-                            : t("NETWORK")
-                    );
+                    setAlertMessage(t("ALERT.WENT_WRONG"));
                     setLoader(false);
-                }
-            })
-            .catch((err) => {
-                setIsAlert(true);
-                setAlertMessage(t("ALERT.WENT_WRONG"));
-                setLoader(false);
-            });
+                });
+        } else {
+            setShowOnlineMode(true);
+        }
     };
 
     const closePopup = () => {
@@ -130,8 +138,23 @@ const UpdateProfile = ({
                 onPress={closePopup}
                 visible={isAlert}
             />
+            <ComingSoon
+                message={t("ON_UPDATE_PROFILE")}
+                visible={showOnlineMode}
+                toggleOverlay={() => setShowOnlineMode(false)}
+            />
         </View>
     );
 };
 
-export default UpdateProfile;
+const mapStateToProps = (state) => {
+    return {
+        mode: state.commonState.mode,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UpdateProfile);

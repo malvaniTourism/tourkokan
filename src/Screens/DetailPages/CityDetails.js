@@ -38,6 +38,7 @@ import MapContainer from "../../Components/Common/MapContainer";
 import MapSkeleton from "../../Components/Common/MapSkeleton";
 import { useTranslation } from "react-i18next";
 import GalleryView from "../../Components/Common/GalleryView";
+import ComingSoon from "../../Components/Common/ComingSoon";
 
 const CityDetails = ({ navigation, route, ...props }) => {
     const { t } = useTranslation();
@@ -53,6 +54,8 @@ const CityDetails = ({ navigation, route, ...props }) => {
     const [initialRegion, setInitialRegion] = useState({});
     const [currentLatitude, setCurrentLatitude] = useState();
     const [currentLongitude, setCurrentLongitude] = useState();
+    const [errorMessage, setErrorMessage] = useState("");
+    const [showOnlineMode, setShowOnlineMode] = useState(false);
 
     useEffect(() => {
         const backHandler = goBackHandler(navigation);
@@ -119,41 +122,51 @@ const CityDetails = ({ navigation, route, ...props }) => {
     };
 
     const onHeartClick = async () => {
-        props.setLoader(true);
-        setIsFav(!isFav);
-        route.params.city.is_favorite = !isFav;
-        let placeData = {
-            user_id: await AsyncStorage.getItem(t("STORAGE.USER_ID")),
-            favouritable_type: t("TABLE.SITE"),
-            favouritable_id: city.id,
-        };
-        comnPost("v2/addDeleteFavourite", placeData)
-            .then((res) => {
-                AsyncStorage.setItem("isUpdated", "true");
-                props.setLoader(false);
-                // getDetails()
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        if (props.mode) {
+            props.setLoader(true);
+            setIsFav(!isFav);
+            route.params.city.is_favorite = !isFav;
+            let placeData = {
+                user_id: await AsyncStorage.getItem(t("STORAGE.USER_ID")),
+                favouritable_type: t("TABLE.SITE"),
+                favouritable_id: city.id,
+            };
+            comnPost("v2/addDeleteFavourite", placeData)
+                .then((res) => {
+                    AsyncStorage.setItem("isUpdated", "true");
+                    props.setLoader(false);
+                    // getDetails()
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        } else {
+            setShowOnlineMode(true);
+            setErrorMessage(t("ON_LIKE"));
+        }
     };
 
     const onStarRatingPress = async (rate) => {
-        setRating(rate);
-        props.setLoader(true);
-        const placeData = {
-            user_id: await AsyncStorage.getItem(t("STORAGE.USER_ID")),
-            rateable_type: t("TABLE.SITE"),
-            rateable_id: city.id,
-            rate,
-        };
-        comnPost("v2/addUpdateRating", placeData)
-            .then((res) => {
-                AsyncStorage.setItem("isUpdated", "true");
-                props.setLoader(false);
-                // getDetails()
-            })
-            .catch((err) => {});
+        if (props.mode) {
+            setRating(rate);
+            props.setLoader(true);
+            const placeData = {
+                user_id: await AsyncStorage.getItem(t("STORAGE.USER_ID")),
+                rateable_type: t("TABLE.SITE"),
+                rateable_id: city.id,
+                rate,
+            };
+            comnPost("v2/addUpdateRating", placeData)
+                .then((res) => {
+                    AsyncStorage.setItem("isUpdated", "true");
+                    props.setLoader(false);
+                    // getDetails()
+                })
+                .catch((err) => {});
+        } else {
+            setShowOnlineMode(true);
+            setErrorMessage(t("ON_RATE"));
+        }
     };
 
     const openCommentsSheet = () => {
@@ -528,6 +541,11 @@ const CityDetails = ({ navigation, route, ...props }) => {
                     openCommentsSheet={() => openCommentsSheet()}
                     closeCommentsSheet={() => closeCommentsSheet()}
                 />
+                <ComingSoon
+                    message={errorMessage}
+                    visible={showOnlineMode}
+                    toggleOverlay={() => setShowOnlineMode(false)}
+                />
             </ScrollView>
         </>
     );
@@ -536,6 +554,7 @@ const CityDetails = ({ navigation, route, ...props }) => {
 const mapStateToProps = (state) => {
     return {
         access_token: state.commonState.access_token,
+        mode: state.commonState.mode,
     };
 };
 

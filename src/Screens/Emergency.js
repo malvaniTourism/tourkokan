@@ -29,6 +29,7 @@ import CheckNet from "../Components/Common/CheckNet";
 import NetInfo from "@react-native-community/netinfo";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
 import GlobalText from "../Components/Customs/Text";
+import ComingSoon from "../Components/Common/ComingSoon";
 
 const Emergency = ({ navigation, route, ...props }) => {
     const { t } = useTranslation();
@@ -40,11 +41,14 @@ const Emergency = ({ navigation, route, ...props }) => {
     const [nextPage, setNextPage] = useState(1);
     const [hasMore, setHasMore] = useState(true); // New state to track if there's more data
     const [refreshing, setRefreshing] = useState(false);
+    const [showOnlineMode, setShowOnlineMode] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
         const backHandler = goBackHandler(navigation);
         checkLogin(navigation);
         props.setLoader(true);
+        setData([]);
 
         if (props.access_token) {
             fetchData(1, true);
@@ -52,14 +56,16 @@ const Emergency = ({ navigation, route, ...props }) => {
 
         const unsubscribe = NetInfo.addEventListener((state) => {
             setOffline(!state.isConnected);
-            dataSync(t("STORAGE.EMERGENCY"), fetchData(1, true)).then(
-                (resp) => {
-                    let res = JSON.parse(resp);
-                    if (res) {
-                        setData(res);
-                    }
+            dataSync(
+                t("STORAGE.EMERGENCY"),
+                fetchData(1, true),
+                props.mode
+            ).then((resp) => {
+                let res = JSON.parse(resp);
+                if (res) {
+                    setData(res);
                 }
-            );
+            });
             props.setLoader(false);
         });
 
@@ -72,7 +78,13 @@ const Emergency = ({ navigation, route, ...props }) => {
 
     const onRefresh = () => {
         setRefreshing(true);
-        fetchData(1, true);
+        if (props.mode) {
+            fetchData(1, true);
+        } else {
+            setErrorMessage(t("ONLINE_MODE"));
+            setShowOnlineMode(true);
+            setRefreshing(false);
+        }
     };
 
     const fetchData = (page, reset = false) => {
@@ -120,7 +132,10 @@ const Emergency = ({ navigation, route, ...props }) => {
     };
 
     const loadMoreData = () => {
-        if (!loading && hasMore) {
+        if (!props.mode) {
+            setErrorMessage(t("GET_MORE_DATA"));
+            setShowOnlineMode(true);
+        } else if (!loading && hasMore) {
             fetchData(nextPage);
         }
     };
@@ -235,13 +250,20 @@ const Emergency = ({ navigation, route, ...props }) => {
                         />
                     </View>
                 )}
+                <ComingSoon
+                    message={errorMessage}
+                    visible={showOnlineMode}
+                    toggleOverlay={() => setShowOnlineMode(false)}
+                />
             </ScrollView>
         </>
     );
 };
 
 const mapStateToProps = (state) => {
-    return {};
+    return {
+        mode: state.commonState.mode,
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {

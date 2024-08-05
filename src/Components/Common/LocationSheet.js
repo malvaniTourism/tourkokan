@@ -19,6 +19,7 @@ import styles from "./Styles";
 import DialogBox from "react-native-dialogbox";
 import Geolocation from "@react-native-community/geolocation";
 import { useTranslation } from "react-i18next";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LocationSheet = ({
     openLocationSheet,

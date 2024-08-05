@@ -29,7 +29,11 @@ const MapScreen = ({ navigation, ...props }) => {
         const unsubscribe = NetInfo.addEventListener((state) => {
             setOffline(false);
 
-            dataSync(t("STORAGE.CITIES_RESPONSE"), getCities()).then((resp) => {
+            dataSync(
+                t("STORAGE.CITIES_RESPONSE"),
+                getCities(),
+                props.mode
+            ).then((resp) => {
                 let res = JSON.parse(resp);
                 if (res) {
                     setCities(res);
@@ -62,11 +66,6 @@ const MapScreen = ({ navigation, ...props }) => {
             unsubscribe();
         };
     }, []);
-
-    const onRefresh = () => {
-        setRefreshing(true);
-        getCities();
-    };
 
     const getCities = () => {
         props.setLoader(true);
@@ -157,6 +156,7 @@ const MapScreen = ({ navigation, ...props }) => {
 const mapStateToProps = (state) => {
     return {
         access_token: state.commonState.access_token,
+        mode: state.commonState.mode,
     };
 };
 

@@ -55,7 +55,11 @@ const Explore = ({ route, navigation, ...props }) => {
         const unsubscribe = NetInfo.addEventListener((state) => {
             setOffline(false);
 
-            dataSync(t("STORAGE.CITIES_RESPONSE"), getCities()).then((resp) => {
+            dataSync(
+                t("STORAGE.CITIES_RESPONSE"),
+                getCities(),
+                props.mode
+            ).then((resp) => {
                 let res = JSON.parse(resp);
                 if (res.data && res.data.data) {
                     setCities(res.data.data.data);
@@ -64,7 +68,7 @@ const Explore = ({ route, navigation, ...props }) => {
                 }
             });
 
-            // dataSync(t("STORAGE.PLACES_RESPONSE"), getPlaces())
+            // dataSync(t("STORAGE.PLACES_RESPONSE"), getPlaces(), props.mode)
             //   .then(resp => {
             //     let res = JSON.parse(resp)
             //     if (res.data && res.data.data) {
@@ -305,6 +309,7 @@ const Explore = ({ route, navigation, ...props }) => {
 const mapStateToProps = (state) => {
     return {
         access_token: state.commonState.access_token,
+        mode: state.commonState.mode,
     };
 };
 

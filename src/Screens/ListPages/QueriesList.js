@@ -38,6 +38,7 @@ import GlobalText from "../../Components/Customs/Text";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Entypo from "react-native-vector-icons/Entypo";
 import ContactUs from "../ContactUs";
+import ComingSoon from "../../Components/Common/ComingSoon";
 
 const QueriesList = ({ navigation, route, ...props }) => {
     const { t } = useTranslation();
@@ -50,11 +51,14 @@ const QueriesList = ({ navigation, route, ...props }) => {
     const [hasMore, setHasMore] = useState(true); // New state to track if there's more data
     const [refreshing, setRefreshing] = useState(false);
     const [step, setStep] = useState(0);
+    const [showOnlineMode, setShowOnlineMode] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(false);
 
     useEffect(() => {
         const backHandler = goBackHandler(navigation);
         checkLogin(navigation);
         props.setLoader(true);
+        setData([]);
 
         if (props.access_token) {
             fetchData(1, true);
@@ -62,16 +66,14 @@ const QueriesList = ({ navigation, route, ...props }) => {
 
         const unsubscribe = NetInfo.addEventListener((state) => {
             setOffline(!state.isConnected);
-            if (state.isConnected) {
-                dataSync(t("STORAGE.QUERIES"), fetchData(1, true)).then(
-                    (resp) => {
-                        let res = JSON.parse(resp);
-                        if (res.data && res.data.data) {
-                            setData(res.data.data.data);
-                        }
+            dataSync(t("STORAGE.QUERIES"), fetchData(1, true), props.mode).then(
+                (resp) => {
+                    let res = JSON.parse(resp);
+                    if (res.data && res.data.data) {
+                        setData(res.data.data.data);
                     }
-                );
-            }
+                }
+            );
             props.setLoader(false);
         });
 
@@ -88,7 +90,13 @@ const QueriesList = ({ navigation, route, ...props }) => {
 
     const onRefresh = () => {
         setRefreshing(true);
-        fetchData(1, true);
+        if (props.mode) {
+            fetchData(1, true);
+        } else {
+            setShowOnlineMode(true);
+            setErrorMessage(t("ONLINE_MODE"));
+            setRefreshing(false);
+        }
     };
 
     const fetchData = (page, reset = false) => {
@@ -130,7 +138,10 @@ const QueriesList = ({ navigation, route, ...props }) => {
     };
 
     const loadMoreData = () => {
-        if (!loading && hasMore) {
+        if (!props.mode) {
+            setErrorMessage(t("GET_MORE_DATA"));
+            setShowOnlineMode(true);
+        } else if (!loading && hasMore) {
             fetchData(nextPage);
         }
     };
@@ -246,13 +257,20 @@ const QueriesList = ({ navigation, route, ...props }) => {
                 ) : (
                     <ContactUs setStep={setStep} />
                 )}
+                <ComingSoon
+                    message={errorMessage}
+                    visible={showOnlineMode}
+                    toggleOverlay={() => setShowOnlineMode(false)}
+                />
             </ScrollView>
         </>
     );
 };
 
 const mapStateToProps = (state) => {
-    return {};
+    return {
+        mode: state.commonState.mode,
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -43,6 +43,7 @@ import { launchImageLibrary } from "react-native-image-picker";
 import Popup from "../Components/Common/Popup";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import DIMENSIONS from "../Services/Constants/DIMENSIONS";
+import ComingSoon from "../Components/Common/ComingSoon";
 
 const ProfileView = ({ navigation, route, ...props }) => {
     const { t, i18n } = useTranslation();
@@ -61,6 +62,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
     const [uploadImage, setUploadImage] = useState(null);
     const [refreshing, setRefreshing] = useState(false);
     const [isAlert, setIsAlert] = useState(false);
+    const [showOnlineMode, setShowOnlineMode] = useState(false);
 
     useEffect(() => {
         props.setLoader(true);
@@ -74,28 +76,32 @@ const ProfileView = ({ navigation, route, ...props }) => {
         const unsubscribeFocus = navigation.addListener(
             t("EVENT.FOCUS"),
             () => {
-                getUserProfile();
+                if (props.mode) getUserProfile();
             }
         );
 
         const unsubscribe = NetInfo.addEventListener((state) => {
             setOffline(false);
-            dataSync(t("STORAGE.PROFILE_RESPONSE"), getUserProfile()).then(
-                (resp) => {
-                    let res = JSON.parse(resp);
-                    if (res.data && res.data.data) {
-                        setProfile(res.data.data);
-                        setOption(0);
-                        setLocationMap(
-                            res.data.data.addresses[0].latitude,
-                            res.data.data.addresses[0].longitude
-                        );
-                    } else if (resp) {
-                        setOffline(true);
-                    }
+            dataSync(
+                t("STORAGE.PROFILE_RESPONSE"),
+                getUserProfile(),
+                props.mode
+            ).then((resp) => {
+                let res = JSON.parse(resp);
+                if (res) {
+                    setProfile(res);
+                    setOption(0);
+                    setLocationMap(
+                        res.addresses[0].latitude,
+                        res.addresses[0].longitude
+                    );
                     props.setLoader(false);
+                setRefreshing(false);
+                } else if (resp) {
+                    setOffline(true);
                 }
-            );
+                props.setLoader(false);
+            });
             // removeFromStorage(t("STORAGE.LANDING_RESPONSE"))
         });
         return () => {
@@ -108,7 +114,12 @@ const ProfileView = ({ navigation, route, ...props }) => {
 
     const onRefresh = () => {
         setRefreshing(true);
-        getUserProfile();
+        if (props.mode) {
+            getUserProfile();
+        } else {
+            setShowOnlineMode(true);
+            setRefreshing(false);
+        }
     };
 
     const backPress = () => {
@@ -481,6 +492,11 @@ const ProfileView = ({ navigation, route, ...props }) => {
                     />
                 </View>
             </Overlay>
+            <ComingSoon
+                message={t("ONLINE_MODE")}
+                visible={showOnlineMode}
+                toggleOverlay={() => setShowOnlineMode(false)}
+            />
         </ScrollView>
     );
 };
@@ -488,6 +504,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
 const mapStateToProps = (state) => {
     return {
         access_token: state.commonState.access_token,
+        mode: state.commonState.mode,
     };
 };
 

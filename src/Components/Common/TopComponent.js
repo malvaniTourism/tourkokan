@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 import { Switch } from "@rneui/themed";
 import { connect } from "react-redux";
 import { setLoader, setMode } from "../../Reducers/CommonActions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 StatusBar.setBarStyle("dark-content");
 

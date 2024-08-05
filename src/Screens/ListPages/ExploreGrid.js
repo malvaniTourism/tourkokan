@@ -33,6 +33,7 @@ import { useTranslation } from "react-i18next";
 import GlobalText from "../../Components/Customs/Text";
 import DIMENSIONS from "../../Services/Constants/DIMENSIONS";
 import ExploreGridSkeleton from "./ExploreGridSkeleton";
+import ComingSoon from "../../Components/Common/ComingSoon";
 
 const { height: screenHeight } = Dimensions.get("window");
 
@@ -47,6 +48,7 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
     const [refreshing, setRefreshing] = useState(false);
+    const [showOnlineMode, setShowOnlineMode] = useState(false);
 
     useEffect(() => {
         const backHandler = goBackHandler(navigation);
@@ -55,20 +57,22 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
 
         const unsubscribe = NetInfo.addEventListener((state) => {
             setOffline(!state.isConnected);
-            dataSync(t("STORAGE.GALLERY"), fetchData(1, true)).then((resp) => {
-                let res = JSON.parse(resp);
-                if (res) {
-                    const newGallery = res;
-                    setGallery(newGallery);
-                    FastImage.preload(
-                        newGallery.map((image) => ({
-                            uri: Path.FTP_PATH + image.path,
-                        }))
-                    );
+            dataSync(t("STORAGE.GALLERY"), fetchData(1, true), props.mode).then(
+                (resp) => {
+                    let res = JSON.parse(resp);
+                    if (res) {
+                        const newGallery = res;
+                        setGallery(newGallery);
+                        FastImage.preload(
+                            newGallery.map((image) => ({
+                                uri: Path.FTP_PATH + image.path,
+                            }))
+                        );
+                    }
+                    props.setLoader(false);
+                    setLoading(false);
                 }
-                props.setLoader(false);
-                setLoading(false);
-            });
+            );
         });
 
         return () => {
@@ -129,7 +133,12 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
 
     const onRefresh = () => {
         setRefreshing(true);
-        fetchData(1, true);
+        if (props.mode) {
+            fetchData(1, true);
+        } else {
+            setShowOnlineMode(true);
+            setRefreshing(false);
+        }
     };
 
     const handleSearch = (value) => {
@@ -250,6 +259,11 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
                         onRequestClose={closeImageViewer}
                     />
                 )}
+                <ComingSoon
+                    message={t("ONLINE_MODE")}
+                    visible={showOnlineMode}
+                    toggleOverlay={() => setShowOnlineMode(false)}
+                />
             </ScrollView>
         </>
     );
@@ -257,6 +271,7 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
 
 const mapStateToProps = (state) => ({
     source: state.commonState.source,
+    mode: state.commonState.mode,
 });
 
 const mapDispatchToProps = (dispatch) => ({

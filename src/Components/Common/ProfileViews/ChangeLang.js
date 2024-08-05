@@ -7,8 +7,10 @@ import TextButton from "../../Customs/Buttons/TextButton";
 import { useTranslation } from "react-i18next";
 import { comnPost } from "../../../Services/Api/CommonServices";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ComingSoon from "../ComingSoon";
+import { connect } from "react-redux";
 
-const ChangeLang = ({ refreshOption, setLoader }) => {
+const ChangeLang = ({ refreshOption, setLoader, ...props }) => {
     const { t, i18n } = useTranslation();
 
     const [list, setList] = useState([
@@ -17,24 +19,29 @@ const ChangeLang = ({ refreshOption, setLoader }) => {
     ]);
     const [language, setLanguage] = useState(null);
     const [isFocus, setIsFocus] = useState(false);
+    const [showOnlineMode, setShowOnlineMode] = useState(false);
 
     useEffect(() => {
         setLanguage(t("LANG"));
     }, []);
 
     const saveLang = () => {
-        setLoader(true);
-        let data = {
-            language,
-        };
-        comnPost("v2/updateProfile", data)
-            .then((res) => {
-                AsyncStorage.setItem("isUpdated", "true");
-            })
-            .catch((err) => {});
-        i18n.changeLanguage(language);
-        AsyncStorage.setItem("isLangChanged", "true");
-        refreshOption();
+        if (props.mode) {
+            setLoader(true);
+            let data = {
+                language,
+            };
+            comnPost("v2/updateProfile", data)
+                .then((res) => {
+                    AsyncStorage.setItem("isUpdated", "true");
+                })
+                .catch((err) => {});
+            i18n.changeLanguage(language);
+            AsyncStorage.setItem("isLangChanged", "true");
+            refreshOption();
+        } else {
+            setShowOnlineMode(true);
+        }
     };
 
     return (
@@ -70,8 +77,23 @@ const ChangeLang = ({ refreshOption, setLoader }) => {
                 titleStyle={styles.buttonTitleStyle}
                 onPress={saveLang}
             />
+            <ComingSoon
+                message={t("ON_UPDATE_PROFILE")}
+                visible={showOnlineMode}
+                toggleOverlay={() => setShowOnlineMode(false)}
+            />
         </View>
     );
 };
 
-export default ChangeLang;
+const mapStateToProps = (state) => {
+    return {
+        mode: state.commonState.mode,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChangeLang);

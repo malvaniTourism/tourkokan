@@ -60,21 +60,23 @@ const Profile = ({ navigation, ...props }) => {
 
         const unsubscribe = NetInfo.addEventListener((state) => {
             setOffline(false);
-            dataSync(t("STORAGE.PROFILE_RESPONSE"), getUserProfile()).then(
-                (resp) => {
-                    let res = JSON.parse(resp);
-                    if (res.data && res.data.data) {
-                        setProfile(res.data.data);
-                        setName(res.data.data.name);
-                        setEmail(res.data.data.email);
-                        setMobile(res.data.data.mobile);
-                        setPicture(res.data.data.profile_picture);
-                    } else if (resp) {
-                        setOffline(true);
-                    }
-                    props.setLoader(false);
+            dataSync(
+                t("STORAGE.PROFILE_RESPONSE"),
+                getUserProfile(),
+                props.mode
+            ).then((resp) => {
+                let res = JSON.parse(resp);
+                if (res.data && res.data.data) {
+                    setProfile(res.data.data);
+                    setName(res.data.data.name);
+                    setEmail(res.data.data.email);
+                    setMobile(res.data.data.mobile);
+                    setPicture(res.data.data.profile_picture);
+                } else if (resp) {
+                    setOffline(true);
                 }
-            );
+                props.setLoader(false);
+            });
             // removeFromStorage(t("STORAGE.LANDING_RESPONSE"))
         });
 
@@ -311,6 +313,7 @@ const Profile = ({ navigation, ...props }) => {
 const mapStateToProps = (state) => {
     return {
         access_token: state.commonState.access_token,
+        mode: state.commonState.mode,
     };
 };
 

@@ -98,6 +98,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
     const [keyboardOffset, setKeyboardOffset] = useState(0);
     const [modePopup, setModePopup] = useState(false);
     const [showOffline, setShowOffline] = useState(false);
+    const [showOnlineMode, setShowOnlineMode] = useState(false);
 
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener(
@@ -144,28 +145,30 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         const unsubscribe = NetInfo.addEventListener((state) => {
             setOffline(!state.isConnected);
 
-            dataSync(t("STORAGE.LANDING_RESPONSE"), callLandingPageAPI()).then(
-                (resp) => {
-                    let res = JSON.parse(resp);
-                    if (res.data && res.data.data) {
-                        setCities(res.data.data.cities);
-                        setRoutes(res.data.data.routes);
-                        setBannerObject(res.data.data.banners);
-                        setIsFetching(false);
-                        setIsLoading(false);
-                        // setCategories(res.data.data.categories);
-                        // setProjects(res.data.data.projects);
-                        // setStops(res.data.data.stops);
-                        // setPlace_category(res.data.data.place_category);
-                        // setPlaces(res.data.data.places);
-                    } else if (resp) {
-                        setOffline(true);
-                        setIsFetching(false);
-                        setIsLoading(false);
-                    }
-                    props.setLoader(false);
+            dataSync(
+                t("STORAGE.LANDING_RESPONSE"),
+                callLandingPageAPI(),
+                props.mode
+            ).then((resp) => {
+                let res = JSON.parse(resp);
+                if (res.data && res.data.data) {
+                    setCities(res.data.data.cities);
+                    setRoutes(res.data.data.routes);
+                    setBannerObject(res.data.data.banners);
+                    setIsFetching(false);
+                    setIsLoading(false);
+                    // setCategories(res.data.data.categories);
+                    // setProjects(res.data.data.projects);
+                    // setStops(res.data.data.stops);
+                    // setPlace_category(res.data.data.place_category);
+                    // setPlaces(res.data.data.places);
+                } else if (resp) {
+                    setOffline(true);
+                    setIsFetching(false);
+                    setIsLoading(false);
                 }
-            );
+                props.setLoader(false);
+            });
             // removeFromStorage(t("STORAGE.LANDING_RESPONSE"))
         });
 
@@ -181,12 +184,20 @@ const HomeScreen = ({ navigation, route, ...props }) => {
 
     const onRefresh = () => {
         setRefreshing(true);
-        callLandingPageAPI();
+        if (props.mode) {
+            callLandingPageAPI();
+        } else {
+            setShowOnlineMode(true);
+            setRefreshing(false);
+        }
     };
 
     useFocusEffect(
         React.useCallback(async () => {
-            if ((await AsyncStorage.getItem("isUpdated")) == "true") {
+            if (
+                (await AsyncStorage.getItem("isUpdated")) == "true" &&
+                props.mode
+            ) {
                 setIsLoading(true);
                 setCities([]);
                 setRoutes([]);
@@ -269,7 +280,8 @@ const HomeScreen = ({ navigation, route, ...props }) => {
             t("STORAGE.CITIES_RESPONSE"),
             JSON.stringify(resp.cities)
         );
-        saveToStorage(t("STORAGE.EMERGENCY"), JSON.stringify(resp.queries));
+        saveToStorage(t("STORAGE.EMERGENCY"), JSON.stringify(resp.emergencies));
+        saveToStorage(t("STORAGE.QUERIES"), JSON.stringify(resp.queries));
         saveToStorage(t("STORAGE.GALLERY"), JSON.stringify(resp.gallery));
         saveToStorage(t("STORAGE.PROFILE_RESPONSE"), JSON.stringify(resp.user));
         setProfilePhoto(resp.user.profile_picture);
@@ -567,6 +579,11 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                     message={t("OFFLINE_MODE")}
                     visible={showOffline}
                     toggleOverlay={() => setShowOffline(false)}
+                />
+                <ComingSoon
+                    message={t("ONLINE_MODE")}
+                    visible={showOnlineMode}
+                    toggleOverlay={() => setShowOnlineMode(false)}
                 />
             </KeyboardAwareScrollView>
         </>
