@@ -94,52 +94,54 @@ const CityList = ({ navigation, route, ...props }) => {
     };
 
     const fetchCities = (page, reset) => {
-        setLoading(true);
-        let data = {};
-        if (route?.params?.subCat) {
-            data = {
-                apitype: "list",
-                parent_id: route?.params?.parent_id,
-                category: route?.params?.subCat || "",
-                per_page: 20,
-                page: page,
-            };
-        } else {
-            data = {
-                apitype: "list",
-                parent_id: route?.params?.parent_id,
-                per_page: 20,
-                page: page,
-            };
-        }
-        comnPost(`v2/sites`, data, navigation)
-            .then((res) => {
-                if (res && res.data.data) {
-                    if (reset) {
-                        setCities(res.data.data.data);
-                    } else {
-                        setCities((prevCities) => [
-                            ...prevCities,
-                            ...res.data.data.data,
-                        ]);
+        if (props.mode) {
+            setLoading(true);
+            let data = {};
+            if (route?.params?.subCat) {
+                data = {
+                    apitype: "list",
+                    parent_id: route?.params?.parent_id,
+                    category: route?.params?.subCat || "",
+                    per_page: 20,
+                    page: page,
+                };
+            } else {
+                data = {
+                    apitype: "list",
+                    parent_id: route?.params?.parent_id,
+                    per_page: 20,
+                    page: page,
+                };
+            }
+            comnPost(`v2/sites`, data, navigation)
+                .then((res) => {
+                    if (res && res.data.data) {
+                        if (reset) {
+                            setCities(res.data.data.data);
+                        } else {
+                            setCities((prevCities) => [
+                                ...prevCities,
+                                ...res.data.data.data,
+                            ]);
+                        }
+                        setNextPage(res.data.data.current_page + 1);
+                        setLastPage(res.data.data.last_page);
+                        saveToStorage(
+                            t("STORAGE.CITIES_RESPONSE"),
+                            JSON.stringify(res.data.data.data)
+                        );
                     }
-                    setNextPage(res.data.data.current_page + 1);
-                    setLastPage(res.data.data.last_page);
-                    saveToStorage(
-                        t("STORAGE.CITIES_RESPONSE"),
-                        JSON.stringify(res)
-                    );
-                }
-                setLoading(false);
-                props.setLoader(false);
-                setRefreshing(false);
-            })
-            .catch((error) => {
-                setLoading(false);
-                props.setLoader(false);
-                setRefreshing(false);
-                setError(error.message); // Update error state with error message
-            });
+                    setLoading(false);
+                    props.setLoader(false);
+                    setRefreshing(false);
+                })
+                .catch((error) => {
+                    setLoading(false);
+                    props.setLoader(false);
+                    setRefreshing(false);
+                    setError(error.message); // Update error state with error message
+                });
+        }
     };
 
     const getCityDetails = (id) => {

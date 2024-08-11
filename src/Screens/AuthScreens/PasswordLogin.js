@@ -109,7 +109,7 @@ const PasswordLogin = ({ navigation, route, ...props }) => {
                     );
                     AsyncStorage.setItem(
                         t("STORAGE.USER_ID"),
-                        res.data.data.user.id
+                        JSON.stringify(res.data.data.user.id)
                     );
                     props.saveAccess_token(res.data.data.access_token);
                     props.setLoader(false);

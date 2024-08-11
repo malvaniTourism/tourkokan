@@ -8,6 +8,7 @@ import {
     RefreshControl,
     Keyboard,
     Platform,
+    Linking,
 } from "react-native";
 import SearchPanel from "../Components/Common/SearchPanel";
 import TopComponent from "../Components/Common/TopComponent";
@@ -18,6 +19,7 @@ import Feather from "react-native-vector-icons/Feather";
 import {
     comnPost,
     dataSync,
+    getFromStorage,
     saveToStorage,
 } from "../Services/Api/CommonServices";
 import { connect } from "react-redux";
@@ -99,6 +101,7 @@ const HomeScreen = ({ navigation, route, ...props }) => {
     const [modePopup, setModePopup] = useState(false);
     const [showOffline, setShowOffline] = useState(false);
     const [showOnlineMode, setShowOnlineMode] = useState(false);
+    const [updateApp, setUpdateApp] = useState(false);
 
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener(
@@ -120,7 +123,13 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         };
     }, []);
 
+    // const setAppMode = async () => {
+    //     let mode = await getFromStorage(t("STORAGE.MODE"))
+    //     props.setMode(mode)
+    // }
+
     useEffect(() => {
+        // setAppMode();
         setIsLoading(true);
         setSindh({
             id: 0,
@@ -142,26 +151,27 @@ const HomeScreen = ({ navigation, route, ...props }) => {
         LogBox.ignoreAllLogs();
         saveToken();
         SplashScreen.hide();
-        const unsubscribe = NetInfo.addEventListener((state) => {
+        const unsubscribe = NetInfo.addEventListener(async (state) => {
             setOffline(!state.isConnected);
+            let mode = JSON.parse(await getFromStorage(t("STORAGE.MODE")));
 
             dataSync(
                 t("STORAGE.LANDING_RESPONSE"),
                 callLandingPageAPI(),
-                props.mode
+                mode
             ).then((resp) => {
                 let res = JSON.parse(resp);
-                if (res.data && res.data.data) {
-                    setCities(res.data.data.cities);
-                    setRoutes(res.data.data.routes);
-                    setBannerObject(res.data.data.banners);
+                if (res) {
+                    setCities(res.cities);
+                    setRoutes(res.routes);
+                    setBannerObject(res.banners);
                     setIsFetching(false);
                     setIsLoading(false);
-                    // setCategories(res.data.data.categories);
-                    // setProjects(res.data.data.projects);
-                    // setStops(res.data.data.stops);
-                    // setPlace_category(res.data.data.place_category);
-                    // setPlaces(res.data.data.places);
+                    // setCategories(res.categories);
+                    // setProjects(res.projects);
+                    // setStops(res.stops);
+                    // setPlace_category(res.place_category);
+                    // setPlaces(res.places);
                 } else if (resp) {
                     setOffline(true);
                     setIsFetching(false);
@@ -221,53 +231,63 @@ const HomeScreen = ({ navigation, route, ...props }) => {
     };
 
     const callLandingPageAPI = async (site_id) => {
-        let data = {
-            site_id,
-        };
-        props.setLoader(true);
+        console.log("cleed");
+
         let isFirstTime = await AsyncStorage.getItem(
             t("STORAGE.IS_FIRST_TIME")
         );
-        comnPost("v2/landingpage", data, navigation)
-            .then((res) => {
-                if (res && res.data.data) {
-                    setOfflineData(res);
-                    i18n.changeLanguage(res.data.language);
-                    setCities(res.data.data.cities);
-                    setRoutes(res.data.data.routes);
-                    setBannerObject(res.data.data.banners);
+        let mode = JSON.parse(await getFromStorage(t("STORAGE.MODE")));
+        if (mode) {
+            let data = {
+                site_id,
+            };
+            props.setLoader(true);
+            comnPost("v2/landingpage", data, navigation)
+                .then((res) => {
+                    if (res && res.data.data) {
+                        setOfflineData(res.data.data);
+                        i18n.changeLanguage(res.data.language);
+                        setCities(res.data.data.cities);
+                        setRoutes(res.data.data.routes);
+                        setBannerObject(res.data.data.banners);
+                        setIsFetching(false);
+                        setIsLoading(false);
+                        props.setLoader(false);
+                        setRefreshing(false);
+                        if (
+                            t("APP_VERSION") <
+                            res.data.data.version.version_number
+                        ) {
+                            setUpdateApp(true);
+                        }
+                        // setCategories(res.data.data.categories);
+                        // setProjects(res.data.data.projects);
+                        // setStops(res.data.data.stops);
+                        // setPlace_category(res.data.data.place_category);
+                        // setPlaces(res.data.data.places);
+                    }
+                    if (isFirstTime == "true") {
+                        // refRBSheet.current.open()
+                        setModePopup(true);
+                        AsyncStorage.setItem(
+                            t("STORAGE.IS_FIRST_TIME"),
+                            JSON.stringify(false)
+                        );
+                    }
+                })
+                .catch((error) => {
                     setIsFetching(false);
                     setIsLoading(false);
                     props.setLoader(false);
                     setRefreshing(false);
-                    // setCategories(res.data.data.categories);
-                    // setProjects(res.data.data.projects);
-                    // setStops(res.data.data.stops);
-                    // setPlace_category(res.data.data.place_category);
-                    // setPlaces(res.data.data.places);
-                }
-                if (isFirstTime == "true") {
-                    // refRBSheet.current.open()
-                    setModePopup(true);
-                    AsyncStorage.setItem(
-                        t("STORAGE.IS_FIRST_TIME"),
-                        JSON.stringify(false)
-                    );
-                }
-            })
-            .catch((error) => {
-                setIsFetching(false);
-                setIsLoading(false);
-                props.setLoader(false);
-                setRefreshing(false);
-                setError(error.message);
-            });
-        AsyncStorage.setItem("isUpdated", "false");
+                    setError(error.message);
+                });
+            AsyncStorage.setItem("isUpdated", "false");
+        }
     };
 
-    const setOfflineData = (res) => {
-        let resp = res.data.data;
-        saveToStorage(t("STORAGE.LANDING_RESPONSE"), JSON.stringify(res));
+    const setOfflineData = (resp) => {
+        saveToStorage(t("STORAGE.LANDING_RESPONSE"), JSON.stringify(resp));
         saveToStorage(
             t("STORAGE.CATEGORIES_RESPONSE"),
             JSON.stringify(resp.categories)
@@ -329,14 +349,26 @@ const HomeScreen = ({ navigation, route, ...props }) => {
     };
 
     const onlineClick = () => {
+        saveToStorage(t("STORAGE.MODE"), JSON.stringify(true));
         props.setMode(true);
         setModePopup(false);
     };
 
     const offlineClick = () => {
+        saveToStorage(t("STORAGE.MODE"), JSON.stringify(false));
         props.setMode(false);
         setModePopup(false);
         setShowOffline(true);
+    };
+
+    const exitUpdate = () => {
+        setUpdateApp(false);
+        BackHandler.exitApp();
+    };
+
+    const continueUpdate = () => {
+        setUpdateApp(false);
+        Linking.openURL(t("APP_URL"));
     };
 
     return (
@@ -572,6 +604,28 @@ const HomeScreen = ({ navigation, route, ...props }) => {
                             titleStyle={styles.locButtonTitle}
                             raised={false}
                             onPress={() => onlineClick()}
+                        />
+                    </View>
+                </Overlay>
+                <Overlay style={styles.locationModal} isVisible={updateApp}>
+                    <GlobalText
+                        text={t("ALERT.APP_VERSION")}
+                        style={styles.locationModal}
+                    />
+                    <View style={styles.flexRow}>
+                        <TextButton
+                            title={t("BUTTON.NO")}
+                            buttonView={styles.logoutButtonStyle}
+                            titleStyle={styles.locButtonTitle}
+                            raised={false}
+                            onPress={() => exitUpdate()}
+                        />
+                        <TextButton
+                            title={t("BUTTON.CONTINUE")}
+                            buttonView={styles.logoutButtonStyle}
+                            titleStyle={styles.locButtonTitle}
+                            raised={false}
+                            onPress={() => continueUpdate()}
                         />
                     </View>
                 </Overlay>

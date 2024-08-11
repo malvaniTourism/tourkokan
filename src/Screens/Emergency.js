@@ -88,47 +88,52 @@ const Emergency = ({ navigation, route, ...props }) => {
     };
 
     const fetchData = (page, reset = false) => {
-        props.setLoader(true);
-        if (loading || !hasMore) {
-            setRefreshing(false);
-            return;
-        }
-
-        setLoading(true);
-        let data = {
-            apitype: "list",
-            category: "emergency",
-            page: page,
-        };
-        comnPost("v2/sites", data)
-            .then((res) => {
-                if (res && res.data.data) {
-                    if (reset) {
-                        setData(res.data.data.data);
-                    } else {
-                        setData((prevData) => [
-                            ...prevData,
-                            ...res.data.data.data,
-                        ]);
-                    }
-                    setHasMore(!!res.data.data.next_page_url); // Check if there's more data
-                    setNextPage(page + 1);
-                    saveToStorage(t("STORAGE.EMERGENCY"), JSON.stringify(res));
-                    props.setLoader(false);
-                }
-                if (isMounted.current) {
-                    setLoading(false);
-                }
+        if (props.mode) {
+            props.setLoader(true);
+            if (loading || !hasMore) {
                 setRefreshing(false);
-                props.setLoader(false);
-            })
-            .catch((error) => {
-                if (isMounted.current) {
-                    setLoading(false);
+                return;
+            }
+
+            setLoading(true);
+            let data = {
+                apitype: "list",
+                category: "emergency",
+                page: page,
+            };
+            comnPost("v2/sites", data)
+                .then((res) => {
+                    if (res && res.data.data) {
+                        if (reset) {
+                            setData(res.data.data.data);
+                        } else {
+                            setData((prevData) => [
+                                ...prevData,
+                                ...res.data.data.data,
+                            ]);
+                        }
+                        setHasMore(!!res.data.data.next_page_url); // Check if there's more data
+                        setNextPage(page + 1);
+                        saveToStorage(
+                            t("STORAGE.EMERGENCY"),
+                            JSON.stringify(res.data.data.data)
+                        );
+                        props.setLoader(false);
+                    }
+                    if (isMounted.current) {
+                        setLoading(false);
+                    }
                     setRefreshing(false);
                     props.setLoader(false);
-                }
-            });
+                })
+                .catch((error) => {
+                    if (isMounted.current) {
+                        setLoading(false);
+                        setRefreshing(false);
+                        props.setLoader(false);
+                    }
+                });
+        }
     };
 
     const loadMoreData = () => {

@@ -9,6 +9,8 @@
     "COMPANION": "महाराष्ट्राच्या किनारी रत्नासाठी तुमचा परम सहचर.",
     "GOOGLE_API_KEY": "AIzaSyCUUzdHc1ccGZhOzia9NoPf8mf3Yv901ZQ",
     "WELCOME": "Welcome back to",
+    "APP_URL": "https://play.google.com/store/apps/details?id=com.yourapp.package",
+    "APP_VERSION": "2.0.0",
 
     "BUTTON": {
         "YES": "होय",
@@ -113,9 +115,11 @@
         "ROUTES_RESPONSE": "routesResponse",
         "EXPLORE_CITIES_RESPONSE": "exploreCitiesResponse",
         "CATEGORIES_RESPONSE": "categoriesResponse",
-        "EMERGENCY": "Emergency",
-        "QUERIES": "Queries",
-        "GALLERY": "Gallery"
+        "EMERGENCY": "emergency",
+        "QUERIES": "queries",
+        "GALLERY": "gallery",
+        "MODE": "mode",
+        "APP_VERSION": "appVersion"
     },
     "HEADER": {
         "BUS_TIMINGS": "बसच्या वेळा",
@@ -148,7 +152,8 @@
         "ERROR_CURRENT_LOCATION": "वर्तमान स्थान मिळविण्यात त्रुटी: ",
         "FETCHING_TEXT": "आम्हाला तुमचे स्थान मिळत आहे कृपया प्रतीक्षा करा",
         "LOGOUT_ALERT": "तुम्हाला खरेच लॉगआउट करायचे आहे का?",
-        "MODE_CHOICE": "तुम्ही ॲप ऑनलाइन किंवा ऑफलाइन मोडमध्ये वापरू इच्छिता?"
+        "MODE_CHOICE": "तुम्ही ॲप ऑनलाइन किंवा ऑफलाइन मोडमध्ये वापरू इच्छिता?",
+        "APP_VERSION": "ॲप वापरणे सुरू ठेवण्यासाठी कृपया अपडेट करा!"
     },
     "TABLE": {
         "CITY": "City",

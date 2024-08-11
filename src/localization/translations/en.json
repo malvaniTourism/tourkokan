@@ -9,6 +9,9 @@
     "COMPANION": "Your Ultimate Travel Companion for Maharashtra's Coastal Gem.",
     "GOOGLE_API_KEY": "AIzaSyCUUzdHc1ccGZhOzia9NoPf8mf3Yv901ZQ",
     "WELCOME": "Welcome back to",
+    "APP_URL": "https://play.google.com/store/apps/details?id=com.yourapp.package",
+    "APP_VERSION": "2.0.0",
+
     "BUTTON": {
         "YES": "Yes",
         "NO": "No",
@@ -112,9 +115,11 @@
         "ROUTES_RESPONSE": "routesResponse",
         "EXPLORE_CITIES_RESPONSE": "exploreCitiesResponse",
         "CATEGORIES_RESPONSE": "categoriesResponse",
-        "EMERGENCY": "Emergency",
-        "QUERIES": "Queries",
-        "GALLERY": "Gallery"
+        "EMERGENCY": "emergency",
+        "QUERIES": "queries",
+        "GALLERY": "gallery",
+        "MODE": "mode",
+        "APP_VERSION": "appVersion"
     },
     "HEADER": {
         "BUS_TIMINGS": "Bus Timings",
@@ -147,7 +152,8 @@
         "ERROR_CURRENT_LOCATION": "Error getting current location: ",
         "FETCHING_TEXT": "We are getting your location please wait",
         "LOGOUT_ALERT": "Do you real want to Logout?",
-        "MODE_CHOICE": "Would you like to use app in Online or Offline mode?"
+        "MODE_CHOICE": "Would you like to use app in Online or Offline mode?",
+        "APP_VERSION": "To continue using app please update!"
     },
     "TABLE": {
         "CITY": "City",

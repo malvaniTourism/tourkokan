@@ -474,7 +474,7 @@ const SignUp = ({ navigation, ...props }) => {
                         <TouchableOpacity onPress={() => signInScreen()}>
                             <GlobalText
                                 text={t("SIGN_IN")}
-                                style={{ fontWeight: "bold" }}
+                                style={styles.blueBold}
                             />
                         </TouchableOpacity>
                     </View>

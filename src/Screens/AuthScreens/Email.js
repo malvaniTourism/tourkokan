@@ -24,6 +24,7 @@ import Popup from "../../Components/Common/Popup";
 import Feather from "react-native-vector-icons/Feather";
 import { CommonActions } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
+import { color } from "react-native-reanimated";
 
 const Email = ({ navigation, route, ...props }) => {
     const { t } = useTranslation();
@@ -152,6 +153,8 @@ const Email = ({ navigation, route, ...props }) => {
         };
         comnPost("v2/auth/sendOtp", data)
             .then((res) => {
+                console.log(res);
+
                 if (res.data?.success) {
                     props.setLoader(false);
                     navigateTo(navigation, t("SCREEN.VERIFY_OTP"), { email });
@@ -258,7 +261,7 @@ const Email = ({ navigation, route, ...props }) => {
                     <TouchableOpacity onPress={() => signUpScreen()}>
                         <GlobalText
                             text={t("SIGN_UP")}
-                            style={{ fontWeight: "bold" }}
+                            style={styles.blueBold}
                         />
                     </TouchableOpacity>
                 </View>

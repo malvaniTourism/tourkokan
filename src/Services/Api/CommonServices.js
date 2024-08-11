@@ -131,7 +131,7 @@ export const dataSync = async (name, callBack, online) => {
     );
 
     if ((await isOffline()) || !online) {
-        console.log("name, ", await getFromStorage(name)[0]);
+        console.log("name, ", name);
         if (await getFromStorage(name)) {
             return await getFromStorage(name);
         } else {

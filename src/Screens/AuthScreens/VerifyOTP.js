@@ -9,9 +9,13 @@ import {
 } from "react-native";
 import TextButton from "../../Components/Customs/Buttons/TextButton";
 import styles from "./Styles";
-import { comnPost } from "../../Services/Api/CommonServices";
+import { comnPost, saveToStorage } from "../../Services/Api/CommonServices";
 import { connect } from "react-redux";
-import { saveAccess_token, setLoader } from "../../Reducers/CommonActions";
+import {
+    saveAccess_token,
+    setLoader,
+    setMode,
+} from "../../Reducers/CommonActions";
 import Loader from "../../Components/Customs/Loader";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import COLOR from "../../Services/Constants/COLORS";
@@ -78,7 +82,7 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
                     );
                     AsyncStorage.setItem(
                         t("STORAGE.USER_ID"),
-                        res.data.data.user.id
+                        JSON.stringify(res.data.data.user.id)
                     );
                     props.saveAccess_token(res.data.data.access_token);
                     props.setLoader(false);
@@ -86,6 +90,8 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
                         t("STORAGE.IS_FIRST_TIME"),
                         JSON.stringify(true)
                     );
+                    saveToStorage(t("STORAGE.MODE"), JSON.stringify(true));
+                    props.setMode(true);
                     navigation.dispatch(
                         CommonActions.reset({
                             index: 0,
@@ -189,7 +195,7 @@ const VerifyOTP = ({ navigation, route, ...props }) => {
             <GlobalText text={`${t("SENT_TO")} ${route.params?.email}`} /> */}
                     </View>
                     <OtpInputs
-                        style={{ flexDirection: "row" }}
+                        style={{ flexDirection: "row", alignSelf: "center" }}
                         numberOfInputs={6}
                         inputStyles={{
                             height: 50,
@@ -271,6 +277,9 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(saveAccess_token(data));
         },
         setLoader: (data) => {
+            dispatch(setLoader(data));
+        },
+        setMode: (data) => {
             dispatch(setLoader(data));
         },
     };

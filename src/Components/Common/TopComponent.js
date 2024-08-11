@@ -13,6 +13,10 @@ import { Switch } from "@rneui/themed";
 import { connect } from "react-redux";
 import { setLoader, setMode } from "../../Reducers/CommonActions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+    getFromStorage,
+    saveToStorage,
+} from "../../Services/Api/CommonServices";
 
 StatusBar.setBarStyle("dark-content");
 
@@ -33,7 +37,7 @@ const TopComponent = ({
     const [isOnline, setIsOnline] = useState(true);
 
     useEffect(async () => {
-        let mode = await AsyncStorage.getItem("mode");
+        let mode = JSON.parse(await getFromStorage(t("STORAGE.MODE")));
         setIsOnline(mode);
         props.setMode(mode);
     }, []);
@@ -56,6 +60,7 @@ const TopComponent = ({
     };
 
     const changeMode = () => {
+        saveToStorage(t("STORAGE.MODE"), JSON.stringify(!isOnline));
         setIsOnline(!isOnline);
         props.setMode(!isOnline);
     };

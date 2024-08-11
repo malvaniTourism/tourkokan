@@ -69,8 +69,8 @@ const QueriesList = ({ navigation, route, ...props }) => {
             dataSync(t("STORAGE.QUERIES"), fetchData(1, true), props.mode).then(
                 (resp) => {
                     let res = JSON.parse(resp);
-                    if (res.data && res.data.data) {
-                        setData(res.data.data.data);
+                    if (res) {
+                        setData(res);
                     }
                 }
             );
@@ -100,41 +100,46 @@ const QueriesList = ({ navigation, route, ...props }) => {
     };
 
     const fetchData = (page, reset = false) => {
-        // if (loading || !hasMore) {
-        //     setRefreshing(false);
-        //     return;
-        // }
-        props.setLoader(true);
-        setLoading(true);
-        comnPost("v2/getQueries")
-            .then((res) => {
-                if (res && res.data.data) {
-                    if (reset) {
-                        setData(res.data.data.data);
-                    } else {
-                        setData((prevData) => [
-                            ...prevData,
-                            ...res.data.data.data,
-                        ]);
+        if (props.mode) {
+            // if (loading || !hasMore) {
+            //     setRefreshing(false);
+            //     return;
+            // }
+            props.setLoader(true);
+            setLoading(true);
+            comnPost("v2/getQueries")
+                .then((res) => {
+                    if (res && res.data.data) {
+                        if (reset) {
+                            setData(res.data.data.data);
+                        } else {
+                            setData((prevData) => [
+                                ...prevData,
+                                ...res.data.data.data,
+                            ]);
+                        }
+                        setHasMore(!!res.data.data.next_page_url); // Check if there's more data
+                        setNextPage(page + 1);
+                        saveToStorage(
+                            t("STORAGE.QUERIES"),
+                            JSON.stringify(res.data.data.data)
+                        );
+                        props.setLoader(false);
                     }
-                    setHasMore(!!res.data.data.next_page_url); // Check if there's more data
-                    setNextPage(page + 1);
-                    saveToStorage(t("STORAGE.QUERIES"), JSON.stringify(res));
-                    props.setLoader(false);
-                }
-                if (isMounted.current) {
-                    setLoading(false);
-                }
-                setRefreshing(false);
-                props.setLoader(false);
-            })
-            .catch((error) => {
-                if (isMounted.current) {
-                    setLoading(false);
+                    if (isMounted.current) {
+                        setLoading(false);
+                    }
                     setRefreshing(false);
                     props.setLoader(false);
-                }
-            });
+                })
+                .catch((error) => {
+                    if (isMounted.current) {
+                        setLoading(false);
+                        setRefreshing(false);
+                        props.setLoader(false);
+                    }
+                });
+        }
     };
 
     const loadMoreData = () => {

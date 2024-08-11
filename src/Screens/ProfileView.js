@@ -96,7 +96,7 @@ const ProfileView = ({ navigation, route, ...props }) => {
                         res.addresses[0].longitude
                     );
                     props.setLoader(false);
-                setRefreshing(false);
+                    setRefreshing(false);
                 } else if (resp) {
                     setOffline(true);
                 }
@@ -221,27 +221,29 @@ const ProfileView = ({ navigation, route, ...props }) => {
     };
 
     const getUserProfile = () => {
-        comnPost("v2/user-profile", props.access_token, navigation)
-            .then((res) => {
-                if (res && res.data.data)
-                    saveToStorage(
-                        t("STORAGE.PROFILE_RESPONSE"),
-                        JSON.stringify(res)
+        if (props.mode) {
+            comnPost("v2/user-profile", props.access_token, navigation)
+                .then((res) => {
+                    if (res && res.data.data)
+                        saveToStorage(
+                            t("STORAGE.PROFILE_RESPONSE"),
+                            JSON.stringify(res.data.data)
+                        );
+                    setProfile(res.data.data); // Update places state with response data
+                    setOption(0);
+                    setLocationMap(
+                        res.data.data.addresses[0].latitude,
+                        res.data.data.addresses[0].longitude
                     );
-                setProfile(res.data.data); // Update places state with response data
-                setOption(0);
-                setLocationMap(
-                    res.data.data.addresses[0].latitude,
-                    res.data.data.addresses[0].longitude
-                );
-                props.setLoader(false);
-                setRefreshing(false);
-            })
-            .catch((error) => {
-                setError(error.message); // Update error state with error message
-                props.setLoader(false);
-                setRefreshing(false);
-            });
+                    props.setLoader(false);
+                    setRefreshing(false);
+                })
+                .catch((error) => {
+                    setError(error.message); // Update error state with error message
+                    props.setLoader(false);
+                    setRefreshing(false);
+                });
+        }
     };
 
     const handleLogout = () => {

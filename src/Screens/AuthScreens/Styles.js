@@ -41,6 +41,10 @@ const styles = StyleSheet.create({
         marginVertical: 20,
         justifyContent: "center",
     },
+    blueBold: {
+        fontWeight: "bold",
+        color: COLOR.themeBlue,
+    },
     containerStyle: {
         borderWidth: 1,
         padding: 10,
@@ -145,6 +149,7 @@ const styles = StyleSheet.create({
     loginSubText: {
         fontWeight: "bold",
         fontSize: DIMENSIONS.subtitleTextSize,
+        color: COLOR.themeBlue,
         textAlign: "left",
         width: DIMENSIONS.bannerWidth,
         marginVertical: 10,

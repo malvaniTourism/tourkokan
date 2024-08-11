@@ -86,49 +86,51 @@ const ExploreGrid = ({ route, navigation, ...props }) => {
     }, [searchValue]);
 
     const fetchData = (page, reset = false) => {
-        if (loading || (page > currentPage && page > lastPage)) return;
+        if (props.mode) {
+            if (loading || (page > currentPage && page > lastPage)) return;
 
-        setLoading(true);
-        const data = {
-            apitype: "list",
-            global: 1,
-            search: searchValue,
-            per_page: 20,
-            page: page,
-        };
-        comnPost(`v2/getGallery`, data)
-            .then((res) => {
-                if (res.data.success) {
-                    props.setLoader(false);
-                    const newGallery = res.data.data.data;
-                    if (reset) {
-                        setGallery(newGallery);
-                        saveToStorage(
-                            t("STORAGE.GALLERY"),
-                            JSON.stringify(newGallery)
+            setLoading(true);
+            const data = {
+                apitype: "list",
+                global: 1,
+                search: searchValue,
+                per_page: 20,
+                page: page,
+            };
+            comnPost(`v2/getGallery`, data)
+                .then((res) => {
+                    if (res.data.success) {
+                        props.setLoader(false);
+                        const newGallery = res.data.data.data;
+                        if (reset) {
+                            setGallery(newGallery);
+                            saveToStorage(
+                                t("STORAGE.GALLERY"),
+                                JSON.stringify(newGallery)
+                            );
+                        } else {
+                            setGallery((prevGallery) => [
+                                ...prevGallery,
+                                ...newGallery,
+                            ]);
+                        }
+                        setCurrentPage(res.data.data.current_page);
+                        setLastPage(res.data.data.last_page);
+                        FastImage.preload(
+                            newGallery.map((image) => ({
+                                uri: Path.FTP_PATH + image.path,
+                            }))
                         );
-                    } else {
-                        setGallery((prevGallery) => [
-                            ...prevGallery,
-                            ...newGallery,
-                        ]);
                     }
-                    setCurrentPage(res.data.data.current_page);
-                    setLastPage(res.data.data.last_page);
-                    FastImage.preload(
-                        newGallery.map((image) => ({
-                            uri: Path.FTP_PATH + image.path,
-                        }))
-                    );
-                }
-                setLoading(false);
-                setRefreshing(false);
-            })
-            .catch((err) => {
-                props.setLoader(false);
-                setLoading(false);
-                setRefreshing(false);
-            });
+                    setLoading(false);
+                    setRefreshing(false);
+                })
+                .catch((err) => {
+                    props.setLoader(false);
+                    setLoading(false);
+                    setRefreshing(false);
+                });
+        }
     };
 
     const onRefresh = () => {

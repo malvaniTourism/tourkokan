@@ -68,38 +68,40 @@ const MapScreen = ({ navigation, ...props }) => {
     }, []);
 
     const getCities = () => {
-        props.setLoader(true);
-        let data = {
-            apitype: "list",
-            category: "City",
-        };
-        comnPost(`v2/sites`, data, navigation)
-            .then(async (res) => {
-                if (res && res.data.data) setCities(res.data.data.data);
-                props.setLoader(false);
-                setRefreshing(false);
-                if (mapRef.current) {
-                    const coordinates = res.data.data.data.map((marker) => {
-                        return {
-                            latitude: parseFloat(marker.latitude),
-                            longitude: parseFloat(marker.longitude),
-                        };
-                    });
-                    mapRef.current.fitToCoordinates(coordinates, {
-                        edgePadding: {
-                            top: 40,
-                            right: 40,
-                            bottom: 40,
-                            left: 40,
-                        },
-                        animated: true,
-                    });
-                }
-            })
-            .catch((error) => {
-                props.setLoader(false);
-                setRefreshing(false);
-            });
+        if (props.mode) {
+            props.setLoader(true);
+            let data = {
+                apitype: "list",
+                category: "City",
+            };
+            comnPost(`v2/sites`, data, navigation)
+                .then(async (res) => {
+                    if (res && res.data.data) setCities(res.data.data.data);
+                    props.setLoader(false);
+                    setRefreshing(false);
+                    if (mapRef.current) {
+                        const coordinates = res.data.data.data.map((marker) => {
+                            return {
+                                latitude: parseFloat(marker.latitude),
+                                longitude: parseFloat(marker.longitude),
+                            };
+                        });
+                        mapRef.current.fitToCoordinates(coordinates, {
+                            edgePadding: {
+                                top: 40,
+                                right: 40,
+                                bottom: 40,
+                                left: 40,
+                            },
+                            animated: true,
+                        });
+                    }
+                })
+                .catch((error) => {
+                    props.setLoader(false);
+                    setRefreshing(false);
+                });
+        }
     };
 
     return (

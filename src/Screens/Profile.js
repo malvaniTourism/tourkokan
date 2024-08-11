@@ -92,7 +92,7 @@ const Profile = ({ navigation, ...props }) => {
                 if (res && res.data.data)
                     saveToStorage(
                         t("STORAGE.PROFILE_RESPONSE"),
-                        JSON.stringify(res)
+                        JSON.stringify(res.data.data)
                     );
                 setProfile(res.data.data); // Update places state with response data
                 props.setLoader(false);
