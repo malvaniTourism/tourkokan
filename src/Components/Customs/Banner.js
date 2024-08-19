@@ -64,7 +64,7 @@ const Banner = ({ style, bannerImages }) => {
                             headers: { Authorization: "someAuthToken" },
                             priority: FastImage.priority.normal,
                         }}
-                        // resizeMode={FastImage.resizeMode.contain}
+                        resizeMode={FastImage.resizeMode.stretch}
                     />
                     // <AnimationStyle
                     //     source={{

@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
         height: DIMENSIONS.halfWidth - 30,
         animation: "fadeinout 4s infinite",
         opacity: 1,
+        resizeMode: "center",
     },
     alertContainerStyle: {
         width: DIMENSIONS.bannerWidth - 40,

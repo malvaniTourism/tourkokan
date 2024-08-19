@@ -104,24 +104,36 @@ const AllRoutesSearch = ({ navigation, route, ...props }) => {
             )
                 .then((res) => {
                     if (res.data.success) {
-                        if (res && res.data.data)
+                        if (res && res.data.data.data[0]) {
                             saveToStorage(
                                 t("STORAGE.ROUTES_RESPONSE"),
                                 JSON.stringify(res)
                             );
-                        let myNextUrl = res.data.data.next_page_url;
-                        setNextUrl(myNextUrl);
-                        nextPage !== myNextUrl[myNextUrl.length - 1] && isNext
-                            ? setList([...list, ...res.data.data.data])
-                            : setList([...res.data.data.data]);
-                        setNextPage(res.data.data.current_page + 1);
-                        setLastPage(res.data.data.last_page);
-                        setIsLoading(false);
-                        setIsFirstTime(false);
-                        props.setLoader(false);
+                            let myNextUrl = res.data.data.next_page_url;
+                            setNextUrl(myNextUrl);
+                            if (myNextUrl) {
+                                nextPage !== myNextUrl[myNextUrl.length - 1] &&
+                                isNext
+                                    ? setList([...list, ...res.data.data.data])
+                                    : setList([...res.data.data.data]);
+                            } else {
+                                setList([...res.data.data.data]);
+                            }
+                            setNextPage(res.data.data.current_page + 1);
+                            setLastPage(res.data.data.last_page);
+                            setIsLoading(false);
+                            setIsFirstTime(false);
+                            props.setLoader(false);
+                        } else {
+                            setIsLoading(false);
+                            setIsFirstTime(false);
+                            setList([]);
+                            props.setLoader(false);
+                        }
                     } else {
                         setIsLoading(false);
                         setIsFirstTime(false);
+                        setList([]);
                         props.setLoader(false);
                     }
                 })
